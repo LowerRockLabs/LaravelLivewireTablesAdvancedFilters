@@ -1,0 +1,19 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "alpinejs": "^3.10.5",
+        "autoprefixer": "^10.2.5",
+        "mega-linter-runner": "^6.15.0",
+        "npm": "^9.1.1",
+        "postcss": "^8.2.12",
+        "postcss-import": "^14.1.0",
+        "tailwindcss": "^2.2.4"
+    },
+    "dependencies": {
+        "flatpickr": "^4.6.13"
+    }
+}

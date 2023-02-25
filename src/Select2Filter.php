@@ -7,8 +7,14 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class Select2Filter extends Filter
 {
+    /**
+     * @var array<mixed>
+     */
     protected array $options = [];
 
+    /**
+     * @return Select2Filter
+     */
     public function setCallback(): Select2Filter
     {
         //$this->component->setSelect2Options
@@ -17,6 +23,10 @@ class Select2Filter extends Filter
         return $this;
     }
 
+    /**
+     * @param  array<mixed>  $options
+     * @return $this
+     */
     public function options(array $options = []): Select2Filter
     {
         $this->options = $options;
@@ -24,11 +34,17 @@ class Select2Filter extends Filter
         return $this;
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getOptions(): array
     {
         return $this->options;
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getKeys(): array
     {
         return collect($this->getOptions())
@@ -40,11 +56,21 @@ class Select2Filter extends Filter
             ->toArray();
     }
 
+    /**
+     * @param array<mixed> $value
+     * 
+     * @return array<mixed>
+     */
     public function validate($value)
     {
         return array_unique($value);
     }
 
+    /**
+     * @param string $value
+     * 
+     * @return string|null
+     */
     public function getFilterPillValue($value): ?string
     {
         $values = [];
@@ -61,11 +87,22 @@ class Select2Filter extends Filter
         return implode(', ', $values);
     }
 
-    public function isEmpty($value): bool
+    /**
+     * @param string $value
+     * 
+     * @return bool
+     */
+    public function isEmpty(string $value): bool
     {
         return $value === '';
     }
 
+
+    /**
+     * @param DataTableComponent $component
+     * 
+     * @return \Illuminate\View\View|\Illuminate\View\Factory
+     */
     public function render(DataTableComponent $component)
     {
         //if ($component->filters->$filterKey)

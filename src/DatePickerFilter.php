@@ -16,8 +16,7 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param  array<mixed>  $config
      * @return $this
      */
     public function config(array $config = []): DatePickerFilter
@@ -28,8 +27,8 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @param  mixed  $value
-     * @return mixed
+     * @param  string  $value
+     * @return bool|string
      */
     public function validate($value)
     {
@@ -42,13 +41,18 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @param  mixed  $value
+     * @param  string  $value
      */
-    public function isEmpty($value): bool
+    public function isEmpty(string $value): bool
     {
         return $value === '';
     }
 
+    /**
+     * @param DataTableComponent $component
+     * 
+     * @return \Illuminate\View\View|\Illuminate\View\Factory
+     */
     public function render(DataTableComponent $component)
     {
         return view('livewiretablesadvancedfilters::datepickerfilter', [

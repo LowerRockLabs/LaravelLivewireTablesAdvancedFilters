@@ -7,6 +7,9 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class NumberRangeFilter extends Filter
 {
+    /**
+     * @var array<mixed>
+     */
     protected array $options = [];
 
     public function __construct(string $name, string $key = null)
@@ -16,6 +19,10 @@ class NumberRangeFilter extends Filter
         $this->options = config('livewiretablesadvancedfilters.numberRange.defaults');
     }
 
+    /**
+     * @param  array<mixed>  $options
+     * @return $this
+     */
     public function options(array $options = []): NumberRangeFilter
     {
         $this->options = $options;
@@ -23,14 +30,16 @@ class NumberRangeFilter extends Filter
         return $this;
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getOptions(): array
     {
         return $this->options;
     }
 
     /**
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param  array<mixed>  $config
      * @return $this
      */
     public function config(array $config = []): NumberRangeFilter
@@ -41,8 +50,8 @@ class NumberRangeFilter extends Filter
     }
 
     /**
-     * @param  mixed  $values
-     * @return mixed
+     * @param  array<mixed>  $values
+     * @return array<mixed>|bool
      */
     public function validate($values)
     {
@@ -66,18 +75,28 @@ class NumberRangeFilter extends Filter
     }
 
     /**
-     * @param  mixed  $value
+     * @param  array<mixed>  $value
      */
     public function isEmpty($value): bool
     {
         return ! is_array($value);
     }
 
-    public function getFilterPillValue($values): ?string
+    /**
+     * @param array<mixed> $values
+     * 
+     * @return string|null
+     */
+    public function getFilterPillValue(array $values): ?string
     {
         return implode(',', $values);
     }
 
+    /**
+     * @param DataTableComponent $component
+     * 
+     * @return \Illuminate\View\View|\Illuminate\View\Factory
+     */
     public function render(DataTableComponent $component)
     {
         return view('livewiretablesadvancedfilters::numberrangefilter', [

@@ -9,7 +9,9 @@ return [
             'ariaDateFormat' => 'F j, Y',
             'dateFormat' => 'Y-m-d',
         ],
+        // Set to true if you need to include the Flatpickr JS
         'publishFlatpickrJS' => false,
+        // Set to true if you need to include the Flatpickr CSS
         'publishFlatpickrCSS' => false,
     ],
     'datePicker' => [
@@ -20,7 +22,9 @@ return [
             'ariaDateFormat' => 'F j, Y',
             'dateFormat' => 'Y-m-d',
         ],
+        // Set to true if you need to include the Flatpickr JS
         'publishFlatpickrJS' => false,
+        // Set to true if you need to include the Flatpickr CSS
         'publishFlatpickrCSS' => false,
     ],
     'numberRange' => [
@@ -58,6 +62,4 @@ return [
         */
         'cssInclude' => 'inline',
     ],
-    'publishFlatpickrJS' => false,
-    'publishFlatpickrCSS' => false,
 ];

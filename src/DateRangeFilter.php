@@ -16,8 +16,7 @@ class DateRangeFilter extends Filter
     }
 
     /**
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param  array<mixed>  $config
      * @return $this
      */
     public function config(array $config = []): DateRangeFilter
@@ -27,9 +26,11 @@ class DateRangeFilter extends Filter
         return $this;
     }
 
+
     /**
-     * @param  mixed  $values
-     * @return mixed
+     * @param array<mixed> $values
+     * 
+     * @return array<mixed>|bool
      */
     public function validate($values)
     {
@@ -48,13 +49,20 @@ class DateRangeFilter extends Filter
     }
 
     /**
-     * @param  mixed  $value
+     * @param string $value
+     * 
+     * @return bool
      */
-    public function isEmpty($value): bool
+    public function isEmpty(string $value): bool
     {
         return $value === '';
     }
 
+    /**
+     * @param DataTableComponent $component
+     * 
+     * @return \Illuminate\View\View|\Illuminate\View\Factory
+     */
     public function render(DataTableComponent $component)
     {
         return view('livewiretablesadvancedfilters::daterangefilter', [

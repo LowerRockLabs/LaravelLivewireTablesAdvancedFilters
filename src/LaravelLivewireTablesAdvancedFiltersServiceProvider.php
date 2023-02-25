@@ -21,20 +21,20 @@ class LaravelLivewireTablesAdvancedFiltersServiceProvider extends ServiceProvide
 
             $this->publishes([
                 __DIR__ . '/../resources/lang' => resource_path('lang/vendor/lowerrocklabs/livewiretablesadvancedfilters'),
-            ], 'livewiretablesadvancedfilters:lang');
+            ], 'livewiretablesadvancedfilters-lang');
 
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('livewiretablesadvancedfilters.php'),
-            ], 'livewiretablesadvancedfilters:config');
+            ], 'livewiretablesadvancedfilters-config');
 
             $this->publishes([
                 __DIR__.'/../public' => public_path('vendor/lowerrocklabs/livewiretablesadvancedfilters'),
-            ], 'livewiretablesadvancedfilters:css');
+            ], 'livewiretablesadvancedfilters-css');
 
             
             $this->publishes([
                 __DIR__.'/../resources/views' => resource_path('views/vendor/lowerrocklabs/livewiretablesadvancedfilters'),
-            ], 'livewiretablesadvancedfilters:views');
+            ], 'livewiretablesadvancedfilters-views');
         
         }
     }

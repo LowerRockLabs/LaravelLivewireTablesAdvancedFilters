@@ -26,6 +26,16 @@ class LaravelLivewireTablesAdvancedFiltersServiceProvider extends ServiceProvide
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('livewiretablesadvancedfilters.php'),
             ], 'config');
+
+            $this->publishes([
+                __DIR__.'/../public' => public_path('vendor/lowerrocklabs/livewiretablesadvancedfilters'),
+            ], 'public');
+
+            
+            $this->publishes([
+                __DIR__.'/../resources/views' => resource_path('views/vendor/lowerrocklabs/livewiretablesadvancedfilters'),
+            ]);
+        
         }
     }
 

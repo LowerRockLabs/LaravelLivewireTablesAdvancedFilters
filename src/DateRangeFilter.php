@@ -8,6 +8,25 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class DateRangeFilter extends Filter
 {
+    public function __construct(string $name, string $key = null)
+    {
+        $this->config = config('livewiretablesadvancedfilters.dateRange.defaults');
+
+        parent::__construct($name, (isset($key) ? $key : null));
+    }
+
+    /**
+     * @param  string  $key
+     * @param  mixed  $value
+     * @return $this
+     */
+    public function config(array $config = []): DateRangeFilter
+    {
+        $this->config = array_merge($this->config, $config);
+
+        return $this;
+    }
+
     /**
      * @param  mixed  $values
      * @return mixed
@@ -15,11 +34,13 @@ class DateRangeFilter extends Filter
     public function validate($values)
     {
         $valueArray = explode(' ', $values);
-        $dateFormat = ($this->hasConfig('dateFormat') ? $this->getConfig('dateFormat') : 'Y-m-d');
+        $dateFormat = $this->getConfig('dateFormat');
+
         if (! DateTime::createFromFormat($dateFormat, $valueArray[0])) {
             return false;
         }
-        if (! DateTime::createFromFormat($dateFormat, $valueArray[2])) {
+
+        if (! isset($valueArray[2]) || isset($valueArray[2]) && ! DateTime::createFromFormat($dateFormat, $valueArray[2])) {
             return false;
         }
 

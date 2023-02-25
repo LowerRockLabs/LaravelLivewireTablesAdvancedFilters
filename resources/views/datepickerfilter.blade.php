@@ -6,12 +6,23 @@
     }
     
 @endphp
+@if (Config::get('livewiretablesadvancedfilters.datePicker.publishFlatpickrJS'))
+    @pushOnce('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    @endPushOnce
+@endif
+@if (Config::get('livewiretablesadvancedfilters.datePicker.publishFlatpickrCSS'))
+    @pushOnce('styles')
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    @endPushOnce
+@endif
+
 @if ($theme === 'tailwind')
     <div class="rounded-md shadow-sm"
         x-data='{
-            extraClass: $store.darkMode.on ? "dark" : "", dateString: "",
+            extraClass: $store.darkMode.on ? "dark" : "",
             init() {
-                window.flatpickr($refs.input, {
+                flatpickr($refs.input, {
                     onChange: function (selectedDate, dateStr, instance)
                     {
                         if (selectedDates.length == 2)
@@ -20,18 +31,16 @@
                         }
                     },
                     mode:"single",
-                    @if ($filter->hasConfig('dateFormat')) dateFormat:"{{ $filter->getConfig('dateFormat') }}",
-                    @else
-                    dateFormat:"Y-m-d", @endif
+                    ariaDateFormat:"{{ $filter->getConfig('ariaDateFormat') }}",
+                    allowInput:"{{ $filter->getConfig('allowInput') }}",
+                    altFormat:"{{ $filter->getConfig('altFormat') }}",
+                    altInput:"{{ $filter->getConfig('altInput') }}",
+                    dateFormat:"{{ $filter->getConfig('dateFormat') }}",
+                    defaultDate:[$refs.input.value],
                     enableTime: false,
-                    altInput: true,
                     locale: "{{ App::currentLocale() }}",
-                    @if ($filter->hasConfig('altFormat')) altFormat:"{{ $filter->getConfig('altFormat') }}",
-                    @else
-                    altFormat:"F j, Y", @endif
                     @if ($filter->hasConfig('minDate')) minDate:"{{ $filter->getConfig('minDate') }}", @endif
                     @if ($filter->hasConfig('maxDate')) maxDate:"{{ $filter->getConfig('maxDate') }}", @endif
-                    defaultDate:[$refs.input.value.split(",")[0],$refs.input.value.split(",")[1]],
                 });
             }
         }'

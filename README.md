@@ -23,7 +23,7 @@ This depends on custom CSS, which can be included in your component by using the
 # Date Range Filter
 This utilises the Flatpickr library.
 
-There are several options for utilising this library.
+There are several options for utilising this library!
 
 ## NPM
 ```terminal

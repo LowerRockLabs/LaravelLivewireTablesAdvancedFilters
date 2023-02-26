@@ -18,3 +18,5 @@
 /phpstan.neon.dist      export-ignore
 /phpstan.neon           export-ignore
 /pint.json              export-ignore
+/phpunit.xml.dist       export-ignore
+/.phpunit.result.cache  export-ignore

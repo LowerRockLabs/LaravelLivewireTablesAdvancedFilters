@@ -32,13 +32,19 @@ class DateRangeFilter extends Filter
 
 
     /**
-     * @param array<mixed> $values
+     * @param array<mixed>|string $values
      * 
      * @return array<mixed>|bool
      */
     public function validate($values)
     {
-        $valueArray = explode(' ', $values);
+        if (!is_array($values)) {
+            $valueArray = explode(' ', $values);
+        }
+        else
+        {
+            $valueArray = $values;
+        }
         $dateFormat = $this->getConfig('dateFormat');
 
         if (! DateTime::createFromFormat($dateFormat, $valueArray[0])) {

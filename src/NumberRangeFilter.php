@@ -79,7 +79,7 @@ class NumberRangeFilter extends Filter
     }
 
     /**
-     * @param  array<mixed>  $value
+     * @param  array<mixed>|string  $value
      */
     public function isEmpty($value): bool
     {

@@ -67,21 +67,24 @@ class SmartSelectFilter extends Filter
     }
 
     /**
-     * @param string $value
+     * @param string|array<mixed> $value
      * 
      * @return string|null
      */
     public function getFilterPillValue($value): ?string
     {
         $values = [];
-
-        foreach ($value as $item) {
-            $found = $this->getCustomFilterPillValue($item) ?? $this->getOptions()[$item] ?? null;
-
-            if ($found) {
-                $values[] = $found;
+        if (is_array($value))
+        {
+            foreach ($value as $item) {
+                $found = $this->getCustomFilterPillValue($item) ?? $this->getOptions()[$item] ?? null;
+    
+                if ($found) {
+                    $values[] = $found;
+                }
             }
         }
+
         $values = array_unique($values, SORT_STRING);
 
         return implode(', ', $values);

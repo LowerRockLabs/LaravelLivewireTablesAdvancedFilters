@@ -94,7 +94,7 @@ class SmartSelectFilterTest extends TestCase
     {
         $filter = SmartSelectFilter::make('Active');
 
-        $this->assertNull($filter->getDefaultValue());
+        $this->assertSame([], $filter->getDefaultValue());
     }
 
     /** @test */

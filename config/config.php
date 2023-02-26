@@ -8,6 +8,8 @@ return [
     ],
     'dateRange' => [
         'defaults' => [
+            'earliestDate' => '',
+            'latestDate' => '',
             'allowInput' => true,
             'altFormat' => 'F j, Y',
             'ariaDateFormat' => 'F j, Y',
@@ -20,7 +22,8 @@ return [
     ],
     'datePicker' => [
         'defaults' => [
-
+            'earliestDate' => '',
+            'latestDate' => '',
             'allowInput' => true,
             'altFormat' => 'F j, Y',
             'ariaDateFormat' => 'F j, Y',

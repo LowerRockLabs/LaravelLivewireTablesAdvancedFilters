@@ -69,14 +69,14 @@ class DateRangeFilterTest extends TestCase
     public function can_check_validation_accepts_valid_values_array(): void
     {
         $filter = DateRangeFilter::make('Active');
-        $this->assertSame(['min' => '2020-01-01', 'max' => '2020-02-02'], $filter->validate(['2020-01-01', '2020-02-02']));
+        $this->assertSame(['minDate' => '2020-01-01', 'maxDate' => '2020-02-02'], $filter->validate(['2020-01-01', '2020-02-02']));
     }
 
     /** @test */
     public function can_check_validation_accepts_valid_values_string(): void
     {
         $filter = DateRangeFilter::make('Active');
-        $this->assertSame(['min' => '2020-01-01', 'max' => '2020-02-02'], $filter->validate('2020-01-01 to 2020-02-02'));
+        $this->assertSame(['minDate' => '2020-01-01', 'maxDate' => '2020-02-02'], $filter->validate('2020-01-01 to 2020-02-02'));
     }
 
     /** @test */
@@ -99,7 +99,7 @@ class DateRangeFilterTest extends TestCase
     {
         $filter = DateRangeFilter::make('Active');
 
-        $this->assertNull($filter->getDefaultValue());
+        $this->assertSame(['minDate' => '', 'maxDate' => ''], $filter->getDefaultValue());
     }
 
     /** @test */
@@ -111,8 +111,8 @@ class DateRangeFilterTest extends TestCase
 
         $filter = DateRangeFilter::make('Active')
             ->filter(function (Builder $builder, array $values) {
-                return $builder->where('created_at', '>', $values['min'])
-                ->where('breed_id', '<', $values['max']);
+                return $builder->where('last_visit', '>=', $values['minDate'])
+                ->where('last_visit', '<=', $values['maxDate']);
             });
 
         $this->assertTrue($filter->hasFilterCallback());

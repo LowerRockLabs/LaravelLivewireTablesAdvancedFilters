@@ -2,9 +2,9 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Views;
 
-use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Exceptions\DataTableConfigurationException;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Pet;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCase;
+use Rappasoft\LaravelLivewireTables\Exceptions\DataTableConfigurationException;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ComponentColumn;
 
 class ComponentColumnTest extends TestCase

@@ -1,25 +1,26 @@
 <?php
 
-namespace Tests;
+namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests;
 
-use Illuminate\Foundation\Testing\Concerns\InteractsWithViews;
-use Rappasoft\LaravelLivewireTables\LaravelLivewireTablesServiceProvider;
+use Illuminate\Encryption\Encrypter;
+use Illuminate\Support\Facades\DB;
+use Livewire\LivewireServiceProvider;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\LaravelLivewireTablesAdvancedFiltersServiceProvider;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Http\Livewire\PetsTable;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Breed;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Pet;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Species;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Veterinary;
+use Orchestra\Testbench\TestCase as Orchestra;
+use Rappasoft\LaravelLivewireTables\LaravelLivewireTablesServiceProvider;
 
-class TestCase extends \Orchestra\Testbench\TestCase
+class TestCase extends Orchestra
 {
-
-    use InteractsWithViews;
-
     protected $enablesPackageDiscoveries = true;
+
     public PetsTable $basicTable;
 
-        /**
+    /**
      * Setup the test environment.
      */
     protected function setUp(): void
@@ -76,9 +77,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app): array
     {
         return [
-            LaravelLivewireTablesAdvancedFiltersServiceProvider::class,
             LivewireServiceProvider::class,
             LaravelLivewireTablesServiceProvider::class,
+            LaravelLivewireTablesAdvancedFiltersServiceProvider::class,
         ];
     }
 
@@ -91,7 +92,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
             'prefix' => '',
         ]);
 
-        include_once __DIR__.'/../database/migrations/create_test_tables.php.stub';
+        include_once __DIR__ . '/../database/migrations/create_test_tables.php.stub';
         (new \CreateTestTables())->up();
 
         config()->set('app.key', Encrypter::generateKey(config('app.cipher')));
@@ -104,22 +105,4 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
         return base_convert($crc32, 10, 36);
     }
-
-
-    /**
- * Get package providers.
- *
- * @param  \Illuminate\Foundation\Application  $app
- *
- * @return array<int, class-string<\Illuminate\Support\ServiceProvider>>
- */
-protected function getPackageProviders($app)
-{
-    return [
-        "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\LaravelLivewireTablesAdvancedFiltersServiceProvider",
-        "Rappasoft\\LaravelLivewireTables\\LaravelLivewireTablesServiceProvider"
-
-    ];
-}
-
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Rappasoft\LaravelLivewireTables\Tests\Views;
+namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Views;
 
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Pet;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCase;
 use Rappasoft\LaravelLivewireTables\Exceptions\DataTableConfigurationException;
-use Rappasoft\LaravelLivewireTables\Tests\Models\Pet;
-use Rappasoft\LaravelLivewireTables\Tests\TestCase;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 
 class BooleanColumnTest extends TestCase

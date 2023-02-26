@@ -3,10 +3,10 @@
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Http\Livewire;
 
 use Illuminate\Database\Eloquent\Builder;
-use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DataTableComponent;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Breed;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Pet;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Species;
+use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectDropdownFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
@@ -46,20 +46,6 @@ class PetsTable extends DataTableComponent
     public function filters(): array
     {
         return [
-                Select::make('Breed')
-                ->options(
-                    Breed::query()
-                        ->firstOption('Select All')
-                        ->orderBy('name')
-                        ->get()
-                        ->keyBy('id')
-                        ->map(fn ($breed) => $breed->name)
-                        ->toArray()
-                )
-                ->filter(function (Builder $builder, string $value) {
-                    return $builder->where('breed_id', $value);
-                }),
-
 
             MultiSelectFilter::make('Breed')
             ->options(
@@ -71,15 +57,13 @@ class PetsTable extends DataTableComponent
                     ->toArray()
             )
             ->filter(function (Builder $builder, array $values) {
-                return $
-                builder->whereIn('breed_id', $values);
+                return $builder->whereIn('breed_id', $values);
             }),
 
             MultiSelectDropdownFilter::make('Species')
             ->options(
                 Species::query()
                     ->orderBy('name')
-                    ->firstOption('Select All')
                     ->get()
                     ->keyBy('id')
                     ->map(fn ($species) => $species->name)

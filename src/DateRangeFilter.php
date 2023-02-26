@@ -59,21 +59,23 @@ class DateRangeFilter extends Filter
     {
         if (! is_array($values)) {
             $valueArray = explode(' ', $values);
-            $valueArray[1] = $valueArray[2];
+            $returnedValues['min'] = $valueArray[0];
+            $returnedValues['max'] = $valueArray[2];
         } else {
-            $valueArray = $values;
+            $returnedValues['min'] = $values[0];
+            $returnedValues['max'] = $values[1];
         }
         $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
 
-        if (! DateTime::createFromFormat($dateFormat, $valueArray[0])) {
+        if (! DateTime::createFromFormat($dateFormat, $returnedValues['min'])) {
             return false;
         }
 
-        if (! isset($valueArray[1]) || isset($valueArray[1]) && ! DateTime::createFromFormat($dateFormat, $valueArray[1])) {
+        if (! isset($returnedValues['max']) || isset($returnedValues['max']) && ! DateTime::createFromFormat($dateFormat, $returnedValues['max'])) {
             return false;
         }
 
-        return $values;
+        return $returnedValues;
     }
 
     /**

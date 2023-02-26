@@ -69,7 +69,7 @@ class DateRangeFilterTest extends TestCase
     public function can_check_validation_accepts_valid_values(): void
     {
         $filter = DateRangeFilter::make('Active');
-        $this->assertSame(['2020-01-01', '2020-02-02'], $filter->validate(['2020-01-01', '2020-02-02']));
+        $this->assertSame(['min' => '2020-01-01', 'max' => '2020-02-02'], $filter->validate(['2020-01-01', '2020-02-02']));
     }
 
     /** @test */

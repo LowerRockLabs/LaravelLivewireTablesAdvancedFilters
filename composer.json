@@ -6,7 +6,8 @@
         "livewire",
         "datatables",
         "tables",
-        "laravel"
+        "laravel",
+        "rappasoft",
     ],
     "homepage": "https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters",
     "license": "MIT",

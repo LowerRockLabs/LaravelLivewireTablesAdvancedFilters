@@ -12,6 +12,10 @@ class NumberRangeFilter extends Filter
      */
     protected array $options = [];
 
+    /**
+     * @param string $name
+     * @param string|null $key
+     */
     public function __construct(string $name, string $key = null)
     {
         parent::__construct($name, (isset($key) ? $key : null));
@@ -23,7 +27,7 @@ class NumberRangeFilter extends Filter
      * @param  array<mixed>  $options
      * @return $this
      */
-    public function options(array $options = []): NumberRangeFilter
+    public function options($options = []): NumberRangeFilter
     {
         $this->options = $options;
 
@@ -42,7 +46,7 @@ class NumberRangeFilter extends Filter
      * @param  array<mixed>  $config
      * @return $this
      */
-    public function config(array $config = []): NumberRangeFilter
+    public function config($config = []): NumberRangeFilter
     {
         $this->config = array_merge($this->config, $config);
 
@@ -87,7 +91,7 @@ class NumberRangeFilter extends Filter
      * 
      * @return string|null
      */
-    public function getFilterPillValue(array $values): ?string
+    public function getFilterPillValue($values): ?string
     {
         return implode(',', $values);
     }
@@ -99,7 +103,7 @@ class NumberRangeFilter extends Filter
      */
     public function render(DataTableComponent $component)
     {
-        return view('livewiretablesadvancedfilters::numberrangefilter', [
+        return view('livewiretablesadvancedfilters::components.tools.filters.numberRange', [
             'component' => $component,
             'filter' => $this,
         ]);

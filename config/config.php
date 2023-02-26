@@ -2,6 +2,9 @@
 
 // config for LowerRockLabs/LaravelLivewireTablesAdvancedFilters
 return [
+    'smartSelect' => [
+
+    ],
     'dateRange' => [
         'defaults' => [
             'allowInput' => true,

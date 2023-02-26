@@ -5,7 +5,7 @@ namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
 
-class Select2Filter extends Filter
+class SmartSelectFilter extends Filter
 {
     /**
      * @var array<mixed>
@@ -13,9 +13,9 @@ class Select2Filter extends Filter
     protected array $options = [];
 
     /**
-     * @return Select2Filter
+     * @return SmartSelectFilter
      */
-    public function setCallback(): Select2Filter
+    public function setCallback(): SmartSelectFilter
     {
         //$this->component->setSelect2Options
         //dd($this->getConfigs());
@@ -27,7 +27,7 @@ class Select2Filter extends Filter
      * @param  array<mixed>  $options
      * @return $this
      */
-    public function options(array $options = []): Select2Filter
+    public function options($options = []): SmartSelectFilter
     {
         $this->options = $options;
 
@@ -92,7 +92,7 @@ class Select2Filter extends Filter
      * 
      * @return bool
      */
-    public function isEmpty(string $value): bool
+    public function isEmpty($value): bool
     {
         return $value === '';
     }
@@ -108,7 +108,7 @@ class Select2Filter extends Filter
         //if ($component->filters->$filterKey)
         // dd($this->{$this->tableName}['filters'][$this->getName()]);
 
-        return view('livewiretablesadvancedfilters::select2filter', [
+        return view('livewiretablesadvancedfilters::components.tools.filters.smartSelect', [
             'component' => $component,
             'filter' => $this,
         ]);

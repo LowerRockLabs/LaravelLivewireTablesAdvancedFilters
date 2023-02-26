@@ -2,12 +2,9 @@
 
 // config for LowerRockLabs/LaravelLivewireTablesAdvancedFilters
 return [
+    'smartSelect' => [
 
-];
-<?php
-
-// config for LowerRockLabs/LaravelLivewireTablesAdvancedFilters
-return [
+    ],
     'dateRange' => [
         'defaults' => [
             'allowInput' => true,
@@ -15,7 +12,9 @@ return [
             'ariaDateFormat' => 'F j, Y',
             'dateFormat' => 'Y-m-d',
         ],
+        // Set to true if you need to include the Flatpickr JS
         'publishFlatpickrJS' => false,
+        // Set to true if you need to include the Flatpickr CSS
         'publishFlatpickrCSS' => false,
     ],
     'datePicker' => [
@@ -26,7 +25,9 @@ return [
             'ariaDateFormat' => 'F j, Y',
             'dateFormat' => 'Y-m-d',
         ],
+        // Set to true if you need to include the Flatpickr JS
         'publishFlatpickrJS' => false,
+        // Set to true if you need to include the Flatpickr CSS
         'publishFlatpickrCSS' => false,
     ],
     'numberRange' => [
@@ -57,14 +58,11 @@ return [
             ],
         ],
         /*
-         How to Include the CSS file.  Options are:
+        How to Include the CSS file.  Options are:
         inline - Pushes the <style></style> tags to the
         include - Requires you to publish the CSS file, and will then include it
         none - Do not include the CSS, note that you will need to include the CSS in your webpack.
         */
         'cssInclude' => 'inline',
-
     ],
-    'publishFlatpickrJS' => false,
-    'publishFlatpickrCSS' => false,
 ];

@@ -8,6 +8,10 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class DateRangeFilter extends Filter
 {
+    /**
+     * @param string $name
+     * @param string|null $key
+     */
     public function __construct(string $name, string $key = null)
     {
         $this->config = config('livewiretablesadvancedfilters.dateRange.defaults');
@@ -16,24 +20,31 @@ class DateRangeFilter extends Filter
     }
 
     /**
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param  array<mixed>  $config
      * @return $this
      */
-    public function config(array $config = []): DateRangeFilter
+    public function config($config = []): DateRangeFilter
     {
         $this->config = array_merge($this->config, $config);
 
         return $this;
     }
 
+
     /**
-     * @param  mixed  $values
-     * @return mixed
+     * @param array<mixed>|string $values
+     * 
+     * @return array<mixed>|bool
      */
     public function validate($values)
     {
-        $valueArray = explode(' ', $values);
+        if (!is_array($values)) {
+            $valueArray = explode(' ', $values);
+        }
+        else
+        {
+            $valueArray = $values;
+        }
         $dateFormat = $this->getConfig('dateFormat');
 
         if (! DateTime::createFromFormat($dateFormat, $valueArray[0])) {
@@ -48,16 +59,23 @@ class DateRangeFilter extends Filter
     }
 
     /**
-     * @param  mixed  $value
+     * @param string $value
+     * 
+     * @return bool
      */
     public function isEmpty($value): bool
     {
         return $value === '';
     }
 
+    /**
+     * @param DataTableComponent $component
+     * 
+     * @return \Illuminate\View\View|\Illuminate\View\Factory
+     */
     public function render(DataTableComponent $component)
     {
-        return view('livewiretablesadvancedfilters::daterangefilter', [
+        return view('livewiretablesadvancedfilters::components.tools.filters.dateRange', [
             'component' => $component,
             'filter' => $this,
         ]);

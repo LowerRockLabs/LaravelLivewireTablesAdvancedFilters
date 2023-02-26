@@ -39,6 +39,11 @@
             "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\": "src"
         }
     },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php vendor/bin/testbench package:discover --ansi"
+        ]
+    },
     "config": {
         "sort-packages": true
     },

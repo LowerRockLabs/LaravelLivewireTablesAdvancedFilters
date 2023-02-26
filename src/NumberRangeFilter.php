@@ -12,10 +12,6 @@ class NumberRangeFilter extends Filter
      */
     protected array $options = [];
 
-    /**
-     * @param string $name
-     * @param string|null $key
-     */
     public function __construct(string $name, string $key = null)
     {
         parent::__construct($name, (isset($key) ? $key : null));
@@ -60,19 +56,19 @@ class NumberRangeFilter extends Filter
     public function validate($values)
     {
         if (isset($values['min'])) {
-            if (intval($values['min']) < $this->getConfig('min') || intval($values['min']) > $this->getConfig('max')) {
+            if (intval($values['min']) < $this->getConfig('defaults')['min'] || intval($values['min']) > $this->getConfig('defaults')['max']) {
                 return false;
             }
         } else {
-            $values['min'] = intval($this->getConfig('min'));
+            $values['min'] = intval($this->getConfig('defaults')['min']);
         }
 
         if (isset($values['max'])) {
-            if (intval($values['max']) < $this->getConfig('min') || intval($values['max']) > $this->getConfig('max')) {
+            if (intval($values['max']) < $this->getConfig('defaults')['min'] || intval($values['max']) > $this->getConfig('defaults')['max']) {
                 return false;
             }
         } else {
-            $values['max'] = intval($this->getConfig('max'));
+            $values['max'] = intval($this->getConfig('defaults')['max']);
         }
 
         return $values;
@@ -87,9 +83,7 @@ class NumberRangeFilter extends Filter
     }
 
     /**
-     * @param array<mixed> $values
-     * 
-     * @return string|null
+     * @param  array<mixed>  $values
      */
     public function getFilterPillValue($values): ?string
     {
@@ -97,8 +91,6 @@ class NumberRangeFilter extends Filter
     }
 
     /**
-     * @param DataTableComponent $component
-     * 
      * @return \Illuminate\View\View|\Illuminate\View\Factory
      */
     public function render(DataTableComponent $component)

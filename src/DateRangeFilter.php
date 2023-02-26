@@ -9,14 +9,35 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 class DateRangeFilter extends Filter
 {
     /**
-     * @param string $name
-     * @param string|null $key
+     * @var array<mixed>
      */
+    protected array $options = [];
+
     public function __construct(string $name, string $key = null)
     {
-        $this->config = config('livewiretablesadvancedfilters.dateRange.defaults');
+        $this->config = config('livewiretablesadvancedfilters.dateRange');
+        $this->options = config('livewiretablesadvancedfilters.dateRange.defaults');
 
         parent::__construct($name, (isset($key) ? $key : null));
+    }
+
+    /**
+     * @param  array<mixed>  $options
+     * @return $this
+     */
+    public function options($options = []): DateRangeFilter
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
     }
 
     /**
@@ -30,28 +51,25 @@ class DateRangeFilter extends Filter
         return $this;
     }
 
-
     /**
-     * @param array<mixed>|string $values
-     * 
+     * @param  array<mixed>|string  $values
      * @return array<mixed>|bool
      */
     public function validate($values)
     {
-        if (!is_array($values)) {
+        if (! is_array($values)) {
             $valueArray = explode(' ', $values);
-        }
-        else
-        {
+            $valueArray[1] = $valueArray[2];
+        } else {
             $valueArray = $values;
         }
-        $dateFormat = $this->getConfig('dateFormat');
+        $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
 
         if (! DateTime::createFromFormat($dateFormat, $valueArray[0])) {
             return false;
         }
 
-        if (! isset($valueArray[2]) || isset($valueArray[2]) && ! DateTime::createFromFormat($dateFormat, $valueArray[2])) {
+        if (! isset($valueArray[1]) || isset($valueArray[1]) && ! DateTime::createFromFormat($dateFormat, $valueArray[1])) {
             return false;
         }
 
@@ -59,9 +77,7 @@ class DateRangeFilter extends Filter
     }
 
     /**
-     * @param string $value
-     * 
-     * @return bool
+     * @param  string  $value
      */
     public function isEmpty($value): bool
     {
@@ -69,8 +85,6 @@ class DateRangeFilter extends Filter
     }
 
     /**
-     * @param DataTableComponent $component
-     * 
      * @return \Illuminate\View\View|\Illuminate\View\Factory
      */
     public function render(DataTableComponent $component)

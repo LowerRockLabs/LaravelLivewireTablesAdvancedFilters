@@ -9,14 +9,35 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 class DatePickerFilter extends Filter
 {
     /**
-     * @param string $name
-     * @param string|null $key
+     * @var array<mixed>
      */
+    protected array $options = [];
+
     public function __construct(string $name, string $key = null)
     {
-        $this->config = config('livewiretablesadvancedfilters.datePicker.defaults');
+        $this->config = config('livewiretablesadvancedfilters.datePicker');
+        $this->options = config('livewiretablesadvancedfilters.datePicker.defaults');
 
         parent::__construct($name, (isset($key) ? $key : null));
+    }
+
+    /**
+     * @param  array<mixed>  $options
+     * @return $this
+     */
+    public function options($options = []): DatePickerFilter
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
     }
 
     /**
@@ -36,7 +57,7 @@ class DatePickerFilter extends Filter
      */
     public function validate($value)
     {
-        $dateFormat = $this->getConfig('dateFormat');
+        $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
         if (! DateTime::createFromFormat($dateFormat, $value)) {
             return false;
         }
@@ -53,8 +74,6 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @param DataTableComponent $component
-     * 
      * @return \Illuminate\View\View|\Illuminate\View\Factory
      */
     public function render(DataTableComponent $component)

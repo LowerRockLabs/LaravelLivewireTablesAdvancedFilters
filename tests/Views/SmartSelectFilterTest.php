@@ -3,15 +3,16 @@
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Views;
 
 use Illuminate\Database\Eloquent\Builder;
-use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Breed;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCase;
 
-class NumberRangeFilterTest extends TestCase
+class SmartSelectFilterTest extends TestCase
 {
     /** @test */
     public function can_get_filter_name(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = SmartSelectFilter::make('Active');
 
         $this->assertSame('Active', $filter->getName());
     }
@@ -19,7 +20,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_get_filter_key(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = SmartSelectFilter::make('Active');
 
         $this->assertSame('active', $filter->getKey());
     }
@@ -27,19 +28,19 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_get_filter_configs(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = SmartSelectFilter::make('Active');
 
-        $this->assertSame(config('livewiretablesadvancedfilters.numberRange'), $filter->getConfigs());
+        $this->assertSame(config('livewiretablesadvancedfilters.smartSelect'), $filter->getConfigs());
 
         $filter->config(['foo' => 'bar']);
 
-        $this->assertSame(array_merge(config('livewiretablesadvancedfilters.numberRange'), ['foo' => 'bar']), $filter->getConfigs());
+        $this->assertSame(array_merge(config('livewiretablesadvancedfilters.smartSelect'), ['foo' => 'bar']), $filter->getConfigs());
     }
 
     /** @test */
     public function get_a_single_filter_config(): void
     {
-        $filter = NumberRangeFilter::make('Active')
+        $filter = SmartSelectFilter::make('Active')
             ->config(['foo' => 'bar']);
 
         $this->assertSame('bar', $filter->getConfig('foo'));
@@ -48,49 +49,42 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_get_if_empty(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = SmartSelectFilter::make('Active');
         $this->assertTrue($filter->isEmpty(''));
         $this->assertFalse($filter->isEmpty(['test']));
     }
 
     /** @test */
-    public function can_check_validation_accepts_valid_values(): void
+    /*public function can_check_validation_accepts_valid_values(): void
     {
-        $filter = NumberRangeFilter::make('Active');
-        $this->assertSame(['min' => 0, 'max' => 100], $filter->validate(['min' => 0, 'max' => 100]));
-    }
+        $filter = SmartSelectFilter::make('Active')->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->unique()->toArray()
+        );
+        $this->assertSame([1, 2], $filter->validate([1, 2]));
+    }*/
 
     /** @test */
-    public function can_check_validation_rejects_invalid_values(): void
+    /*public function can_check_validation_rejects_invalid_values(): void
     {
-        $filter = NumberRangeFilter::make('Active');
-        $this->assertFalse($filter->validate(['min' => 0, 'max' => 500]));
-    }
-
-    /** @test */
-    public function can_check_validation_populates_missing_values(): void
-    {
-        $filter = NumberRangeFilter::make('Active');
-        $this->assertSame(['min' => 10, 'max' => 100], $filter->validate(['min' => 10]));
-        $this->assertSame(['max' => 50, 'min' => 0], $filter->validate(['max' => 50]));
-    }
+        $filter = SmartSelectFilter::make('Active')->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->unique()->toArray()
+        );
+        $this->assertFalse($filter->validate([1, 'test']));
+    }*/
 
     /** @test */
     public function can_get_filter_options(): void
     {
-        $filter = NumberRangeFilter::make('Active');
-
-        $this->assertSame(config('livewiretablesadvancedfilters.numberRange.defaults'), $filter->getOptions());
-
-        $filter->options(['foo' => 'bar']);
-
-        $this->assertSame(['foo' => 'bar'], $filter->getOptions());
+        $filter = SmartSelectFilter::make('Active')->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->unique()->toArray()
+        );
+        $this->assertSame(Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->unique()->toArray(), $filter->getOptions());
     }
 
     /** @test */
     public function can_get_filter_keys(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = SmartSelectFilter::make('Active');
 
         $this->assertSame([], $filter->getKeys());
     }
@@ -98,7 +92,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_get_filter_default_value(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = SmartSelectFilter::make('Active');
 
         $this->assertNull($filter->getDefaultValue());
     }
@@ -106,14 +100,16 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_get_filter_callback(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = SmartSelectFilter::make('Active');
 
         $this->assertFalse($filter->hasFilterCallback());
 
-        $filter = NumberRangeFilter::make('Active')
+        $filter = SmartSelectFilter::make('Active')
+        ->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->unique()->toArray()
+        )
             ->filter(function (Builder $builder, array $values) {
-                return $builder->where('breed_id', '>', $values['min'])
-                ->where('breed_id', '<', $values['max']);
+                return $builder->whereIn('breed_id', $values);
             });
 
         $this->assertTrue($filter->hasFilterCallback());
@@ -123,11 +119,11 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_get_filter_pill_title(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = SmartSelectFilter::make('Active');
 
         $this->assertSame('Active', $filter->getFilterPillTitle());
 
-        $filter = NumberRangeFilter::make('Active')
+        $filter = SmartSelectFilter::make('Active')
             ->setFilterPillTitle('User Status');
 
         $this->assertSame('User Status', $filter->getFilterPillTitle());
@@ -168,15 +164,14 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_check_if_filter_has_configs(): void
     {
-        $filter = NumberRangeFilter::make('Active');
-
+        $filter = SmartSelectFilter::make('Active')->config(['foo' => 'bar']);
         $this->assertTrue($filter->hasConfigs());
     }
 
     /** @test */
     public function can_check_filter_config_by_name(): void
     {
-        $filter = NumberRangeFilter::make('Active')
+        $filter = SmartSelectFilter::make('Active')
             ->config(['foo' => 'bar']);
 
         $this->assertTrue($filter->hasConfig('foo'));
@@ -186,7 +181,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_check_if_filter_is_hidden_from_menus(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = SmartSelectFilter::make('Active');
 
         $this->assertFalse($filter->isHiddenFromMenus());
         $this->assertTrue($filter->isVisibleInMenus());
@@ -200,7 +195,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_check_if_filter_is_hidden_from_pills(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = SmartSelectFilter::make('Active');
 
         $this->assertFalse($filter->isHiddenFromPills());
         $this->assertTrue($filter->isVisibleInPills());
@@ -214,7 +209,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_check_if_filter_is_hidden_from_count(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = SmartSelectFilter::make('Active');
 
         $this->assertFalse($filter->isHiddenFromFilterCount());
         $this->assertTrue($filter->isVisibleInFilterCount());
@@ -228,7 +223,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_check_if_filter_is_reset_by_clear_button(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = SmartSelectFilter::make('Active');
 
         $this->assertTrue($filter->isResetByClearButton());
 

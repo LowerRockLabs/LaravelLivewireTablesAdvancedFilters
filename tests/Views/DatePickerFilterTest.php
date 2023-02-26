@@ -3,15 +3,15 @@
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Views;
 
 use Illuminate\Database\Eloquent\Builder;
-use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCase;
 
-class NumberRangeFilterTest extends TestCase
+class DatePickerFilterTest extends TestCase
 {
     /** @test */
     public function can_get_filter_name(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
         $this->assertSame('Active', $filter->getName());
     }
@@ -19,7 +19,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_get_filter_key(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
         $this->assertSame('active', $filter->getKey());
     }
@@ -27,60 +27,21 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_get_filter_configs(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
-        $this->assertSame(config('livewiretablesadvancedfilters.numberRange'), $filter->getConfigs());
+        $this->assertSame(config('livewiretablesadvancedfilters.datePicker'), $filter->getConfigs());
 
         $filter->config(['foo' => 'bar']);
 
-        $this->assertSame(array_merge(config('livewiretablesadvancedfilters.numberRange'), ['foo' => 'bar']), $filter->getConfigs());
-    }
-
-    /** @test */
-    public function get_a_single_filter_config(): void
-    {
-        $filter = NumberRangeFilter::make('Active')
-            ->config(['foo' => 'bar']);
-
-        $this->assertSame('bar', $filter->getConfig('foo'));
-    }
-
-    /** @test */
-    public function can_get_if_empty(): void
-    {
-        $filter = NumberRangeFilter::make('Active');
-        $this->assertTrue($filter->isEmpty(''));
-        $this->assertFalse($filter->isEmpty(['test']));
-    }
-
-    /** @test */
-    public function can_check_validation_accepts_valid_values(): void
-    {
-        $filter = NumberRangeFilter::make('Active');
-        $this->assertSame(['min' => 0, 'max' => 100], $filter->validate(['min' => 0, 'max' => 100]));
-    }
-
-    /** @test */
-    public function can_check_validation_rejects_invalid_values(): void
-    {
-        $filter = NumberRangeFilter::make('Active');
-        $this->assertFalse($filter->validate(['min' => 0, 'max' => 500]));
-    }
-
-    /** @test */
-    public function can_check_validation_populates_missing_values(): void
-    {
-        $filter = NumberRangeFilter::make('Active');
-        $this->assertSame(['min' => 10, 'max' => 100], $filter->validate(['min' => 10]));
-        $this->assertSame(['max' => 50, 'min' => 0], $filter->validate(['max' => 50]));
+        $this->assertSame(array_merge(config('livewiretablesadvancedfilters.datePicker'), ['foo' => 'bar']), $filter->getConfigs());
     }
 
     /** @test */
     public function can_get_filter_options(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
-        $this->assertSame(config('livewiretablesadvancedfilters.numberRange.defaults'), $filter->getOptions());
+        $this->assertSame(config('livewiretablesadvancedfilters.datePicker.defaults'), $filter->getOptions());
 
         $filter->options(['foo' => 'bar']);
 
@@ -88,9 +49,40 @@ class NumberRangeFilterTest extends TestCase
     }
 
     /** @test */
+    public function can_get_if_empty(): void
+    {
+        $filter = DatePickerFilter::make('Active');
+        $this->assertTrue($filter->isEmpty(''));
+        $this->assertFalse($filter->isEmpty('test'));
+    }
+
+    /** @test */
+    public function can_check_validation_accepts_valid_values(): void
+    {
+        $filter = DatePickerFilter::make('Active');
+        $this->assertSame('2020-01-01', $filter->validate('2020-01-01'));
+    }
+
+    /** @test */
+    public function can_check_validation_rejects_invalid_values(): void
+    {
+        $filter = DatePickerFilter::make('Active');
+        $this->assertFalse($filter->validate('test'));
+    }
+
+    /** @test */
+    public function get_a_single_filter_config(): void
+    {
+        $filter = DatePickerFilter::make('Active')
+            ->config(['foo' => 'bar']);
+
+        $this->assertSame('bar', $filter->getConfig('foo'));
+    }
+
+    /** @test */
     public function can_get_filter_keys(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
         $this->assertSame([], $filter->getKeys());
     }
@@ -98,7 +90,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_get_filter_default_value(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
         $this->assertNull($filter->getDefaultValue());
     }
@@ -106,14 +98,13 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_get_filter_callback(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
         $this->assertFalse($filter->hasFilterCallback());
 
-        $filter = NumberRangeFilter::make('Active')
-            ->filter(function (Builder $builder, array $values) {
-                return $builder->where('breed_id', '>', $values['min'])
-                ->where('breed_id', '<', $values['max']);
+        $filter = DatePickerFilter::make('Active')
+            ->filter(function (Builder $builder, string $value) {
+                return $builder->where('created_at', '>', $value);
             });
 
         $this->assertTrue($filter->hasFilterCallback());
@@ -123,11 +114,11 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_get_filter_pill_title(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
         $this->assertSame('Active', $filter->getFilterPillTitle());
 
-        $filter = NumberRangeFilter::make('Active')
+        $filter = DatePickerFilter::make('Active')
             ->setFilterPillTitle('User Status');
 
         $this->assertSame('User Status', $filter->getFilterPillTitle());
@@ -168,7 +159,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_check_if_filter_has_configs(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
         $this->assertTrue($filter->hasConfigs());
     }
@@ -176,7 +167,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_check_filter_config_by_name(): void
     {
-        $filter = NumberRangeFilter::make('Active')
+        $filter = DatePickerFilter::make('Active')
             ->config(['foo' => 'bar']);
 
         $this->assertTrue($filter->hasConfig('foo'));
@@ -186,7 +177,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_check_if_filter_is_hidden_from_menus(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
         $this->assertFalse($filter->isHiddenFromMenus());
         $this->assertTrue($filter->isVisibleInMenus());
@@ -200,7 +191,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_check_if_filter_is_hidden_from_pills(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
         $this->assertFalse($filter->isHiddenFromPills());
         $this->assertTrue($filter->isVisibleInPills());
@@ -214,7 +205,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_check_if_filter_is_hidden_from_count(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
         $this->assertFalse($filter->isHiddenFromFilterCount());
         $this->assertTrue($filter->isVisibleInFilterCount());
@@ -228,7 +219,7 @@ class NumberRangeFilterTest extends TestCase
     /** @test */
     public function can_check_if_filter_is_reset_by_clear_button(): void
     {
-        $filter = NumberRangeFilter::make('Active');
+        $filter = DatePickerFilter::make('Active');
 
         $this->assertTrue($filter->isResetByClearButton());
 

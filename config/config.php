@@ -3,7 +3,8 @@
 // config for LowerRockLabs/LaravelLivewireTablesAdvancedFilters
 return [
     'smartSelect' => [
-
+        'defaults' => [
+        ],
     ],
     'dateRange' => [
         'defaults' => [
@@ -32,8 +33,8 @@ return [
     ],
     'numberRange' => [
         'defaults' => [
-            'min' => '0',
-            'max' => '100',
+            'min' => 0,
+            'max' => 100,
         ],
         'styling' => [
             'light' => [

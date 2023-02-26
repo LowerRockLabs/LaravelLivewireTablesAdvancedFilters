@@ -12,14 +12,29 @@ class SmartSelectFilter extends Filter
      */
     protected array $options = [];
 
-    /**
-     * @return SmartSelectFilter
-     */
+    public function __construct(string $name, string $key = null)
+    {
+        parent::__construct($name, (isset($key) ? $key : null));
+        $this->config = config('livewiretablesadvancedfilters.smartSelect');
+        $this->options = config('livewiretablesadvancedfilters.smartSelect.defaults');
+    }
+
     public function setCallback(): SmartSelectFilter
     {
         //$this->component->setSelect2Options
         //dd($this->getConfigs());
         //$this->setSelect2Options('fa');
+        return $this;
+    }
+
+    /**
+     * @param  array<mixed>  $config
+     * @return $this
+     */
+    public function config($config = []): SmartSelectFilter
+    {
+        $this->config = array_merge($this->config, $config);
+
         return $this;
     }
 
@@ -57,8 +72,7 @@ class SmartSelectFilter extends Filter
     }
 
     /**
-     * @param array<mixed> $value
-     * 
+     * @param  array<mixed>  $value
      * @return array<mixed>
      */
     public function validate($value)
@@ -67,18 +81,15 @@ class SmartSelectFilter extends Filter
     }
 
     /**
-     * @param string|array<mixed> $value
-     * 
-     * @return string|null
+     * @param  string|array<mixed>  $value
      */
     public function getFilterPillValue($value): ?string
     {
         $values = [];
-        if (is_array($value))
-        {
+        if (is_array($value)) {
             foreach ($value as $item) {
                 $found = $this->getCustomFilterPillValue($item) ?? $this->getOptions()[$item] ?? null;
-    
+
                 if ($found) {
                     $values[] = $found;
                 }
@@ -91,19 +102,14 @@ class SmartSelectFilter extends Filter
     }
 
     /**
-     * @param string $value
-     * 
-     * @return bool
+     * @param  string  $value
      */
     public function isEmpty($value): bool
     {
         return $value === '';
     }
 
-
     /**
-     * @param DataTableComponent $component
-     * 
      * @return \Illuminate\View\View|\Illuminate\View\Factory
      */
     public function render(DataTableComponent $component)

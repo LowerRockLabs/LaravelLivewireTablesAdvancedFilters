@@ -2,8 +2,8 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Traits\Configuration;
 
-use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCase;
 use Rappasoft\LaravelLivewireTables\Exceptions\DataTableConfigurationException;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCase;
 
 class FilterConfigurationTest extends TestCase
 {

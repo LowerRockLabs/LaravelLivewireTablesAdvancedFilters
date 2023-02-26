@@ -175,6 +175,7 @@ class ComponentHelpersTest extends TestCase
             'after-toolbar' => null,
             'before-pagination' => null,
             'after-pagination' => null,
+            'before-tools' => null,
         ], $this->basicTable->getConfigurableAreas());
 
         $this->basicTable->setConfigurableAreas([

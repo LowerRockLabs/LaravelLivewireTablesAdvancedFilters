@@ -24,3 +24,5 @@ Homestead.json
 LaravelLivewireTablesAdvancedFilters.code-workspace
 composer.lock
 phpunit.txt
+build/*
+build/report.junit.xml

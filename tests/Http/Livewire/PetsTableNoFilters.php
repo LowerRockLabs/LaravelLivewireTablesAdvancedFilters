@@ -2,8 +2,8 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Http\Livewire;
 
-use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DataTableComponent;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Pet;
+use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 
 class PetsTableNoFilters extends DataTableComponent

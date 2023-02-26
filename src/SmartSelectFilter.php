@@ -71,12 +71,23 @@ class SmartSelectFilter extends Filter
             ->toArray();
     }
 
-    /**
-     * @param  array<mixed>  $value
-     * @return array<mixed>
-     */
     public function validate($value)
     {
+        if (is_array($value)) {
+            foreach ($value as $index => $val) {
+                // Remove the bad value
+                if (! in_array($val, $this->getKeys())) {
+                    unset($value[$index]);
+                }
+            }
+        } else {
+            if (in_array($value, $this->getKeys())) {
+                $value[] = $value;
+            } else {
+                $value = [];
+            }
+        }
+
         return array_unique($value);
     }
 

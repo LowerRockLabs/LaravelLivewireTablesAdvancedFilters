@@ -55,30 +55,30 @@ class SmartSelectFilterTest extends TestCase
     }
 
     /** @test */
-    /*public function can_check_validation_accepts_valid_values(): void
+    public function can_check_validation_accepts_valid_values(): void
     {
         $filter = SmartSelectFilter::make('Active')->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->unique()->toArray()
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
         );
         $this->assertSame([1, 2], $filter->validate([1, 2]));
-    }*/
+    }
 
     /** @test */
-    /*public function can_check_validation_rejects_invalid_values(): void
+    public function can_check_validation_rejects_invalid_values(): void
     {
         $filter = SmartSelectFilter::make('Active')->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->unique()->toArray()
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
         );
-        $this->assertFalse($filter->validate([1, 'test']));
-    }*/
+        $this->assertSame([1], $filter->validate([1, 'test']));
+    }
 
     /** @test */
     public function can_get_filter_options(): void
     {
         $filter = SmartSelectFilter::make('Active')->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->unique()->toArray()
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
         );
-        $this->assertSame(Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->unique()->toArray(), $filter->getOptions());
+        $this->assertSame(Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray(), $filter->getOptions());
     }
 
     /** @test */

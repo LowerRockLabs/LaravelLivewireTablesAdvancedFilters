@@ -23,6 +23,26 @@ class AdvancedFiltersVisualsTest extends TestCaseAdvanced
     }
 
     /** @test */
+    public function can_see_html_for_date_range_filter(): void
+    {
+        Livewire::test(PetsTableAdvanced::class)
+            ->assertSeeHtml('mode:"range"');
+    }
+
+    /** @test */
+    public function can_see_html_for_date_picker_filter(): void
+    {
+        Livewire::test(PetsTableAdvanced::class)
+            ->assertSeeHtml('mode:"single"');
+    }
+
+    public function can_see_html_for_smart_select_filter(): void
+    {
+        Livewire::test(PetsTableAdvanced::class)
+            ->assertSeeHtml('<input x-on:keydown="open = true" type="search" x-model="search" placeholder="Search Here..."');
+    }
+
+    /** @test */
     public function empty_message_shows_with_no_results(): void
     {
         Livewire::test(PetsTableAdvanced::class)

@@ -3,8 +3,10 @@
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Http\Livewire;
 
 use Illuminate\Database\Eloquent\Builder;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DateRangeFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Breed;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Pet;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Species;
@@ -61,6 +63,19 @@ class PetsTableAdvanced extends DataTableComponent
             ->filter(function (Builder $builder, array $values) {
                 return $builder->whereIn('breed_id', $values);
             }),
+
+            SmartSelectFilter::make('WebsiteSel2')
+            ->options(
+                Breed::query()
+                    ->orderBy('name')
+                    ->get()
+                    ->keyBy('id')
+                    ->map(fn ($breed) => $breed->name)
+                    ->toArray()
+            )->filter(function (Builder $builder, array $values) {
+                return $builder->whereIn('breed_id', $values);
+            }),
+
             NumberRangeFilter::make('Breed ID Range')
             ->options(
                 [
@@ -83,7 +98,20 @@ class PetsTableAdvanced extends DataTableComponent
                 'maxDate' => date('Y-m-d'),
             ])
             ->filter(function (Builder $builder, array $dateRange) {
-                $builder->where('created_at', '>=', $dateRange['min'])->where('created_at', '<=', $dateRange['max']);
+                return $builder->where('created_at', '>=', $dateRange['min'])->where('created_at', '<=', $dateRange['max']);
+            }),
+
+            DatePickerFilter::make('Modified Date')
+            ->config([
+                'ariaDateFormat' => 'F j, Y',
+                'dateFormat' => 'Y-m-d',
+                'defaultStartDate' => date('Y-m-d'),
+                'defaultEndDate' => date('Y-m-d'),
+                'minDate' => '2022-01-01',
+                'maxDate' => date('Y-m-d'),
+            ])
+            ->filter(function (Builder $builder, string $datePicker) {
+                return $builder->where('modified_at', '>=', $datePicker);
             }),
 
             MultiSelectDropdownFilter::make('Species')

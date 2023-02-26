@@ -28,14 +28,12 @@ class LaravelLivewireTablesAdvancedFiltersServiceProvider extends ServiceProvide
             ], 'livewiretablesadvancedfilters-config');
 
             $this->publishes([
-                __DIR__.'/../public' => public_path('vendor/lowerrocklabs/livewiretablesadvancedfilters'),
+                __DIR__ . '/../resources/css' => public_path('vendor/lowerrocklabs/livewiretablesadvancedfilters'),
             ], 'livewiretablesadvancedfilters-css');
 
-            
             $this->publishes([
-                __DIR__.'/../resources/views' => resource_path('views/vendor/lowerrocklabs/livewiretablesadvancedfilters'),
+                __DIR__ . '/../resources/views' => resource_path('views/vendor/lowerrocklabs/livewiretablesadvancedfilters'),
             ], 'livewiretablesadvancedfilters-views');
-        
         }
     }
 

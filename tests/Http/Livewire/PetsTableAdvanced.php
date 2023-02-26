@@ -64,7 +64,7 @@ class PetsTableAdvanced extends DataTableComponent
                 return $builder->whereIn('breed_id', $values);
             }),
 
-            SmartSelectFilter::make('WebsiteSel2')
+            SmartSelectFilter::make('Smart')
             ->options(
                 Breed::query()
                     ->orderBy('name')
@@ -76,7 +76,7 @@ class PetsTableAdvanced extends DataTableComponent
                 return $builder->whereIn('breed_id', $values);
             }),
 
-            NumberRangeFilter::make('Breed ID Range')
+            NumberRangeFilter::make('Range')
             ->options(
                 [
                     'min' => 0,
@@ -88,7 +88,7 @@ class PetsTableAdvanced extends DataTableComponent
                 ->where('species_id', '<', $values['max']);
             }),
 
-            DateRangeFilter::make('Created Date')
+            DateRangeFilter::make('Daterange')
             ->config([
                 'ariaDateFormat' => 'F j, Y',
                 'dateFormat' => 'Y-m-d',
@@ -101,7 +101,7 @@ class PetsTableAdvanced extends DataTableComponent
                 return $builder->where('created_at', '>=', $dateRange['min'])->where('created_at', '<=', $dateRange['max']);
             }),
 
-            DatePickerFilter::make('Modified Date')
+            DatePickerFilter::make('Datepicker')
             ->config([
                 'ariaDateFormat' => 'F j, Y',
                 'dateFormat' => 'Y-m-d',

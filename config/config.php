@@ -48,14 +48,35 @@ return [
                 'valueBgHover' => '#0366d6',
             ],
             'dark' => [
-                'activeColor' => '#000000',
-                'fillColor' => '#000000',
-                'primaryColor' => '#000000',
-                'progressBackground' => '#F0F0F0',
-                'thumbColor' => '#000000',
+                'activeColor' => 'transparent',
+
+                // The color of the bar for the selected range
+                'fillColor' => '#FF0000',
+
+                // The color of the remainder of the bar
+                'progressBackground' => '#eee',
+
+                // The primary color
+                'primaryColor' => '#00FF00',
+
+                // The color of the Circle
+                'thumbColor' => '#0000FF',
+
                 'ticksColor' => 'silver',
-                'valueBg' => 'transparent',
+
+                'valueBg' => '#000000',
+
+                // The bg color of the current value when the relevant selector is hovered over
                 'valueBgHover' => '#000000',
+
+                //'activeColor' => '#000000',
+                //  'fillColor' => '#000000',
+                //  'primaryColor' => '#000000',
+                //  'progressBackground' => '#F0F0F0',
+                //  'thumbColor' => '#000000',
+                //  'ticksColor' => 'silver',
+                //  'valueBg' => 'transparent',
+                //  'valueBgHover' => '#000000',
             ],
         ],
         /*

@@ -8,19 +8,43 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class DateRangeFilter extends Filter
 {
+    /**
+     * @var array<mixed>
+     */
+    protected array $options = [];
+
     public function __construct(string $name, string $key = null)
     {
-        $this->config = config('livewiretablesadvancedfilters.dateRange.defaults');
+        $this->config = config('livewiretablesadvancedfilters.dateRange');
+        $this->options = config('livewiretablesadvancedfilters.dateRange.defaults');
 
         parent::__construct($name, (isset($key) ? $key : null));
     }
 
     /**
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param  array<mixed>  $options
      * @return $this
      */
-    public function config(array $config = []): DateRangeFilter
+    public function options($options = []): DateRangeFilter
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param  array<mixed>  $config
+     * @return $this
+     */
+    public function config($config = []): DateRangeFilter
     {
         $this->config = array_merge($this->config, $config);
 
@@ -28,36 +52,46 @@ class DateRangeFilter extends Filter
     }
 
     /**
-     * @param  mixed  $values
-     * @return mixed
+     * @param  array<mixed>|string  $values
+     * @return array<mixed>|bool
      */
     public function validate($values)
     {
-        $valueArray = explode(' ', $values);
-        $dateFormat = $this->getConfig('dateFormat');
+        if (! is_array($values)) {
+            $valueArray = explode(' ', $values);
+            $returnedValues['min'] = $valueArray[0];
+            $returnedValues['max'] = $valueArray[2];
+        } else {
+            $returnedValues['min'] = $values[0];
+            $returnedValues['max'] = $values[1];
+        }
+        $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
 
-        if (! DateTime::createFromFormat($dateFormat, $valueArray[0])) {
+        if (! DateTime::createFromFormat($dateFormat, $returnedValues['min'])) {
             return false;
         }
 
-        if (! isset($valueArray[2]) || isset($valueArray[2]) && ! DateTime::createFromFormat($dateFormat, $valueArray[2])) {
+        if (! isset($returnedValues['max']) || isset($returnedValues['max']) && ! DateTime::createFromFormat($dateFormat, $returnedValues['max'])) {
             return false;
         }
 
-        return $values;
+        return $returnedValues;
     }
 
     /**
-     * @param  mixed  $value
+     * @param  string  $value
      */
     public function isEmpty($value): bool
     {
         return $value === '';
     }
 
+    /**
+     * @return \Illuminate\View\View|\Illuminate\View\Factory
+     */
     public function render(DataTableComponent $component)
     {
-        return view('livewiretablesadvancedfilters::daterangefilter', [
+        return view('livewiretablesadvancedfilters::components.tools.filters.dateRange', [
             'component' => $component,
             'filter' => $this,
         ]);

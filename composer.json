@@ -39,6 +39,19 @@
             "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --colors=always",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "psalm": "vendor/bin/psalm",
+        "post-autoload-dump": [
+            "@php vendor/bin/testbench package:discover --ansi"
+        ]
+    },
     "config": {
         "sort-packages": true
     },

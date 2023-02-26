@@ -8,19 +8,43 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 
 class DatePickerFilter extends Filter
 {
+    /**
+     * @var array<mixed>
+     */
+    protected array $options = [];
+
     public function __construct(string $name, string $key = null)
     {
-        $this->config = config('livewiretablesadvancedfilters.datePicker.defaults');
+        $this->config = config('livewiretablesadvancedfilters.datePicker');
+        $this->options = config('livewiretablesadvancedfilters.datePicker.defaults');
 
         parent::__construct($name, (isset($key) ? $key : null));
     }
 
     /**
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param  array<mixed>  $options
      * @return $this
      */
-    public function config(array $config = []): DatePickerFilter
+    public function options($options = []): DatePickerFilter
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param  array<mixed>  $config
+     * @return $this
+     */
+    public function config($config = []): DatePickerFilter
     {
         $this->config = array_merge($this->config, $config);
 
@@ -28,12 +52,12 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @param  mixed  $value
-     * @return mixed
+     * @param  string  $value
+     * @return bool|string
      */
     public function validate($value)
     {
-        $dateFormat = $this->getConfig('dateFormat');
+        $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
         if (! DateTime::createFromFormat($dateFormat, $value)) {
             return false;
         }
@@ -42,16 +66,19 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @param  mixed  $value
+     * @param  string  $value
      */
     public function isEmpty($value): bool
     {
         return $value === '';
     }
 
+    /**
+     * @return \Illuminate\View\View|\Illuminate\View\Factory
+     */
     public function render(DataTableComponent $component)
     {
-        return view('livewiretablesadvancedfilters::datepickerfilter', [
+        return view('livewiretablesadvancedfilters::components.tools.filters.datePicker', [
             'component' => $component,
             'filter' => $this,
         ]);

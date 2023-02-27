@@ -55,11 +55,15 @@ class NumberRangeFilter extends Filter
      */
     public function validate($values)
     {
-        if (! isset($values['min']) || ! isset($values['max']) || $values['min'] == '' || ($values['min'] == 0 && $values['max'] == 100) || is_null($values['min']) || $values['max'] == '' || is_null($values['max'])) {
+        if (! isset($values['min']) || ! isset($values['max'])) {
             return false;
         }
 
         if (! is_int($values['min']) || ! is_int($values['max'])) {
+            return false;
+        }
+
+        if ($values['min'] == 0 && $values['max'] == 100) {
             return false;
         }
 

@@ -165,7 +165,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
             'smart' => [],
             'range' => ['min' => 0, 'max' => 100],
             'daterange' => ['minDate' => '', 'maxDate' => ''],
-            'datepicker' => null,
+            'datepicker' => [],
             'species' => [],
         ], $this->advancedTable->getAppliedFilters());
     }

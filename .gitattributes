@@ -20,3 +20,7 @@
 /pint.json              export-ignore
 /phpunit.xml.dist       export-ignore
 /.phpunit.result.cache  export-ignore
+/database               export-ignore
+/build                  export-ignore
+/badge.svg              export-ignore
+/clover.xml              export-ignore

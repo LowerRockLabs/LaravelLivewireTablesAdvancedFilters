@@ -163,8 +163,8 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
 
         $this->assertSame(['breed' => [],
             'smart' => [],
-            'range' => ['min' => 0, 'max' => 100],
-            'daterange' => ['minDate' => '', 'maxDate' => ''],
+            'range' => [],
+            'daterange' => [],
             'datepicker' => [],
             'species' => [],
         ], $this->advancedTable->getAppliedFilters());
@@ -185,7 +185,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
     {
         $this->advancedTable->setFilterDefaults();
 
-        $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
 
         $this->advancedTable->setFilter('breed', ['1']);
 
@@ -193,7 +193,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
 
         $this->advancedTable->setFilter('breed', []);
 
-        $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
 
         $this->advancedTable->setFilter('species', ['1']);
 
@@ -220,7 +220,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
 
         $this->advancedTable->setFilter('species', ['0']);
 
-        $this->assertSame(['breed' => ['1'], 'range' => ['min' => 0, 'max' => 100], 'daterange' => ['minDate' => '', 'maxDate' => ''], 'species' => ['0']], $this->advancedTable->getAppliedFiltersWithValues());
+        $this->assertSame(['breed' => ['1'], 'species' => ['0']], $this->advancedTable->getAppliedFiltersWithValues());
     }
 
     /** @test */
@@ -228,27 +228,27 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
     {
         $this->advancedTable->setFilterDefaults();
 
-        $this->assertSame(2, $this->advancedTable->getAppliedFiltersWithValuesCount());
+        $this->assertSame(0, $this->advancedTable->getAppliedFiltersWithValuesCount());
 
         $this->advancedTable->setFilter('breed', ['1']);
 
-        $this->assertSame(3, $this->advancedTable->getAppliedFiltersWithValuesCount());
+        $this->assertSame(1, $this->advancedTable->getAppliedFiltersWithValuesCount());
 
         $this->advancedTable->setFilter('species', ['1']);
 
-        $this->assertSame(4, $this->advancedTable->getAppliedFiltersWithValuesCount());
+        $this->assertSame(2, $this->advancedTable->getAppliedFiltersWithValuesCount());
 
         $this->advancedTable->setFilter('datepicker', '2021-01-01');
 
-        $this->assertSame(5, $this->advancedTable->getAppliedFiltersWithValuesCount());
+        $this->assertSame(3, $this->advancedTable->getAppliedFiltersWithValuesCount());
 
         $this->advancedTable->setFilter('breed', []);
 
-        $this->assertSame(4, $this->advancedTable->getAppliedFiltersWithValuesCount());
+        $this->assertSame(2, $this->advancedTable->getAppliedFiltersWithValuesCount());
 
         $this->advancedTable->setFilterDefaults();
 
-        $this->assertSame(2, $this->advancedTable->getAppliedFiltersWithValuesCount());
+        $this->assertSame(0, $this->advancedTable->getAppliedFiltersWithValuesCount());
     }
 
     /** @test */

@@ -22,6 +22,14 @@ class DateRangeFilter extends Filter
     }
 
     /**
+     * @return array<mixed>
+     */
+    public function getKeys(): array
+    {
+        return ['minDate' => '', 'maxDate' => ''];
+    }
+
+    /**
      * @param  array<mixed>  $options
      * @return $this
      */
@@ -67,7 +75,7 @@ class DateRangeFilter extends Filter
         }
         $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
 
-        if ($returnedValues['minDate'] == '' || $returnedValues['minDate'] == null || $returnedValues['maxDate'] == '' || $returnedValues['maxDate'] == null) {
+        if ($returnedValues['minDate'] == '' || $returnedValues['maxDate'] == '') {
             return false;
         }
 
@@ -87,7 +95,19 @@ class DateRangeFilter extends Filter
      */
     public function getDefaultValue(): array
     {
-        return ['minDate' => '', 'maxDate' => ''];
+        return [];
+    }
+
+    /**
+     * @param  mixed  $value
+     */
+    public function getFilterPillValue($value): ?string
+    {
+        $values = [];
+        $values['minDate'] = $this->getCustomFilterPillValue('minDate') ?? $this->getOptions()['minDate'] ?? '';
+        $values['maxDate'] = $this->getCustomFilterPillValue('maxDate') ?? $this->getOptions()['maxDate'] ?? '';
+
+        return implode(',', $values);
     }
 
     /**
@@ -95,7 +115,7 @@ class DateRangeFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        return $value === '' || (is_array($value) && ($value['minDate'] == '' || $value['maxDate'] == ''));
+        return $value === '';
     }
 
     /**

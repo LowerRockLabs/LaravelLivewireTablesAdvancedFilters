@@ -56,7 +56,7 @@ class SmartSelectFilter extends Filter
         return collect($this->getOptions())
             ->keys()
             ->map(fn ($value) => (string) $value)
-            ->filter(fn ($value) => strlen($value))
+            ->filter(fn ($value) => strlen($value)) /** @phpstan-ignore-line */
             ->values()
             ->toArray();
     }

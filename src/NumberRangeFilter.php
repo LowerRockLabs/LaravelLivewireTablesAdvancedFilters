@@ -59,11 +59,15 @@ class NumberRangeFilter extends Filter
             return false;
         }
 
-        if (intval($values['min']) < $this->getConfig('defaults')['min'] || intval($values['min']) > $this->getConfig('defaults')['max']) {
+        if (! is_int($values['min']) || ! is_int($values['max'])) {
             return false;
         }
 
-        if (intval($values['max']) < $this->getConfig('defaults')['min'] || intval($values['max']) > $this->getConfig('defaults')['max']) {
+        if ($values['min'] < $this->getConfig('defaults')['min'] || $values['min'] > $this->getConfig('defaults')['max']) {
+            return false;
+        }
+
+        if ($values['max'] < $this->getConfig('defaults')['min'] || $values['max'] > $this->getConfig('defaults')['max']) {
             return false;
         }
 

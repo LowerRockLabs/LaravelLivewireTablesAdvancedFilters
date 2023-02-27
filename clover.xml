@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1677465302">
-  <project timestamp="1677465302">
+<coverage generated="1677465597">
+  <project timestamp="1677465597">
     <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter" namespace="global">
         <metrics complexity="11" methods="8" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="15" elements="28" coveredelements="21"/>

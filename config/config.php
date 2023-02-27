@@ -59,14 +59,7 @@ return [
                 'ticksColor' => 'silver',
                 'valueBg' => '#000000',
                 'valueBgHover' => '#000000', // The bg color of the current value when the relevant selector is hovered over
-                //'activeColor' => '#000000',
-                //  'fillColor' => '#000000',
-                //  'primaryColor' => '#000000',
-                //  'progressBackground' => '#F0F0F0',
-                //  'thumbColor' => '#000000',
-                //  'ticksColor' => 'silver',
-                //  'valueBg' => 'transparent',
-                //  'valueBgHover' => '#000000',
+
             ],
         ],
         /*

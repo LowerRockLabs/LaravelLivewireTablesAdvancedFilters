@@ -1,4 +1,4 @@
-name: Main PHP Unit Tests
+name: Develop PHP Unit Tests
 on:
   push:
     branches:
@@ -52,7 +52,6 @@ jobs:
 
       - name: Run Unit Tests
         run: XDEBUG_MODE_COVERAGE=coverage vendor/bin/phpunit
-
 
       - name: Setup problem matchers
         run: |

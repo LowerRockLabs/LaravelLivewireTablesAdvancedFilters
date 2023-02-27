@@ -1,11 +1,11 @@
 ![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit-pull.yml/badge.svg) 
 ![PHP Stan](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-stan.yml/badge.svg)
-
+![PHP Unit Coverage](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/badges/phpunit-coverage-main.svg)
 
 Dev Branch
 ![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit.yml/badge.svg?branch=develop)
 ![PHP Stan](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-stan.yml/badge.svg?branch=develop)
-
+![PHP Unit Coverage](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/badges/phpunit-coverage-develop.svg)
 
 # LaravelLivewireTablesAdvancedFilters
 Advanced filters for Rappasoft Laravel Livewire Tables v2.0 and above

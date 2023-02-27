@@ -187,6 +187,8 @@ This uses AlpineJS, there are no other dependencies.
 
 
 # Publishing Assets
+To publish assets to make modifications, please see below
+
 ## Config
 ```terminal
 php artisan vendor:publish livewiretablesadvancedfilters-config

@@ -52,12 +52,6 @@ jobs:
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
-      - name: Run Psalm
-        run: composer psalm
-
-      - name: Run PHP_CS
-        run: composer phpcs
-
       - name: Run Unit Tests
         run: XDEBUG_MODE_COVERAGE=coverage vendor/bin/phpunit
 

@@ -1,11 +1,11 @@
-![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit.yml/badge.svg) 
+![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit-pull.yml/badge.svg) 
 ![PHP Stan](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-stan.yml/badge.svg)
-
+![PHP Unit Coverage](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/badges/phpunit-coverage-main.svg)
 
 Dev Branch
 ![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit.yml/badge.svg?branch=develop)
 ![PHP Stan](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-stan.yml/badge.svg?branch=develop)
-
+![PHP Unit Coverage](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/badges/phpunit-coverage-develop.svg)
 
 # LaravelLivewireTablesAdvancedFilters
 Advanced filters for Rappasoft Laravel Livewire Tables v2.0 and above
@@ -14,6 +14,10 @@ Advanced filters for Rappasoft Laravel Livewire Tables v2.0 and above
 * Date Range Filter
 * Date Picker Filter
 * Smart Select (Select2 Style)
+
+Package is currently under active development & testing, please use caution when using.
+
+*Currently only supports Tailwind (no Bootstrap).*
 
 # Installation
 This package is available to be installed via Composer
@@ -49,9 +53,9 @@ NumberRangeFilter::make('Age')
 
 ### Dependencies
 This depends on custom CSS, which can be included in your component by using the "numberRange.cssInclude" configuration option.
-1. Used in-line, by setting numberRange.cssInclude to "inline" in the config file.
+1. Included within the blade, by setting numberRange.cssInclude to "inline" in the config file.
 2. Included from a minified file, this requires publishing the CSS files, and setting numberRange.cssInclude to "include"
-3. Included as part of your webpack/bundle, setting numberRange.cssInclude to "none".
+3. Included as part of your webpack/bundle, by setting numberRange.cssInclude to "none"
 
 ### Configuration Options
 The colours in use are fully customisable, designed for class-based "dark/light" themes approach, as are the default min/max options, see guidance below.  Any of these can be over-ridden on a per-filter basis using the "config()" option on the filter.
@@ -93,7 +97,10 @@ The colours in use are fully customisable, designed for class-based "dark/light"
     ],
 ```
 
-## Date Range Filter
+## Date Filters
+There are two filters, one is a standard single-date picker (DatePickerFilter), and the other is a range filter (DateRangeFilter)
+
+### Date Range Filter
 Flatpickr Filter with a configurable Minimum/Maximum value, provides two values to the filter() function () in the form of an array.
 
 Include the class after your namespace declaration
@@ -109,24 +116,25 @@ DateRangeFilter::make('Created Date')
 }),
 ```
 
-### Configuration Options
+#### Configuration Options
 Sensible defaults can be set within the configuration file.  However, the following variables can be set on a per-filter basis
 ```php
 DateRangeFilter::make('Created Date')
 ->config([
-    'ariaDateFormat' => 'F j, Y',
-    'dateFormat' => 'Y-m-d',
-    'defaultStartDate' => date('Y-m-d'),
+    'ariaDateFormat' => 'F j, Y', // The date format to be displayed once a date is selected
+    'dateFormat' => 'Y-m-d', // The date format to be returned for use in the filter
+    'defaultStartDate' => date('Y-m-d'),  
     'defaultEndDate' => date('Y-m-d'),
-    'minDate' => '2022-01-01',
-    'maxDate' => date('Y-m-d')
+    'earliestDate' => '2022-01-01', // The earliest date permitted, this is not required
+    'latestDate' => date('Y-m-d') // The latest date permitted, this is not required
 ])
 ->filter(function (Builder $builder, array $dateRange) {
-    $builder->where('created_at', '>=', $dateRange['min'])->where('created_at', '<=', $dateRange['max']);
+    $builder->where('created_at', '>=', $dateRange['min'])
+    ->where('created_at', '<=', $dateRange['max']);
 }),
 ```
 
-## Date Picker Filter
+### Date Picker Filter
 Flatpickr Filter with a configurable Minimum/Maximum value, provides one values to the filter() function
 
 Include the class after your namespace declaration
@@ -135,13 +143,35 @@ use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter;
 ```
 
 In the filters() function in your data table component:
+```php
+DatePickerFilter::make('Created Date')
+->filter(function (Builder $builder, string $date) {
+    $builder->where('created_at', '>=', $date);
+}),
+```
 
+#### Configuration Options
+Sensible defaults can be set within the configuration file.  However, the following variables can be set on a per-filter basis
 
+```php
+DatePickerFilter::make('Created Date')
+->config([
+    'ariaDateFormat' => 'F j, Y', // The date format to be displayed once a date is selected
+    'dateFormat' => 'Y-m-d', // The date format to be returned for use in the filter
+    'defaultStartDate' => date('Y-m-d'),
+    'defaultEndDate' => date('Y-m-d'),
+    'earliestDate' => '2022-01-01', // The earliest date permitted, this is not required
+    'latestDate' => date('Y-m-d') // The latest date permitted, this is not required
+])
+->filter(function (Builder $builder, string $date) {
+    $builder->where('created_at', '>=', $date);
+}),
 
+```
 ### Dependencies
 This utilises the Flatpickr library.
 
-There are several options for utilising this library!
+There are several options for utilising the Flatpickr library!
 
 #### NPM
 Install flatpickr
@@ -154,9 +184,19 @@ Import flatpickr into your project's app.js
 import flatpickr from "flatpickr";
 ```
 
+#### Including in the Views
+Globally via the configuration file
+```php
+        // Set to true if you need to include the Flatpickr JS
+        'publishFlatpickrJS' => false,
+        // Set to true if you need to include the Flatpickr CSS
+        'publishFlatpickrCSS' => false,
+```
+You can also set this at run-time via the config() option
+
 
 ## SmartSelect Filter
-A Select2 style Filter built in AlpineJS
+A Select2 style Filter built in AlpineJS.  This takes a list of potential options, and allows the end-user to filter them on-the-fly, and select appropriate values.  
 
 Include the class after your namespace declaration
 ```php
@@ -166,12 +206,12 @@ use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter;
 In the filters() function in your data table component:
 ```php
 SmartSelectFilter::make('Smart')
-->options(
-    Breed::query()
+->options(  // An array of options.  You can choose to either cache this, load it as a public array to maintain state, or generate a list each time.
+    Breed::query()  
         ->orderBy('name')
         ->get()
-        ->keyBy('id')
-        ->map(fn ($breed) => $breed->name)
+        ->keyBy('id') // The value to return for use in the filter() function
+        ->map(fn ($breed) => $breed->name)  // The value to display to the end-user
         ->toArray()
 )->filter(function (Builder $builder, array $values) {
     return $builder->whereIn('breed_id', $values);
@@ -183,6 +223,8 @@ This uses AlpineJS, there are no other dependencies.
 
 
 # Publishing Assets
+To publish assets to make modifications, please see below
+
 ## Config
 ```terminal
 php artisan vendor:publish livewiretablesadvancedfilters-config
@@ -211,3 +253,4 @@ Please exercise restraint when publishing the views, as this package is in activ
 ```terminal
 php artisan vendor:publish livewiretablesadvancedfilters-views
 ```
+

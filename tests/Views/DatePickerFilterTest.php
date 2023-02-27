@@ -4,9 +4,9 @@ namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Views;
 
 use Illuminate\Database\Eloquent\Builder;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter;
-use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCase;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCaseAdvanced;
 
-class DatePickerFilterTest extends TestCase
+class DatePickerFilterTest extends TestCaseAdvanced
 {
     /** @test */
     public function can_get_filter_name(): void

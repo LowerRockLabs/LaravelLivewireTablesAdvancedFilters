@@ -1,3 +1,9 @@
+Dev
+![Dev](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/run-tests.yml/badge.svg?branch=dev)
+
+Main
+![Main](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/run-tests.yml/badge.svg?branch=main)
+
 # LaravelLivewireTablesAdvancedFilters
 Advanced filters for Rappasoft Laravel Livewire Tables v2.0 and above
 

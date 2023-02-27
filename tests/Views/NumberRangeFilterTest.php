@@ -4,9 +4,9 @@ namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Views;
 
 use Illuminate\Database\Eloquent\Builder;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter;
-use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCase;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCaseAdvanced;
 
-class NumberRangeFilterTest extends TestCase
+class NumberRangeFilterTest extends TestCaseAdvanced
 {
     /** @test */
     public function can_get_filter_name(): void

@@ -206,6 +206,11 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
         $this->advancedTable->setFilter('species', []);
 
         $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
+
+        $this->advancedTable->setFilter('range', ['min' => 10, 'max' => 50]);
+        $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->advancedTable->setFilter('range', []);
+        $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
     }
 
     /** @test */

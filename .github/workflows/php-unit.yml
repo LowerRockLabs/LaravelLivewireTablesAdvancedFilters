@@ -49,10 +49,11 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer
 
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
 
       - name: Update dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Run Unit Tests

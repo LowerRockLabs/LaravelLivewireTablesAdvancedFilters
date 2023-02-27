@@ -2,7 +2,6 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 
-use Illuminate\Support\Collection;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
 
@@ -17,16 +16,7 @@ class SmartSelectFilter extends Filter
     {
         parent::__construct($name, (isset($key) ? $key : null));
         $this->config = config('livewiretablesadvancedfilters.smartSelect');
-        $this->options = config('livewiretablesadvancedfilters.smartSelect.defaults');
     }
-
-  //  public function setCallback(): SmartSelectFilter
- //   {
- //       //$this->component->setSelect2Options
-        //dd($this->getConfigs());
- //       //$this->setSelect2Options('fa');
-  //      return $this;
-  //  }
 
     /**
      * @param  array<mixed>  $config
@@ -63,12 +53,10 @@ class SmartSelectFilter extends Filter
      */
     public function getKeys(): array
     {
-        $collect = new Collection($this->getOptions());
-
-        return $collect->map(fn ($value, $key) => $key)
-            ->flatten()
+        return collect($this->getOptions())
+            ->keys()
             ->map(fn ($value) => (string) $value)
-            ->filter(fn ($value) => strlen($value) > 0)
+            ->filter(fn ($value) => strlen($value)) /** @phpstan-ignore-line */
             ->values()
             ->toArray();
     }
@@ -114,12 +102,14 @@ class SmartSelectFilter extends Filter
         $values = [];
         if (is_array($value)) {
             foreach ($value as $item) {
-                $found = $this->getCustomFilterPillValue($item) ?? $this->getOptions()[$item] ?? null;
+                $found = isset($this->getOptions()[$item]);
 
                 if ($found) {
                     $values[] = $found;
                 }
             }
+        } else {
+            $values[] = $value;
         }
 
         $values = array_unique($values, SORT_STRING);

@@ -70,11 +70,11 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @return null
+     * @return void
      */
-    public function getDefaultValue(): null
+    public function getDefaultValue(): void
     {
-        return null;
+
     }
 
     /**

@@ -1,12 +1,13 @@
 {
     "name": "lowerrocklabs/laravel-livewire-tables-advanced-filters",
-    "description": "Advanced filters for Rappasoft Laravel Livewire Tables using FlatPickr",
+    "description": "Additional/Advanced Filters for Rappasoft's Laravel Livewire Tables",
     "keywords": [
         "lowerrocklabs",
         "livewire",
         "datatables",
         "tables",
-        "laravel"
+        "laravel",
+        "rappasoft"
     ],
     "homepage": "https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters",
     "license": "MIT",

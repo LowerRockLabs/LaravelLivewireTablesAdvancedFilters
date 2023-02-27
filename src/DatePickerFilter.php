@@ -74,7 +74,6 @@ class DatePickerFilter extends Filter
      */
     public function getDefaultValue(): void
     {
-
     }
 
     /**

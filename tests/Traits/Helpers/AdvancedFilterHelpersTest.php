@@ -123,7 +123,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
     public function advanced_can_set_filter_value(): void
     {
         $this->advancedTable->setFilter('datepicker', '2021-01-01');
-
+        // Check Helpers
         $this->assertSame('2021-01-01', $this->advancedTable->getAppliedFilterWithValue('datepicker'));
 
         $this->advancedTable->setFilter('species', ['1']);

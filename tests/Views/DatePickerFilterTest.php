@@ -91,7 +91,7 @@ class DatePickerFilterTest extends TestCaseAdvanced
     public function can_get_filter_default_value(): void
     {
         $filter = DatePickerFilter::make('Active');
-
+        // Should be array
         $this->assertSame([], $filter->getDefaultValue());
     }
 

@@ -71,6 +71,10 @@ class SmartSelectFilter extends Filter
             ->toArray();
     }
 
+    /**
+     * @param  mixed  $value
+     * @return array<mixed>|bool
+     */
     public function validate($value)
     {
         if (is_array($value)) {

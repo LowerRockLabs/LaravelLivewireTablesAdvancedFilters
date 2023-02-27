@@ -13,7 +13,7 @@ class NumberRangeFilterConfigurationTest extends TestCaseAdvanced
         $filter = NumberRangeFilter::make('Active');
 
         $this->assertEquals(config('livewiretablesadvancedfilters.numberRange'), $filter->getConfigs());
-
+        // Check Config
         $filter->config([
             'test' => 'cfg',
         ]);

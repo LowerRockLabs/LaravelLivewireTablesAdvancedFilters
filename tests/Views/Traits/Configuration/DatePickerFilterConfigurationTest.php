@@ -11,7 +11,7 @@ class DatePickerFilterConfigurationTest extends TestCaseAdvanced
     public function filter_config_can_be_set(): void
     {
         $filter = DatePickerFilter::make('Active');
-
+        // Check Config
         $this->assertEquals(config('livewiretablesadvancedfilters.datePicker'), $filter->getConfigs());
 
         $filter->config([

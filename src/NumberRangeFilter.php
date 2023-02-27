@@ -95,7 +95,7 @@ class NumberRangeFilter extends Filter
     }
 
     /**
-     * @param  array<mixed>  $values
+     * @param  mixed  $values
      */
     public function getFilterPillValue($values): ?string
     {

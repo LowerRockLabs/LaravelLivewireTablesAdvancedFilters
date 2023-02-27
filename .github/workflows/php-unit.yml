@@ -58,6 +58,6 @@ jobs:
       - name: phpunit-coverage-badge
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
-          coverage_badge_path: 'badge.svg'
+          coverage_badge_path: 'build/phpunit-coverage-develop.svg'
           push_badge: true
           repo_token: ${{ secrets.GITHUB_TOKEN }}

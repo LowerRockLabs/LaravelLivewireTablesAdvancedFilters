@@ -38,5 +38,13 @@ jobs:
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+          
       - name: Run Unit Tests
         run: XDEBUG_MODE_COVERAGE=coverage vendor/bin/phpunit
+
+      - name: phpunit-coverage-badge
+        uses: timkrase/phpunit-coverage-badge@v1.2.1
+        with:
+          coverage_badge_path: 'build/phpunit-coverage-main.svg'
+          push_badge: true
+          repo_token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,4 +1,4 @@
-name: run-tests
+name: php-unit
 on:
   pull_request:
     branches:

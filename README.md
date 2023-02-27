@@ -1,8 +1,13 @@
-Develop
-![Develop](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/run-tests.yml/badge.svg?branch=develop)
+Main Branch
+![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit.yml/badge.svg?branch=main)
+![PHP Stan](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-stan.yml/badge.svg?branch=main)
 
-Main
-![Main](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/run-tests.yml/badge.svg?branch=main)
+
+
+Develop Branch
+![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit.yml/badge.svg?branch=develop)
+![PHP Stan](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-stan.yml/badge.svg?branch=develop)
+
 
 # LaravelLivewireTablesAdvancedFilters
 Advanced filters for Rappasoft Laravel Livewire Tables v2.0 and above

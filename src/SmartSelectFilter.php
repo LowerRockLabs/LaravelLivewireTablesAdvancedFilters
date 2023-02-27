@@ -2,6 +2,7 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 
+use Illuminate\Support\Collection;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
 
@@ -62,8 +63,9 @@ class SmartSelectFilter extends Filter
      */
     public function getKeys(): array
     {
-        return collect($this->getOptions())
-            ->map(fn ($value, $key) => is_iterable($value) ? collect($value)->keys() : $key)
+        $collect = new Collection($this->getOptions());
+
+        return $collect->map(fn ($value, $key) => $key)
             ->flatten()
             ->map(fn ($value) => (string) $value)
             ->filter(fn ($value) => strlen($value) > 0)
@@ -130,7 +132,7 @@ class SmartSelectFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        return empty($value) || $value == '';
+        return empty($value);
     }
 
     /**

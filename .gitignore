@@ -28,3 +28,4 @@ phpunit.txt
 build/*
 .php-cs-fixer.cache
 build/report.junit.xml
+build/report.junit.xml

@@ -69,6 +69,9 @@ class DatePickerFilter extends Filter
         return $value;
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getDefaultValue(): array
     {
         return [];

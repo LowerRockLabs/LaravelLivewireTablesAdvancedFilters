@@ -59,19 +59,23 @@ class DateRangeFilter extends Filter
     {
         if (! is_array($values)) {
             $valueArray = explode(' ', $values);
-            $returnedValues['min'] = $valueArray[0];
-            $returnedValues['max'] = $valueArray[2];
+            $returnedValues['minDate'] = $valueArray[0];
+            $returnedValues['maxDate'] = $valueArray[2];
         } else {
-            $returnedValues['min'] = $values[0];
-            $returnedValues['max'] = $values[1];
+            $returnedValues['minDate'] = (isset($values['minDate']) ? $values['minDate'] : (isset($values[0]) ? $values[0] : ''));
+            $returnedValues['maxDate'] = (isset($values['maxDate']) ? $values['maxDate'] : (isset($values[1]) ? $values[1] : ''));
         }
         $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
 
-        if (! DateTime::createFromFormat($dateFormat, $returnedValues['min'])) {
+        if ($returnedValues['minDate'] == '' || $returnedValues['minDate'] == null || $returnedValues['maxDate'] == '' || $returnedValues['maxDate'] == null) {
             return false;
         }
 
-        if (! isset($returnedValues['max']) || isset($returnedValues['max']) && ! DateTime::createFromFormat($dateFormat, $returnedValues['max'])) {
+        if (! DateTime::createFromFormat($dateFormat, $returnedValues['minDate'])) {
+            return false;
+        }
+
+        if (! DateTime::createFromFormat($dateFormat, $returnedValues['maxDate'])) {
             return false;
         }
 
@@ -79,11 +83,19 @@ class DateRangeFilter extends Filter
     }
 
     /**
-     * @param  string  $value
+     * @return array<mixed>
+     */
+    public function getDefaultValue(): array
+    {
+        return ['minDate' => '', 'maxDate' => ''];
+    }
+
+    /**
+     * @param  mixed  $value
      */
     public function isEmpty($value): bool
     {
-        return $value === '';
+        return $value === '' || (is_array($value) && ($value['minDate'] == '' || $value['maxDate'] == ''));
     }
 
     /**

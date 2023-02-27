@@ -55,6 +55,10 @@ class NumberRangeFilter extends Filter
      */
     public function validate($values)
     {
+        if (! isset($values['min']) || ! isset($values['max']) || $values['min'] == '' || ($values['min'] == 0 && $values['max'] == 100) || $values['min'] == null || $values['max'] == '' || $values['max'] == null) {
+            return false;
+        }
+
         if (isset($values['min'])) {
             if (intval($values['min']) < $this->getConfig('defaults')['min'] || intval($values['min']) > $this->getConfig('defaults')['max']) {
                 return false;
@@ -79,7 +83,15 @@ class NumberRangeFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        return ! is_array($value);
+        return $value === '' || (is_array($value) && (! isset($value['min']) || ! isset($value['max']))) || (is_array($value) && (isset($value['min']) && isset($value['max']) && $value['min'] == 0 && $value['max'] == 100));
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getDefaultValue(): array
+    {
+        return ['min' => 0, 'max' => 100];
     }
 
     /**

@@ -8,6 +8,8 @@ return [
     ],
     'dateRange' => [
         'defaults' => [
+            'earliestDate' => '',
+            'latestDate' => '',
             'allowInput' => true,
             'altFormat' => 'F j, Y',
             'ariaDateFormat' => 'F j, Y',
@@ -20,7 +22,8 @@ return [
     ],
     'datePicker' => [
         'defaults' => [
-
+            'earliestDate' => '',
+            'latestDate' => '',
             'allowInput' => true,
             'altFormat' => 'F j, Y',
             'ariaDateFormat' => 'F j, Y',
@@ -33,50 +36,30 @@ return [
     ],
     'numberRange' => [
         'defaults' => [
-            'min' => 0,
-            'max' => 100,
+            'min' => 0, // A Default Minimum Value
+            'max' => 100,  // A Default Maximum Value
         ],
         'styling' => [
-            'light' => [
+            'light' => [ // Used When "dark" class is not in a parent element
                 'activeColor' => '#FFFFF',
-                'fillColor' => '#0366d6',
-                'primaryColor' => '#0366d6',
-                'progressBackground' => '#eee',
-                'thumbColor' => '#FFFFFF',
+                'fillColor' => '#0366d6', // The color of the bar for the selected range
+                'primaryColor' => '#0366d6', // The primary color
+                'progressBackground' => '#eee', // The color of the remainder of the bar
+                'thumbColor' => '#FFFFFF', // The color of the Circle
                 'ticksColor' => 'silver',
                 'valueBg' => 'transparent',
-                'valueBgHover' => '#0366d6',
+                'valueBgHover' => '#0366d6', // The bg color of the current value when the relevant selector is hovered over
             ],
-            'dark' => [
+            'dark' => [ // Used When "dark" class is in a parent element
                 'activeColor' => 'transparent',
-
-                // The color of the bar for the selected range
-                'fillColor' => '#FF0000',
-
-                // The color of the remainder of the bar
-                'progressBackground' => '#eee',
-
-                // The primary color
-                'primaryColor' => '#00FF00',
-
-                // The color of the Circle
-                'thumbColor' => '#0000FF',
-
+                'fillColor' => '#FF0000', // The color of the bar for the selected range
+                'progressBackground' => '#eee', // The color of the remainder of the bar
+                'primaryColor' => '#00FF00', // The primary color
+                'thumbColor' => '#0000FF', // The color of the Circle
                 'ticksColor' => 'silver',
-
                 'valueBg' => '#000000',
+                'valueBgHover' => '#000000', // The bg color of the current value when the relevant selector is hovered over
 
-                // The bg color of the current value when the relevant selector is hovered over
-                'valueBgHover' => '#000000',
-
-                //'activeColor' => '#000000',
-                //  'fillColor' => '#000000',
-                //  'primaryColor' => '#000000',
-                //  'progressBackground' => '#F0F0F0',
-                //  'thumbColor' => '#000000',
-                //  'ticksColor' => 'silver',
-                //  'valueBg' => 'transparent',
-                //  'valueBgHover' => '#000000',
             ],
         ],
         /*

@@ -5,9 +5,9 @@ namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Views;
 use Illuminate\Database\Eloquent\Builder;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Breed;
-use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCase;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCaseAdvanced;
 
-class SmartSelectFilterTest extends TestCase
+class SmartSelectFilterTest extends TestCaseAdvanced
 {
     /** @test */
     public function can_get_filter_name(): void
@@ -94,7 +94,7 @@ class SmartSelectFilterTest extends TestCase
     {
         $filter = SmartSelectFilter::make('Active');
 
-        $this->assertNull($filter->getDefaultValue());
+        $this->assertSame([], $filter->getDefaultValue());
     }
 
     /** @test */

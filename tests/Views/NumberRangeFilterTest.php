@@ -4,9 +4,9 @@ namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Views;
 
 use Illuminate\Database\Eloquent\Builder;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter;
-use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCase;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCaseAdvanced;
 
-class NumberRangeFilterTest extends TestCase
+class NumberRangeFilterTest extends TestCaseAdvanced
 {
     /** @test */
     public function can_get_filter_name(): void
@@ -50,29 +50,33 @@ class NumberRangeFilterTest extends TestCase
     {
         $filter = NumberRangeFilter::make('Active');
         $this->assertTrue($filter->isEmpty(''));
-        $this->assertFalse($filter->isEmpty(['test']));
+        $this->assertTrue($filter->isEmpty(['max' => 100]));
+        $this->assertTrue($filter->isEmpty(['min' => 0]));
+        $this->assertTrue($filter->isEmpty(['min' => 0, 'max' => 100]));
+        $this->assertFalse($filter->isEmpty(['min' => 0, 'max' => 50]));
     }
 
     /** @test */
     public function can_check_validation_accepts_valid_values(): void
     {
         $filter = NumberRangeFilter::make('Active');
-        $this->assertSame(['min' => 0, 'max' => 100], $filter->validate(['min' => 0, 'max' => 100]));
+        $this->assertFalse($filter->validate(['min' => 0, 'max' => 100]));
     }
 
     /** @test */
     public function can_check_validation_rejects_invalid_values(): void
     {
         $filter = NumberRangeFilter::make('Active');
-        $this->assertFalse($filter->validate(['min' => 0, 'max' => 500]));
+        $this->assertFalse($filter->validate(['min' => 0, 'max' => 'set']));
     }
 
     /** @test */
-    public function can_check_validation_populates_missing_values(): void
+    public function can_check_validation_rejects_missing_values(): void
     {
         $filter = NumberRangeFilter::make('Active');
-        $this->assertSame(['min' => 10, 'max' => 100], $filter->validate(['min' => 10]));
-        $this->assertSame(['max' => 50, 'min' => 0], $filter->validate(['max' => 50]));
+        $this->assertFalse($filter->validate(['min' => 10]));
+        $this->assertFalse($filter->validate(['min' => 10]));
+        $this->assertSame(['min' => 15, 'max' => 50], $filter->validate(['min' => 15, 'max' => 50]));
     }
 
     /** @test */
@@ -100,7 +104,7 @@ class NumberRangeFilterTest extends TestCase
     {
         $filter = NumberRangeFilter::make('Active');
 
-        $this->assertNull($filter->getDefaultValue());
+        $this->assertSame(['min' => 0, 'max' => 100], $filter->getDefaultValue());
     }
 
     /** @test */

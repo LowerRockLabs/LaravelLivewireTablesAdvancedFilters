@@ -2,7 +2,7 @@
 node_modules/
 npm-debug.log
 yarn-error.log
-
+/build/
 # Laravel 4 specific
 bootstrap/compiled.php
 app/storage/
@@ -24,5 +24,6 @@ Homestead.json
 LaravelLivewireTablesAdvancedFilters.code-workspace
 composer.lock
 phpunit.txt
+/build/report.junit.xml
 build/*
-build/report.junit.xml
+.php-cs-fixer.cache

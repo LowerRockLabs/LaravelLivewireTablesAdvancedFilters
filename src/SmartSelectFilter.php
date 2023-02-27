@@ -19,13 +19,13 @@ class SmartSelectFilter extends Filter
         $this->options = config('livewiretablesadvancedfilters.smartSelect.defaults');
     }
 
-    public function setCallback(): SmartSelectFilter
-    {
-        //$this->component->setSelect2Options
+  //  public function setCallback(): SmartSelectFilter
+ //   {
+ //       //$this->component->setSelect2Options
         //dd($this->getConfigs());
-        //$this->setSelect2Options('fa');
-        return $this;
-    }
+ //       //$this->setSelect2Options('fa');
+  //      return $this;
+  //  }
 
     /**
      * @param  array<mixed>  $config
@@ -74,13 +74,22 @@ class SmartSelectFilter extends Filter
     public function validate($value)
     {
         if (is_array($value)) {
+            if (empty($value)) {
+                return false;
+            }
             foreach ($value as $index => $val) {
                 // Remove the bad value
                 if (! in_array($val, $this->getKeys())) {
                     unset($value[$index]);
                 }
             }
+            if (count($value) == 0) {
+                return false;
+            }
         } else {
+            if ($value == '') {
+                return false;
+            }
             if (in_array($value, $this->getKeys())) {
                 $value[] = $value;
             } else {
@@ -117,7 +126,15 @@ class SmartSelectFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        return $value === '';
+        return $value === [] || $value === '';
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getDefaultValue(): array
+    {
+        return [];
     }
 
     /**

@@ -57,12 +57,24 @@ class DatePickerFilter extends Filter
      */
     public function validate($value)
     {
+        if ($value == '' || $value == null) {
+            return false;
+        }
         $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
+
         if (! DateTime::createFromFormat($dateFormat, $value)) {
             return false;
         }
 
         return $value;
+    }
+
+    /**
+     * @return null
+     */
+    public function getDefaultValue(): null
+    {
+        return null;
     }
 
     /**

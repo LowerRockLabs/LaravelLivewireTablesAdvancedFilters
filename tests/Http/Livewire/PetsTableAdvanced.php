@@ -84,8 +84,8 @@ class PetsTableAdvanced extends DataTableComponent
                 ]
             )
             ->filter(function (Builder $builder, array $values) {
-                return $builder->where('species_id', '>', $values['min'])
-                ->where('species_id', '<', $values['max']);
+                return $builder->where('breed_id', '>', $values['min'])
+                ->where('breed_id', '<', $values['max']);
             }),
 
             DateRangeFilter::make('Daterange')
@@ -94,11 +94,11 @@ class PetsTableAdvanced extends DataTableComponent
                 'dateFormat' => 'Y-m-d',
                 'defaultStartDate' => date('Y-m-d'),
                 'defaultEndDate' => date('Y-m-d'),
-                'minDate' => '2022-01-01',
-                'maxDate' => date('Y-m-d'),
+                'earliestDate' => '2022-01-01',
+                'latestDate' => date('Y-m-d'),
             ])
             ->filter(function (Builder $builder, array $dateRange) {
-                return $builder->where('created_at', '>=', $dateRange['min'])->where('created_at', '<=', $dateRange['max']);
+                return $builder->where('last_visit', '>=', $dateRange['minDate'])->where('last_visit', '<=', $dateRange['maxDate']);
             }),
 
             DatePickerFilter::make('Datepicker')
@@ -107,11 +107,11 @@ class PetsTableAdvanced extends DataTableComponent
                 'dateFormat' => 'Y-m-d',
                 'defaultStartDate' => date('Y-m-d'),
                 'defaultEndDate' => date('Y-m-d'),
-                'minDate' => '2022-01-01',
-                'maxDate' => date('Y-m-d'),
+                'earliestDate' => '2022-01-01',
+                'latestDate' => date('Y-m-d'),
             ])
             ->filter(function (Builder $builder, string $datePicker) {
-                return $builder->where('modified_at', '>=', $datePicker);
+                return $builder->where('last_visit', '=', $datePicker);
             }),
 
             MultiSelectDropdownFilter::make('Species')

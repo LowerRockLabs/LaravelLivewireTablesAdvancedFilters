@@ -48,8 +48,8 @@
                     defaultDate:[$refs.input.value.split(" ")[0],$refs.input.value.split(" ")[2]],
                     enableTime: false,
                     locale: "{{ App::currentLocale() }}",
-                    @if ($filter->hasConfig('minDate')) minDate:"{{ $filter->getConfig('minDate') }}", @endif
-                    @if ($filter->hasConfig('maxDate')) maxDate:"{{ $filter->getConfig('maxDate') }}", @endif
+                    @if ($filter->hasConfig('earliestDate')) minDate:"{{ $filter->getConfig('earliestDate') }}", @endif
+                    @if ($filter->hasConfig('latestDate')) maxDate:"{{ $filter->getConfig('latestDate') }}", @endif
                 });
             }
         }'
@@ -67,7 +67,8 @@
         <input wire:model.stop="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}"
             wire:key="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
             id="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}" type="date"
-            @if ($filter->hasConfig('min')) min="{{ $filter->getConfig('min') }}" @endif
-            @if ($filter->hasConfig('max')) max="{{ $filter->getConfig('max') }}" @endif class="form-control" />
+            @if ($filter->hasConfig('earliestDate')) min="{{ $filter->getConfig('earliestDate') }}" @endif
+            @if ($filter->hasConfig('latestDate')) max="{{ $filter->getConfig('latestDate') }}" @endif
+            class="form-control" />
     </div>
 @endif

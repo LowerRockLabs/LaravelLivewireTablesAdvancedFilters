@@ -24,3 +24,5 @@ build/*
 src/DateRangeFilter.php
 .phpunit.cache/*
 docs/images/badges/phpunit-coverage-develop.svg
+clover.xml
+build/report.junit.xml

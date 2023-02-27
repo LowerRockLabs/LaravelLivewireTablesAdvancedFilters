@@ -23,3 +23,4 @@ build/*
 .php-cs-fixer.cache
 src/DateRangeFilter.php
 .phpunit.cache/*
+docs/images/badges/phpunit-coverage-develop.svg

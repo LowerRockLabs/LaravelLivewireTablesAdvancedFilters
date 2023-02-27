@@ -22,6 +22,14 @@ class DatePickerFilter extends Filter
     }
 
     /**
+     * @return array<mixed>
+     */
+    public function getKeys(): array
+    {
+        return ['date' => ''];
+    }
+
+    /**
      * @param  array<mixed>  $options
      * @return $this
      */
@@ -67,14 +75,6 @@ class DatePickerFilter extends Filter
         }
 
         return $value;
-    }
-
-    /**
-     * @return array<mixed>
-     */
-    public function getDefaultValue(): array
-    {
-        return [];
     }
 
     /**

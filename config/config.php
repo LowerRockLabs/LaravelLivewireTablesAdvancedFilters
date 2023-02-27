@@ -28,6 +28,7 @@ return [
             'altFormat' => 'F j, Y',
             'ariaDateFormat' => 'F j, Y',
             'dateFormat' => 'Y-m-d',
+            'timeEnabled' => false,
         ],
         // Set to true if you need to include the Flatpickr JS
         'publishFlatpickrJS' => false,

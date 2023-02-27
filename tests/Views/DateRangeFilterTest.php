@@ -91,7 +91,7 @@ class DateRangeFilterTest extends TestCaseAdvanced
     {
         $filter = DateRangeFilter::make('Active');
 
-        $this->assertSame([], $filter->getKeys());
+        $this->assertSame(['minDate' => '', 'maxDate' => ''], $filter->getKeys());
     }
 
     /** @test */
@@ -99,7 +99,7 @@ class DateRangeFilterTest extends TestCaseAdvanced
     {
         $filter = DateRangeFilter::make('Active');
 
-        $this->assertSame(['minDate' => '', 'maxDate' => ''], $filter->getDefaultValue());
+        $this->assertSame([], $filter->getDefaultValue());
     }
 
     /** @test */

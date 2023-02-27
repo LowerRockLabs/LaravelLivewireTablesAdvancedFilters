@@ -91,7 +91,7 @@ class NumberRangeFilter extends Filter
      */
     public function getDefaultValue(): array
     {
-        return ['min' => 0, 'max' => 100];
+        return [];
     }
 
     /**

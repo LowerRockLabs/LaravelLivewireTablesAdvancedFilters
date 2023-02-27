@@ -9,6 +9,7 @@ public/storage
 public/hot
 public_html/storage
 public_html/hot
+clover.xml
 storage/*.key
 .env
 Homestead.yaml
@@ -18,8 +19,7 @@ Homestead.json
 LaravelLivewireTablesAdvancedFilters.code-workspace
 composer.lock
 phpunit.txt
-/build/report.junit.xml
 build/*
 .php-cs-fixer.cache
-build/report.junit.xml
-build/report.junit.xml
+src/DateRangeFilter.php
+.phpunit.cache/*

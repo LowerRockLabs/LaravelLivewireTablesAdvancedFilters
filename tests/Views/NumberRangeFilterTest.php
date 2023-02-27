@@ -104,7 +104,7 @@ class NumberRangeFilterTest extends TestCaseAdvanced
     {
         $filter = NumberRangeFilter::make('Active');
 
-        $this->assertSame(['min' => 0, 'max' => 100], $filter->getDefaultValue());
+        $this->assertSame([], $filter->getDefaultValue());
     }
 
     /** @test */

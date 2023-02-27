@@ -55,24 +55,16 @@ class NumberRangeFilter extends Filter
      */
     public function validate($values)
     {
-        if (! isset($values['min']) || ! isset($values['max']) || $values['min'] == '' || ($values['min'] == 0 && $values['max'] == 100) || $values['min'] == null || $values['max'] == '' || $values['max'] == null) {
+        if (! isset($values['min']) || ! isset($values['max']) || $values['min'] == '' || ($values['min'] == 0 && $values['max'] == 100) || is_null($values['min']) || $values['max'] == '' || is_null($values['max'])) {
             return false;
         }
 
-        if (isset($values['min'])) {
-            if (intval($values['min']) < $this->getConfig('defaults')['min'] || intval($values['min']) > $this->getConfig('defaults')['max']) {
-                return false;
-            }
-        } else {
-            $values['min'] = intval($this->getConfig('defaults')['min']);
+        if (intval($values['min']) < $this->getConfig('defaults')['min'] || intval($values['min']) > $this->getConfig('defaults')['max']) {
+            return false;
         }
 
-        if (isset($values['max'])) {
-            if (intval($values['max']) < $this->getConfig('defaults')['min'] || intval($values['max']) > $this->getConfig('defaults')['max']) {
-                return false;
-            }
-        } else {
-            $values['max'] = intval($this->getConfig('defaults')['max']);
+        if (intval($values['max']) < $this->getConfig('defaults')['min'] || intval($values['max']) > $this->getConfig('defaults')['max']) {
+            return false;
         }
 
         return $values;

@@ -126,7 +126,7 @@ class SmartSelectFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        return $value === [] || $value === '';
+        return empty($value) || $value === '';
     }
 
     /**

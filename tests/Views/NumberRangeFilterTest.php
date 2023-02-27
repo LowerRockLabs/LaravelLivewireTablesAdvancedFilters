@@ -80,6 +80,32 @@ class NumberRangeFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
+    public function can_check_validation_rejects_values_over_configmax(): void
+    {
+        $filter = NumberRangeFilter::make('Active');
+        $this->assertFalse($filter->validate(['min' => 15, 'max' => 5000]));
+        $this->assertFalse($filter->validate(['min' => 6, 'max' => 5000]));
+        $this->assertSame(['min' => 15, 'max' => 50], $filter->validate(['min' => 15, 'max' => 50]));
+    }
+
+    /** @test */
+    public function can_check_validation_rejects_values_below_configmax(): void
+    {
+        $filter = NumberRangeFilter::make('Active');
+        $this->assertFalse($filter->validate(['min' => -46, 'max' => 50]));
+        $this->assertFalse($filter->validate(['min' => -6, 'max' => 22]));
+        $this->assertSame(['min' => 15, 'max' => 50], $filter->validate(['min' => 15, 'max' => 50]));
+    }
+
+    /** @test */
+    public function can_check_validation_rejects_values_fault_configs(): void
+    {
+        $filter = NumberRangeFilter::make('Active');
+        $this->assertFalse($filter->validate(['min' => -6, 'max' => 2200]));
+        $this->assertSame(['min' => 15, 'max' => 50], $filter->validate(['min' => 15, 'max' => 50]));
+    }
+
+    /** @test */
     public function can_get_filter_options(): void
     {
         $filter = NumberRangeFilter::make('Active');

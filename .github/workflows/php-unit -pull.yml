@@ -1,4 +1,4 @@
-name: php-unit
+name: Main PHP Unit Tests
 on:
   pull_request:
     branches:
@@ -38,7 +38,7 @@ jobs:
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
-          
+
       - name: Run Unit Tests
         run: XDEBUG_MODE_COVERAGE=coverage vendor/bin/phpunit
 

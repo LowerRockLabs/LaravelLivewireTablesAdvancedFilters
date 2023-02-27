@@ -45,8 +45,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ runner.php }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-${{ runner.php }}-composer-
+          key: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer
+          restore-keys: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'

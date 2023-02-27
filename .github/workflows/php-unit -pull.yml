@@ -1,9 +1,8 @@
 name: php-unit
 on:
-  push:
+  pull_request:
     branches:
-      - develop
-
+      - main
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -41,9 +40,3 @@ jobs:
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
       - name: Run Unit Tests
         run: XDEBUG_MODE_COVERAGE=coverage vendor/bin/phpunit
-      - name: Generate test coverage badge
-        uses: ./
-        with:
-          coverage_badge_path: 'badge.svg'
-          push_badge: true
-          repo_token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,5 +1,5 @@
-Dev
-![Dev](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/run-tests.yml/badge.svg?branch=dev)
+Develop
+![Develop](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/run-tests.yml/badge.svg?branch=develop)
 
 Main
 ![Main](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/run-tests.yml/badge.svg?branch=main)

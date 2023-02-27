@@ -1,11 +1,11 @@
-name: run-tests
+name: php-stan
 on:
   pull_request:
     branches:
       - main
   push:
     branches:
-      - dev2
+      - develop
 
 jobs:
   test:
@@ -14,12 +14,9 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [8.0, 8.2]
+        php: [8.2]
         laravel: [9.*, 10.*]
         stability: [prefer-stable]
-        exclude:
-          - laravel: 10.*
-            php: 8.0
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -32,15 +29,15 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: none
+          tools: phpstan
 
       - name: Setup problem matchers
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
       - name: Install dependencies
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
-      - name: Execute tests
-        run: vendor/bin/phpunit
+      - name: Run PHPStan
+        run: phpstan analyse src
+

@@ -13,7 +13,7 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     public function can_get_filter_name(): void
     {
         $filter = SmartSelectFilter::make('Active');
-
+        // Should match
         $this->assertSame('Active', $filter->getName());
     }
 

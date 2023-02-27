@@ -11,7 +11,7 @@ class SmartSelectFilterConfigurationTest extends TestCaseAdvanced
     public function filter_config_can_be_set(): void
     {
         $filter = SmartSelectFilter::make('Active');
-
+        // Check Config
         $this->assertEquals(config('livewiretablesadvancedfilters.smartSelect'), $filter->getConfigs());
 
         $filter->config([

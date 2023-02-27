@@ -57,7 +57,7 @@ class DatePickerFilter extends Filter
      */
     public function validate($value)
     {
-        if ($value == '' || is_null($value)) {
+        if ($value === '') {
             return false;
         }
         $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
@@ -70,10 +70,11 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @return void
+     * @return array<mixed>
      */
-    public function getDefaultValue(): void
+    public function getDefaultValue(): array
     {
+        return [];
     }
 
     /**

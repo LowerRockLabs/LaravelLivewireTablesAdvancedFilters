@@ -10,6 +10,7 @@ class DateRangeFilterConfigurationTest extends TestCaseAdvanced
     /** @test */
     public function filter_config_can_be_set(): void
     {
+        // Check Config
         $filter = DateRangeFilter::make('Active');
 
         $this->assertEquals(config('livewiretablesadvancedfilters.dateRange'), $filter->getConfigs());

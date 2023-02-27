@@ -55,24 +55,24 @@ class NumberRangeFilter extends Filter
      */
     public function validate($values)
     {
-        if (! isset($values['min']) || ! isset($values['max']) || $values['min'] == '' || ($values['min'] == 0 && $values['max'] == 100) || $values['min'] == null || $values['max'] == '' || $values['max'] == null) {
+        if (! isset($values['min']) || ! isset($values['max'])) {
             return false;
         }
 
-        if (isset($values['min'])) {
-            if (intval($values['min']) < $this->getConfig('defaults')['min'] || intval($values['min']) > $this->getConfig('defaults')['max']) {
-                return false;
-            }
-        } else {
-            $values['min'] = intval($this->getConfig('defaults')['min']);
+        if (! is_int($values['min']) || ! is_int($values['max'])) {
+            return false;
         }
 
-        if (isset($values['max'])) {
-            if (intval($values['max']) < $this->getConfig('defaults')['min'] || intval($values['max']) > $this->getConfig('defaults')['max']) {
-                return false;
-            }
-        } else {
-            $values['max'] = intval($this->getConfig('defaults')['max']);
+        if ($values['min'] == 0 && $values['max'] == 100) {
+            return false;
+        }
+
+        if ($values['min'] < $this->getConfig('defaults')['min'] || $values['min'] > $this->getConfig('defaults')['max']) {
+            return false;
+        }
+
+        if ($values['max'] < $this->getConfig('defaults')['min'] || $values['max'] > $this->getConfig('defaults')['max']) {
+            return false;
         }
 
         return $values;
@@ -95,7 +95,7 @@ class NumberRangeFilter extends Filter
     }
 
     /**
-     * @param  array<mixed>  $values
+     * @param  mixed  $values
      */
     public function getFilterPillValue($values): ?string
     {

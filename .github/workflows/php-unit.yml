@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-20.04]
         php: [8.0, 8.2]
         laravel: [9.*, 10.*]
         stability: [prefer-stable]
@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -30,12 +30,6 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, xdebug, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
           coverage: xdebug
-
-
-      - name: Setup problem matchers
-        run: |
-          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Get composer cache directory
         id: composer-cache
@@ -46,8 +40,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer
-          restore-keys: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer
+          key: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer--${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer-
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
@@ -59,6 +53,12 @@ jobs:
 
       - name: Run Unit Tests
         run: XDEBUG_MODE_COVERAGE=coverage vendor/bin/phpunit
+
+
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: phpunit-coverage-badge
         uses: timkrase/phpunit-coverage-badge@v1.2.1

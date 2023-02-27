@@ -217,3 +217,4 @@ Please exercise restraint when publishing the views, as this package is in activ
 ```terminal
 php artisan vendor:publish livewiretablesadvancedfilters-views
 ```
+

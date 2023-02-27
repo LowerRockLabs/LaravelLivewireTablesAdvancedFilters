@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <coverage generated="1677530274">
   <project timestamp="1677530274">
     <file name="/home/joe/awscandc/laraveladvancedtest/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
+=======
+<coverage generated="1677527285">
+  <project timestamp="1677527285">
+    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
+>>>>>>> 80183f6d13f4a71ee64e42d655fef21f849610c0
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter" namespace="global">
         <metrics complexity="11" methods="8" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="15" elements="28" coveredelements="21"/>
       </class>

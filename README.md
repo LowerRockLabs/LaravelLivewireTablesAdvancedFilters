@@ -15,6 +15,10 @@ Advanced filters for Rappasoft Laravel Livewire Tables v2.0 and above
 * Date Picker Filter
 * Smart Select (Select2 Style)
 
+Package is currently under active development & testing, please use caution when using.
+
+*Currently only supports Tailwind (no Bootstrap).*
+
 # Installation
 This package is available to be installed via Composer
 ```terminal

@@ -21,24 +21,12 @@
 
 
 @if ($theme === 'tailwind')
-    <div class="rounded-md shadow-sm -ml-2 "
+    <div class="-ml-2 -px-2 rounded-md shadow-sm "
         x-data='{
             init() {
                 flatpickr($refs.input, {
-                    onOpen: function()
-                    {
-                        pickerOpen = true;
-                        open = true;
-                    },
-                    onClose: function()
-                    {
-                        pickerOpen = false;
-                    },
-                    onChange: function (selectedDates, dateStr, instance)
-                    {
-                        $refs.input.value = dateStr;
-                    },
                     mode:"single",
+                    clickOpens: false,
                     ariaDateFormat:"{{ $filter->getConfig('ariaDateFormat') }}",
                     allowInput:"{{ $filter->getConfig('allowInput') }}",
                     altFormat:"{{ $filter->getConfig('altFormat') }}",
@@ -49,19 +37,30 @@
                     locale: "{{ App::currentLocale() }}",
                     @if ($filter->hasConfig('earliestDate')) minDate:"{{ $filter->getConfig('earliestDate') }}", @endif
                     @if ($filter->hasConfig('latestDate')) maxDate:"{{ $filter->getConfig('latestDate') }}", @endif
+                    onOpen: function()
+                    {
+                        childElementOpen = true;
+                    },
+                    onChange: function (selectedDates, dateStr, instance)
+                    {
+                        $refs.input.value = dateStr;
+                    },
+                    onClose: function()
+                    {
+                        childElementOpen = false;
+                    },
                 });
             }
         }'
         x-effect="init" placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
-        <div class="w-full">
+        <div class="w-full" x-on:click="flatpickr($refs.input).toggle">
             <input type="text" x-ref="input"
                 wire:model.debounce.2000ms="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}"
-                x-on:click="pickerOpen = true"
                 wire:key="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
                 id="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
-                class="inline-block w-11/12 border-gray-300 rounded-md shadow-sm transition duration-150 ease-in-out focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-800 dark:text-white dark:border-gray-600" />
-            <a x-on:click="flatpickr($refs.input).toggle" class="inline-block input-button -ml-8 w-6 h-6">
+                class="inline-block w-11/12 transition duration-150 ease-in-out border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-800 dark:text-white dark:border-gray-600" />
+            <a class="inline-block w-6 h-6 -ml-8 input-button">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round"

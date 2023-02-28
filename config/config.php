@@ -39,6 +39,9 @@ return [
         'defaults' => [
             'min' => 0, // A Default Minimum Value
             'max' => 100,  // A Default Maximum Value
+            'minRange' => 0, // A Default Minimum Permitted Value
+            'maxRange' => 100,  // A Default Maximum Permitted Value
+            'suffix' => '', // A Default Suffix
         ],
         'styling' => [
             'light' => [ // Used When "dark" class is not in a parent element

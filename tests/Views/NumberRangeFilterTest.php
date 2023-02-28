@@ -113,8 +113,7 @@ class NumberRangeFilterTest extends TestCaseAdvanced
         $this->assertSame(config('livewiretablesadvancedfilters.numberRange.defaults'), $filter->getOptions());
 
         $filter->options(['foo' => 'bar']);
-
-        $this->assertSame(['foo' => 'bar'], $filter->getOptions());
+        $this->assertSame(['min' => 0, 'max' => 100, 'minRange' => 0, 'maxRange' => 100, 'suffix' => '', 'foo' => 'bar'], $filter->getOptions());
     }
 
     /** @test */

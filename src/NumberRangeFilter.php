@@ -25,7 +25,7 @@ class NumberRangeFilter extends Filter
      */
     public function options($options = []): NumberRangeFilter
     {
-        $this->options = $options;
+        $this->options = array_merge($this->options, $options);
 
         return $this;
     }
@@ -59,19 +59,22 @@ class NumberRangeFilter extends Filter
             return false;
         }
 
-        if (! is_int($values['min']) || ! is_int($values['max'])) {
+        $values['min'] = intval($values['min']);
+        $values['max'] = intval($values['max']);
+
+        if ($values['min'] == 0 && $values['max'] == 0) {
             return false;
         }
 
-        if ($values['min'] == 0 && $values['max'] == 100) {
+        if ($values['min'] == $this->getOptions()['minRange'] && $values['max'] == $this->getOptions()['maxRange']) {
             return false;
         }
 
-        if ($values['min'] < $this->getConfig('defaults')['min'] || $values['min'] > $this->getConfig('defaults')['max']) {
+        if ($values['min'] < $this->getOptions()['minRange'] || $values['min'] > $this->getOptions()['maxRange']) {
             return false;
         }
 
-        if ($values['max'] < $this->getConfig('defaults')['min'] || $values['max'] > $this->getConfig('defaults')['max']) {
+        if ($values['max'] < $this->getOptions()['minRange'] || $values['max'] > $this->getOptions()['maxRange']) {
             return false;
         }
 

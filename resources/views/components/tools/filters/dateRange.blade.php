@@ -27,12 +27,16 @@
 @endphp
 
 @if (Config::get('livewiretablesadvancedfilters.dateRange.publishFlatpickrJS'))
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     @pushOnce('scripts')
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endPushOnce
 @endif
 
 @if (Config::get('livewiretablesadvancedfilters.dateRange.publishFlatpickrCSS'))
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     @pushOnce('styles')
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @endPushOnce
@@ -44,7 +48,7 @@
             init() {
                 flatpickr($refs.input, {
                     mode:"range",
-                    clickOpens: false,
+                    clickOpens: true,
                     ariaDateFormat:"{{ $filter->getConfig('ariaDateFormat') }}",
                     allowInput:"{{ $filter->getConfig('allowInput') }}",
                     altFormat:"{{ $filter->getConfig('altFormat') }}",
@@ -69,13 +73,14 @@
                     {
                         childElementOpen = false;
                     },
+
                 });
             }
         }'
-        x-effect="init" placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
+        placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
-        <div class="w-full" x-on:click="flatpickr($refs.input).toggle">
-            <input type="text" x-ref="input" value="{{ $dateString }}" x-on:click="pickerOpen = true"
+        <div class="w-full">
+            <input type="text" x-ref="input" value="{{ $dateString }}" x-on:click="childElementOpen = true"
                 wire:key="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
                 id="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
                 class="inline-block w-11/12 transition duration-150 ease-in-out border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-800 dark:text-white dark:border-gray-600" />

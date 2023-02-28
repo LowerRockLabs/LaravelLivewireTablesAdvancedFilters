@@ -8,12 +8,16 @@
     
 @endphp
 @if (Config::get('livewiretablesadvancedfilters.datePicker.publishFlatpickrJS'))
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     @pushOnce('scripts')
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endPushOnce
 @endif
 
 @if (Config::get('livewiretablesadvancedfilters.datePicker.publishFlatpickrCSS'))
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     @pushOnce('styles')
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @endPushOnce
@@ -25,18 +29,6 @@
         x-data='{
             init() {
                 flatpickr($refs.input, {
-                    mode:"single",
-                    clickOpens: false,
-                    ariaDateFormat:"{{ $filter->getConfig('ariaDateFormat') }}",
-                    allowInput:"{{ $filter->getConfig('allowInput') }}",
-                    altFormat:"{{ $filter->getConfig('altFormat') }}",
-                    altInput:"{{ $filter->getConfig('altInput') }}",
-                    dateFormat:"{{ $filter->getConfig('dateFormat') }}",
-                    defaultDate:[$refs.input.value],
-                    enableTime: @if ($filter->getConfig('timeEnabled') == 1) true, @else false, @endif
-                    locale: "{{ App::currentLocale() }}",
-                    @if ($filter->hasConfig('earliestDate')) minDate:"{{ $filter->getConfig('earliestDate') }}", @endif
-                    @if ($filter->hasConfig('latestDate')) maxDate:"{{ $filter->getConfig('latestDate') }}", @endif
                     onOpen: function()
                     {
                         childElementOpen = true;
@@ -49,12 +41,24 @@
                     {
                         childElementOpen = false;
                     },
+                    mode:"single",
+                    clickOpens: true,
+                    ariaDateFormat:"{{ $filter->getConfig('ariaDateFormat') }}",
+                    allowInput:"{{ $filter->getConfig('allowInput') }}",
+                    altFormat:"{{ $filter->getConfig('altFormat') }}",
+                    altInput:"{{ $filter->getConfig('altInput') }}",
+                    dateFormat:"{{ $filter->getConfig('dateFormat') }}",
+                    defaultDate:[$refs.input.value],
+                    enableTime: @if ($filter->getConfig('timeEnabled') == 1) true, @else false, @endif
+                    locale: "{{ App::currentLocale() }}",
+                    @if ($filter->hasConfig('earliestDate')) minDate:"{{ $filter->getConfig('earliestDate') }}", @endif
+                    @if ($filter->hasConfig('latestDate')) maxDate:"{{ $filter->getConfig('latestDate') }}", @endif
                 });
             }
         }'
         x-effect="init" placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
-        <div class="w-full" x-on:click="flatpickr($refs.input).toggle">
+        <div class="w-full">
             <input type="text" x-ref="input"
                 wire:model.debounce.2000ms="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}"
                 wire:key="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"

@@ -85,9 +85,11 @@ class SmartSelectFilter extends Filter
                 return false;
             }
             if (in_array($value, $this->getKeys())) {
-                $value[] = $value;
-            } else {
+                $val = $value;
                 $value = [];
+                $value[] = $val;
+            } else {
+                return false;
             }
         }
 

@@ -64,6 +64,20 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
+    public function can_check_validation_rejects_empty_values(): void
+    {
+        $filter = SmartSelectFilter::make('Active');
+        $this->assertFalse($filter->validate([]));
+    }
+
+    /** @test */
+    public function can_check_validation_rejects_string_values(): void
+    {
+        $filter = SmartSelectFilter::make('Active');
+        $this->assertFalse($filter->validate(''));
+    }
+
+    /** @test */
     public function can_check_validation_rejects_invalid_values(): void
     {
         $filter = SmartSelectFilter::make('Active')->options(
@@ -71,6 +85,24 @@ class SmartSelectFilterTest extends TestCaseAdvanced
         );
         $this->assertSame([1], $filter->validate([1, 'test']));
     }
+
+    /** @test */
+    public function can_check_validation_rejects_string_value(): void
+    {
+        $filter = SmartSelectFilter::make('Active')->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
+        );
+        $this->assertFalse($filter->validate('test'));
+    }
+
+        /** @test */
+        public function can_check_validation_accepts_string_value_in_array(): void
+        {
+            $filter = SmartSelectFilter::make('Active')->options(
+                Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
+            );
+            $this->assertSame([0 => '1'], $filter->validate('1'));
+        }
 
     /** @test */
     public function can_get_filter_options(): void

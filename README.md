@@ -32,6 +32,7 @@ Filter classes should be in your table's head in the same way as existing filter
 ## Numeric Range Filter
 Filter with a configurable Minimum/Maximum value, provides two values to the filter() function
 ![Number Range Filter](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/NumberRangeFilter.png)
+![Number Range Filter](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/NumberRangeFilter-Light.png)
 
 Include the class after your namespace declaration
 ```php
@@ -64,6 +65,10 @@ The colours in use are fully customisable, designed for class-based "dark/light"
         'defaults' => [
             'min' => 0, // A Default Minimum Value
             'max' => 100,  // A Default Maximum Value
+            'minRange' => 0,  // A Default Minimum Permitted Value
+            'maxRange' => 100,  // A Default Maximum Permitted Value
+            'suffix' => '%', // A Default Suffix
+
         ],
         'styling' => [
             'light' => [ // Used When "dark" class is not in a parent element
@@ -77,7 +82,7 @@ The colours in use are fully customisable, designed for class-based "dark/light"
                 'valueBgHover' => '#0366d6', // The bg color of the current value when the relevant selector is hovered over
             ],
             'dark' => [ // Used When "dark" class is in a parent element
-                'activeColor' => 'transparent',
+                'activeColor' => '#FFFFFF',
                 'fillColor' => '#FF0000', // The color of the bar for the selected range
                 'progressBackground' => '#eee', // The color of the remainder of the bar                
                 'primaryColor' => '#00FF00', // The primary color
@@ -102,6 +107,8 @@ There are two filters, one is a standard single-date picker (DatePickerFilter), 
 
 ### Date Range Filter
 Flatpickr Filter with a configurable Minimum/Maximum value, provides two values to the filter() function () in the form of an array.
+![Date Range Filter](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/DateRange-Single.png)
+![Date Range Filter](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/DateRange-RangeSelected.png)
 
 Include the class after your namespace declaration
 ```php
@@ -112,7 +119,7 @@ In the filters() function in your data table component:
 ```php
 DateRangeFilter::make('Created Date')
 ->filter(function (Builder $builder, array $dateRange) {
-    $builder->where('created_at', '>=', $dateRange['min'])->where('created_at', '<=', $dateRange['max']);
+    $builder->whereDate('created_at', '>=', $dateRange['minDate'])->whereDate('created_at', '<=', $dateRange['maxDate']);
 }),
 ```
 
@@ -121,21 +128,23 @@ Sensible defaults can be set within the configuration file.  However, the follow
 ```php
 DateRangeFilter::make('Created Date')
 ->config([
-    'ariaDateFormat' => 'F j, Y', // The date format to be displayed once a date is selected
+    'altFormat' => 'F j, Y', // The date format to be displayed once a date is selected
+    'ariaDateFormat' => 'F j, Y', // The date format to be displayed for screen-readers
     'dateFormat' => 'Y-m-d', // The date format to be returned for use in the filter
-    'defaultStartDate' => date('Y-m-d'),  
-    'defaultEndDate' => date('Y-m-d'),
     'earliestDate' => '2022-01-01', // The earliest date permitted, this is not required
     'latestDate' => date('Y-m-d') // The latest date permitted, this is not required
 ])
 ->filter(function (Builder $builder, array $dateRange) {
-    $builder->where('created_at', '>=', $dateRange['min'])
-    ->where('created_at', '<=', $dateRange['max']);
+    $builder->whereDate('created_at', '>=', $dateRange['minDate'])
+    ->whereDate('created_at', '<=', $dateRange['maxDate']);
 }),
 ```
 
 ### Date Picker Filter
 Flatpickr Filter with a configurable Minimum/Maximum value, provides one values to the filter() function
+![Date Picker Filter](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/DatePicker-DateOnly.png)
+![Date Picker Filter](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/DatePicker-Time.png)
+![Date Picker Filter](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/DatePicker-TimeSelected.png)
 
 Include the class after your namespace declaration
 ```php
@@ -156,10 +165,11 @@ Sensible defaults can be set within the configuration file.  However, the follow
 ```php
 DatePickerFilter::make('Created Date')
 ->config([
-    'ariaDateFormat' => 'F j, Y', // The date format to be displayed once a date is selected
+    'altFormat' => 'F j, Y', // The date format to be displayed once a date is selected
+    'ariaDateFormat' => 'F j, Y', // The date format to be displayed for screen-readers
     'dateFormat' => 'Y-m-d', // The date format to be returned for use in the filter
-    'defaultStartDate' => date('Y-m-d'),
-    'defaultEndDate' => date('Y-m-d'),
+    'timeEnabled' => false, // Enable time selection
+    'allowInput' => true, // Allow/disallow manual input into the text field
     'earliestDate' => '2022-01-01', // The earliest date permitted, this is not required
     'latestDate' => date('Y-m-d') // The latest date permitted, this is not required
 ])
@@ -205,17 +215,16 @@ use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter;
 
 In the filters() function in your data table component:
 ```php
-SmartSelectFilter::make('Smart')
-->options(  // An array of options.  You can choose to either cache this, load it as a public array to maintain state, or generate a list each time.
-    Breed::query()  
+SmartSelectFilter::make('Tag Smart')
+->options(
+    Tag::query()
+        ->select('id', 'name')
         ->orderBy('name')
         ->get()
-        ->keyBy('id') // The value to return for use in the filter() function
-        ->map(fn ($breed) => $breed->name)  // The value to display to the end-user
         ->toArray()
 )->filter(function (Builder $builder, array $values) {
-    return $builder->whereIn('breed_id', $values);
-})
+    $builder->whereHas('tags', fn ($query) => $query->whereIn('tags.id', $values));
+}),
 ```
 
 ### Dependencies

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1677549926">
-  <project timestamp="1677549926">
-    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
+<coverage generated="1677624435">
+  <project timestamp="1677624435">
+    <file name="/home/joe/awscandc/laraveladvancedtest/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter" namespace="global">
         <metrics complexity="11" methods="8" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="15" elements="28" coveredelements="21"/>
       </class>
@@ -35,7 +35,7 @@
       <line num="96" type="stmt" count="0"/>
       <metrics loc="99" ncloc="72" classes="1" methods="8" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="15" elements="28" coveredelements="21"/>
     </file>
-    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/DateRangeFilter.php">
+    <file name="/home/joe/awscandc/laraveladvancedtest/LaravelLivewireTablesAdvancedFilters/src/DateRangeFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DateRangeFilter" namespace="global">
         <metrics complexity="20" methods="10" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="33" coveredstatements="23" elements="43" coveredelements="30"/>
       </class>
@@ -84,7 +84,7 @@
       <line num="129" type="stmt" count="0"/>
       <metrics loc="132" ncloc="99" classes="1" methods="10" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="33" coveredstatements="23" elements="43" coveredelements="30"/>
     </file>
-    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/LaravelLivewireTablesAdvancedFiltersServiceProvider.php">
+    <file name="/home/joe/awscandc/laraveladvancedtest/LaravelLivewireTablesAdvancedFilters/src/LaravelLivewireTablesAdvancedFiltersServiceProvider.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\LaravelLivewireTablesAdvancedFiltersServiceProvider" namespace="global">
         <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="19" coveredelements="19"/>
       </class>
@@ -109,7 +109,7 @@
       <line num="45" type="stmt" count="281"/>
       <metrics loc="48" ncloc="39" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="19" coveredelements="19"/>
     </file>
-    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/NumberRangeFilter.php">
+    <file name="/home/joe/awscandc/laraveladvancedtest/LaravelLivewireTablesAdvancedFilters/src/NumberRangeFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter" namespace="global">
         <metrics complexity="28" methods="9" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="23" elements="37" coveredelements="30"/>
       </class>
@@ -152,9 +152,9 @@
       <line num="116" type="stmt" count="0"/>
       <metrics loc="119" ncloc="89" classes="1" methods="9" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="23" elements="37" coveredelements="30"/>
     </file>
-    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/SmartSelectFilter.php">
+    <file name="/home/joe/awscandc/laraveladvancedtest/LaravelLivewireTablesAdvancedFilters/src/SmartSelectFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter" namespace="global">
-        <metrics complexity="21" methods="10" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="44" coveredstatements="31" elements="54" coveredelements="39"/>
+        <metrics complexity="22" methods="10" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="45" coveredstatements="31" elements="55" coveredelements="39"/>
       </class>
       <line num="15" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="126"/>
       <line num="17" type="stmt" count="126"/>
@@ -191,13 +191,14 @@
       <line num="90" type="stmt" count="1"/>
       <line num="92" type="stmt" count="1"/>
       <line num="96" type="stmt" count="3"/>
-      <line num="102" type="method" name="getFilterPillValue" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="102" type="method" name="getFilterPillValue" visibility="public" complexity="5" crap="30" count="0"/>
       <line num="104" type="stmt" count="0"/>
       <line num="105" type="stmt" count="0"/>
       <line num="106" type="stmt" count="0"/>
       <line num="107" type="stmt" count="0"/>
       <line num="109" type="stmt" count="0"/>
       <line num="110" type="stmt" count="0"/>
+      <line num="113" type="stmt" count="0"/>
       <line num="114" type="stmt" count="0"/>
       <line num="117" type="stmt" count="0"/>
       <line num="119" type="stmt" count="0"/>
@@ -210,8 +211,8 @@
       <line num="147" type="stmt" count="0"/>
       <line num="148" type="stmt" count="0"/>
       <line num="149" type="stmt" count="0"/>
-      <metrics loc="152" ncloc="116" classes="1" methods="10" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="44" coveredstatements="31" elements="54" coveredelements="39"/>
+      <metrics loc="152" ncloc="116" classes="1" methods="10" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="45" coveredstatements="31" elements="55" coveredelements="39"/>
     </file>
-    <metrics files="5" loc="550" ncloc="415" classes="5" methods="39" coveredmethods="30" conditionals="0" coveredconditionals="0" statements="142" coveredstatements="109" elements="181" coveredelements="139"/>
+    <metrics files="5" loc="550" ncloc="415" classes="5" methods="39" coveredmethods="30" conditionals="0" coveredconditionals="0" statements="143" coveredstatements="109" elements="182" coveredelements="139"/>
   </project>
 </coverage>

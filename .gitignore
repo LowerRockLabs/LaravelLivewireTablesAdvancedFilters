@@ -26,3 +26,5 @@ src/DateRangeFilter.php
 docs/images/badges/phpunit-coverage-develop.svg
 clover.xml
 build/report.junit.xml
+clover.xml
+build/report.junit.xml

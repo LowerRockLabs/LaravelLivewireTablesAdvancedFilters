@@ -110,7 +110,7 @@ class SmartSelectFilter extends Filter
                     $values[] = $found;
                 }
             }
-        } elseif (isset($this->getOptions()[$item])) {
+        } elseif (isset($this->getOptions()[$value])) {
             $values[] = $value;
         }
 

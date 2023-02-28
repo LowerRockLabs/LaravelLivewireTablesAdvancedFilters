@@ -110,11 +110,11 @@ class SmartSelectFilter extends Filter
                     $values[] = $found;
                 }
             }
-        } else {
+        } elseif (isset($this->getOptions()[$item])) {
             $values[] = $value;
         }
 
-        $values = array_unique($values, SORT_STRING);
+        $values = array_unique($values);
 
         return implode(', ', $values);
     }
@@ -124,7 +124,7 @@ class SmartSelectFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        return empty($value);
+        return $value === '';
     }
 
     /**

@@ -12,7 +12,7 @@
         currentFilteredList: [],
         filteredList: [],
         tmp: {{ json_encode($selectedItems) }},
-        selectedItems: {{ json_encode($selectedItems) }},
+        selectedItems: $wire.entangle('{{ $filterKey }}'),
         items: {{ json_encode($filter->getOptions()) }},
         setupCurrentFilteredList() {
             this.filteredList = Array.from(new Set({{ json_encode($filter->getOptions()) }}));
@@ -38,12 +38,20 @@
             );
         },
         pushToSelected(itemID) {
-            this.checkedItems = Array.from(new Set(this.selectedItems));
-            this.checkedItems.push(itemID);
+            this.selectedItems.push(itemID);
             this.currentFilteredList = []
             $refs.smartSelectSearchBox.value = '';
-            $wire.set('{{ $filterKey }}', this.checkedItems);
     
+        },
+        delToSelected(itemID) {
+            var index = this.selectedItems.indexOf(itemID);
+    
+            this.currentFilteredList = []
+            $refs.smartSelectSearchBox.value = '';
+    
+            if (index !== -1) {
+                this.selectedItems.splice(index, 1);
+            }
         },
         init() {
             if (this.filteredList.length === 0) {
@@ -59,10 +67,10 @@
             <div class="flex-col w-full pr-4 ">
                 <ul class="bg-white dark:bg-darker flex-col w-full z-50">
                     <template x-for="filteredItem in currentFilteredList" :key="filteredItem.id">
-                        <li class="w-full flex text-gray-700 px-2 mt-2 text-black dark:text-white bg-white hover:bg-sky-700 dark:bg-darker hover:dark:bg-sky-700"
-                            x-on:click="pushToSelected(filteredItem.id)">
-                            <span>T</span>
-                            <span x-text="filteredItem.name"></span>
+                        <li
+                            class="w-full flex text-gray-700 px-2 mt-2 text-black dark:text-white bg-white hover:bg-sky-700 dark:bg-darker hover:dark:bg-sky-700">
+                            <span x-on:click="delToSelected(filteredItem.id)">X </span>
+                            <span x-on:click="pushToSelected(filteredItem.id)" x-text="filteredItem.name"></span>
                         </li>
                     </template>
                 </ul>

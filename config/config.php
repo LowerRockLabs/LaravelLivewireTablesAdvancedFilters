@@ -24,6 +24,8 @@ return [
             'classes' => '',            // Classes for the list items
             'defaults' => true,         // Determines whether to merge (true) or replace (false) the default classes
         ],
+        'closeAfterAdd' => true,        // Close the smartSelect after adding an item
+        'closeAfterRemove' => true,     // Close the smartSelect after removing an item
     ],
     'dateRange' => [
         'defaults' => [

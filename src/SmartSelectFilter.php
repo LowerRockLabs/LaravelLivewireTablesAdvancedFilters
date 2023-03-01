@@ -41,11 +41,51 @@ class SmartSelectFilter extends Filter
     }
 
     /**
+     * @param  bool  $svgEnabled
+     * @param  string  $svgFill
+     * @param  string  $svgSize
+     * @param  mixed  $mode='both'
+     */
+    public function setIconStyling($svgEnabled = true, $svgFill = '', $svgSize = '', $mode = 'both'): SmartSelectFilter
+    {
+        //$this->config['iconStyling'] =
+        if ($mode == 'add' || $mode == 'both') {
+            $this->config['iconStyling']['add']['svgEnabled'] = $svgEnabled;
+            if ($svgFill != '') {
+                $this->config['iconStyling']['add']['svgFill'] = $svgFill;
+            }
+            if ($svgSize != '') {
+                $this->config['iconStyling']['add']['svgSize'] = $svgSize;
+            }
+        }
+        if ($mode == 'delete' || $mode == 'both') {
+            $this->config['iconStyling']['delete']['svgEnabled'] = $svgEnabled;
+            if ($svgFill != '') {
+                $this->config['iconStyling']['delete']['svgFill'] = $svgFill;
+            }
+            if ($svgSize != '') {
+                $this->config['iconStyling']['delete']['svgSize'] = $svgSize;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return array<mixed>
      */
     public function getOptions(): array
     {
-        return $this->options;
+        if ($this->getConfig('optionsMethod') == 'complex') {
+            return $this->options;
+        } else {
+            $complexArray = [];
+            foreach ($this->options as $id => $name) {
+                $complexArray[] = ['id' => $id, 'name' => $name];
+            }
+
+            return $complexArray;
+        }
     }
 
     /**
@@ -108,11 +148,29 @@ class SmartSelectFilter extends Filter
     {
         $values = [];
         if (is_array($value)) {
-            foreach ($value as $item) {
-                $found = isset($this->getOptions()[$item]);
+            if ($this->getConfig('optionsMethod') == 'complex') {
+                $optArray = $this->getOptions();
+                foreach ($optArray as $option) {
+                    $optionArray[$option['id']] = $option['name'];
+                }
 
-                if ($found) {
-                    $values[] = $found;
+                foreach ($value as $item) {
+                    $found = $this->getCustomFilterPillValue($item) ?? $optionArray[$item] ?? null;
+
+                    if ($found) {
+                        $values[] = $found;
+                    }
+                }
+            } else {
+                foreach ($value as $item) {
+                    $found = $this->getCustomFilterPillValue($item) ?? $this->getOptions()[$item] ?? null;
+
+                    if ($found) {
+                        if (is_array($found)) {
+                            $found = implode(',', $found);
+                        }
+                        $values[] = $found;
+                    }
                 }
             }
         } elseif (isset($this->getOptions()[$value])) {
@@ -143,18 +201,9 @@ class SmartSelectFilter extends Filter
      */
     public function render(DataTableComponent $component)
     {
-        //if ($component->filters->$filterKey)
-        // dd($this->{$this->tableName}['filters'][$this->getName()]);
-        if ($this->getConfig('optionsMethod') == 'complex') {
-            return view('livewiretablesadvancedfilters::components.tools.filters.smartSelectComplex', [
-                'component' => $component,
-                'filter' => $this,
-            ]);
-        } else {
-            return view('livewiretablesadvancedfilters::components.tools.filters.smartSelectSimple', [
-                'component' => $component,
-                'filter' => $this,
-            ]);
-        }
+        return view('livewiretablesadvancedfilters::components.tools.filters.smartSelectHero', [
+            'component' => $component,
+            'filter' => $this,
+        ]);
     }
 }

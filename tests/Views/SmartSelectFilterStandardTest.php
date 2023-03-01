@@ -110,7 +110,7 @@ class SmartSelectFilterStandardTest extends TestCaseAdvanced
         $filter = SmartSelectFilter::make('Active')->options(
             Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->toArray()
         );
-        $this->assertSame(Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray(), $filter->getOptions());
+        $this->assertSame(Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->toArray(), $filter->getOptions());
     }
 
     /** @test */

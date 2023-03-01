@@ -205,7 +205,7 @@ class SmartSelectFilter extends Filter
             $component->{$component->getTableName()}['filters'][$this->getKey()] = [];
         }
 
-        return view('livewiretablesadvancedfilters::components.tools.filters.smartSelectHero', [
+        return view('livewiretablesadvancedfilters::components.tools.filters.smartSelect', [
             'component' => $component,
             'filter' => $this,
         ]);

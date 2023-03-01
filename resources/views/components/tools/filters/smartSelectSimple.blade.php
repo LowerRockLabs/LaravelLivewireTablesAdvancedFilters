@@ -18,8 +18,15 @@
             this.currentFilteredList = [];
         },
         updateCurrentFilteredList() {
+            currentlyFilteredObject = [];
             if ($refs.{{ $xRefKey }}.value != '') {
-                this.currentFilteredList = this.filteredList.filter(i => i.name.toLowerCase().includes($refs.{{ $xRefKey }}.value.toLowerCase()))
+                this.filteredList.filter(function(elem, index) {
+                    if (elem.toLowerCase().includes($refs.{{ $xRefKey }}.value.toLowerCase())) {
+                        currentlyFilteredObject.push({ 'id': index, 'name': elem });
+                    }
+                    return true;
+                });
+                this.currentFilteredList = currentlyFilteredObject;
             } else {
                 this.currentFilteredList = [];
             }
@@ -28,10 +35,8 @@
             var index = this.selectedItems.indexOf(itemID);
             if (index !== -1) {
                 $refs.{{ $xRefKey }}.value = ''
-                this.currentFilteredList = []
             } else {
                 $refs.{{ $xRefKey }}.value = '';
-                this.currentFilteredList = []
                 this.selectedItems.push(itemID.toString())
             }
         },
@@ -45,16 +50,15 @@
             }
         },
         init() {
-            this.currentFilteredList = [];
+            this.currentFilteredList = []
             var testObject = Object.entries({{ json_encode($filter->getOptions()) }}).map((entry) => this.filteredList[entry[0]] = entry[1]);
-            this.filteredList = Array.from(new Set({{ json_encode($filter->getOptions()) }}));
         },
     }">
-        <div class=" w-full flex flex-col items-center justify-center">
+        <div class=" w-full flex flex-col items-center justify-center ">
             <input x-on:keyup="updateCurrentFilteredList" type="text" x-ref="{{ $xRefKey }}"
                 placeholder="Search Here..."
                 class=" w-full mr-4	border-gray-300 rounded-md dark:bg-gray-800 dark:text-white dark:border-gray-600">
-            <div class="flex-col w-full pr-4 overflow-visible z-50">
+            <div class="flex-col w-full pr-4 overflow-visible z-50 ">
                 <ul class="bg-white dark:bg-darker flex-col w-full">
                     <template x-for="filteredItem in currentFilteredList" :key="filteredItem.id">
                         <li @class([
@@ -63,7 +67,7 @@
                             $listStyling['classes'],
                         ])>
                             <template x-if="selectedItems.indexOf(Number(filteredItem.id)) > -1">
-                                <a class="cursor-pointer" x-on:click="removeSelectedItem(filteredItem.id.toString())">
+                                <a class="cursor-pointer" x-on:click="removeSelectedItem(filteredItem.id)">
                                     @if ($iconStyling['delete']['svgEnabled'])
                                         <svg @class([
                                             'inline-block' => $iconStyling['delete']['defaults'],
@@ -84,7 +88,7 @@
                                     <span class="smartSelect-NameDisplay-Wrapper">
                                         <template x-if="displayIdEnabled">
                                             <span class="smartSelect-NameDisplay-ID">
-                                                (<span x-text="filteredItem.id"></span>)
+                                                &#40;<span x-text="filteredItem.id"></span>&#41;
                                             </span>
                                         </template>
                                         <span class="smartSelect-NameDisplay-Name" x-text="filteredItem.name"></span>
@@ -92,7 +96,7 @@
                                 </a>
                             </template>
                             <template x-if="selectedItems.indexOf(Number(filteredItem.id)) < 0">
-                                <a class="cursor-pointer" x-on:click="addSelectedItem(filteredItem.id.toString())">
+                                <a class="cursor-pointer" x-on:click="addSelectedItem(filteredItem.id)">
                                     @if ($iconStyling['add']['svgEnabled'])
                                         <svg @class([
                                             'inline-block' => $iconStyling['add']['defaults'],
@@ -109,7 +113,7 @@
                                     <span class="smartSelect-NameDisplay-Wrapper">
                                         <template x-if="displayIdEnabled">
                                             <span class="smartSelect-NameDisplay-ID">
-                                                (<span x-text="filteredItem.id"></span>)
+                                                &#40;<span x-text="filteredItem.id"></span>&#41;
                                             </span>
                                         </template>
                                         <span class="smartSelect-NameDisplay-Name" x-text="filteredItem.name"></span>
@@ -120,9 +124,7 @@
                     </template>
                 </ul>
             </div>
-
         </div>
-
     </div>
 @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
     <div class="mb-3 mb-md-0 input-group">

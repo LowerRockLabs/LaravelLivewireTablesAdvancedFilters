@@ -24,7 +24,7 @@ class SmartSelectFilter extends Filter
      */
     public function config($config = []): SmartSelectFilter
     {
-        $this->config = array_merge($this->config, $config);
+        $this->config = (empty($this->config) ? array_merge(config('livewiretablesadvancedfilters.smartSelect'), $config) : array_merge($this->config, $config));
 
         return $this;
     }
@@ -53,12 +53,16 @@ class SmartSelectFilter extends Filter
      */
     public function getKeys(): array
     {
-        return collect($this->getOptions())
+        if ($this->getConfig('optionsMethod') == 'complex') {
+            return collect($this->getOptions())->pluck('id')->toArray();
+        } else {
+            return collect($this->getOptions())
             ->keys()
             ->map(fn ($value) => (string) $value)
             ->filter(fn ($value) => strlen($value)) /** @phpstan-ignore-line */
             ->values()
             ->toArray();
+        }
     }
 
     /**
@@ -68,9 +72,10 @@ class SmartSelectFilter extends Filter
     public function validate($value)
     {
         if (is_array($value)) {
-            if (empty($value)) {
+            if (count($value) == 0) {
                 return false;
             }
+            $value = array_unique($value);
             foreach ($value as $index => $val) {
                 // Remove the bad value
                 if (! in_array($val, $this->getKeys())) {
@@ -93,7 +98,7 @@ class SmartSelectFilter extends Filter
             }
         }
 
-        return array_unique($value);
+        return $value;
     }
 
     /**
@@ -114,9 +119,7 @@ class SmartSelectFilter extends Filter
             $values[] = $value;
         }
 
-        $values = array_unique($values);
-
-        return implode(', ', $values);
+        return implode(', ', array_unique($values));
     }
 
     /**
@@ -142,10 +145,16 @@ class SmartSelectFilter extends Filter
     {
         //if ($component->filters->$filterKey)
         // dd($this->{$this->tableName}['filters'][$this->getName()]);
-
-        return view('livewiretablesadvancedfilters::components.tools.filters.smartSelect', [
-            'component' => $component,
-            'filter' => $this,
-        ]);
+        if ($this->getConfig('optionsMethod') == 'complex') {
+            return view('livewiretablesadvancedfilters::components.tools.filters.smartSelectComplex', [
+                'component' => $component,
+                'filter' => $this,
+            ]);
+        } else {
+            return view('livewiretablesadvancedfilters::components.tools.filters.smartSelectSimple', [
+                'component' => $component,
+                'filter' => $this,
+            ]);
+        }
     }
 }

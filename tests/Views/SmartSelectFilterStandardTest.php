@@ -7,7 +7,7 @@ use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Breed;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCaseAdvanced;
 
-class SmartSelectFilterTest extends TestCaseAdvanced
+class SmartSelectFilterStandardTest extends TestCaseAdvanced
 {
     /** @test */
     public function can_get_filter_name(): void
@@ -58,9 +58,9 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     public function can_check_validation_accepts_valid_values(): void
     {
         $filter = SmartSelectFilter::make('Active')->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->toArray()
         );
-        $this->assertSame([1, 2], $filter->validate([1, 2]));
+        $this->assertSame(['1', '2'], $filter->validate(['1', '2']));
     }
 
     /** @test */
@@ -71,7 +71,7 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function can_check_validation_rejects_string_values(): void
+    public function can_check_validation_rejects_string_value(): void
     {
         $filter = SmartSelectFilter::make('Active');
         $this->assertFalse($filter->validate(''));
@@ -81,34 +81,34 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     public function can_check_validation_rejects_invalid_values(): void
     {
         $filter = SmartSelectFilter::make('Active')->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
-        );
-        $this->assertSame([1], $filter->validate([1, 'test']));
-    }
-
-    /** @test */
-    public function can_check_validation_rejects_string_value(): void
-    {
-        $filter = SmartSelectFilter::make('Active')->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->toArray()
         );
         $this->assertFalse($filter->validate('test'));
     }
 
-        /** @test */
-        public function can_check_validation_accepts_string_value_in_array(): void
-        {
-            $filter = SmartSelectFilter::make('Active')->options(
-                Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
-            );
-            $this->assertSame([0 => '1'], $filter->validate('1'));
-        }
+    /** @test */
+    public function can_check_validation_accepts_string_value_in(): void
+    {
+        $filter = SmartSelectFilter::make('Active')->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->toArray()
+        );
+        $this->assertSame([0 => '1'], $filter->validate('1'));
+    }
+
+    /** @test */
+    public function can_check_validation_rejects_invalid_string_value_in(): void
+    {
+        $filter = SmartSelectFilter::make('Active')->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->toArray()
+        );
+        $this->assertFalse($filter->validate('888'));
+    }
 
     /** @test */
     public function can_get_filter_options(): void
     {
         $filter = SmartSelectFilter::make('Active')->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->toArray()
         );
         $this->assertSame(Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray(), $filter->getOptions());
     }
@@ -138,11 +138,10 @@ class SmartSelectFilterTest extends TestCaseAdvanced
 
         $filter = SmartSelectFilter::make('Active')
         ->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->unique()->toArray()
-        )
-            ->filter(function (Builder $builder, array $values) {
-                return $builder->whereIn('breed_id', $values);
-            });
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->unique()->toArray()
+        )->filter(function (Builder $builder, array $values) {
+            return $builder->whereIn('breed_id', $values);
+        });
 
         $this->assertTrue($filter->hasFilterCallback());
         $this->assertIsCallable($filter->getFilterCallback());

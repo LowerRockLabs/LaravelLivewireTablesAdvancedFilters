@@ -28,3 +28,5 @@ clover.xml
 build/report.junit.xml
 clover.xml
 build/report.junit.xml
+tests/Views/SmartSelectFilterTest.php
+build/report.junit.xml

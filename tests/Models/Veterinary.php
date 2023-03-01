@@ -1,6 +1,5 @@
 <?php
 
-
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -31,9 +30,6 @@ class Veterinary extends Model
         'phone',
     ];
 
-    /**
-     * @return BelongsToMany
-     */
     public function pets(): BelongsToMany
     {
         return $this->belongsToMany(Pet::class);

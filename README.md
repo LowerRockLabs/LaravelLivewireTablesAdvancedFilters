@@ -213,18 +213,69 @@ Include the class after your namespace declaration
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter;
 ```
 
+There are two approaches, one is to pass the filter a simple array (id => name), the other is to pass it a more complex array (# => { id: val, name: val, extraField: val}), which is presently for future enhancements.
+
 In the filters() function in your data table component:
+
+### Flat array approach
+
 ```php
-SmartSelectFilter::make('Tag Smart')
+SmartSelectFilter::make('Tag')
+->config(['optionsMethod' => 'simple'])  // Optional, this is the default
 ->options(
     Tag::query()
-        ->select('id', 'name')
+    ->select('id', 'name')
+    ->orderBy('name')
+    ->pluck('name','id')
+    ->toArray()
+)->filter(function (Builder $builder, array $values) {
+    $builder->whereHas('tags', fn ($query) => $query->whereIn('tags.id', $values));
+}),
+
+```
+
+### Complex array approach
+```php
+SmartSelectFilter::make('Parent')
+->config(['optionsMethod' => 'complex'])
+->options(
+    User::query()
+        ->select('id', 'title', 'name')
         ->orderBy('name')
         ->get()
         ->toArray()
 )->filter(function (Builder $builder, array $values) {
-    $builder->whereHas('tags', fn ($query) => $query->whereIn('tags.id', $values));
+     $builder->whereIn('parent_id',$values);
 }),
+```
+{{ $iconStyling['delete']['svgFill'] }}
+### Configuration options
+```php
+'smartSelect' => [
+    'optionsMethod' => 'simple',    // Should be set to either simple/complex.
+    'iconStyling' => [
+        'add' => [
+            'classes' => '',        // Base classes for the "add" icon
+            'defaults' => true,     // Determines whether to merge (true) or replace (false) the default class (inline-block)
+            'svgEnabled' => false,  // Enable or Disable the use of the default SVG icon
+            'svgFill' => '#000000', // Fill for the SVG Icon
+            'svgSize' => '1.5em',   // Size for the SVG Icon
+        ],
+        'delete' => [
+            'classes' => '',        // Base classes for the "delete" icon
+            'defaults' => true,     // Determines whether to merge (true) or replace (false) the default class (inline-block)
+            'svgEnabled' => true,   // Enable or Disable the use of the default SVG icon
+            'svgFill' => '#000000', // Fill for the SVG Icon
+            'svgSize' => '1.5em',   // Size for the SVG Icon
+        ],
+    ],
+    'listStyling' => [
+        'classes' => '',            // Classes for the list items
+        'defaults' => true,         // Determines whether to merge (true) or replace (false) the default classes
+    ],
+    'closeAfterAdd' => true,        // Close the smartSelect after adding an item
+    'closeAfterRemove' => true,     // Close the smartSelect after removing an item
+],
 ```
 
 ### Dependencies

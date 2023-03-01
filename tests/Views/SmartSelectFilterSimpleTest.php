@@ -7,10 +7,10 @@ use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Breed;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCaseAdvanced;
 
-class SmartSelectFilterTest extends TestCaseAdvanced
+class SmartSelectFilterSimpleTest extends TestCaseAdvanced
 {
     /** @test */
-    public function can_get_filter_name(): void
+    public function can_get_filter_name_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
         // Should match
@@ -18,7 +18,7 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function can_get_filter_key(): void
+    public function can_get_filter_key_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
 
@@ -26,7 +26,7 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function can_get_filter_configs(): void
+    public function can_get_filter_configs_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
 
@@ -38,7 +38,7 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function get_a_single_filter_config(): void
+    public function get_a_single_filter_config_simple(): void
     {
         $filter = SmartSelectFilter::make('Active')
             ->config(['foo' => 'bar']);
@@ -47,7 +47,7 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function can_get_if_empty(): void
+    public function can_get_if_empty_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
         $this->assertTrue($filter->isEmpty(''));
@@ -55,66 +55,66 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function can_check_validation_accepts_valid_values(): void
+    public function can_check_validation_accepts_valid_values_simple(): void
     {
-        $filter = SmartSelectFilter::make('Active')->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
+        $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'simple'])->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->toArray()
         );
-        $this->assertSame([1, 2], $filter->validate([1, 2]));
+        $this->assertSame(['1', '2'], $filter->validate(['1', '2']));
     }
 
     /** @test */
-    public function can_check_validation_rejects_empty_values(): void
+    public function can_check_validation_rejects_empty_values_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
         $this->assertFalse($filter->validate([]));
     }
 
     /** @test */
-    public function can_check_validation_rejects_string_values(): void
+    public function can_check_validation_rejects_string_value_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
         $this->assertFalse($filter->validate(''));
     }
 
     /** @test */
-    public function can_check_validation_rejects_invalid_values(): void
+    public function can_check_validation_rejects_invalid_values_simple(): void
     {
-        $filter = SmartSelectFilter::make('Active')->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
-        );
-        $this->assertSame([1], $filter->validate([1, 'test']));
-    }
-
-    /** @test */
-    public function can_check_validation_rejects_string_value(): void
-    {
-        $filter = SmartSelectFilter::make('Active')->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
+        $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'simple'])->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->toArray()
         );
         $this->assertFalse($filter->validate('test'));
     }
 
-        /** @test */
-        public function can_check_validation_accepts_string_value_in_array(): void
-        {
-            $filter = SmartSelectFilter::make('Active')->options(
-                Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
-            );
-            $this->assertSame([0 => '1'], $filter->validate('1'));
-        }
-
     /** @test */
-    public function can_get_filter_options(): void
+    public function can_check_validation_accepts_string_value_in_simple(): void
     {
-        $filter = SmartSelectFilter::make('Active')->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray()
+        $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'simple'])->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->toArray()
         );
-        $this->assertSame(Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->pluck('name', 'id')->toArray(), $filter->getOptions());
+        $this->assertSame([0 => '1'], $filter->validate('1'));
     }
 
     /** @test */
-    public function can_get_filter_keys(): void
+    public function can_check_validation_rejects_invalid_string_value_in_simple(): void
+    {
+        $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'simple'])->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->toArray()
+        );
+        $this->assertFalse($filter->validate('888'));
+    }
+
+    /** @test */
+    public function can_get_filter_options_simple(): void
+    {
+        $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'simple'])->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->toArray()
+        );
+        $this->assertSame(Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->toArray(), $filter->getOptions());
+    }
+
+    /** @test */
+    public function can_get_filter_keys_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
 
@@ -122,7 +122,7 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function can_get_filter_default_value(): void
+    public function can_get_filter_default_value_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
 
@@ -130,7 +130,7 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function can_get_filter_callback(): void
+    public function can_get_filter_callback_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
 
@@ -138,18 +138,17 @@ class SmartSelectFilterTest extends TestCaseAdvanced
 
         $filter = SmartSelectFilter::make('Active')
         ->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->unique()->toArray()
-        )
-            ->filter(function (Builder $builder, array $values) {
-                return $builder->whereIn('breed_id', $values);
-            });
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->unique()->toArray()
+        )->filter(function (Builder $builder, array $values) {
+            return $builder->whereIn('breed_id', $values);
+        });
 
         $this->assertTrue($filter->hasFilterCallback());
         $this->assertIsCallable($filter->getFilterCallback());
     }
 
     /** @test */
-    public function can_get_filter_pill_title(): void
+    public function can_get_filter_pill_title_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
 
@@ -194,14 +193,14 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }*/
 
     /** @test */
-    public function can_check_if_filter_has_configs(): void
+    public function can_check_if_filter_has_configs_simple(): void
     {
         $filter = SmartSelectFilter::make('Active')->config(['foo' => 'bar']);
         $this->assertTrue($filter->hasConfigs());
     }
 
     /** @test */
-    public function can_check_filter_config_by_name(): void
+    public function can_check_filter_config_by_name_simple(): void
     {
         $filter = SmartSelectFilter::make('Active')
             ->config(['foo' => 'bar']);
@@ -211,7 +210,7 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function can_check_if_filter_is_hidden_from_menus(): void
+    public function can_check_if_filter_is_hidden_from_menus_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
 
@@ -225,7 +224,7 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function can_check_if_filter_is_hidden_from_pills(): void
+    public function can_check_if_filter_is_hidden_from_pills_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
 
@@ -239,7 +238,7 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function can_check_if_filter_is_hidden_from_count(): void
+    public function can_check_if_filter_is_hidden_from_count_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
 
@@ -253,7 +252,7 @@ class SmartSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function can_check_if_filter_is_reset_by_clear_button(): void
+    public function can_check_if_filter_is_reset_by_clear_button_simple(): void
     {
         $filter = SmartSelectFilter::make('Active');
 

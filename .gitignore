@@ -9,7 +9,6 @@ public/storage
 public/hot
 public_html/storage
 public_html/hot
-clover.xml
 storage/*.key
 .env
 Homestead.yaml
@@ -24,5 +23,7 @@ build/*
 src/DateRangeFilter.php
 .phpunit.cache/*
 docs/images/badges/phpunit-coverage-develop.svg
-clover.xml
+build/report.junit.xml
+build/report.junit.xml
+tests/Views/SmartSelectFilterTest.php
 build/report.junit.xml

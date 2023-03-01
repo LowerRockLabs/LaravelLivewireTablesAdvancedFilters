@@ -3,8 +3,29 @@
 // config for LowerRockLabs/LaravelLivewireTablesAdvancedFilters
 return [
     'smartSelect' => [
-        'defaults' => [
+        'optionsMethod' => 'simple',    // Should be set to either simple/complex.
+        'iconStyling' => [
+            'add' => [
+                'classes' => '',        // Base classes for the "add" icon
+                'defaults' => true,     // Determines whether to merge (true) or replace (false) the default class (inline-block)
+                'svgEnabled' => false,  // Enable or Disable the use of the default SVG icon
+                'svgFill' => '#000000', // Fill for the SVG Icon
+                'svgSize' => '1.5em',   // Size for the SVG Icon
+            ],
+            'delete' => [
+                'classes' => '',        // Base classes for the "delete" icon
+                'defaults' => true,     // Determines whether to merge (true) or replace (false) the default class (inline-block)
+                'svgEnabled' => true,   // Enable or Disable the use of the default SVG icon
+                'svgFill' => '#000000', // Fill for the SVG Icon
+                'svgSize' => '1.5em',   // Size for the SVG Icon
+            ],
         ],
+        'listStyling' => [
+            'classes' => '',            // Classes for the list items
+            'defaults' => true,         // Determines whether to merge (true) or replace (false) the default classes
+        ],
+        'closeAfterAdd' => true,        // Close the smartSelect after adding an item
+        'closeAfterRemove' => true,     // Close the smartSelect after removing an item
     ],
     'dateRange' => [
         'defaults' => [
@@ -45,7 +66,7 @@ return [
         ],
         'styling' => [
             'light' => [ // Used When "dark" class is not in a parent element
-                'activeColor' => '#FFFFF',
+                'activeColor' => '#FFFFF', // Color of the text within the circle when hovered
                 'fillColor' => '#0366d6', // The color of the bar for the selected range
                 'primaryColor' => '#0366d6', // The primary color
                 'progressBackground' => '#eee', // The color of the remainder of the bar
@@ -55,7 +76,7 @@ return [
                 'valueBgHover' => '#0366d6', // The bg color of the current value when the relevant selector is hovered over
             ],
             'dark' => [ // Used When "dark" class is in a parent element
-                'activeColor' => 'transparent',
+                'activeColor' => 'transparent', // Color of the text within the circle when hovered
                 'fillColor' => '#FF0000', // The color of the bar for the selected range
                 'progressBackground' => '#eee', // The color of the remainder of the bar
                 'primaryColor' => '#00FF00', // The primary color

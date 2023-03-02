@@ -119,22 +119,12 @@ class SlimSelectFilter extends Filter
     {
         $values = [];
 
-        return 'yes';
         if (is_array($value)) {
-            $optArray = $this->getOptions();
-            foreach ($optArray as $option) {
-                $optionArray[$option['id']] = $option['name'];
+            foreach ($value as $index => $item) {
+                $values[] = $this->options[$item] ?? $item;
             }
-
-            foreach ($value as $item) {
-                $found = $this->getCustomFilterPillValue($item) ?? $optionArray[$item] ?? null;
-
-                if ($found) {
-                    $values[] = $found;
-                }
-            }
-        } elseif (isset($this->getOptions()[$value])) {
-            $values[] = $value;
+        } elseif (isset($this->options[$value])) {
+            $values[] = $this->options[$value];
         }
 
         return implode(', ', array_unique($values));

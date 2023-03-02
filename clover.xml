@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1677721358">
-  <project timestamp="1677721358">
+<coverage generated="1677722281">
+  <project timestamp="1677722281">
     <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter" namespace="global">
         <metrics complexity="11" methods="8" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="15" elements="28" coveredelements="21"/>
@@ -154,7 +154,7 @@
     </file>
     <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/SlimSelectFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SlimSelectFilter" namespace="global">
-        <metrics complexity="31" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="49" coveredstatements="0" elements="60" coveredelements="0"/>
+        <metrics complexity="29" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="54" coveredstatements="0" elements="65" coveredelements="0"/>
       </class>
       <line num="17" type="method" name="__construct" visibility="public" complexity="2" crap="6" count="0"/>
       <line num="19" type="stmt" count="0"/>
@@ -195,28 +195,33 @@
       <line num="107" type="stmt" count="0"/>
       <line num="108" type="stmt" count="0"/>
       <line num="112" type="stmt" count="0"/>
-      <line num="118" type="method" name="getFilterPillValue" visibility="public" complexity="6" crap="42" count="0"/>
+      <line num="118" type="method" name="getFilterPillValue" visibility="public" complexity="4" crap="20" count="0"/>
       <line num="120" type="stmt" count="0"/>
       <line num="122" type="stmt" count="0"/>
-      <line num="146" type="method" name="isEmpty" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="148" type="stmt" count="0"/>
-      <line num="154" type="method" name="getDefaultValue" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="156" type="stmt" count="0"/>
-      <line num="162" type="method" name="render" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="123" type="stmt" count="0"/>
+      <line num="124" type="stmt" count="0"/>
+      <line num="126" type="stmt" count="0"/>
+      <line num="127" type="stmt" count="0"/>
+      <line num="130" type="stmt" count="0"/>
+      <line num="136" type="method" name="isEmpty" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="138" type="stmt" count="0"/>
+      <line num="144" type="method" name="getDefaultValue" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="146" type="stmt" count="0"/>
+      <line num="152" type="method" name="render" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="154" type="stmt" count="0"/>
+      <line num="155" type="stmt" count="0"/>
+      <line num="157" type="stmt" count="0"/>
+      <line num="159" type="stmt" count="0"/>
+      <line num="160" type="stmt" count="0"/>
+      <line num="161" type="stmt" count="0"/>
+      <line num="162" type="stmt" count="0"/>
+      <line num="163" type="stmt" count="0"/>
       <line num="164" type="stmt" count="0"/>
-      <line num="165" type="stmt" count="0"/>
-      <line num="167" type="stmt" count="0"/>
+      <line num="168" type="stmt" count="0"/>
       <line num="169" type="stmt" count="0"/>
       <line num="170" type="stmt" count="0"/>
       <line num="171" type="stmt" count="0"/>
-      <line num="172" type="stmt" count="0"/>
-      <line num="173" type="stmt" count="0"/>
-      <line num="174" type="stmt" count="0"/>
-      <line num="178" type="stmt" count="0"/>
-      <line num="179" type="stmt" count="0"/>
-      <line num="180" type="stmt" count="0"/>
-      <line num="181" type="stmt" count="0"/>
-      <metrics loc="184" ncloc="144" classes="1" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="49" coveredstatements="0" elements="60" coveredelements="0"/>
+      <metrics loc="174" ncloc="134" classes="1" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="54" coveredstatements="0" elements="65" coveredelements="0"/>
     </file>
     <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/SmartSelectFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter" namespace="global">
@@ -312,6 +317,6 @@
       <line num="211" type="stmt" count="0"/>
       <metrics loc="214" ncloc="173" classes="1" methods="11" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="77" coveredstatements="38" elements="88" coveredelements="45"/>
     </file>
-    <metrics files="6" loc="796" ncloc="616" classes="6" methods="51" coveredmethods="29" conditionals="0" coveredconditionals="0" statements="224" coveredstatements="116" elements="275" coveredelements="145"/>
+    <metrics files="6" loc="786" ncloc="606" classes="6" methods="51" coveredmethods="29" conditionals="0" coveredconditionals="0" statements="229" coveredstatements="116" elements="280" coveredelements="145"/>
   </project>
 </coverage>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1677682187">
-  <project timestamp="1677682187">
+<coverage generated="1677721358">
+  <project timestamp="1677721358">
     <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter" namespace="global">
         <metrics complexity="11" methods="8" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="15" elements="28" coveredelements="21"/>
@@ -152,6 +152,72 @@
       <line num="116" type="stmt" count="0"/>
       <metrics loc="119" ncloc="89" classes="1" methods="9" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="23" elements="37" coveredelements="30"/>
     </file>
+    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/SlimSelectFilter.php">
+      <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SlimSelectFilter" namespace="global">
+        <metrics complexity="31" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="49" coveredstatements="0" elements="60" coveredelements="0"/>
+      </class>
+      <line num="17" type="method" name="__construct" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="19" type="stmt" count="0"/>
+      <line num="20" type="stmt" count="0"/>
+      <line num="27" type="method" name="config" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="29" type="stmt" count="0"/>
+      <line num="31" type="stmt" count="0"/>
+      <line num="38" type="method" name="options" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="40" type="stmt" count="0"/>
+      <line num="42" type="stmt" count="0"/>
+      <line num="51" type="method" name="setIconStyling" visibility="public" complexity="9" crap="90" count="0"/>
+      <line num="54" type="stmt" count="0"/>
+      <line num="55" type="stmt" count="0"/>
+      <line num="56" type="stmt" count="0"/>
+      <line num="57" type="stmt" count="0"/>
+      <line num="59" type="stmt" count="0"/>
+      <line num="60" type="stmt" count="0"/>
+      <line num="63" type="stmt" count="0"/>
+      <line num="64" type="stmt" count="0"/>
+      <line num="65" type="stmt" count="0"/>
+      <line num="66" type="stmt" count="0"/>
+      <line num="68" type="stmt" count="0"/>
+      <line num="69" type="stmt" count="0"/>
+      <line num="73" type="stmt" count="0"/>
+      <line num="79" type="method" name="getOptions" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="81" type="stmt" count="0"/>
+      <line num="83" type="stmt" count="0"/>
+      <line num="89" type="method" name="getKeys" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="91" type="stmt" count="0"/>
+      <line num="92" type="stmt" count="0"/>
+      <line num="93" type="stmt" count="0"/>
+      <line num="94" type="stmt" count="0"/>
+      <line num="95" type="stmt" count="0"/>
+      <line num="96" type="stmt" count="0"/>
+      <line num="103" type="method" name="validate" visibility="public" complexity="3" crap="12" count="0"/>
+      <line num="105" type="stmt" count="0"/>
+      <line num="106" type="stmt" count="0"/>
+      <line num="107" type="stmt" count="0"/>
+      <line num="108" type="stmt" count="0"/>
+      <line num="112" type="stmt" count="0"/>
+      <line num="118" type="method" name="getFilterPillValue" visibility="public" complexity="6" crap="42" count="0"/>
+      <line num="120" type="stmt" count="0"/>
+      <line num="122" type="stmt" count="0"/>
+      <line num="146" type="method" name="isEmpty" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="148" type="stmt" count="0"/>
+      <line num="154" type="method" name="getDefaultValue" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="156" type="stmt" count="0"/>
+      <line num="162" type="method" name="render" visibility="public" complexity="4" crap="20" count="0"/>
+      <line num="164" type="stmt" count="0"/>
+      <line num="165" type="stmt" count="0"/>
+      <line num="167" type="stmt" count="0"/>
+      <line num="169" type="stmt" count="0"/>
+      <line num="170" type="stmt" count="0"/>
+      <line num="171" type="stmt" count="0"/>
+      <line num="172" type="stmt" count="0"/>
+      <line num="173" type="stmt" count="0"/>
+      <line num="174" type="stmt" count="0"/>
+      <line num="178" type="stmt" count="0"/>
+      <line num="179" type="stmt" count="0"/>
+      <line num="180" type="stmt" count="0"/>
+      <line num="181" type="stmt" count="0"/>
+      <metrics loc="184" ncloc="144" classes="1" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="49" coveredstatements="0" elements="60" coveredelements="0"/>
+    </file>
     <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/SmartSelectFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter" namespace="global">
         <metrics complexity="41" methods="11" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="77" coveredstatements="38" elements="88" coveredelements="45"/>
@@ -246,6 +312,6 @@
       <line num="211" type="stmt" count="0"/>
       <metrics loc="214" ncloc="173" classes="1" methods="11" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="77" coveredstatements="38" elements="88" coveredelements="45"/>
     </file>
-    <metrics files="5" loc="612" ncloc="472" classes="5" methods="40" coveredmethods="29" conditionals="0" coveredconditionals="0" statements="175" coveredstatements="116" elements="215" coveredelements="145"/>
+    <metrics files="6" loc="796" ncloc="616" classes="6" methods="51" coveredmethods="29" conditionals="0" coveredconditionals="0" statements="224" coveredstatements="116" elements="275" coveredelements="145"/>
   </project>
 </coverage>

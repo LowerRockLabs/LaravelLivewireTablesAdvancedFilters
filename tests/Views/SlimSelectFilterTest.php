@@ -258,6 +258,30 @@ class SlimSelectFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
+    public function can_get_filter_pill_value(): void
+    {
+        $filter = SlimSelectFilter::make('Active')->options(
+            Breed::query()
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get()
+            ->keyBy('id')
+            ->map(function ($breed) {
+                return [
+                    'id' => $breed->id,
+                    'name' => $breed->name,
+                    'text' => $breed->name,
+                    'value' => $breed->id,
+                    'html' => $breed->name,
+                ];
+            })->toArray());
+
+        $this->assertSame('', $filter->getFilterPillValue(['1']));
+
+        $this->assertSame('', $filter->getFilterPillValue(['1', '3']));
+    }
+
+    /** @test */
     /*
     public function can_get_filter_pill_value(): void
     {

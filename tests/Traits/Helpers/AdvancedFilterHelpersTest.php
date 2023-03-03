@@ -74,7 +74,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
     /** @test */
     public function can_get_component_filter_count(): void
     {
-        $this->assertEquals(6, $this->advancedTable->getFiltersCount());
+        $this->assertEquals(7, $this->advancedTable->getFiltersCount());
     }
 
     /** @test */
@@ -169,6 +169,8 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
                 'maxDate' => null],
             'datepicker' => null,
             'species' => [],
+            'slim' => [],
+
         ], $this->advancedTable->getAppliedFilters());
     }
 

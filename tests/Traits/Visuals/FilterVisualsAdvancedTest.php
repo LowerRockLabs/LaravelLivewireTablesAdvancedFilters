@@ -117,4 +117,11 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
         Livewire::test(PetsTableAdvanced::class)
             ->assertSeeHtml('mode:"single"');
     }
+
+        /** @test */
+        public function filters_slimselect_can_be_seen(): void
+        {
+            Livewire::test(PetsTableAdvanced::class)
+                ->assertSeeHtml('slimSelect');
+        }
 }

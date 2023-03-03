@@ -5,6 +5,7 @@ namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Traits\Helper
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DateRangeFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SlimSelectFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCaseAdvanced;
 use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectDropdownFilter;
@@ -69,12 +70,13 @@ class FilterHelpersAdvancedTest extends TestCaseAdvanced
         $this->assertInstanceOf(DateRangeFilter::class, $this->advancedTable->getFilters()[3]);
         $this->assertInstanceOf(DatePickerFilter::class, $this->advancedTable->getFilters()[4]);
         $this->assertInstanceOf(MultiSelectDropdownFilter::class, $this->advancedTable->getFilters()[5]);
+        $this->assertInstanceOf(SlimSelectFilter::class, $this->advancedTable->getFilters()[6]);
     }
 
     /** @test */
     public function can_get_component_filter_count(): void
     {
-        $this->assertEquals(6, $this->advancedTable->getFiltersCount());
+        $this->assertEquals(7, $this->advancedTable->getFiltersCount());
     }
 
     /** @test */
@@ -88,16 +90,19 @@ class FilterHelpersAdvancedTest extends TestCaseAdvanced
         $this->assertInstanceOf(DateRangeFilter::class, $this->advancedTable->getFilterByKey('daterange'));
         $this->assertInstanceOf(DatePickerFilter::class, $this->advancedTable->getFilterByKey('datepicker'));
         $this->assertInstanceOf(MultiSelectDropdownFilter::class, $this->advancedTable->getFilterByKey('species'));
+        $this->assertInstanceOf(SlimSelectFilter::class, $this->advancedTable->getFilterByKey('slim'));
 
         $this->assertNotInstanceOf(SmartSelectFilter::class, $this->advancedTable->getFilterByKey('species'));
         $this->assertNotInstanceOf(NumberRangeFilter::class, $this->advancedTable->getFilterByKey('species'));
         $this->assertNotInstanceOf(DateRangeFilter::class, $this->advancedTable->getFilterByKey('species'));
         $this->assertNotInstanceOf(DatePickerFilter::class, $this->advancedTable->getFilterByKey('species'));
+        $this->assertNotInstanceOf(SlimSelectFilter::class, $this->advancedTable->getFilterByKey('species'));
 
         $this->assertNotInstanceOf(MultiSelectFilter::class, $this->advancedTable->getFilterByKey('smart'));
         $this->assertNotInstanceOf(MultiSelectFilter::class, $this->advancedTable->getFilterByKey('range'));
         $this->assertNotInstanceOf(MultiSelectFilter::class, $this->advancedTable->getFilterByKey('daterange'));
         $this->assertNotInstanceOf(MultiSelectFilter::class, $this->advancedTable->getFilterByKey('datepicker'));
+        $this->assertNotInstanceOf(MultiSelectFilter::class, $this->advancedTable->getFilterByKey('slim'));
     }
 
     /** @test */
@@ -142,7 +147,7 @@ class FilterHelpersAdvancedTest extends TestCaseAdvanced
 
         $this->advancedTable->setFilterDefaults();
 
-        $this->assertSame(['breed' => [], 'smart' => [], 'range' => ['min' => null, 'max' => null], 'daterange' => ['minDate' => null, 'maxDate' => null], 'datepicker' => null, 'species' => []], $this->advancedTable->getAppliedFilters());
+        $this->assertSame(['breed' => [], 'smart' => [], 'range' => ['min' => null, 'max' => null], 'daterange' => ['minDate' => null, 'maxDate' => null], 'datepicker' => null, 'species' => [], 'slim' => []], $this->advancedTable->getAppliedFilters());
     }
 
     /** @test */

@@ -63,6 +63,14 @@ class NumberRangeFilter extends Filter
             return false;
         }
 
+        if (is_string($values['min']) && ! ctype_digit($values['min'])) {
+            return false;
+        }
+
+        if (is_string($values['max']) && ! ctype_digit($values['max'])) {
+            return false;
+        }
+
         $min = intval($values['min']);
         $max = intval($values['max']);
 
@@ -81,7 +89,7 @@ class NumberRangeFilter extends Filter
             return false;
         }
 
-        return $values;
+        return ['min' => $values['min'], 'max' => $values['max']];
     }
 
     /**
@@ -95,10 +103,14 @@ class NumberRangeFilter extends Filter
             if (! isset($value['min']) || ! isset($value['max'])) {
                 return true;
             }
-            if (is_null($value['max']) || is_null($value['min']) || $value['min'] == '' || $value['max'] == '') {
+            if (is_null($value['max']) || is_null($value['min'])) {
                 return true;
             }
-            if (intval($value['min']) == intval($this->getDefaultValue()['min']) && intval($value['max']) == intval($this->getDefaultValue()['max'])) {
+
+            if ($value['min'] == '' || $value['max'] == '') {
+                return true;
+            }
+            if (intval($value['min']) == intval($this->getConfig('minRange')) && intval($value['max']) == intval($this->getConfig('maxRange'))) {
                 return true;
             }
         }

@@ -2,7 +2,6 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 
-use DateTime;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
 
@@ -17,7 +16,7 @@ class DateRangeFilter extends Filter
     {
         parent::__construct($name, (isset($key) ? $key : null));
         $this->config = config('livewiretablesadvancedfilters.dateRange');
-        $this->options = config('livewiretablesadvancedfilters.dateRange.defaults');
+        $this->options = $this->config['defaults'];
     }
 
     /**
@@ -64,6 +63,7 @@ class DateRangeFilter extends Filter
      */
     public function validate($values)
     {
+        $returnedValues = [];
         if (is_array($values)) {
             foreach ($values as $index => $value) {
                 if ($index == 0 || strtolower($index) == 'mindate') {
@@ -76,21 +76,43 @@ class DateRangeFilter extends Filter
         } else {
             $valueArray = explode(' ', $values);
             $returnedValues['minDate'] = $valueArray[0];
-            $returnedValues['maxDate'] = ((isset($valueArray[1]) && $valueArray[1] != ' to ') ? $valueArray[1] : (isset($valueArray[2]) ? $valueArray[2] : ''));
+            $returnedValues['maxDate'] = ((isset($valueArray[1]) && $valueArray[1] != 'to') ? $valueArray[1] : (isset($valueArray[2]) ? $valueArray[2] : ''));
         }
-
-        $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
 
         if ($returnedValues['minDate'] == '' || $returnedValues['maxDate'] == '') {
             return false;
         }
+        $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
 
-        if (! DateTime::createFromFormat($dateFormat, $returnedValues['minDate'])) {
+        $validator = \Illuminate\Support\Facades\Validator::make($returnedValues, [
+            'minDate' => 'required|date_format:' . $dateFormat,
+            'maxDate' => 'required|date_format:' . $dateFormat,
+        ]);
+        if ($validator->fails()) {
             return false;
         }
 
-        if (! DateTime::createFromFormat($dateFormat, $returnedValues['maxDate'])) {
+        $startDate = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['minDate']);
+        $endDate = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['maxDate']);
+
+        if ($startDate->gt($endDate)) {
             return false;
+        }
+
+        $earliestDateString = $this->getConfig('earliestDate') ?? $this->getConfig('defaults')['earliestDate'];
+        if ($earliestDateString != '') {
+            $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
+            if ($startDate->lt($earliestDate)) {
+                return false;
+            }
+        }
+
+        $latestDateString = $this->getConfig('latestDate') ?? $this->getConfig('defaults')['latestDate'];
+        if ($latestDateString != '') {
+            $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
+            if ($endDate->gt($latestDate)) {
+                return false;
+            }
         }
 
         return $returnedValues;
@@ -109,28 +131,16 @@ class DateRangeFilter extends Filter
      */
     public function getFilterPillValue($value): ?string
     {
-        if ($this->validate($value)) {
-            if (is_array($value)) {
-                foreach ($value as $index => $val) {
-                    if ($index == 0 || strtolower($index) == 'mindate') {
-                        $minDate = $val;
-                    }
-                    if ($index == 1 || strtolower($index) == 'maxdate') {
-                        $maxDate = $val;
-                    }
-                }
-            }
+        $validatedValue = $this->validate($value);
 
-            if ($minDate != '' && $maxDate != '' && ! is_null($minDate) && ! is_null($maxDate) && ! empty($minDate) && ! empty($maxDate)) {
-                $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
-                $displayFormat = $this->getConfigs()['defaults']['ariaDateFormat'];
+        if ($validatedValue) {
+            $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
+            $displayFormat = $this->getConfig('displayFormat') ?? $this->getConfig('defaults')['displayFormat'];
 
-                $minDate = DateTime::createFromFormat($dateFormat, $minDate)->format($displayFormat);
-                $maxDate = DateTime::createFromFormat($dateFormat, $maxDate)->format($displayFormat);
-                if ($minDate != '' && $maxDate != '') {
-                    return $minDate . ' ' . __('to') . ' ' . $maxDate;
-                }
-            }
+            $minDate = \Carbon\Carbon::createFromFormat($dateFormat, $minDate)->format($displayFormat);
+            $maxDate = \Carbon\Carbon::createFromFormat($dateFormat, $maxDate)->format($displayFormat);
+
+            return $minDate . ' ' . __('to') . ' ' . $maxDate;
         }
 
         return '';

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1677854098">
-  <project timestamp="1677854098">
+<coverage generated="1677854880">
+  <project timestamp="1677854880">
     <file name="/home/joe/awscandc/laraveladvancedtest/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter" namespace="global">
         <metrics complexity="20" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="42" elements="50" coveredelements="50"/>
       </class>
-      <line num="15" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="229"/>
-      <line num="17" type="stmt" count="229"/>
-      <line num="18" type="stmt" count="229"/>
-      <line num="19" type="stmt" count="229"/>
+      <line num="15" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="245"/>
+      <line num="17" type="stmt" count="245"/>
+      <line num="18" type="stmt" count="245"/>
+      <line num="19" type="stmt" count="245"/>
       <line num="26" type="method" name="options" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="28" type="stmt" count="1"/>
       <line num="30" type="stmt" count="1"/>
       <line num="36" type="method" name="getOptions" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="38" type="stmt" count="1"/>
-      <line num="45" type="method" name="config" visibility="public" complexity="1" crap="1" count="229"/>
-      <line num="47" type="stmt" count="229"/>
-      <line num="49" type="stmt" count="229"/>
+      <line num="45" type="method" name="config" visibility="public" complexity="1" crap="1" count="245"/>
+      <line num="47" type="stmt" count="245"/>
+      <line num="49" type="stmt" count="245"/>
       <line num="56" type="method" name="validate" visibility="public" complexity="7" crap="7" count="9"/>
       <line num="58" type="stmt" count="9"/>
       <line num="59" type="stmt" count="1"/>
@@ -39,9 +39,9 @@
       <line num="86" type="stmt" count="3"/>
       <line num="87" type="stmt" count="2"/>
       <line num="91" type="stmt" count="8"/>
-      <line num="97" type="method" name="isEmpty" visibility="public" complexity="5" crap="5" count="229"/>
-      <line num="99" type="stmt" count="229"/>
-      <line num="100" type="stmt" count="229"/>
+      <line num="97" type="method" name="isEmpty" visibility="public" complexity="5" crap="5" count="245"/>
+      <line num="99" type="stmt" count="245"/>
+      <line num="100" type="stmt" count="245"/>
       <line num="102" type="stmt" count="3"/>
       <line num="109" type="method" name="getFilterPillValue" visibility="public" complexity="2" crap="2" count="2"/>
       <line num="111" type="stmt" count="2"/>
@@ -61,10 +61,10 @@
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DateRangeFilter" namespace="global">
         <metrics complexity="41" methods="10" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="61" coveredstatements="59" elements="71" coveredelements="67"/>
       </class>
-      <line num="15" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="229"/>
-      <line num="17" type="stmt" count="229"/>
-      <line num="18" type="stmt" count="229"/>
-      <line num="19" type="stmt" count="229"/>
+      <line num="15" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="245"/>
+      <line num="17" type="stmt" count="245"/>
+      <line num="18" type="stmt" count="245"/>
+      <line num="19" type="stmt" count="245"/>
       <line num="25" type="method" name="getKeys" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="27" type="stmt" count="1"/>
       <line num="34" type="method" name="options" visibility="public" complexity="1" crap="1" count="1"/>
@@ -72,9 +72,9 @@
       <line num="38" type="stmt" count="1"/>
       <line num="44" type="method" name="getOptions" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="46" type="stmt" count="1"/>
-      <line num="53" type="method" name="config" visibility="public" complexity="1" crap="1" count="229"/>
-      <line num="55" type="stmt" count="229"/>
-      <line num="57" type="stmt" count="229"/>
+      <line num="53" type="method" name="config" visibility="public" complexity="1" crap="1" count="245"/>
+      <line num="55" type="stmt" count="245"/>
+      <line num="57" type="stmt" count="245"/>
       <line num="64" type="method" name="validate" visibility="public" complexity="18" crap="18" count="9"/>
       <line num="66" type="stmt" count="9"/>
       <line num="67" type="stmt" count="9"/>
@@ -110,8 +110,8 @@
       <line num="113" type="stmt" count="5"/>
       <line num="114" type="stmt" count="3"/>
       <line num="118" type="stmt" count="9"/>
-      <line num="124" type="method" name="getDefaultValue" visibility="public" complexity="1" crap="1" count="229"/>
-      <line num="126" type="stmt" count="229"/>
+      <line num="124" type="method" name="getDefaultValue" visibility="public" complexity="1" crap="1" count="245"/>
+      <line num="126" type="stmt" count="245"/>
       <line num="132" type="method" name="getFilterPillValue" visibility="public" complexity="2" crap="2" count="3"/>
       <line num="134" type="stmt" count="3"/>
       <line num="136" type="stmt" count="3"/>
@@ -121,9 +121,9 @@
       <line num="141" type="stmt" count="3"/>
       <line num="143" type="stmt" count="3"/>
       <line num="146" type="stmt" count="2"/>
-      <line num="152" type="method" name="isEmpty" visibility="public" complexity="12" crap="17.33" count="229"/>
-      <line num="154" type="stmt" count="229"/>
-      <line num="155" type="stmt" count="229"/>
+      <line num="152" type="method" name="isEmpty" visibility="public" complexity="12" crap="17.33" count="245"/>
+      <line num="154" type="stmt" count="245"/>
+      <line num="155" type="stmt" count="245"/>
       <line num="157" type="stmt" count="0"/>
       <line num="164" type="method" name="render" visibility="public" complexity="2" crap="2.02" count="14"/>
       <line num="166" type="stmt" count="14"/>
@@ -138,53 +138,53 @@
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\LaravelLivewireTablesAdvancedFiltersServiceProvider" namespace="global">
         <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="32" elements="34" coveredelements="34"/>
       </class>
-      <line num="12" type="method" name="boot" visibility="public" complexity="2" crap="2" count="384"/>
-      <line num="17" type="stmt" count="384"/>
-      <line num="18" type="stmt" count="384"/>
-      <line num="19" type="stmt" count="384"/>
-      <line num="20" type="stmt" count="384"/>
-      <line num="22" type="stmt" count="384"/>
-      <line num="23" type="stmt" count="384"/>
-      <line num="24" type="stmt" count="384"/>
-      <line num="26" type="stmt" count="384"/>
-      <line num="27" type="stmt" count="384"/>
-      <line num="28" type="stmt" count="384"/>
-      <line num="30" type="stmt" count="384"/>
-      <line num="31" type="stmt" count="384"/>
-      <line num="32" type="stmt" count="384"/>
-      <line num="34" type="stmt" count="384"/>
-      <line num="35" type="stmt" count="384"/>
-      <line num="36" type="stmt" count="384"/>
-      <line num="38" type="stmt" count="384"/>
-      <line num="39" type="stmt" count="384"/>
-      <line num="40" type="stmt" count="384"/>
-      <line num="42" type="stmt" count="384"/>
-      <line num="43" type="stmt" count="384"/>
-      <line num="44" type="stmt" count="384"/>
-      <line num="46" type="stmt" count="384"/>
-      <line num="47" type="stmt" count="384"/>
-      <line num="48" type="stmt" count="384"/>
-      <line num="50" type="stmt" count="384"/>
-      <line num="51" type="stmt" count="384"/>
-      <line num="52" type="stmt" count="384"/>
-      <line num="54" type="stmt" count="384"/>
-      <line num="55" type="stmt" count="384"/>
-      <line num="56" type="stmt" count="384"/>
-      <line num="63" type="method" name="register" visibility="public" complexity="1" crap="1" count="384"/>
-      <line num="65" type="stmt" count="384"/>
+      <line num="12" type="method" name="boot" visibility="public" complexity="2" crap="2" count="400"/>
+      <line num="17" type="stmt" count="400"/>
+      <line num="18" type="stmt" count="400"/>
+      <line num="19" type="stmt" count="400"/>
+      <line num="20" type="stmt" count="400"/>
+      <line num="22" type="stmt" count="400"/>
+      <line num="23" type="stmt" count="400"/>
+      <line num="24" type="stmt" count="400"/>
+      <line num="26" type="stmt" count="400"/>
+      <line num="27" type="stmt" count="400"/>
+      <line num="28" type="stmt" count="400"/>
+      <line num="30" type="stmt" count="400"/>
+      <line num="31" type="stmt" count="400"/>
+      <line num="32" type="stmt" count="400"/>
+      <line num="34" type="stmt" count="400"/>
+      <line num="35" type="stmt" count="400"/>
+      <line num="36" type="stmt" count="400"/>
+      <line num="38" type="stmt" count="400"/>
+      <line num="39" type="stmt" count="400"/>
+      <line num="40" type="stmt" count="400"/>
+      <line num="42" type="stmt" count="400"/>
+      <line num="43" type="stmt" count="400"/>
+      <line num="44" type="stmt" count="400"/>
+      <line num="46" type="stmt" count="400"/>
+      <line num="47" type="stmt" count="400"/>
+      <line num="48" type="stmt" count="400"/>
+      <line num="50" type="stmt" count="400"/>
+      <line num="51" type="stmt" count="400"/>
+      <line num="52" type="stmt" count="400"/>
+      <line num="54" type="stmt" count="400"/>
+      <line num="55" type="stmt" count="400"/>
+      <line num="56" type="stmt" count="400"/>
+      <line num="63" type="method" name="register" visibility="public" complexity="1" crap="1" count="400"/>
+      <line num="65" type="stmt" count="400"/>
       <metrics loc="68" ncloc="59" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="32" elements="34" coveredelements="34"/>
     </file>
     <file name="/home/joe/awscandc/laraveladvancedtest/LaravelLivewireTablesAdvancedFilters/src/NumberRangeFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter" namespace="global">
         <metrics complexity="41" methods="9" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="48" coveredstatements="47" elements="57" coveredelements="55"/>
       </class>
-      <line num="15" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="229"/>
-      <line num="17" type="stmt" count="229"/>
-      <line num="18" type="stmt" count="229"/>
-      <line num="19" type="stmt" count="229"/>
-      <line num="26" type="method" name="options" visibility="public" complexity="1" crap="1" count="229"/>
-      <line num="28" type="stmt" count="229"/>
-      <line num="30" type="stmt" count="229"/>
+      <line num="15" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="245"/>
+      <line num="17" type="stmt" count="245"/>
+      <line num="18" type="stmt" count="245"/>
+      <line num="19" type="stmt" count="245"/>
+      <line num="26" type="method" name="options" visibility="public" complexity="1" crap="1" count="245"/>
+      <line num="28" type="stmt" count="245"/>
+      <line num="30" type="stmt" count="245"/>
       <line num="36" type="method" name="getOptions" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="38" type="stmt" count="1"/>
       <line num="45" type="method" name="config" visibility="public" complexity="1" crap="1" count="12"/>
@@ -212,11 +212,11 @@
       <line num="88" type="stmt" count="12"/>
       <line num="89" type="stmt" count="4"/>
       <line num="92" type="stmt" count="12"/>
-      <line num="98" type="method" name="isEmpty" visibility="public" complexity="10" crap="10.08" count="229"/>
-      <line num="100" type="stmt" count="229"/>
+      <line num="98" type="method" name="isEmpty" visibility="public" complexity="10" crap="10.08" count="245"/>
+      <line num="100" type="stmt" count="245"/>
       <line num="101" type="stmt" count="1"/>
-      <line num="103" type="stmt" count="229"/>
-      <line num="104" type="stmt" count="229"/>
+      <line num="103" type="stmt" count="245"/>
+      <line num="104" type="stmt" count="245"/>
       <line num="106" type="stmt" count="2"/>
       <line num="107" type="stmt" count="0"/>
       <line num="110" type="stmt" count="2"/>
@@ -224,8 +224,8 @@
       <line num="113" type="stmt" count="2"/>
       <line num="114" type="stmt" count="1"/>
       <line num="118" type="stmt" count="2"/>
-      <line num="124" type="method" name="getDefaultValue" visibility="public" complexity="1" crap="1" count="229"/>
-      <line num="126" type="stmt" count="229"/>
+      <line num="124" type="method" name="getDefaultValue" visibility="public" complexity="1" crap="1" count="245"/>
+      <line num="126" type="stmt" count="245"/>
       <line num="132" type="method" name="getFilterPillValue" visibility="public" complexity="2" crap="2" count="1"/>
       <line num="134" type="stmt" count="1"/>
       <line num="135" type="stmt" count="1"/>
@@ -274,17 +274,17 @@
     </file>
     <file name="/home/joe/awscandc/laraveladvancedtest/LaravelLivewireTablesAdvancedFilters/src/SmartSelectFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter" namespace="global">
-        <metrics complexity="41" methods="13" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="78" coveredstatements="68" elements="91" coveredelements="77"/>
+        <metrics complexity="39" methods="12" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="73" coveredstatements="68" elements="85" coveredelements="77"/>
       </class>
-      <line num="15" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="229"/>
-      <line num="17" type="stmt" count="229"/>
-      <line num="18" type="stmt" count="229"/>
+      <line num="15" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="245"/>
+      <line num="17" type="stmt" count="245"/>
+      <line num="18" type="stmt" count="245"/>
       <line num="25" type="method" name="config" visibility="public" complexity="1" crap="1" count="36"/>
       <line num="27" type="stmt" count="36"/>
       <line num="29" type="stmt" count="36"/>
-      <line num="36" type="method" name="options" visibility="public" complexity="1" crap="1" count="229"/>
-      <line num="38" type="stmt" count="229"/>
-      <line num="40" type="stmt" count="229"/>
+      <line num="36" type="method" name="options" visibility="public" complexity="1" crap="1" count="245"/>
+      <line num="38" type="stmt" count="245"/>
+      <line num="40" type="stmt" count="245"/>
       <line num="49" type="method" name="setIconStyling" visibility="public" complexity="9" crap="9" count="1"/>
       <line num="52" type="stmt" count="1"/>
       <line num="53" type="stmt" count="1"/>
@@ -350,16 +350,10 @@
       <line num="174" type="stmt" count="0"/>
       <line num="175" type="stmt" count="0"/>
       <line num="178" type="stmt" count="1"/>
-      <line num="181" type="method" name="getFilterPillLinkItems" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="183" type="stmt" count="0"/>
-      <line num="184" type="stmt" count="0"/>
-      <line num="186" type="stmt" count="0"/>
-      <line num="187" type="stmt" count="0"/>
-      <line num="190" type="stmt" count="0"/>
-      <line num="196" type="method" name="isEmpty" visibility="public" complexity="1" crap="1" count="229"/>
-      <line num="198" type="stmt" count="229"/>
-      <line num="204" type="method" name="getDefaultValue" visibility="public" complexity="1" crap="1" count="229"/>
-      <line num="206" type="stmt" count="229"/>
+      <line num="196" type="method" name="isEmpty" visibility="public" complexity="1" crap="1" count="245"/>
+      <line num="198" type="stmt" count="245"/>
+      <line num="204" type="method" name="getDefaultValue" visibility="public" complexity="1" crap="1" count="245"/>
+      <line num="206" type="stmt" count="245"/>
       <line num="212" type="method" name="render" visibility="public" complexity="2" crap="2.02" count="14"/>
       <line num="214" type="stmt" count="14"/>
       <line num="215" type="stmt" count="0"/>
@@ -367,8 +361,8 @@
       <line num="219" type="stmt" count="14"/>
       <line num="220" type="stmt" count="14"/>
       <line num="221" type="stmt" count="14"/>
-      <metrics loc="224" ncloc="180" classes="1" methods="13" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="78" coveredstatements="68" elements="91" coveredelements="77"/>
+      <metrics loc="224" ncloc="169" classes="1" methods="12" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="73" coveredstatements="68" elements="85" coveredelements="77"/>
     </file>
-    <metrics files="6" loc="875" ncloc="692" classes="6" methods="52" coveredmethods="43" conditionals="0" coveredconditionals="0" statements="280" coveredstatements="259" elements="332" coveredelements="302"/>
+    <metrics files="6" loc="875" ncloc="681" classes="6" methods="51" coveredmethods="43" conditionals="0" coveredconditionals="0" statements="275" coveredstatements="259" elements="326" coveredelements="302"/>
   </project>
 </coverage>

@@ -178,7 +178,7 @@ class SmartSelectFilter extends Filter
         return array_unique($values);
     }
 
-    public function getFilterPillLinkItems($value)
+    /*public function getFilterPillLinkItems($value)
     {
         $returnValues = [];
         $linkItems = $this->generatePillArray($value);
@@ -188,7 +188,7 @@ class SmartSelectFilter extends Filter
         }
 
         return $returnValues;
-    }
+    }*/
 
     /**
      * @param  string  $value

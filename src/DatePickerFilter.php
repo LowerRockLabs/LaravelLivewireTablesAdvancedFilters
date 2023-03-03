@@ -2,7 +2,6 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 
-use DateTime;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
 
@@ -51,24 +50,42 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @param  string  $value
-     * @return bool|string
+     * @param  string  $values
+     * @return string|bool
      */
     public function validate($value)
     {
         if ($value == '') {
             return false;
         }
-        if (is_array($value)) {
-            return false;
-        }
-        if (empty($value)) {
-            return false;
-        }
-        $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
 
-        if (! DateTime::createFromFormat($dateFormat, $value)) {
+        $returnedValues['date'] = $value;
+
+        $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
+
+        $validator = \Illuminate\Support\Facades\Validator::make($returnedValues, [
+            'date' => 'required|date_format:' . $dateFormat,
+        ]);
+        if ($validator->fails()) {
             return false;
+        }
+
+        $date = \Carbon\Carbon::createFromFormat($dateFormat, $value);
+
+        $earliestDateString = $this->getConfig('earliestDate') ?? $this->getConfig('defaults')['earliestDate'];
+        if ($earliestDateString != '') {
+            $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
+            if ($date->lt($earliestDate)) {
+                return false;
+            }
+        }
+
+        $latestDateString = $this->getConfig('latestDate') ?? $this->getConfig('defaults')['latestDate'];
+        if ($latestDateString != '') {
+            $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
+            if ($date->gt($latestDate)) {
+                return false;
+            }
         }
 
         return $value;
@@ -91,7 +108,16 @@ class DatePickerFilter extends Filter
      */
     public function getFilterPillValue($value): ?string
     {
-        return (isset($value) && ! empty($value) && $value != '' && ! is_null($value)) ? DateTime::createFromFormat($this->getConfig('defaults')['dateFormat'], $value)->format($this->getConfig('defaults')['ariaDateFormat']) : '';
+        $validatedValue = $this->validate($value);
+
+        if ($validatedValue) {
+            $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
+            $displayFormat = $this->getConfig('displayFormat') ?? $this->getConfig('defaults')['displayFormat'];
+
+            return \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue)->format($displayFormat);
+        }
+
+        return '';
     }
 
     /**

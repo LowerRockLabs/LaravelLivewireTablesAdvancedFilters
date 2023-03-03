@@ -21,14 +21,6 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @return array<mixed>
-     */
-    public function getKeys(): array
-    {
-        return ['date' => ''];
-    }
-
-    /**
      * @param  array<mixed>  $options
      * @return $this
      */
@@ -68,16 +60,14 @@ class DatePickerFilter extends Filter
             return false;
         }
         if (is_array($value)) {
-            if ($value['date'] == '' || empty($value['date'])) {
-                return false;
-            }
+            return false;
         }
-        if (empty($value['date'])) {
+        if (empty($value)) {
             return false;
         }
         $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
 
-        if (! DateTime::createFromFormat($dateFormat, $value['date'])) {
+        if (! DateTime::createFromFormat($dateFormat, $value)) {
             return false;
         }
 
@@ -89,15 +79,11 @@ class DatePickerFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        return $value === '' || (empty($value['date']) || $value['date'] == '');
-    }
-
-    /**
-     * @return array<mixed>
-     */
-    public function getDefaultValue(): array
-    {
-        return ['date' => ''];
+        if ($value == '' || empty($value) || $value === '' || is_null($value)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -105,15 +91,7 @@ class DatePickerFilter extends Filter
      */
     public function getFilterPillValue($value): ?string
     {
-        $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
-        $displayFormat = $this->getConfigs()['defaults']['ariaDateFormat'];
-        if ($value['date'] != '' && ! empty($value['date'])) {
-            $date = (! empty($value['date'] && $value['date'] != '') ? DateTime::createFromFormat($dateFormat, $value['date'])->format($displayFormat) : '');
-        } else {
-            return '';
-        }
-
-        return $date;
+        return (isset($value) && ! empty($value) && $value != '' && ! is_null($value)) ? DateTime::createFromFormat($this->getConfig('defaults')['dateFormat'], $value)->format($this->getConfig('defaults')['ariaDateFormat']) : '';
     }
 
     /**

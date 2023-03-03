@@ -84,7 +84,7 @@ class DatePickerFilterTest extends TestCaseAdvanced
     {
         $filter = DatePickerFilter::make('Active');
 
-        $this->assertSame(['date' => ''], $filter->getKeys());
+        $this->assertSame([], $filter->getKeys());
     }
 
     /** @test */

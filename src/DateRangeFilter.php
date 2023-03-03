@@ -64,20 +64,19 @@ class DateRangeFilter extends Filter
      */
     public function validate($values)
     {
-        if (is_array($value)) {
-            foreach ($value as $index => $val) {
+        if (is_array($values)) {
+            foreach ($values as $index => $value) {
                 if ($index == 0 || strtolower($index) == 'mindate') {
-                    $returnedValues['minDate'] = $val;
+                    $returnedValues['minDate'] = $value;
                 }
                 if ($index == 1 || strtolower($index) == 'maxdate') {
-                    $returnedValues['maxDate'] = $val;
+                    $returnedValues['maxDate'] = $value;
                 }
             }
-        }
-        if (! is_array($values)) {
+        } else {
             $valueArray = explode(' ', $values);
             $returnedValues['minDate'] = $valueArray[0];
-            $returnedValues['maxDate'] = $valueArray[2];
+            $returnedValues['maxDate'] = ((isset($valueArray[1]) && $valueArray[1] != ' to ') ? $valueArray[1] : (isset($valueArray[2]) ? $valueArray[2] : ''));
         }
 
         $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
@@ -102,7 +101,7 @@ class DateRangeFilter extends Filter
      */
     public function getDefaultValue(): array
     {
-        return ['minDate' => '', 'maxDate' => ''];
+        return ['minDate' => null, 'maxDate' => null];
     }
 
     /**
@@ -110,23 +109,31 @@ class DateRangeFilter extends Filter
      */
     public function getFilterPillValue($value): ?string
     {
-        if (is_array($value)) {
-            foreach ($value as $index => $val) {
-                if ($index == 0 || strtolower($index) == 'mindate') {
-                    $minDate = $val;
+        if ($this->validate($value)) {
+            if (is_array($value)) {
+                foreach ($value as $index => $val) {
+                    if ($index == 0 || strtolower($index) == 'mindate') {
+                        $minDate = $val;
+                    }
+                    if ($index == 1 || strtolower($index) == 'maxdate') {
+                        $maxDate = $val;
+                    }
                 }
-                if ($index == 1 || strtolower($index) == 'maxdate') {
-                    $maxDate = $val;
+            }
+
+            if ($minDate != '' && $maxDate != '' && ! is_null($minDate) && ! is_null($maxDate) && ! empty($minDate) && ! empty($maxDate)) {
+                $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
+                $displayFormat = $this->getConfigs()['defaults']['ariaDateFormat'];
+
+                $minDate = DateTime::createFromFormat($dateFormat, $minDate)->format($displayFormat);
+                $maxDate = DateTime::createFromFormat($dateFormat, $maxDate)->format($displayFormat);
+                if ($minDate != '' && $maxDate != '') {
+                    return $minDate . ' ' . __('to') . ' ' . $maxDate;
                 }
             }
         }
-        $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
-        $displayFormat = $this->getConfigs()['defaults']['ariaDateFormat'];
 
-        $minDate = (! empty($minDate) ? DateTime::createFromFormat($dateFormat, $minDate)->format($displayFormat) : '');
-        $maxDate = (! empty($maxDate) ? DateTime::createFromFormat($dateFormat, $maxDate)->format($displayFormat) : '');
-
-        return $minDate . ' ' . __('to') . ' ' . $maxDate;
+        return '';
     }
 
     /**
@@ -134,7 +141,11 @@ class DateRangeFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        return $value === '';
+        if (is_null($value) || empty($value) || $value == $this->getDefaultValue() || ! isset($value['minDate']) || ! isset($value['maxDate']) || $value['minDate'] == '' || $value['maxDate'] == '' || is_null($value['maxDate']) || is_null($value['minDate']) || empty($value['maxDate']) || empty($value['minDate'])) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -143,7 +154,7 @@ class DateRangeFilter extends Filter
     public function render(DataTableComponent $component)
     {
         if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
-            $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
+            $component->resetFilter($this);
         }
 
         return view('livewiretablesadvancedfilters::components.tools.filters.dateRange', [

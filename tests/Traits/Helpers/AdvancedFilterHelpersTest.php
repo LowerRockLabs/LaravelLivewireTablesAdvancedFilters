@@ -163,8 +163,10 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
 
         $this->assertSame(['breed' => [],
             'smart' => [],
-            'range' => [],
-            'daterange' => [],
+            'range' => ['min' => null,
+                'max' => null],
+            'daterange' => ['minDate' => null,
+                'maxDate' => null],
             'datepicker' => null,
             'species' => [],
         ], $this->advancedTable->getAppliedFilters());
@@ -220,7 +222,8 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
 
         $this->advancedTable->setFilter('species', ['0']);
 
-        $this->assertSame(['breed' => ['1'], 'species' => ['0']], $this->advancedTable->getAppliedFiltersWithValues());
+        $this->assertSame(['breed' => [0 => '1'],
+            'species' => [0 => '0']], $this->advancedTable->getAppliedFiltersWithValues());
     }
 
     /** @test */

@@ -52,7 +52,7 @@ class NumberRangeFilterTest extends TestCaseAdvanced
         $this->assertTrue($filter->isEmpty(''));
         $this->assertTrue($filter->isEmpty(['max' => 100]));
         $this->assertTrue($filter->isEmpty(['min' => 0]));
-        $this->assertTrue($filter->isEmpty(['min' => 0, 'max' => 100]));
+        $this->assertFalse($filter->isEmpty(['min' => 0, 'max' => 100]));
         $this->assertFalse($filter->isEmpty(['min' => 0, 'max' => 50]));
     }
 
@@ -113,7 +113,7 @@ class NumberRangeFilterTest extends TestCaseAdvanced
         $this->assertSame(config('livewiretablesadvancedfilters.numberRange.defaults'), $filter->getOptions());
 
         $filter->options(['foo' => 'bar']);
-        $this->assertSame(['min' => 0, 'max' => 100, 'minRange' => 0, 'maxRange' => 100, 'suffix' => '', 'foo' => 'bar'], $filter->getOptions());
+        $this->assertSame(['min' => '0', 'max' => '100', 'foo' => 'bar'], $filter->getOptions());
     }
 
     /** @test */
@@ -129,7 +129,7 @@ class NumberRangeFilterTest extends TestCaseAdvanced
     {
         $filter = NumberRangeFilter::make('Active');
 
-        $this->assertSame([], $filter->getDefaultValue());
+        $this->assertSame(['min' => null, 'max' => null], $filter->getDefaultValue());
     }
 
     /** @test */

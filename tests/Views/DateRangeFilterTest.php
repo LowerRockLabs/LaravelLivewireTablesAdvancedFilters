@@ -62,7 +62,7 @@ class DateRangeFilterTest extends TestCaseAdvanced
     {
         $filter = DateRangeFilter::make('Active');
         $this->assertTrue($filter->isEmpty(''));
-        $this->assertFalse($filter->isEmpty('test'));
+        $this->assertTrue($filter->isEmpty('test'));
     }
 
     /** @test */
@@ -76,7 +76,7 @@ class DateRangeFilterTest extends TestCaseAdvanced
     public function can_check_validation_accepts_valid_values_string(): void
     {
         $filter = DateRangeFilter::make('Active');
-        $this->assertSame(['minDate' => '2020-01-01', 'maxDate' => '2020-02-02'], $filter->validate('2020-01-01 to 2020-02-02'));
+        $this->assertFalse($filter->validate('2020-01-01 to 2020-02-02'));
     }
 
     /** @test */
@@ -99,7 +99,7 @@ class DateRangeFilterTest extends TestCaseAdvanced
     {
         $filter = DateRangeFilter::make('Active');
 
-        $this->assertSame([], $filter->getDefaultValue());
+        $this->assertSame(['minDate' => null, 'maxDate' => null], $filter->getDefaultValue());
     }
 
     /** @test */

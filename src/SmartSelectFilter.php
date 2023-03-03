@@ -149,7 +149,7 @@ class SmartSelectFilter extends Filter
         $values = [];
         $values = $this->generatePillArray($value);
 
-        return implode(',', $values);
+        return implode(', ', $values);
     }
 
     /**
@@ -159,29 +159,16 @@ class SmartSelectFilter extends Filter
     {
         $values = [];
         if (is_array($value)) {
-            if ($this->getConfig('optionsMethod') == 'complex') {
-                $optArray = $this->getOptions();
-                foreach ($optArray as $option) {
-                    $optionArray[$option['id']] = $option['name'];
-                }
+            foreach ($value as $item) {
+                $found = $this->getCustomFilterPillValue($item) ?? $this->getOptions()[$item] ?? null;
 
-                foreach ($value as $item) {
-                    $found = $this->getCustomFilterPillValue($item) ?? $optionArray[$item] ?? null;
-
-                    if ($found) {
-                        $values[] = $found;
+                if ($found) {
+                    if (is_array($found)) {
+                        $found = (isset($found['name']) ? $found['name'] : (isset($found[1]) ? $found[1] : ''));
                     }
-                }
-            } else {
-                foreach ($value as $item) {
-                    $found = $this->getCustomFilterPillValue($item) ?? $this->getOptions()[$item] ?? null;
-
-                    if ($found) {
-                        if (is_array($found)) {
-                            $found = implode(',', $found);
-                        }
-                        $values[$item] = $found;
-                    }
+                    $values[$item] = $found;
+                } else {
+                    $values[] = implode($item);
                 }
             }
         } elseif (isset($this->getOptions()[$value])) {
@@ -217,13 +204,6 @@ class SmartSelectFilter extends Filter
     public function getDefaultValue(): array
     {
         return [];
-    }
-
-    public function removeSelectedItem(string $item)
-    {
-        if (isset($component->{$component->getTableName()}['filters'][$this->getKey()][$item])) {
-            unset($component->{$component->getTableName()}['filters'][$this->getKey()][$item]);
-        }
     }
 
     /**

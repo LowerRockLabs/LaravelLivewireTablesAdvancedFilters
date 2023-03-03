@@ -215,20 +215,16 @@ class SmartSelectFilterStandardTest extends TestCaseAdvanced
     }
 
     /** @test */
-    /*
     public function can_get_filter_pill_value(): void
     {
-        $filter = NumberRangeFilter::make('Active')
-            ->options(['foo' => 'bar']);
+        $filter = SmartSelectFilter::make('Active')->options(
+            Breed::select(['id', 'name'])->orderBy('name', 'asc')->pluck('name', 'id')->toArray()
+        );
 
-        $this->assertSame('bar', $filter->getFilterPillValue('foo'));
+        $this->assertSame('Arabian', $filter->getFilterPillValue(['1']));
 
-        $filter = NumberRangeFilter::make('Active')
-            ->options(['foo' => 'bar'])
-            ->setFilterPillValues(['foo' => 'baz']);
-
-        $this->assertSame('baz', $filter->getFilterPillValue('foo'));
-    }*/
+        $this->assertSame('Arabian, Clydesdale', $filter->getFilterPillValue(['1', '3']));
+    }
 
     /** @test */
     /*

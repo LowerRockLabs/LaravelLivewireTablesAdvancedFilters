@@ -26,6 +26,60 @@ class SmartSelectFilterStandardTest extends TestCaseAdvanced
     }
 
     /** @test */
+    public function can_set_icon_styling(): void
+    {
+        $filter = SmartSelectFilter::make('Active');
+        $filter->setIconStyling(true, '#000000', '25', 'both');
+
+        $this->assertTrue($filter->getConfig('iconStyling')['add']['svgEnabled']);
+        $this->assertSame('#000000', $filter->getConfig('iconStyling')['add']['svgFill']);
+        $this->assertSame('25', $filter->getConfig('iconStyling')['add']['svgSize']);
+        $this->assertTrue($filter->getConfig('iconStyling')['delete']['svgEnabled']);
+        $this->assertSame('#000000', $filter->getConfig('iconStyling')['delete']['svgFill']);
+        $this->assertSame('25', $filter->getConfig('iconStyling')['delete']['svgSize']);
+
+        $filter->setIconStyling(false, '#FF0000', '50', 'add');
+        $this->assertFalse($filter->getConfig('iconStyling')['add']['svgEnabled']);
+        $this->assertSame('#FF0000', $filter->getConfig('iconStyling')['add']['svgFill']);
+        $this->assertSame('50', $filter->getConfig('iconStyling')['add']['svgSize']);
+        $this->assertTrue($filter->getConfig('iconStyling')['delete']['svgEnabled']);
+        $this->assertSame('#000000', $filter->getConfig('iconStyling')['delete']['svgFill']);
+        $this->assertSame('25', $filter->getConfig('iconStyling')['delete']['svgSize']);
+
+        $filter->setIconStyling(false, '#FF00FF', '55', 'delete');
+        $this->assertFalse($filter->getConfig('iconStyling')['add']['svgEnabled']);
+        $this->assertSame('#FF0000', $filter->getConfig('iconStyling')['add']['svgFill']);
+        $this->assertSame('50', $filter->getConfig('iconStyling')['add']['svgSize']);
+        $this->assertFalse($filter->getConfig('iconStyling')['delete']['svgEnabled']);
+        $this->assertSame('#FF00FF', $filter->getConfig('iconStyling')['delete']['svgFill']);
+        $this->assertSame('55', $filter->getConfig('iconStyling')['delete']['svgSize']);
+    }
+
+    /** @test */
+    public function can_set_icon_styling_config(): void
+    {
+        $filter = SmartSelectFilter::make('Active')->config([
+            'iconStyling' => [
+                'add' => [
+                    'classes' => '',        // Base classes for the "add" icon
+                    'defaults' => true,     // Determines whether to merge (true) or replace (false) the default class (inline-block)
+                    'svgEnabled' => true,  // Enable or Disable the use of the default SVG icon
+                    'svgFill' => '#000000', // Fill for the SVG Icon
+                    'svgSize' => '1.5em',   // Size for the SVG Icon
+                ],
+                'delete' => [
+                    'classes' => '',        // Base classes for the "delete" icon
+                    'defaults' => true,     // Determines whether to merge (true) or replace (false) the default class (inline-block)
+                    'svgEnabled' => false,   // Enable or Disable the use of the default SVG icon
+                    'svgFill' => '#000000', // Fill for the SVG Icon
+                    'svgSize' => '1.5em',   // Size for the SVG Icon
+                ],
+            ]]);
+        $this->assertTrue($filter->getConfig('iconStyling')['add']['svgEnabled']);
+        $this->assertFalse($filter->getConfig('iconStyling')['delete']['svgEnabled']);
+    }
+
+    /** @test */
     public function can_get_filter_configs(): void
     {
         $filter = SmartSelectFilter::make('Active');

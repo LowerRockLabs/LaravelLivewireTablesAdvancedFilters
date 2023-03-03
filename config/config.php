@@ -3,7 +3,7 @@
 // config for LowerRockLabs/LaravelLivewireTablesAdvancedFilters
 return [
     'slimSelect' => [
-        'defaults' => [''],
+        'defaults' => ['test' => 'test'],
     ],
     'smartSelect' => [
         'optionsMethod' => 'simple',    // Should be set to either simple/complex.

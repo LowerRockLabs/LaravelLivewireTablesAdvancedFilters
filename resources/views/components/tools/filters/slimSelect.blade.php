@@ -4,8 +4,7 @@
     $filterKey = $filter->getKey();
     $options = [];
     $empty = [];
-    $empty[] = ['text' => '', 'value' => ''];
-    $options = array_merge($empty, $filter->getOptions());
+    $options = $filter->getOptions();
 @endphp
 
 @pushOnce('scripts')

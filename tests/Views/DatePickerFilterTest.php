@@ -123,6 +123,7 @@ class DatePickerFilterTest extends TestCaseAdvanced
         {
             $filter = DatePickerFilter::make('Active');
             $this->assertSame('2020-01-01', $filter->validate('2020-01-01'));
+            $this->assertFalse($filter->validate(''));
             $this->assertFalse($filter->validate('test'));
             $this->assertFalse($filter->validate(['test']));
             $this->assertFalse($filter->validate(['2020-10-22']));

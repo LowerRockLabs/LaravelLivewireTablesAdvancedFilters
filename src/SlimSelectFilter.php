@@ -43,37 +43,6 @@ class SlimSelectFilter extends Filter
     }
 
     /**
-     * @param  bool  $svgEnabled
-     * @param  string  $svgFill
-     * @param  string  $svgSize
-     * @param  mixed  $mode='both'
-     */
-    public function setIconStyling($svgEnabled = true, $svgFill = '', $svgSize = '', $mode = 'both'): SlimSelectFilter
-    {
-        //$this->config['iconStyling'] =
-        if ($mode == 'add' || $mode == 'both') {
-            $this->config['iconStyling']['add']['svgEnabled'] = $svgEnabled;
-            if ($svgFill != '') {
-                $this->config['iconStyling']['add']['svgFill'] = $svgFill;
-            }
-            if ($svgSize != '') {
-                $this->config['iconStyling']['add']['svgSize'] = $svgSize;
-            }
-        }
-        if ($mode == 'delete' || $mode == 'both') {
-            $this->config['iconStyling']['delete']['svgEnabled'] = $svgEnabled;
-            if ($svgFill != '') {
-                $this->config['iconStyling']['delete']['svgFill'] = $svgFill;
-            }
-            if ($svgSize != '') {
-                $this->config['iconStyling']['delete']['svgSize'] = $svgSize;
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return array<mixed>
      */
     public function getOptions(): array
@@ -86,12 +55,7 @@ class SlimSelectFilter extends Filter
      */
     public function getKeys(): array
     {
-        return collect($this->getOptions())
-        ->keys()
-        ->map(fn ($value) => (string) $value)
-        ->filter(fn ($value) => strlen($value)) /** @phpstan-ignore-line */
-        ->values()
-        ->toArray();
+        return collect($this->getOptions())->toArray();
     }
 
     /**
@@ -113,14 +77,6 @@ class SlimSelectFilter extends Filter
     public function getFilterPillValue($value): ?string
     {
         $values = [];
-
-        if (is_array($value)) {
-            foreach ($value as $index => $item) {
-                $values[] = (isset($this->options[$item]['text']) ? $this->options[$item]['text'] : '');
-            }
-        } elseif (isset($this->options[$value])) {
-            $values[] = $this->options[$value];
-        }
 
         return implode(', ', array_unique($values));
     }

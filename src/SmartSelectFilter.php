@@ -24,7 +24,7 @@ class SmartSelectFilter extends Filter
      */
     public function config($config = []): SmartSelectFilter
     {
-        $this->config = (empty($this->config) ? array_merge(config('livewiretablesadvancedfilters.smartSelect'), $config) : array_merge($this->config, $config));
+        $this->config = array_merge($this->config, $config);
 
         return $this;
     }

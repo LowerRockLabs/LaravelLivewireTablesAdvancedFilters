@@ -77,6 +77,8 @@ class DateRangeFilterTest extends TestCaseAdvanced
     {
         $filter = DateRangeFilter::make('Active');
         $this->assertSame(['minDate' => '2020-01-01', 'maxDate' => '2020-02-02'], $filter->validate('2020-01-01 to 2020-02-02'));
+        $this->assertFalse($filter->validate('2020-01-01 to '));
+        $this->assertFalse($filter->validate(' to 2020-01-01'));
     }
 
     /** @test */

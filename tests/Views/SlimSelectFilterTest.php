@@ -274,7 +274,8 @@ class SlimSelectFilterTest extends TestCaseAdvanced
                     'value' => $breed->id,
                     'html' => $breed->name,
                 ];
-            })->toArray());
+            })->toArray()
+        );
 
         $this->assertSame('', $filter->getFilterPillValue(['1']));
 

@@ -156,6 +156,17 @@ class NumberRangeFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
+    public function filter_pill_values_can_be_set_for_numberrange(): void
+    {
+        $filter = NumberRangeFilter::make('Active')->config(['minRange' => '10', 'maxRange' => '100']);
+
+        $this->assertEquals('Min:25, Max:50', $filter->getFilterPillValue(['min' => '25', 'max' => '50']));
+        $this->assertEquals('', $filter->getFilterPillValue(['min' => '30', 'max' => '166']));
+        $this->assertEquals('', $filter->getFilterPillValue(['min' => '5', 'max' => '53']));
+        $this->assertEquals('', $filter->getFilterPillValue(['min' => 'd0', 'max' => '76']));
+    }
+
+    /** @test */
     public function can_check_validation_fails_non_numeric_values(): void
     {
         $filter = NumberRangeFilter::make('Active')->config(['minRange' => '0', 'maxRange' => '100']);

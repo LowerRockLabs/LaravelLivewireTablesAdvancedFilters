@@ -112,9 +112,9 @@ class DatePickerFilter extends Filter
 
         if ($validatedValue) {
             $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
-            $displayFormat = $this->getConfig('displayFormat') ?? $this->getConfig('defaults')['displayFormat'];
+            $ariaDateFormat = $this->getConfig('ariaDateFormat') ?? $this->getConfig('defaults')['ariaDateFormat'];
 
-            return \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue)->format($displayFormat);
+            return \Carbon\Carbon::createFromFormat($dateFormat, $value)->format($ariaDateFormat);
         }
 
         return '';

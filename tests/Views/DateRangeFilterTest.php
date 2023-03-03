@@ -131,6 +131,33 @@ class DateRangeFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
+    public function filter_pill_values_can_be_set_for_daterange(): void
+    {
+        $filter = DateRangeFilter::make('Active');
+
+        $this->assertEquals('February 2, 2020 to February 5, 2020', $filter->getFilterPillValue(['minDate' => '2020-02-02', 'maxDate' => '2020-02-05']));
+        $this->assertEquals('February 2, 2010 to February 5, 2020', $filter->getFilterPillValue(['minDate' => '2010-02-02', 'maxDate' => '2020-02-05']));
+    }
+
+    /** @test */
+    public function filter_pill_values_can_be_set_for_daterange_limits(): void
+    {
+        $filter = DateRangeFilter::make('Active')->config(['ariaDateFormat' => 'F j, Y', 'earliestDate' => '2020-01-01', 'latestDate' => '2022-01-01']);
+
+        $this->assertEquals('February 2, 2020 to February 5, 2020', $filter->getFilterPillValue(['minDate' => '2020-02-02', 'maxDate' => '2020-02-05']));
+        $this->assertEquals('', $filter->getFilterPillValue(['minDate' => '2010-02-02', 'maxDate' => '2020-02-05']));
+    }
+
+    /** @test */
+    public function filter_pill_values_can_be_set_for_daterange_customformat(): void
+    {
+        $filter = DateRangeFilter::make('Active')->config(['ariaDateFormat' => 'Y', 'latestDate' => '2022-01-01']);
+
+        $this->assertEquals('2020 to 2021', $filter->getFilterPillValue(['minDate' => '2020-02-02', 'maxDate' => '2021-02-05']));
+        $this->assertEquals('', $filter->getFilterPillValue(['minDate' => '20220-02-02', 'maxDate' => '2020-02-05']));
+    }
+
+    /** @test */
     public function can_get_filter_keys(): void
     {
         $filter = DateRangeFilter::make('Active');

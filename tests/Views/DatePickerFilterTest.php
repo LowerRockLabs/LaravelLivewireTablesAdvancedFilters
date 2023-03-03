@@ -176,6 +176,36 @@ class DatePickerFilterTest extends TestCaseAdvanced
     }
 
     /** @test */
+    public function filter_pill_title_can_be_set(): void
+    {
+        $filter = DatePickerFilter::make('Date');
+
+        $this->assertEquals('Date', $filter->getFilterPillTitle());
+
+        $filter->setFilterPillTitle('Date 2');
+
+        $this->assertEquals('Date 2', $filter->getFilterPillTitle());
+    }
+
+    /** @test */
+    public function filter_pill_values_can_be_set_for_datepicker(): void
+    {
+        $filter = DatePickerFilter::make('Active');
+
+        $this->assertEquals('January 1, 2020', $filter->getFilterPillValue('2020-01-01'));
+        $this->assertEquals('', $filter->getFilterPillValue('21020-01-01'));
+    }
+
+    /** @test */
+    public function filter_pill_values_can_be_set_for_datepicker_customformat(): void
+    {
+        $filter = DatePickerFilter::make('Active')->config(['ariaDateFormat' => 'Y']);
+
+        $this->assertEquals('2020', $filter->getFilterPillValue('2020-01-01'));
+        $this->assertEquals('', $filter->getFilterPillValue('21020-01-01'));
+    }
+
+    /** @test */
     /*
     public function can_get_filter_pill_value(): void
     {

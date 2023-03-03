@@ -135,10 +135,10 @@ class DateRangeFilter extends Filter
 
         if ($validatedValue) {
             $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
-            $displayFormat = $this->getConfig('displayFormat') ?? $this->getConfig('defaults')['displayFormat'];
+            $ariaDateFormat = $this->getConfig('ariaDateFormat') ?? $this->getConfig('defaults')['ariaDateFormat'];
 
-            $minDate = \Carbon\Carbon::createFromFormat($dateFormat, $minDate)->format($displayFormat);
-            $maxDate = \Carbon\Carbon::createFromFormat($dateFormat, $maxDate)->format($displayFormat);
+            $minDate = \Carbon\Carbon::createFromFormat($dateFormat, $value['minDate'])->format($ariaDateFormat);
+            $maxDate = \Carbon\Carbon::createFromFormat($dateFormat, $value['maxDate'])->format($ariaDateFormat);
 
             return $minDate . ' ' . __('to') . ' ' . $maxDate;
         }

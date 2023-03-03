@@ -147,6 +147,17 @@ class SmartSelectFilter extends Filter
     public function getFilterPillValue($value): ?string
     {
         $values = [];
+        $values = $this->generatePillArray($value);
+
+        return implode(',', $values);
+    }
+
+    /**
+     * @param  string|array<mixed>  $value
+     */
+    public function generatePillArray($value): ?array
+    {
+        $values = [];
         if (is_array($value)) {
             if ($this->getConfig('optionsMethod') == 'complex') {
                 $optArray = $this->getOptions();
@@ -169,15 +180,27 @@ class SmartSelectFilter extends Filter
                         if (is_array($found)) {
                             $found = implode(',', $found);
                         }
-                        $values[] = $found;
+                        $values[$item] = $found;
                     }
                 }
             }
         } elseif (isset($this->getOptions()[$value])) {
-            $values[] = $value;
+            $values[$value] = $this->getOptions()[$value];
         }
 
-        return implode(', ', array_unique($values));
+        return array_unique($values);
+    }
+
+    public function getFilterPillLinkItems($value)
+    {
+        $returnValues = [];
+        $linkItems = $this->generatePillArray($value);
+
+        foreach ($linkItems as $itemID => $itemName) {
+            $returnValues[$itemID] = $itemName;
+        }
+
+        return $returnValues;
     }
 
     /**
@@ -196,6 +219,13 @@ class SmartSelectFilter extends Filter
         return [];
     }
 
+    public function removeSelectedItem(string $item)
+    {
+        if (isset($component->{$component->getTableName()}['filters'][$this->getKey()][$item])) {
+            unset($component->{$component->getTableName()}['filters'][$this->getKey()][$item]);
+        }
+    }
+
     /**
      * @return \Illuminate\View\View|\Illuminate\View\Factory
      */
@@ -205,7 +235,7 @@ class SmartSelectFilter extends Filter
             $component->{$component->getTableName()}['filters'][$this->getKey()] = [];
         }
 
-        return view('livewiretablesadvancedfilters::components.tools.filters.smartSelect', [
+        return view('livewiretablesadvancedfilters::components.tools.filters.smartSelectHero', [
             'component' => $component,
             'filter' => $this,
         ]);

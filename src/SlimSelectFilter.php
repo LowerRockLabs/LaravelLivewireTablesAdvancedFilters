@@ -78,8 +78,6 @@ class SlimSelectFilter extends Filter
      */
     public function getOptions(): array
     {
-        $complexArray = [];
-
         return $this->options;
     }
 
@@ -102,12 +100,9 @@ class SlimSelectFilter extends Filter
      */
     public function validate($value)
     {
-        if (is_array($value)) {
-            foreach ($value as $idx => $val) {
-                $this->selectedItems[$val] = 'yes';
-                $this->selectedItems[$idx] = 'yes';
-            }
-        }
+        //if (is_array($value)) {
+
+        //}
 
         return $value;
     }
@@ -121,7 +116,7 @@ class SlimSelectFilter extends Filter
 
         if (is_array($value)) {
             foreach ($value as $index => $item) {
-                $values[] = $this->options[$item] ?? $item;
+                $values[] = (isset($this->options[$item]['text']) ? $this->options[$item]['text'] : '');
             }
         } elseif (isset($this->options[$value])) {
             $values[] = $this->options[$value];
@@ -153,16 +148,6 @@ class SlimSelectFilter extends Filter
     {
         if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
             $component->{$component->getTableName()}['filters'][$this->getKey()] = [];
-        } else {
-            $selectedVals = $component->{$component->getTableName()}['filters'][$this->getKey()];
-
-            foreach ($this->options as $id => $name) {
-                $this->options[$id] = [
-                    'id' => $id,
-                    'name' => $name,
-                    'selected' => (in_array($id, $selectedVals) ? true : false),
-                ];
-            }
         }
 
         return view('livewiretablesadvancedfilters::components.tools.filters.slimSelect', [

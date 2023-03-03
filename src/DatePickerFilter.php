@@ -15,10 +15,9 @@ class DatePickerFilter extends Filter
 
     public function __construct(string $name, string $key = null)
     {
+        parent::__construct($name, (isset($key) ? $key : null));
         $this->config = config('livewiretablesadvancedfilters.datePicker');
         $this->options = config('livewiretablesadvancedfilters.datePicker.defaults');
-
-        parent::__construct($name, (isset($key) ? $key : null));
     }
 
     /**
@@ -65,12 +64,20 @@ class DatePickerFilter extends Filter
      */
     public function validate($value)
     {
-        if ($value === '') {
+        if ($value == '') {
+            return false;
+        }
+        if (is_array($value)) {
+            if ($value['date'] == '' || empty($value['date'])) {
+                return false;
+            }
+        }
+        if (empty($value['date'])) {
             return false;
         }
         $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
 
-        if (! DateTime::createFromFormat($dateFormat, $value)) {
+        if (! DateTime::createFromFormat($dateFormat, $value['date'])) {
             return false;
         }
 
@@ -82,7 +89,31 @@ class DatePickerFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        return $value === '';
+        return $value === '' || (empty($value['date']) || $value['date'] == '');
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getDefaultValue(): array
+    {
+        return ['date' => ''];
+    }
+
+    /**
+     * @param  mixed  $value
+     */
+    public function getFilterPillValue($value): ?string
+    {
+        $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
+        $displayFormat = $this->getConfigs()['defaults']['ariaDateFormat'];
+        if ($value['date'] != '' && ! empty($value['date'])) {
+            $date = (! empty($value['date'] && $value['date'] != '') ? DateTime::createFromFormat($dateFormat, $value['date'])->format($displayFormat) : '');
+        } else {
+            return '';
+        }
+
+        return $date;
     }
 
     /**

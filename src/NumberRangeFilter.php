@@ -58,23 +58,16 @@ class NumberRangeFilter extends Filter
         if (! isset($values['min']) || ! isset($values['max'])) {
             return false;
         }
+        $min = intval($values['min']);
+        $max = intval($values['max']);
 
-        $values['min'] = intval($values['min']);
-        $values['max'] = intval($values['max']);
-
-        if ($values['min'] == 0 && $values['max'] == 0) {
-            return false;
+        if ($max < $min) {
+            $newMin = $values['max'];
+            $newMax = $values['min'];
+            $values['max'] = $newMin;
+            $values['min'] = $newMax;
         }
-
-        if ($values['min'] == $this->getOptions()['minRange'] && $values['max'] == $this->getOptions()['maxRange']) {
-            return false;
-        }
-
-        if ($values['min'] < $this->getOptions()['minRange'] || $values['min'] > $this->getOptions()['maxRange']) {
-            return false;
-        }
-
-        if ($values['max'] < $this->getOptions()['minRange'] || $values['max'] > $this->getOptions()['maxRange']) {
+        if (($min == $this->getConfig('minRange') && $max == $this->getConfig('maxRange')) || ($min == $this->getConfig('minRange') && $max == $this->getConfig('minRange')) || ($min == $this->getConfig('maxRange') && $max == $this->getConfig('maxRange')) || $min < $this->getConfig('minRange') || $min > $this->getConfig('maxRange') || $max < $this->getConfig('minRange') || $max > $this->getConfig('maxRange')) {
             return false;
         }
 
@@ -86,7 +79,7 @@ class NumberRangeFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        return $value === '' || (is_array($value) && (! isset($value['min']) || ! isset($value['max']))) || (is_array($value) && (isset($value['min']) && isset($value['max']) && $value['min'] == 0 && $value['max'] == 100));
+        return $value === '' || (is_array($value) && (! isset($value['min']) || ! isset($value['max']))) || (is_array($value) && (isset($value['min']) && isset($value['max']) && ($value['min'] == '0' || $value['min'] == 0) && ($value['max'] == '100' || $value['max'] == '100')));
     }
 
     /**
@@ -94,7 +87,7 @@ class NumberRangeFilter extends Filter
      */
     public function getDefaultValue(): array
     {
-        return [];
+        return config('livewiretablesadvancedfilters.numberRange.defaults');
     }
 
     /**
@@ -102,7 +95,7 @@ class NumberRangeFilter extends Filter
      */
     public function getFilterPillValue($values): ?string
     {
-        return implode(',', $values);
+        return __('Min:') . $values['min'] . ', ' . __('Max:') . $values['max'];
     }
 
     /**
@@ -110,6 +103,15 @@ class NumberRangeFilter extends Filter
      */
     public function render(DataTableComponent $component)
     {
+        if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
+            $component->{$component->getTableName()}['filters'][$this->getKey()] = [];
+        }
+        $currentMin = intval($component->{$component->getTableName()}['filters'][$this->getKey()]['min']);
+        $currentMax = intval($component->{$component->getTableName()}['filters'][$this->getKey()]['max']);
+        if ($currentMax < $currentMin) {
+            $component->{$component->getTableName()}['filters'][$this->getKey()] = ['min' => $component->{$component->getTableName()}['filters'][$this->getKey()]['max'], 'max' => $component->{$component->getTableName()}['filters'][$this->getKey()]['min']];
+        }
+
         return view('livewiretablesadvancedfilters::components.tools.filters.numberRange', [
             'component' => $component,
             'filter' => $this,

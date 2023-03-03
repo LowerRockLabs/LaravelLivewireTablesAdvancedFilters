@@ -15,10 +15,9 @@ class DateRangeFilter extends Filter
 
     public function __construct(string $name, string $key = null)
     {
+        parent::__construct($name, (isset($key) ? $key : null));
         $this->config = config('livewiretablesadvancedfilters.dateRange');
         $this->options = config('livewiretablesadvancedfilters.dateRange.defaults');
-
-        parent::__construct($name, (isset($key) ? $key : null));
     }
 
     /**
@@ -65,14 +64,22 @@ class DateRangeFilter extends Filter
      */
     public function validate($values)
     {
+        if (is_array($value)) {
+            foreach ($value as $index => $val) {
+                if ($index == 0 || strtolower($index) == 'mindate') {
+                    $returnedValues['minDate'] = $val;
+                }
+                if ($index == 1 || strtolower($index) == 'maxdate') {
+                    $returnedValues['maxDate'] = $val;
+                }
+            }
+        }
         if (! is_array($values)) {
             $valueArray = explode(' ', $values);
             $returnedValues['minDate'] = $valueArray[0];
             $returnedValues['maxDate'] = $valueArray[2];
-        } else {
-            $returnedValues['minDate'] = (isset($values['minDate']) ? $values['minDate'] : (isset($values[0]) ? $values[0] : ''));
-            $returnedValues['maxDate'] = (isset($values['maxDate']) ? $values['maxDate'] : (isset($values[1]) ? $values[1] : ''));
         }
+
         $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
 
         if ($returnedValues['minDate'] == '' || $returnedValues['maxDate'] == '') {
@@ -95,7 +102,7 @@ class DateRangeFilter extends Filter
      */
     public function getDefaultValue(): array
     {
-        return [];
+        return ['minDate' => '', 'maxDate' => ''];
     }
 
     /**
@@ -103,11 +110,23 @@ class DateRangeFilter extends Filter
      */
     public function getFilterPillValue($value): ?string
     {
-        $values = [];
-        $values['minDate'] = $this->getCustomFilterPillValue('minDate') ?? $this->getOptions()['minDate'] ?? '';
-        $values['maxDate'] = $this->getCustomFilterPillValue('maxDate') ?? $this->getOptions()['maxDate'] ?? '';
+        if (is_array($value)) {
+            foreach ($value as $index => $val) {
+                if ($index == 0 || strtolower($index) == 'mindate') {
+                    $minDate = $val;
+                }
+                if ($index == 1 || strtolower($index) == 'maxdate') {
+                    $maxDate = $val;
+                }
+            }
+        }
+        $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
+        $displayFormat = $this->getConfigs()['defaults']['ariaDateFormat'];
 
-        return implode(',', $values);
+        $minDate = (! empty($minDate) ? DateTime::createFromFormat($dateFormat, $minDate)->format($displayFormat) : '');
+        $maxDate = (! empty($maxDate) ? DateTime::createFromFormat($dateFormat, $maxDate)->format($displayFormat) : '');
+
+        return $minDate . ' ' . __('to') . ' ' . $maxDate;
     }
 
     /**
@@ -123,6 +142,10 @@ class DateRangeFilter extends Filter
      */
     public function render(DataTableComponent $component)
     {
+        if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
+            $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
+        }
+
         return view('livewiretablesadvancedfilters::components.tools.filters.dateRange', [
             'component' => $component,
             'filter' => $this,

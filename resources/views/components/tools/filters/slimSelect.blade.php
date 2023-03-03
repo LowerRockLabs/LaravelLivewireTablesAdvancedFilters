@@ -1,17 +1,11 @@
 @php
     $theme = $component->getTheme();
+    $tableName = $component->getTableName();
+    $filterKey = $filter->getKey();
     $options = [];
-    $selectedValues = [];
-    $selectedValues = $this->{$component->getTableName()}['filters'][$filter->getKey()];
-    
-    foreach ($filter->getOptions() as $idx => $val) {
-        if (in_array($val['id'], $selectedValues) || in_array(intval($val['id']), $selectedValues)) {
-            $options[] = ['tmp' => $idx, 'value' => $val['id'], 'text' => $val['name'], 'selected' => true];
-        } else {
-            $options[] = ['tmp' => $idx, 'value' => $val['id'], 'text' => $val['name'], 'selected' => false];
-        }
-    }
-    
+    $empty = [];
+    $empty[] = ['text' => '', 'value' => ''];
+    $options = array_merge($empty, $filter->getOptions());
 @endphp
 
 @pushOnce('scripts')
@@ -19,63 +13,111 @@
     <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet" />
 @endPushOnce
 
-@if ($theme === 'tailwind')
-    <div class="rounded-md shadow-sm" wire:ignore x-data="{
-        slimSelect: [],
-        bootSlimSelect() {
-            this.slimSelect = new SlimSelect({
-                select: '#test123',
-                settings: {
-                    placeholderText: 'Select Values',
-                    allowDeselect: true
-                },
-                events: {
-                    afterChange: (newVal) => {
-                        if (this.slimSelect.getSelected().length > 0) {
-                            $wire.set('{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}', this.slimSelect.getSelected());
+<div>
+    @if ($theme === 'tailwind')
+        <label for="{{ $tableName }}-filter-{{ $filterKey }}"
+            class="block text-sm font-medium leading-5 text-gray-700 dark:text-white">
+            {{ $filter->getName() }}
+        </label>
+        <div wire:ignore wire:key>
+            <div wire:key class="rounded-md shadow-sm" x-data="{
+                slimSelect: [],
+                booting: true,
+                bootSlimSelect() {
+                    this.slimSelect = new SlimSelect({
+                        select: '#test123',
+                        settings: {
+                            placeholderText: 'Select Values',
+                            allowDeselect: true
+                        },
+                        events: {
+                            afterChange: (newVal) => {
+                                if (!this.booting) {
+                                    if (this.slimSelect.getSelected().length > 0) {
+                                        $wire.set('{{ $tableName }}.filters.{{ $filterKey }}', this.slimSelect.getSelected());
+                                    }
+                                } else {
+                                    this.booting = false;
+                                }
+            
+                            }
                         }
-                        console.log(this.slimSelect.getData());
+                    });
+                },
+                updateSlimSelect() {
+                    if (this.slimSelect.length == 0) {
+                        this.bootSlimSelect();
+                        this.slimSelect.setData({{ json_encode($filter->getOptions()) }});
+                    } else {
+                        this.slimSelect.setData({{ json_encode($filter->getOptions()) }});
                     }
+            
+                },
+                init() {
+                    this.booting = true;
+                    this.updateSlimSelect()
                 }
-            });
-        },
-        updateSlimSelect() {
-            if (this.slimSelect.length == 0) {
-                this.bootSlimSelect();
-                this.slimSelect.setData({{ json_encode($options) }});
-    
-            } else {
-                this.slimSelect.setData({{ json_encode($options) }});
-            }
-            console.log(this.slimSelect.getData());
-        },
-        init() {
-            this.updateSlimSelect()
-        }
-    }">
-        <select multiple id='test123'>
-            <option data-placeholder="true"></option>
-        </select>
-    </div>
-@elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
-    <select multiple wire:model.stop="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}"
-        wire:key="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
-        id="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}"
-        class="{{ $theme === 'bootstrap-4' ? 'form-control' : 'form-select' }}">
-        @if ($filter->getFirstOption() != '')
-            <option @if ($filter->isEmpty($this)) selected @endif value="all">{{ $filter->getFirstOption() }}
-            </option>
-        @endif
-        @foreach ($filter->getOptions() as $key => $value)
-            @if (is_iterable($value))
-                <optgroup label="{{ $key }}">
-                    @foreach ($value as $optionKey => $optionValue)
-                        <option value="{{ $optionKey }}">{{ $optionValue }}</option>
-                    @endforeach
-                </optgroup>
-            @else
-                <option value="{{ $key }}">{{ $value }}</option>
-            @endif
-        @endforeach
-    </select>
-@endif
+            }">
+
+            </div>
+            <div wire:key>
+                <select multiple id='test123' wire:key>
+                    <option data-placeholder="true"></option>
+                </select>
+            </div>
+        </div>
+    @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
+        <label for="{{ $tableName }}-filter-{{ $filterKey }}"
+            class="block text-sm font-medium leading-5 text-gray-700 dark:text-white">
+            {{ $filter->getName() }}
+        </label>
+        <div wire:ignore wire:key>
+            <div wire:key class="rounded-md shadow-sm" x-data="{
+                slimSelect: [],
+                booting: true,
+                bootSlimSelect() {
+                    this.slimSelect = new SlimSelect({
+                        select: '#test123',
+                        settings: {
+                            placeholderText: 'Select Values',
+                            allowDeselect: true
+                        },
+                        events: {
+                            afterChange: (newVal) => {
+                                if (!this.booting) {
+                                    if (this.slimSelect.getSelected().length > 0) {
+                                        $wire.set('{{ $tableName }}.filters.{{ $filterKey }}', this.slimSelect.getSelected());
+                                    }
+                                } else {
+                                    this.booting = false;
+                                }
+            
+                            }
+                        }
+                    });
+                },
+                updateSlimSelect() {
+                    if (this.slimSelect.length == 0) {
+                        this.bootSlimSelect();
+                        this.slimSelect.setData({{ json_encode($filter->getOptions()) }});
+                    } else {
+                        this.slimSelect.setData({{ json_encode($filter->getOptions()) }});
+                    }
+            
+                },
+                init() {
+                    this.booting = true;
+                    this.updateSlimSelect()
+                }
+            }">
+
+            </div>
+            <div wire:key>
+                <select multiple id='test123' wire:key
+                    class="{{ $theme === 'bootstrap-4' ? 'form-control' : 'form-select' }}">
+                    <option data-placeholder="true"></option>
+                </select>
+            </div>
+        </div>
+    @endif
+</div>

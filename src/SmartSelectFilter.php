@@ -12,10 +12,19 @@ class SmartSelectFilter extends Filter
      */
     protected array $options = [];
 
+    public array $fullSelectedList = [];
+
+    public $componentname = '';
+
     public function __construct(string $name, string $key = null)
     {
         parent::__construct($name, (isset($key) ? $key : null));
         $this->config = config('livewiretablesadvancedfilters.smartSelect');
+    }
+
+    public function boot()
+    {
+        $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
     }
 
     /**
@@ -94,7 +103,7 @@ class SmartSelectFilter extends Filter
     public function getKeys(): array
     {
         if ($this->getConfig('optionsMethod') == 'complex') {
-            return collect($this->getOptions())->pluck('id')->toArray();
+            return collect($this->getOptions())->toArray();
         } else {
             return collect($this->getOptions())
             ->keys()
@@ -116,12 +125,16 @@ class SmartSelectFilter extends Filter
                 return false;
             }
             $value = array_unique($value);
+
             foreach ($value as $index => $val) {
                 // Remove the bad value
                 if (! in_array($val, $this->getKeys())) {
                     unset($value[$index]);
                 }
+
+                $this->fullSelectedList[$val] = ['id' => $val, 'name' => $this->getOptions()[$val]['name']];
             }
+
             if (count($value) == 0) {
                 return false;
             }
@@ -207,6 +220,22 @@ class SmartSelectFilter extends Filter
     }
 
     /**
+     * @return array<mixed>
+     */
+    public function getFullSelectedList($itemList): array
+    {
+        $newCol = collect();
+        foreach ($itemList as $val) {
+            $newCol->push(['id' => $val, 'name' => $this->getOptions()[$val]['name']]);
+        }
+        if ($newCol->count() > 0) {
+            return $newCol->sortBy('name')->values()->toArray();
+        } else {
+            return [];
+        }
+    }
+
+    /**
      * @return \Illuminate\View\View|\Illuminate\View\Factory
      */
     public function render(DataTableComponent $component)
@@ -215,7 +244,16 @@ class SmartSelectFilter extends Filter
             $component->{$component->getTableName()}['filters'][$this->getKey()] = [];
         }
 
-        return view('livewiretablesadvancedfilters::components.tools.filters.smartSelectHero', [
+        //if (! isset($component->{$component->getTableName()}['filterdata'])) {
+        //    $component->{$component->getTableName()}['filterdata'] = [$this->getKey() => []];
+        //}
+
+        //$this->filterdata[$component->getTableName()][$this->getKey()] = $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
+        //$this->filterdatas[$component->getTableName()][$this->getKey()] = 'test';
+
+        $component->filterData[$this->getKey()] = $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
+
+        return view('livewiretablesadvancedfilters::components.tools.filters.smartSelect', [
             'component' => $component,
             'filter' => $this,
         ]);

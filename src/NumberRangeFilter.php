@@ -50,11 +50,18 @@ class NumberRangeFilter extends Filter
     }
 
     /**
-     * @param  array<mixed>  $values
+     * @param  array<mixed>|string  $values
      * @return array<mixed>|bool
      */
     public function validate($values)
     {
+        if (! is_array($values)) {
+            $tmp = explode(',', $values);
+            asort($tmp);
+            $values['min'] = (isset($tmp[0]) ? $tmp[0] : $this->getConfig('minRange'));
+            $values['max'] = (isset($tmp[1]) ? $tmp[1] : $this->getConfig('maxRange'));
+        }
+
         if (! isset($values['min']) || ! isset($values['max'])) {
             return false;
         }
@@ -148,6 +155,9 @@ class NumberRangeFilter extends Filter
         //if ($currentMax < $currentMin) {
         //    $component->{$component->getTableName()}['filters'][$this->getKey()] = ['min' => $component->{$component->getTableName()}['filters'][$this->getKey()]['max'], 'max' => $component->{$component->getTableName()}['filters'][$this->getKey()]['min']];
         // }
+        if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
+            $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
+        }
 
         return view('livewiretablesadvancedfilters::components.tools.filters.numberRange', [
             'component' => $component,

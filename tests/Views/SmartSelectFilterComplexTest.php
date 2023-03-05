@@ -61,7 +61,16 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
     public function can_check_validation_accepts_valid_values_complex(): void
     {
         $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'complex'])->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->toArray()
+            Breed::query()
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($breed) {
+                $breedValue['id'] = $breed->id;
+                $breedValue['name'] = $breed->name;
+
+                return $breedValue;
+            })->keyBy('id')->toArray()
         );
         $this->assertSame(['1', '2'], $filter->validate(['1', '2']));
     }
@@ -84,7 +93,16 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
     public function can_check_validation_rejects_invalid_values_complex(): void
     {
         $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'complex'])->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->toArray()
+            Breed::query()
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($breed) {
+                $breedValue['id'] = $breed->id;
+                $breedValue['name'] = $breed->name;
+
+                return $breedValue;
+            })->keyBy('id')->toArray()
         );
         $this->assertFalse($filter->validate('test'));
     }
@@ -93,16 +111,34 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
     public function can_check_validation_accepts_string_value_in_complex(): void
     {
         $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'complex'])->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->toArray()
+            Breed::query()
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($breed) {
+                $breedValue['id'] = $breed->id;
+                $breedValue['name'] = $breed->name;
+
+                return $breedValue;
+            })->keyBy('id')->toArray()
         );
-        $this->assertSame([0 => '1'], $filter->validate('1'));
+        $this->assertSame(['1'], $filter->validate('1'));
     }
 
     /** @test */
     public function can_check_validation_rejects_invalid_string_value_in_complex(): void
     {
         $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'complex'])->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->toArray()
+            Breed::query()
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($breed) {
+                $breedValue['id'] = $breed->id;
+                $breedValue['name'] = $breed->name;
+
+                return $breedValue;
+            })->keyBy('id')->toArray()
         );
         $this->assertFalse($filter->validate('888'));
     }
@@ -111,9 +147,23 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
     public function can_get_filter_options_complex(): void
     {
         $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'complex'])->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->toArray()
+            Breed::query()
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($breed) {
+                $breedValue['id'] = $breed->id;
+                $breedValue['name'] = $breed->name;
+
+                return $breedValue;
+            })->keyBy('id')->toArray()
         );
-        $this->assertSame(Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->toArray(), $filter->getOptions());
+        $this->assertSame(Breed::query()->select('id', 'name')->orderBy('name')->get()->map(function ($breed) {
+            $breedValue['id'] = $breed->id;
+            $breedValue['name'] = $breed->name;
+
+            return $breedValue;
+        })->keyBy('id')->toArray(), $filter->getOptions());
     }
 
     /** @test */
@@ -141,7 +191,12 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
 
         $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'complex'])
         ->options(
-            Breed::select(['id', 'name'])->orderBy('name', 'asc')->get()->toArray()
+            Breed::query()->select('id', 'name')->orderBy('name')->get()->map(function ($breed) {
+                $breedValue['id'] = $breed->id;
+                $breedValue['name'] = $breed->name;
+
+                return $breedValue;
+            })->keyBy('id')->toArray()
         )->filter(function (Builder $builder, array $values) {
             return $builder->whereIn('breed_id', $values);
         });

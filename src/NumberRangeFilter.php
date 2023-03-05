@@ -56,8 +56,10 @@ class NumberRangeFilter extends Filter
     public function validate($values)
     {
         if (! is_array($values)) {
+            $tmp = [];
             $tmp = explode(',', $values);
             asort($tmp);
+            $values = [];
             $values['min'] = (isset($tmp[0]) ? $tmp[0] : $this->getConfig('minRange'));
             $values['max'] = (isset($tmp[1]) ? $tmp[1] : $this->getConfig('maxRange'));
         }

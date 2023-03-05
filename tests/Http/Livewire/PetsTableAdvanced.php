@@ -20,6 +20,8 @@ class PetsTableAdvanced extends DataTableComponent
 {
     public $model = Pet::class;
 
+    public $filterData = [];
+
     public function configure(): void
     {
         $this->setPrimaryKey('id');
@@ -68,11 +70,16 @@ class PetsTableAdvanced extends DataTableComponent
             SmartSelectFilter::make('Smart')
             ->options(
                 Breed::query()
-                    ->orderBy('name')
-                    ->get()
-                    ->keyBy('id')
-                    ->map(fn ($breed) => $breed->name)
-                    ->toArray()
+                ->select('id', 'name')
+                ->orderBy('name')
+                ->get()
+                ->map(function ($breed) {
+                    $breedValue['id'] = $breed->id;
+                    $breedValue['name'] = $breed->name;
+
+                    return $breedValue;
+                })->keyBy('id')->toArray()
+
             )->filter(function (Builder $builder, array $values) {
                 return $builder->whereIn('breed_id', $values);
             }),
@@ -143,8 +150,8 @@ class PetsTableAdvanced extends DataTableComponent
                     ];
                 })->toArray()
             )->filter(function (Builder $builder, array $values) {
-                    return $builder->whereIn('breed_id', $values);
-                }),
+                return $builder->whereIn('breed_id', $values);
+            }),
         ];
     }
 }

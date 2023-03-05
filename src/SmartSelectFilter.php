@@ -103,7 +103,7 @@ class SmartSelectFilter extends Filter
     public function getKeys(): array
     {
         if ($this->getConfig('optionsMethod') == 'complex') {
-            return collect($this->getOptions())->toArray();
+            return collect($this->getOptions())->pluck('id')->toArray();
         } else {
             return collect($this->getOptions())
             ->keys()
@@ -124,18 +124,18 @@ class SmartSelectFilter extends Filter
             if (count($value) == 0) {
                 return false;
             }
-            $value = array_unique($value);
+            $values = array_unique($value);
 
-            foreach ($value as $index => $val) {
+            foreach ($values as $index => $val) {
                 // Remove the bad value
                 if (! in_array($val, $this->getKeys())) {
-                    unset($value[$index]);
+                    unset($values[$index]);
                 }
 
                 $this->fullSelectedList[$val] = ['id' => $val, 'name' => $this->getOptions()[$val]['name']];
             }
 
-            if (count($value) == 0) {
+            if (count($values) == 0) {
                 return false;
             }
         } else {

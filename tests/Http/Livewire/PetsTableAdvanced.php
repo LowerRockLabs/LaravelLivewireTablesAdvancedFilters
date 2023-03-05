@@ -143,8 +143,8 @@ class PetsTableAdvanced extends DataTableComponent
                     ];
                 })->toArray()
             )->filter(function (Builder $builder, array $values) {
-                    return $builder->whereIn('breed_id', $values);
-                }),
+                return $builder->whereIn('breed_id', $values);
+            }),
         ];
     }
 }

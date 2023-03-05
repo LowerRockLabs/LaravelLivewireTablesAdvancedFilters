@@ -79,7 +79,6 @@ class PetsTableAdvanced extends DataTableComponent
 
                     return $breedValue;
                 })->keyBy('id')->toArray()
-
             )->filter(function (Builder $builder, array $values) {
                 return $builder->whereIn('breed_id', $values);
             }),

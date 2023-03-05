@@ -70,6 +70,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/LowerRockLabs/laravel-livewire-tables.git"
-        },
+        }
     ]
 }

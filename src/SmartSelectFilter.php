@@ -12,19 +12,15 @@ class SmartSelectFilter extends Filter
      */
     protected array $options = [];
 
+    /**
+     * @var array<mixed>
+     */
     public array $fullSelectedList = [];
-
-    public $componentname = '';
 
     public function __construct(string $name, string $key = null)
     {
         parent::__construct($name, (isset($key) ? $key : null));
         $this->config = config('livewiretablesadvancedfilters.smartSelect');
-    }
-
-    public function boot()
-    {
-        $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
     }
 
     /**
@@ -166,7 +162,8 @@ class SmartSelectFilter extends Filter
     }
 
     /**
-     * @param  string|array<mixed>  $value
+     * @param  mixed  $value
+     * @return array<mixed>|null
      */
     public function generatePillArray($value): ?array
     {
@@ -220,6 +217,7 @@ class SmartSelectFilter extends Filter
     }
 
     /**
+     * @param  mixed  $itemList
      * @return array<mixed>
      */
     public function getFullSelectedList($itemList): array
@@ -251,7 +249,9 @@ class SmartSelectFilter extends Filter
         //$this->filterdata[$component->getTableName()][$this->getKey()] = $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
         //$this->filterdatas[$component->getTableName()][$this->getKey()] = 'test';
 
-        $component->filterData[$this->getKey()] = $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
+        if (isset($component->filterData)) {
+            $component->filterData[$this->getKey()] = $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
+        }
 
         return view('livewiretablesadvancedfilters::components.tools.filters.smartSelect', [
             'component' => $component,

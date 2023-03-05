@@ -12,6 +12,9 @@ class SlimSelectFilter extends Filter
      */
     protected array $options = [];
 
+    /**
+     * @var array<mixed>
+     */
     public array $selectedItems;
 
     public function __construct(string $name, string $key = null)
@@ -72,7 +75,7 @@ class SlimSelectFilter extends Filter
     }
 
     /**
-     * @param  mixed
+     * @param  mixed  $value
      */
     public function getFilterPillValue($value): ?string
     {

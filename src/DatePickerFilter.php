@@ -50,7 +50,7 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @param  string  $values
+     * @param  string  $value
      * @return string|bool
      */
     public function validate($value)
@@ -71,10 +71,16 @@ class DatePickerFilter extends Filter
         }
 
         $date = \Carbon\Carbon::createFromFormat($dateFormat, $value);
+        if (! $date) {
+            return false;
+        }
 
         $earliestDateString = $this->getConfig('earliestDate') ?? $this->getConfig('defaults')['earliestDate'];
         if ($earliestDateString != '') {
             $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
+            if (! $earliestDate) {
+                return false;
+            }
             if ($date->lt($earliestDate)) {
                 return false;
             }
@@ -83,6 +89,9 @@ class DatePickerFilter extends Filter
         $latestDateString = $this->getConfig('latestDate') ?? $this->getConfig('defaults')['latestDate'];
         if ($latestDateString != '') {
             $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
+            if (! $latestDate) {
+                return false;
+            }
             if ($date->gt($latestDate)) {
                 return false;
             }
@@ -96,7 +105,7 @@ class DatePickerFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        if ($value == '' || empty($value) || $value === '' || is_null($value)) {
+        if ($value == '' || empty($value)) {
             return true;
         } else {
             return false;
@@ -114,7 +123,13 @@ class DatePickerFilter extends Filter
             $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
             $ariaDateFormat = $this->getConfig('ariaDateFormat') ?? $this->getConfig('defaults')['ariaDateFormat'];
 
-            return \Carbon\Carbon::createFromFormat($dateFormat, $value)->format($ariaDateFormat);
+            $carbonInstance = \Carbon\Carbon::createFromFormat($dateFormat, $value);
+
+            if (! $carbonInstance) {
+                return '';
+            }
+
+            return $carbonInstance->format($ariaDateFormat);
         }
 
         return '';

@@ -63,7 +63,7 @@ class DateRangeFilter extends Filter
      */
     public function validate($values)
     {
-        $returnedValues = [];
+        $returnedValues = ['minDate' => '', 'maxDate' => ''];
         if (is_array($values)) {
             foreach ($values as $index => $value) {
                 if ($index == 0 || strtolower($index) == 'mindate') {
@@ -94,7 +94,9 @@ class DateRangeFilter extends Filter
 
         $startDate = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['minDate']);
         $endDate = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['maxDate']);
-
+        if (! $startDate || ! $endDate) {
+            return false;
+        }
         if ($startDate->gt($endDate)) {
             return false;
         }
@@ -102,6 +104,9 @@ class DateRangeFilter extends Filter
         $earliestDateString = $this->getConfig('earliestDate') ?? $this->getConfig('defaults')['earliestDate'];
         if ($earliestDateString != '') {
             $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
+            if (! $earliestDate) {
+                return false;
+            }
             if ($startDate->lt($earliestDate)) {
                 return false;
             }
@@ -110,6 +115,10 @@ class DateRangeFilter extends Filter
         $latestDateString = $this->getConfig('latestDate') ?? $this->getConfig('defaults')['latestDate'];
         if ($latestDateString != '') {
             $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
+
+            if (! $latestDate) {
+                return false;
+            }
             if ($endDate->gt($latestDate)) {
                 return false;
             }
@@ -136,9 +145,17 @@ class DateRangeFilter extends Filter
         if ($validatedValue) {
             $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
             $ariaDateFormat = $this->getConfig('ariaDateFormat') ?? $this->getConfig('defaults')['ariaDateFormat'];
+            if ($value['minDate'] == null || $value['maxDate'] == null) {
+                return '';
+            }
+            $minDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $value['minDate']);
+            $maxDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $value['maxDate']);
 
-            $minDate = \Carbon\Carbon::createFromFormat($dateFormat, $value['minDate'])->format($ariaDateFormat);
-            $maxDate = \Carbon\Carbon::createFromFormat($dateFormat, $value['maxDate'])->format($ariaDateFormat);
+            if (! $minDateCarbon || ! $maxDateCarbon) {
+                return '';
+            }
+            $minDate = $minDateCarbon->format($ariaDateFormat);
+            $maxDate = $maxDateCarbon->format($ariaDateFormat);
 
             return $minDate . ' ' . __('to') . ' ' . $maxDate;
         }

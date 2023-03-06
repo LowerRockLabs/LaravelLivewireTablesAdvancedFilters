@@ -12,9 +12,6 @@ class SmartSelectFilter extends Filter
      */
     protected array $options = [];
 
-    /**
-     * @var array<mixed>
-     */
     public array $fullSelectedList = [];
 
     public function __construct(string $name, string $key = null)
@@ -81,16 +78,7 @@ class SmartSelectFilter extends Filter
      */
     public function getOptions(): array
     {
-        if ($this->getConfig('optionsMethod') == 'complex') {
-            return $this->options;
-        } else {
-            $complexArray = [];
-            foreach ($this->options as $id => $name) {
-                $complexArray[] = ['id' => $id, 'name' => $name];
-            }
-
-            return $complexArray;
-        }
+        return $this->options;
     }
 
     /**
@@ -98,16 +86,7 @@ class SmartSelectFilter extends Filter
      */
     public function getKeys(): array
     {
-        if ($this->getConfig('optionsMethod') == 'complex') {
-            return collect($this->getOptions())->pluck('id')->toArray();
-        } else {
-            return collect($this->getOptions())
-            ->keys()
-            ->map(fn ($value) => (string) $value)
-            ->filter(fn ($value) => strlen($value)) /** @phpstan-ignore-line */
-            ->values()
-            ->toArray();
-        }
+        return collect($this->getOptions())->pluck('id')->toArray(); //->toArray();
     }
 
     /**
@@ -120,18 +99,18 @@ class SmartSelectFilter extends Filter
             if (count($value) == 0) {
                 return false;
             }
-            $values = array_unique($value);
+            $value = array_unique($value);
 
-            foreach ($values as $index => $val) {
+            foreach ($value as $index => $val) {
                 // Remove the bad value
                 if (! in_array($val, $this->getKeys())) {
-                    unset($values[$index]);
+                    unset($value[$index]);
                 }
 
                 $this->fullSelectedList[$val] = ['id' => $val, 'name' => $this->getOptions()[$val]['name']];
             }
 
-            if (count($values) == 0) {
+            if (count($value) == 0) {
                 return false;
             }
         } else {
@@ -162,8 +141,7 @@ class SmartSelectFilter extends Filter
     }
 
     /**
-     * @param  mixed  $value
-     * @return array<mixed>|null
+     * @param  string|array<mixed>  $value
      */
     public function generatePillArray($value): ?array
     {
@@ -217,7 +195,6 @@ class SmartSelectFilter extends Filter
     }
 
     /**
-     * @param  mixed  $itemList
      * @return array<mixed>
      */
     public function getFullSelectedList($itemList): array
@@ -249,9 +226,7 @@ class SmartSelectFilter extends Filter
         //$this->filterdata[$component->getTableName()][$this->getKey()] = $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
         //$this->filterdatas[$component->getTableName()][$this->getKey()] = 'test';
 
-        if (isset($component->filterData)) {
-            $component->filterData[$this->getKey()] = $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
-        }
+        $component->filterData[$this->getKey()] = $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
 
         return view('livewiretablesadvancedfilters::components.tools.filters.smartSelect', [
             'component' => $component,

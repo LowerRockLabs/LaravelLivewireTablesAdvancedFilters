@@ -3,7 +3,7 @@
     $tableName = $component->getTableName();
     $filterKey = $filter->getKey();
     $dateInput = !is_null($this->{$tableName}['filters'][$filterKey]) && $this->{$tableName}['filters'][$filterKey] != '' ? $this->{$tableName}['filters'][$filterKey] : date('Y-m-d');
-    
+
 @endphp
 @if (Config::get('livewiretablesadvancedfilters.datePicker.publishFlatpickrJS'))
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -21,51 +21,51 @@
     @endPushOnce
 @endif
 
-<div>
+<div x-data='{
+                init() {
+                    flatpickr($refs.datePickerInput-{{ $filterKey }}, {
+                        onOpen: function()
+                        {
+                            childElementOpen = true;
+                        },
+                        onChange: function (selectedDates, dateStr, instance)
+                        {
+                            if ($refs.datePickerInput-{{ $filterKey }}.value != dateStr)
+                            {
+                                $refs.datePickerInput-{{ $filterKey }}.value = dateStr;
+                            }
+
+                        },
+                        onClose: function()
+                        {
+                            childElementOpen = false;
+                        },
+                        mode:"single",
+                        clickOpens: true,
+                        ariaDateFormat:"{{ $filter->getConfig('ariaDateFormat') }}",
+                        allowInput:"{{ $filter->getConfig('allowInput') }}",
+                        altFormat:"{{ $filter->getConfig('altFormat') }}",
+                        altInput:"{{ $filter->getConfig('altInput') }}",
+                        dateFormat:"{{ $filter->getConfig('dateFormat') }}",
+                        defaultDate:"{{ $dateInput }}",
+                        enableTime: @if ($filter->getConfig('timeEnabled') == 1) true, @else false, @endif
+                        locale: "{{ App::currentLocale() }}",
+                        @if ($filter->hasConfig('earliestDate')) minDate:"{{ $filter->getConfig('earliestDate') }}", @endif
+                        @if ($filter->hasConfig('latestDate')) maxDate:"{{ $filter->getConfig('latestDate') }}", @endif
+                    });
+                }
+            }'
+    x-effect="init">
     @if ($theme === 'tailwind')
         <label for="{{ $tableName }}-filter-{{ $filterKey }}"
             class="block text-sm font-medium leading-5 text-gray-700 dark:text-white">
             {{ $filter->getName() }}
         </label>
         <div class="-ml-2 -px-2 rounded-md shadow-sm "
-            x-data='{
-            init() {
-                flatpickr($refs.input, {
-                    onOpen: function()
-                    {
-                        childElementOpen = true;
-                    },
-                    onChange: function (selectedDates, dateStr, instance)
-                    {
-                        if ($refs.input.value != dateStr)
-                        {
-                            $refs.input.value = dateStr;
-                        }
-
-                    },
-                    onClose: function()
-                    {
-                        childElementOpen = false;
-                    },
-                    mode:"single",
-                    clickOpens: true,
-                    ariaDateFormat:"{{ $filter->getConfig('ariaDateFormat') }}",
-                    allowInput:"{{ $filter->getConfig('allowInput') }}",
-                    altFormat:"{{ $filter->getConfig('altFormat') }}",
-                    altInput:"{{ $filter->getConfig('altInput') }}",
-                    dateFormat:"{{ $filter->getConfig('dateFormat') }}",
-                    defaultDate:"{{ $dateInput }}",
-                    enableTime: @if ($filter->getConfig('timeEnabled') == 1) true, @else false, @endif
-                    locale: "{{ App::currentLocale() }}",
-                    @if ($filter->hasConfig('earliestDate')) minDate:"{{ $filter->getConfig('earliestDate') }}", @endif
-                    @if ($filter->hasConfig('latestDate')) maxDate:"{{ $filter->getConfig('latestDate') }}", @endif
-                });
-            }
-        }'
-            x-effect="init" placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
+            placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
             <div class="w-full">
-                <input type="text" x-ref="input"
+                <input type="text" x-ref="datePickerInput-{{ $filterKey }}"
                     wire:model.debounce.2000ms="{{ $tableName }}.filters.{{ $filterKey }}"
                     wire:key="{{ $tableName }}-filter-{{ $filterKey }}"
                     id="{{ $tableName }}-filter-{{ $filterKey }}"
@@ -85,41 +85,9 @@
             class="block text-sm font-medium leading-5 text-gray-700 dark:text-white">
             {{ $filter->getName() }}
         </label>
-        <div class="mb-3 mb-md-0 -ml-2 -px-2 input-group"
-            x-data='{
-            init() {
-                flatpickr($refs.input, {
-                    onOpen: function()
-                    {
-                        childElementOpen = true;
-                    },
-                    onChange: function (selectedDates, dateStr, instance)
-                    {
-                        $refs.input.value = dateStr;
-                    },
-                    onClose: function()
-                    {
-                        childElementOpen = false;
-                    },
-                    mode:"single",
-                    clickOpens: true,
-                    ariaDateFormat:"{{ $filter->getConfig('ariaDateFormat') }}",
-                    allowInput:"{{ $filter->getConfig('allowInput') }}",
-                    altFormat:"{{ $filter->getConfig('altFormat') }}",
-                    altInput:"{{ $filter->getConfig('altInput') }}",
-                    dateFormat:"{{ $filter->getConfig('dateFormat') }}",
-                    defaultDate:[$refs.input.value],
-                    enableTime: @if ($filter->getConfig('timeEnabled') == 1) true, @else false, @endif
-                    locale: "{{ App::currentLocale() }}",
-                    @if ($filter->hasConfig('earliestDate')) minDate:"{{ $filter->getConfig('earliestDate') }}", @endif
-                    @if ($filter->hasConfig('latestDate')) maxDate:"{{ $filter->getConfig('latestDate') }}", @endif
-                });
-            }
-        }'
-            x-effect="init" placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
-
+        <div class="mb-3 mb-md-0 -ml-2 -px-2 input-group" placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
             <div class="w-full">
-                <input type="text" class="form-control" x-ref="input"
+                <input type="text" class="form-control" x-ref="datePickerInput-{{ $filterKey }}"
                     wire:model.debounce.2000ms="{{ $tableName }}.filters.{{ $filterKey }}"
                     wire:key="{{ $tableName }}-filter-{{ $filterKey }}"
                     id="{{ $tableName }}-filter-{{ $filterKey }}"

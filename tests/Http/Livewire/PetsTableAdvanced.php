@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DateRangeFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SlimSelectFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Breed;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Models\Pet;
@@ -18,6 +19,8 @@ use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
 class PetsTableAdvanced extends DataTableComponent
 {
     public $model = Pet::class;
+
+    public $filterData = [];
 
     public function configure(): void
     {
@@ -67,11 +70,15 @@ class PetsTableAdvanced extends DataTableComponent
             SmartSelectFilter::make('Smart')
             ->options(
                 Breed::query()
-                    ->orderBy('name')
-                    ->get()
-                    ->keyBy('id')
-                    ->map(fn ($breed) => $breed->name)
-                    ->toArray()
+                ->select('id', 'name')
+                ->orderBy('name')
+                ->get()
+                ->map(function ($breed) {
+                    $breedValue['id'] = $breed->id;
+                    $breedValue['name'] = $breed->name;
+
+                    return $breedValue;
+                })->keyBy('id')->toArray()
             )->filter(function (Builder $builder, array $values) {
                 return $builder->whereIn('breed_id', $values);
             }),
@@ -125,6 +132,24 @@ class PetsTableAdvanced extends DataTableComponent
             )
             ->filter(function (Builder $builder, array $values) {
                 return $builder->whereIn('species_id', $values);
+            }),
+
+            SlimSelectFilter::make('Slim')->options(
+                Breed::query()
+                ->select('id', 'name')
+                ->orderBy('name')
+                ->get()
+                ->map(function ($breed) {
+                    return [
+                        'id' => $breed->id,
+                        'name' => $breed->name,
+                        'text' => $breed->name,
+                        'value' => $breed->id,
+                        'html' => $breed->name,
+                    ];
+                })->toArray()
+            )->filter(function (Builder $builder, array $values) {
+                return $builder->whereIn('breed_id', $values);
             }),
         ];
     }

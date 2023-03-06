@@ -74,7 +74,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
     /** @test */
     public function can_get_component_filter_count(): void
     {
-        $this->assertEquals(6, $this->advancedTable->getFiltersCount());
+        $this->assertEquals(7, $this->advancedTable->getFiltersCount());
     }
 
     /** @test */
@@ -163,10 +163,14 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
 
         $this->assertSame(['breed' => [],
             'smart' => [],
-            'range' => [],
-            'daterange' => [],
+            'range' => ['min' => null,
+                'max' => null],
+            'daterange' => ['minDate' => null,
+                'maxDate' => null],
             'datepicker' => null,
             'species' => [],
+            'slim' => [],
+
         ], $this->advancedTable->getAppliedFilters());
     }
 
@@ -220,7 +224,8 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
 
         $this->advancedTable->setFilter('species', ['0']);
 
-        $this->assertSame(['breed' => ['1'], 'species' => ['0']], $this->advancedTable->getAppliedFiltersWithValues());
+        $this->assertSame(['breed' => [0 => '1'],
+            'species' => [0 => '0']], $this->advancedTable->getAppliedFiltersWithValues());
     }
 
     /** @test */

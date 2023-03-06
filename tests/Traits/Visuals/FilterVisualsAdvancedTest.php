@@ -3,19 +3,11 @@
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Traits\Visuals;
 
 use Livewire\Livewire;
-use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Http\Livewire\PetsTableAdvanced;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\TestCaseAdvanced;
 
-class FilterVisualsTestAdvanced extends TestCaseAdvanced
+class FilterVisualsAdvancedTest extends TestCaseAdvanced
 {
-    /** @test */
-    public function the_number_range_filter_component_can_render()
-    {
-        Livewire::test(NumberRangeFilter::class)->assertStatus(200);
-        Livewire::test(NumberRangeFilter::class)->assertSeeHtml("<div class='range-slider__progress'></div>");
-    }
-
     /** @test */
     public function filters_button_shows_when_enabled(): void
     {
@@ -99,30 +91,37 @@ class FilterVisualsTestAdvanced extends TestCaseAdvanced
     }
 
     /** @test */
-    public function filters_datepicker_can_be_seen(): void
-    {
-        Livewire::test(PetsTableAdvanced::class)
-            ->assertSeeHtml('<a x-on:click="flatpickr($refs.input).toggle" class="inline-block input-button -ml-8 w-6 h-6">');
-    }
-
-    /** @test */
     public function filters_numberrange_can_be_seen(): void
     {
         Livewire::test(PetsTableAdvanced::class)
-            ->assertSeeHtml("<div class='range-slider__progress'></div>");
+            ->assertSeeHtml('range-slider');
     }
 
     /** @test */
     public function filters_smartselect_can_be_seen(): void
     {
         Livewire::test(PetsTableAdvanced::class)
-            ->assertSeeHtml('smartSelectOpen: false');
+            ->assertSeeHtml('updateCurrentFilteredList');
     }
 
     /** @test */
     public function filters_daterange_can_be_seen(): void
     {
         Livewire::test(PetsTableAdvanced::class)
-            ->assertSeeHtml('mode:"range"');
+            ->assertSeeHtml("mode: 'range'");
     }
+
+    /** @test */
+    public function filters_datepicker_can_be_seen(): void
+    {
+        Livewire::test(PetsTableAdvanced::class)
+            ->assertSeeHtml("mode: 'single'");
+    }
+
+        /** @test */
+        public function filters_slimselect_can_be_seen(): void
+        {
+            Livewire::test(PetsTableAdvanced::class)
+                ->assertSeeHtml('slimSelect');
+        }
 }

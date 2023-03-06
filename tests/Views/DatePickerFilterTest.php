@@ -84,7 +84,7 @@ class DatePickerFilterTest extends TestCaseAdvanced
     {
         $filter = DatePickerFilter::make('Active');
 
-        $this->assertSame(['date' => ''], $filter->getKeys());
+        $this->assertSame([], $filter->getKeys());
     }
 
     /** @test */
@@ -111,6 +111,58 @@ class DatePickerFilterTest extends TestCaseAdvanced
         $this->assertIsCallable($filter->getFilterCallback());
     }
 
+        /** @test */
+        public function can_check_validation_accepts_valid_values_string(): void
+        {
+            $filter = DatePickerFilter::make('Active');
+            $this->assertSame('2020-01-01', $filter->validate('2020-01-01'));
+        }
+
+        /** @test */
+        public function can_check_validation_rejects_invalid_values2(): void
+        {
+            $filter = DatePickerFilter::make('Active');
+            $this->assertSame('2020-01-01', $filter->validate('2020-01-01'));
+            $this->assertFalse($filter->validate(''));
+            $this->assertFalse($filter->validate('test'));
+            $this->assertFalse($filter->validate(['test']));
+            $this->assertFalse($filter->validate(['2020-10-22']));
+            $this->assertFalse($filter->validate(['2020-13-22']));
+            $this->assertFalse($filter->validate(['20110-12-22']));
+            $this->assertFalse($filter->validate('20110-12-22'));
+            $this->assertFalse($filter->validate('2010-14-22'));
+            $this->assertFalse($filter->validate('2010-12-32'));
+        }
+
+        /** @test */
+        public function can_check_validation_rejects_values_before_earliest_or_after_latest_with_dateformat(): void
+        {
+            $filter = DatePickerFilter::make('Active')->config(['dateFormat' => 'Y-m-d', 'earliestDate' => '2020-01-01', 'latestDate' => '2020-10-10']);
+            $this->assertSame('2020-01-02', $filter->validate('2020-01-02'));
+            $this->assertFalse($filter->validate('2021-02-02'));
+            $this->assertFalse($filter->validate('2010-02-02'));
+            $this->assertFalse($filter->validate('31010-02-02'));
+        }
+
+        /** @test */
+        public function can_check_validation_rejects_values_before_earliest_or_after_latest_default_dateformat(): void
+        {
+            $filter = DatePickerFilter::make('Active')->config(['earliestDate' => '2020-01-01', 'latestDate' => '2020-10-10']);
+            $this->assertSame('2020-01-02', $filter->validate('2020-01-02'));
+            $this->assertFalse($filter->validate('2021-02-02'));
+            $this->assertFalse($filter->validate('2010-02-02'));
+            $this->assertFalse($filter->validate('31010-02-02'));
+        }
+
+        /** @test */
+        public function can_check_date_format_can_be_changed2(): void
+        {
+            $filter = DatePickerFilter::make('Active')->config(['dateFormat' => 'd-m-Y', 'earliestDate' => '01-01-2020', 'latestDate' => '12-10-2020']);
+            $this->assertSame('02-01-2020', $filter->validate('02-01-2020'));
+            $this->assertFalse($filter->validate('2020-04-05'));
+            $this->assertFalse($filter->validate('30-13-2020'));
+        }
+
     /** @test */
     public function can_get_filter_pill_title(): void
     {
@@ -122,6 +174,36 @@ class DatePickerFilterTest extends TestCaseAdvanced
             ->setFilterPillTitle('User Status');
 
         $this->assertSame('User Status', $filter->getFilterPillTitle());
+    }
+
+    /** @test */
+    public function filter_pill_title_can_be_set(): void
+    {
+        $filter = DatePickerFilter::make('Date');
+
+        $this->assertEquals('Date', $filter->getFilterPillTitle());
+
+        $filter->setFilterPillTitle('Date 2');
+
+        $this->assertEquals('Date 2', $filter->getFilterPillTitle());
+    }
+
+    /** @test */
+    public function filter_pill_values_can_be_set_for_datepicker(): void
+    {
+        $filter = DatePickerFilter::make('Active');
+
+        $this->assertEquals('January 1, 2020', $filter->getFilterPillValue('2020-01-01'));
+        $this->assertEquals('', $filter->getFilterPillValue('21020-01-01'));
+    }
+
+    /** @test */
+    public function filter_pill_values_can_be_set_for_datepicker_customformat(): void
+    {
+        $filter = DatePickerFilter::make('Active')->config(['ariaDateFormat' => 'Y']);
+
+        $this->assertEquals('2020', $filter->getFilterPillValue('2020-01-01'));
+        $this->assertEquals('', $filter->getFilterPillValue('21020-01-01'));
     }
 
     /** @test */

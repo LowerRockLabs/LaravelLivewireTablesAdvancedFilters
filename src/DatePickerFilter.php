@@ -2,7 +2,6 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 
-use DateTime;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
 
@@ -15,18 +14,9 @@ class DatePickerFilter extends Filter
 
     public function __construct(string $name, string $key = null)
     {
+        parent::__construct($name, (isset($key) ? $key : null));
         $this->config = config('livewiretablesadvancedfilters.datePicker');
         $this->options = config('livewiretablesadvancedfilters.datePicker.defaults');
-
-        parent::__construct($name, (isset($key) ? $key : null));
-    }
-
-    /**
-     * @return array<mixed>
-     */
-    public function getKeys(): array
-    {
-        return ['date' => ''];
     }
 
     /**
@@ -61,17 +51,50 @@ class DatePickerFilter extends Filter
 
     /**
      * @param  string  $value
-     * @return bool|string
+     * @return string|bool
      */
     public function validate($value)
     {
-        if ($value === '') {
+        if ($value == '') {
             return false;
         }
-        $dateFormat = $this->getConfigs()['defaults']['dateFormat'];
 
-        if (! DateTime::createFromFormat($dateFormat, $value)) {
+        $returnedValues['date'] = $value;
+
+        $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
+
+        $validator = \Illuminate\Support\Facades\Validator::make($returnedValues, [
+            'date' => 'required|date_format:'.$dateFormat,
+        ]);
+        if ($validator->fails()) {
             return false;
+        }
+
+        $date = \Carbon\Carbon::createFromFormat($dateFormat, $value);
+        if (! $date) {
+            return false;
+        }
+
+        $earliestDateString = $this->getConfig('earliestDate') ?? $this->getConfig('defaults')['earliestDate'];
+        if ($earliestDateString != '') {
+            $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
+            if (! $earliestDate) {
+                return false;
+            }
+            if ($date->lt($earliestDate)) {
+                return false;
+            }
+        }
+
+        $latestDateString = $this->getConfig('latestDate') ?? $this->getConfig('defaults')['latestDate'];
+        if ($latestDateString != '') {
+            $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
+            if (! $latestDate) {
+                return false;
+            }
+            if ($date->gt($latestDate)) {
+                return false;
+            }
         }
 
         return $value;
@@ -82,7 +105,42 @@ class DatePickerFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        return $value === '';
+        if ($value === '' || empty($value)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param  mixed  $value
+     */
+    public function getFilterPillValue($value): ?string
+    {
+        $validatedValue = $this->validate($value);
+
+        if ($validatedValue) {
+            $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
+            $ariaDateFormat = $this->getConfig('ariaDateFormat') ?? $this->getConfig('defaults')['ariaDateFormat'];
+
+            $carbonInstance = \Carbon\Carbon::createFromFormat($dateFormat, $value);
+
+            if (! $carbonInstance) {
+                return '';
+            }
+
+            return $carbonInstance->format($ariaDateFormat);
+        }
+
+        return '';
+    }
+
+    /**
+     * @return array<mixed>|string|null
+     */
+    public function getDefaultValue()
+    {
+        return null;
     }
 
     /**
@@ -90,6 +148,10 @@ class DatePickerFilter extends Filter
      */
     public function render(DataTableComponent $component)
     {
+        if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
+            $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
+        }
+
         return view('livewiretablesadvancedfilters::components.tools.filters.datePicker', [
             'component' => $component,
             'filter' => $this,

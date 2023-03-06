@@ -1,37 +1,137 @@
 @php
-    $filterMin = 0;
-    $filterMax = 100;
-    $currentMin = $filterMin = $filter->getOptions()['minRange'];
-    $currentMax = $filterMax = $filter->getOptions()['maxRange'];
-    
-    $minFilterPath = $component->getTableName() . '.filters.' . $filter->getKey() . '.min';
-    $maxFilterPath = $component->getTableName() . '.filters.' . $filter->getKey() . '.max';
-    
-    if (isset($this->{$component->getTableName()}['filters'])) {
-        if (isset($this->{$component->getTableName()}['filters'][$filter->getKey()])) {
-            $currentMin = isset($this->{$component->getTableName()}['filters'][$filter->getKey()]['min']) ? $this->{$component->getTableName()}['filters'][$filter->getKey()]['min'] : $filterMin;
-            $currentMax = isset($this->{$component->getTableName()}['filters'][$filter->getKey()]['max']) ? $this->{$component->getTableName()}['filters'][$filter->getKey()]['max'] : $filterMax;
-        }
+    $theme = $component->getTheme();
+    $tableName = $component->getTableName();
+    $filterKey = $filter->getKey();
+
+    $defaultMin = $currentMin = $filterMin = $minRange = $filter->getConfig('minRange');
+    $defaultMax = $currentMax = $filterMax = $maxRange = $filter->getConfig('maxRange');
+    $filterBasePath = $tableName . '.filters.' . $filterKey;
+    $minFilterWirePath = $filterBasePath . '.min';
+    $maxFilterWirePath = $filterBasePath . '.max';
+
+    if (isset($this->{$tableName}['filters'])) {
+        $currentMin = !is_null($this->{$tableName}['filters'][$filterKey]['min']) ? $this->{$tableName}['filters'][$filterKey]['min'] : $defaultMin;
+        $currentMax = isset($this->{$tableName}['filters'][$filterKey]['max']) ? (!is_null($this->{$tableName}['filters'][$filterKey]['max']) ? $this->{$tableName}['filters'][$filterKey]['max'] : $filterMax) : $filterMax;
     }
     $lightStyling = $filter->getConfig('styling')['light'];
     $darkStyling = $filter->getConfig('styling')['dark'];
 @endphp
-<div class="mt-4 h-22 pt-8 pb-4 grid gap-10">
-    <div class="range-slider flat" data-ticks-position='bottom'
-        style='--min:{{ $filterMin }}; --max:{{ $filterMax }}; --value-a:{{ $currentMax }}; --value-b:{{ $currentMin }}; --suffix:"%"; --text-value-a:"{{ $currentMax }}"; --text-value-b:"{{ $currentMin }}";'>
 
-        <input type="range" min="{{ $filterMin }}" max="{{ $filterMax }}"
-            wire:model="{{ $component->getTableName() }}.filters.{{ $filter->getKey() }}.max"
-            onchange="this.parentNode.style.setProperty('--value-a',this.value); this.parentNode.style.setProperty('--text-value-a', JSON.stringify(this.value))">
-        <output></output>
-        <input type="range" min="{{ $filterMin }}" max="{{ $filterMax }}" wire:model="{{ $minFilterPath }}"
-            onchange="this.parentNode.style.setProperty('--value-b',this.value); this.parentNode.style.setProperty('--text-value-b', JSON.stringify(this.value));">
-        <output></output>
-        <div class='range-slider__progress'></div>
-    </div>
-</div>
 
-@if ($filter->getConfig('cssInclude') == 'inline')
+<div x-data="{
+    allFilters: $wire.entangle('{{ $tableName }}.filters'),
+    currentMin: $refs.filterMin.value,
+    currentMax: $refs.filterMax.value,
+    minValue: $wire.entangle('{{ $minFilterWirePath }}'),
+    maxValue: $wire.entangle('{{ $maxFilterWirePath }}'),
+    defaultMin: {{ $minRange }},
+    defaultMax: {{ $maxRange }},
+    restrictUpdates: true,
+    swapLabels() {
+        document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-labelInternal').classList.remove('hidden');
+        document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label').classList.add('hidden');
+    },
+    updateStyles() {
+        document.getElementById('{{ $filterBasePath }}').style.setProperty('--value-b', $refs.filterMin.value);
+        document.getElementById('{{ $filterBasePath }}').style.setProperty('--text-value-b', JSON.stringify($refs.filterMin.value));
+        document.getElementById('{{ $filterBasePath }}').style.setProperty('--value-a', $refs.filterMax.value);
+        document.getElementById('{{ $filterBasePath }}').style.setProperty('--text-value-a', JSON.stringify($refs.filterMax.value));
+    },
+    setupWire() {
+        this.swapLabels();
+        $refs.filterMin.value = (this.minValue) ? this.minValue : this.defaultMin;
+        $refs.filterMax.value = (this.maxValue) ? this.maxValue : this.defaultMax;
+        this.updateStyles();
+    },
+    allowUpdates() {
+        this.restrictUpdates = false;
+        this.updateWire();
+    },
+    updateWire() {
+        this.swapLabels();
+        this.updateStyles();
+
+        if (!this.restrictUpdates) {
+            if (this.minValue === null || this.maxValue === null) {
+                if ($refs.filterMin.value != this.defaultMin || $refs.filterMax.value != this.defaultMax) {
+                    this.minValue = $refs.filterMin.value;
+                    this.maxValue = $refs.filterMax.value;
+                }
+            } else {
+                if (this.minValue != $refs.filterMin.value || this.maxValue != $refs.filterMax.value) {
+                    this.minValue = $refs.filterMin.value;
+                    this.maxValue = $refs.filterMax.value;
+                }
+            }
+            this.restrictUpdates = true;
+        }
+    },
+    init() {
+        this.setupWire();
+        $watch('open', value => this.swapLabels());
+        $watch('open', value => this.setupWire());
+        $watch('allFilters', value => this.swapLabels());
+        $watch('allFilters', value => this.setupWire());
+
+    },
+}">
+    @if ($theme === 'tailwind')
+        <label for="{{ $tableName }}-filter-{{ $filterKey }}"
+            id="{{ $tableName }}-filter-{{ $filterKey }}-labelInternal"
+            class="block text-sm font-medium leading-5 text-gray-700 dark:text-white hidden">
+            {{ $filter->getName() }}
+        </label>
+        <div class="mt-4 h-22 pt-8 pb-4 grid gap-10">
+            <div x-on:mouseleave="allowUpdates" class="range-slider flat" id="{{ $filterBasePath }}"
+                data-ticks-position='bottom'
+                style='--min:{{ $minRange }};
+                --max:{{ $maxRange }};
+                --value-a:{{ $currentMax }};
+                --value-b:{{ $currentMin }};
+                --suffix:"%";
+                --text-value-a:"{{ $currentMax }}";
+                --text-value-b:"{{ $currentMin }}";
+                '>
+
+                <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
+                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()">
+                <output></output>
+                <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMin }}"
+                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()">
+                <output></output>
+                <div class='range-slider__progress'></div>
+            </div>
+        </div>
+    @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
+        <label for="{{ $tableName }}-filter-{{ $filterKey }}"
+        id="{{ $tableName }}-filter-{{ $filterKey }}-labelInternal"
+        class="hidden block text-sm font-medium leading-5 text-gray-700 dark:text-white">
+            {{ $filter->getName() }}
+        </label>
+        <div x-on:mouseleave="allowUpdates" class="range-slider flat w-100" id="{{ $filterBasePath }}"
+            data-ticks-position='bottom'
+            style='--min:{{ $minRange }};
+        --max:{{ $maxRange }};
+        --value-a:{{ $currentMax }};
+        --value-b:{{ $currentMin }};
+        --suffix:"%";
+        --text-value-a:"{{ $currentMax }}";
+        --text-value-b:"{{ $currentMin }}";
+        '>
+            <div class="range-slider flat w-100" data-ticks-position='bottom' id=""
+                style='--min:{{ $filterMin }}; --max:{{ $filterMax }}; --value-a:{{ $currentMax }}; --value-b:{{ $currentMin }}; --suffix:"%"; --text-value-a:"{{ $currentMax }}"; --text-value-b:"{{ $currentMin }}";'>
+
+                <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
+                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()">
+                <output></output>
+                <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMin }}"
+                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()">
+                <output></output>
+                <div class='range-slider__progress'></div>
+            </div>
+        </div>
+    @endif
+    @if ($filter->getConfig('cssInclude') == 'inline')
     <style>
         .range-slider {
             --primary-color: {{ $lightStyling['primaryColor'] }};
@@ -358,8 +458,10 @@
             min-width: 200px;
         }
     </style>
-@elseif ($filter->getConfig('cssInclude') == 'include')
-    @push('styles')
-        <link href="{{ asset('css/numberRange.css') }}" rel="stylesheet">
-    @endpush
-@endif
+
+    @elseif ($filter->getConfig('cssInclude') == 'include')
+            @push('styles') <link href="{{ asset('css/numberRange.css') }}" rel="stylesheet">@endpush
+
+    @endif
+
+</div>

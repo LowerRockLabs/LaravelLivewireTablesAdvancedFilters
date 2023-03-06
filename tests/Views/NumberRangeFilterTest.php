@@ -49,25 +49,41 @@ class NumberRangeFilterTest extends TestCaseAdvanced
     public function can_get_if_empty(): void
     {
         $filter = NumberRangeFilter::make('Active');
+        $this->assertTrue($filter->isEmpty([]));
         $this->assertTrue($filter->isEmpty(''));
         $this->assertTrue($filter->isEmpty(['max' => 100]));
         $this->assertTrue($filter->isEmpty(['min' => 0]));
+        $this->assertTrue($filter->isEmpty(['min' => '0']));
+        $this->assertTrue($filter->isEmpty(['min' => '0', 'max' => '']));
+        $this->assertTrue($filter->isEmpty(['min' => '0', 'max' => null]));
+        $this->assertTrue($filter->isEmpty(['max' => null, 'min' => null]));
+        $this->assertTrue($filter->isEmpty(['max' => null, 'min' => '4']));
+        $this->assertTrue($filter->isEmpty(['min' => '62', 'max' => '']));
+        $this->assertTrue($filter->isEmpty(['min' => '', 'max' => '3']));
+        $this->assertTrue($filter->isEmpty(['min' => '', 'max' => '']));
         $this->assertTrue($filter->isEmpty(['min' => 0, 'max' => 100]));
         $this->assertFalse($filter->isEmpty(['min' => 0, 'max' => 50]));
+        $this->assertFalse($filter->isEmpty(['min' => '0', 'max' => 50]));
+        $this->assertFalse($filter->isEmpty(['min' => '0', 'max' => '50']));
+        $this->assertFalse($filter->isEmpty(['min' => '10', 'max' => '100']));
+        $this->assertFalse($filter->isEmpty(['min' => 10, 'max' => '100']));
     }
 
     /** @test */
     public function can_check_validation_accepts_valid_values(): void
     {
         $filter = NumberRangeFilter::make('Active');
-        $this->assertFalse($filter->validate(['min' => 0, 'max' => 100]));
+        $this->assertSame(['min' => '5', 'max' => '100'], $filter->validate(['min' => '5', 'max' => '100']));
     }
 
     /** @test */
     public function can_check_validation_rejects_invalid_values(): void
     {
         $filter = NumberRangeFilter::make('Active');
-        $this->assertFalse($filter->validate(['min' => 0, 'max' => 'set']));
+        $this->assertFalse($filter->validate(['min' => '0', 'max' => 'set']));
+        $this->assertFalse($filter->validate(['min' => 'test', 'max' => '0']));
+        $this->assertFalse($filter->validate(['min' => 'test', 'max' => 'test']));
+        $this->assertSame(['min' => '15', 'max' => '50'], $filter->validate(['min' => '15', 'max' => '50']));
     }
 
     /** @test */
@@ -82,19 +98,82 @@ class NumberRangeFilterTest extends TestCaseAdvanced
     /** @test */
     public function can_check_validation_rejects_values_over_configmax(): void
     {
-        $filter = NumberRangeFilter::make('Active');
-        $this->assertFalse($filter->validate(['min' => 15, 'max' => 5000]));
-        $this->assertFalse($filter->validate(['min' => 6, 'max' => 5000]));
-        $this->assertSame(['min' => 15, 'max' => 50], $filter->validate(['min' => 15, 'max' => 50]));
+        $filter = NumberRangeFilter::make('Active')->config(['minRange' => '0', 'maxRange' => '100']);
+        $this->assertFalse($filter->validate(['min' => '15', 'max' => '5000']));
+        $this->assertFalse($filter->validate(['min' => '6', 'max' => '5000']));
+        $this->assertSame(['min' => '15', 'max' => '50'], $filter->validate(['min' => '15', 'max' => '50']));
     }
 
     /** @test */
     public function can_check_validation_rejects_values_below_configmax(): void
     {
-        $filter = NumberRangeFilter::make('Active');
-        $this->assertFalse($filter->validate(['min' => -46, 'max' => 50]));
-        $this->assertFalse($filter->validate(['min' => -6, 'max' => 22]));
-        $this->assertSame(['min' => 15, 'max' => 50], $filter->validate(['min' => 15, 'max' => 50]));
+        $filter = NumberRangeFilter::make('Active')->config(['minRange' => '0', 'maxRange' => '100']);
+        $this->assertFalse($filter->validate(['min' => '-46', 'max' => '50']));
+        $this->assertFalse($filter->validate(['min' => '-6', 'max' => '22']));
+        $this->assertSame(['min' => '15', 'max' => '50'], $filter->validate(['min' => '15', 'max' => '50']));
+    }
+
+    /** @test */
+    public function can_check_validation_flips_values_min_larger_than_max(): void
+    {
+        $filter = NumberRangeFilter::make('Active')->config(['minRange' => '0', 'maxRange' => '100']);
+        $this->assertFalse($filter->validate(['min' => '-46', 'max' => '50']));
+        $this->assertFalse($filter->validate(['min' => '-6', 'max' => '22']));
+        $this->assertSame(['min' => '50', 'max' => '80'], $filter->validate(['min' => '80', 'max' => '50']));
+    }
+
+    /** @test */
+    public function can_check_validation_flips_values_max_smaller_than_min_orderflipped(): void
+    {
+        $filter = NumberRangeFilter::make('Active')->config(['minRange' => '0', 'maxRange' => '100']);
+        $this->assertFalse($filter->validate(['min' => '146', 'max' => '50']));
+        $this->assertFalse($filter->validate(['min' => '-6', 'max' => '22']));
+        $this->assertFalse($filter->validate(['min' => '30', 'max' => '-5']));
+        $this->assertFalse($filter->validate(['min' => '30', 'max' => '125']));
+
+        $this->assertSame(['min' => '50', 'max' => '80'], $filter->validate(['max' => '50', 'min' => '80']));
+    }
+
+    /** @test */
+    public function can_check_validation_fails_values_empty_string(): void
+    {
+        $filter = NumberRangeFilter::make('Active')->config(['minRange' => '0', 'maxRange' => '100']);
+        $this->assertFalse($filter->validate(''));
+        $this->assertFalse($filter->validate(['min' => '-6', 'max' => '22']));
+        $this->assertSame(['min' => '50', 'max' => '80'], $filter->validate(['min' => '80', 'max' => '50']));
+    }
+
+    /** @test */
+    public function can_check_validation_fails_values_null_values(): void
+    {
+        $filter = NumberRangeFilter::make('Active')->config(['minRange' => '0', 'maxRange' => '100']);
+        $this->assertFalse($filter->validate(['min' => '22', 'max' => null]));
+        $this->assertFalse($filter->validate(['min' => null, 'max' => '22']));
+        $this->assertFalse($filter->validate(['min' => '', 'max' => '22']));
+        $this->assertFalse($filter->validate(['min' => '22', 'max' => '']));
+
+        $this->assertSame(['min' => '50', 'max' => '80'], $filter->validate(['min' => '80', 'max' => '50']));
+    }
+
+    /** @test */
+    public function filter_pill_values_can_be_set_for_numberrange(): void
+    {
+        $filter = NumberRangeFilter::make('Active')->config(['minRange' => '10', 'maxRange' => '100']);
+
+        $this->assertEquals('Min:25, Max:50', $filter->getFilterPillValue(['min' => '25', 'max' => '50']));
+        $this->assertEquals('', $filter->getFilterPillValue(['min' => '30', 'max' => '166']));
+        $this->assertEquals('', $filter->getFilterPillValue(['min' => '5', 'max' => '53']));
+        $this->assertEquals('', $filter->getFilterPillValue(['min' => 'd0', 'max' => '76']));
+    }
+
+    /** @test */
+    public function can_check_validation_fails_non_numeric_values(): void
+    {
+        $filter = NumberRangeFilter::make('Active')->config(['minRange' => '0', 'maxRange' => '100']);
+        $this->assertFalse($filter->validate(['min' => 'test', 'max' => '48']));
+        $this->assertFalse($filter->validate(['min' => '38', 'max' => 'test']));
+
+        $this->assertSame(['min' => '50', 'max' => '80'], $filter->validate(['min' => '50', 'max' => '80']));
     }
 
     /** @test */
@@ -113,7 +192,7 @@ class NumberRangeFilterTest extends TestCaseAdvanced
         $this->assertSame(config('livewiretablesadvancedfilters.numberRange.defaults'), $filter->getOptions());
 
         $filter->options(['foo' => 'bar']);
-        $this->assertSame(['min' => 0, 'max' => 100, 'minRange' => 0, 'maxRange' => 100, 'suffix' => '', 'foo' => 'bar'], $filter->getOptions());
+        $this->assertSame(['min' => '0', 'max' => '100', 'foo' => 'bar'], $filter->getOptions());
     }
 
     /** @test */
@@ -129,7 +208,7 @@ class NumberRangeFilterTest extends TestCaseAdvanced
     {
         $filter = NumberRangeFilter::make('Active');
 
-        $this->assertSame([], $filter->getDefaultValue());
+        $this->assertSame(['min' => null, 'max' => null], $filter->getDefaultValue());
     }
 
     /** @test */

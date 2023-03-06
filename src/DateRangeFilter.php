@@ -145,8 +145,7 @@ class DateRangeFilter extends Filter
             }
         }
 
-        if ($returnedValues['minDate'] == date('Y-m-d') && $returnedValues['maxDate'] == date('Y-m-d'))
-        {
+        if ($returnedValues['minDate'] == date('Y-m-d') && $returnedValues['maxDate'] == date('Y-m-d')) {
             return false;
         }
 

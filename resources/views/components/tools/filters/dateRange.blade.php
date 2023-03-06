@@ -30,11 +30,17 @@
     $filterConfigs = $filter->getConfigs();
 @endphp
 
-<div x-data="{
+<div id="dateRangeContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
     swapLabels() {
+
+        if (document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label') === null) {
+            document.getElementById('dateRangeContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
+        } else {
+            document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label').classList.add('hidden');
+        }
         document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-labelInternal').classList.remove('hidden');
-        document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label').classList.add('hidden');
+
     },
     init() {
         $watch('open', value => this.swapLabels());

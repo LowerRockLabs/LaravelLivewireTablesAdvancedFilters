@@ -7,13 +7,16 @@
     $filterName = $filter->getName();
 
 @endphp
-<div x-data="{
+<div id="datePickerContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
     swapLabels() {
-        if (document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label') !== null) {
+        if (document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label') === null) {
+            document.getElementById('datePickerContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
+        } else {
             document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label').classList.add('hidden');
-            document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-labelInternal').classList.remove('hidden');
         }
+        document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-labelInternal').classList.remove('hidden');
+
     },
     init() {
         $watch('open', value => this.swapLabels());

@@ -16,11 +16,20 @@
     <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet" />
 @endPushOnce
 
-<div x-data="{
+<div id="slimSelectContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
 
     slimSelect: [],
     booting: true,
+    swapLabels() {
+        if (document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label') === null) {
+            document.getElementById('slimSelectContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
+        } else {
+            document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label').classList.add('hidden');
+        }
+        document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-labelInternal').classList.remove('hidden');
+
+    },
     bootSlimSelect() {
         this.slimSelect = new SlimSelect({
             select: '#{{ $smartSelectID }}',

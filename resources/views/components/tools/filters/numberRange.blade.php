@@ -20,7 +20,7 @@
 @endphp
 
 
-<div x-data="{
+<div id="numberRangeContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
     currentMin: $refs.filterMin.value,
     currentMax: $refs.filterMax.value,
@@ -30,8 +30,12 @@
     defaultMax: {{ $maxRange }},
     restrictUpdates: true,
     swapLabels() {
+        if (document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label') === null) {
+            document.getElementById('numberRangeContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
+        } else {
+            document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label').classList.add('hidden');
+        }
         document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-labelInternal').classList.remove('hidden');
-        document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label').classList.add('hidden');
     },
     updateStyles() {
         document.getElementById('{{ $filterBasePath }}').style.setProperty('--value-b', $refs.filterMin.value);
@@ -74,6 +78,7 @@
         $watch('open', value => this.setupWire());
         $watch('allFilters', value => this.swapLabels());
         $watch('allFilters', value => this.setupWire());
+
 
     },
 }">

@@ -16,7 +16,7 @@
 
 @endphp
 
-<div id="smartSelect-{{ $filterKey }}" x-data="{
+<div id="smartSelectContainer{{ $filterKey }}" x-data="{
     newSelectedItems: $wire.entangle('{{ $selectedWireKey }}'),
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
     optionsMethod: '{{ $optionsMethod }}',
@@ -28,8 +28,12 @@
     popOpen: false,
     selectedItems: $wire.entangle('{{ $wireKey }}'),
     swapLabels() {
+        if (document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label') === null) {
+            document.getElementById('smartSelectContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
+        } else {
+            document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label').classList.add('hidden');
+        }
         document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-labelInternal').classList.remove('hidden');
-        document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label').classList.add('hidden');
     },
     resetCurrentFilteredList() {
         $refs.{{ $xRefKey }}.value = '';

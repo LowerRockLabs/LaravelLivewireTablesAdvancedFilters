@@ -71,15 +71,25 @@ class DateRangeFilter extends Filter
      */
     public function validate($values)
     {
+
+
         $returnedValues = ['minDate' => '', 'maxDate' => ''];
         if (is_array($values)) {
-            foreach ($values as $index => $value) {
-                if ($index == 0 || strtolower($index) == 'mindate') {
-                    $returnedValues['minDate'] = $value;
+            if (!isset($values['minDate']) || !isset($values['maxDate']))
+            {
+                foreach ($values as $index => $value) {
+                    if ($index === 0 || $index == "0" || strtolower($index) == 'mindate') {
+                        $returnedValues['minDate'] = $value;
+                    }
+                    if ($index == 1 || $index == "1" || strtolower($index) == 'maxdate') {
+                        $returnedValues['maxDate'] = $value;
+                    }
                 }
-                if ($index == 1 || strtolower($index) == 'maxdate') {
-                    $returnedValues['maxDate'] = $value;
-                }
+            }
+            else
+            {
+                $returnedValues['minDate'] = $values['minDate'];
+                $returnedValues['maxDate'] = $values['maxDate'];
             }
         } else {
             $valueArray = explode(' ', $values);
@@ -99,18 +109,23 @@ class DateRangeFilter extends Filter
         if ($validator->fails()) {
             return false;
         }
-
         $startDate = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['minDate']);
         $endDate = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['maxDate']);
-        if (! $startDate || ! $endDate) {
+
+        if (! $startDate instanceof \Carbon\Carbon) {
             return false;
         }
+
+        if (! $endDate instanceof \Carbon\Carbon) {
+            return false;
+        }
+
         if ($startDate->gt($endDate)) {
             return false;
         }
 
-        $earliestDateString = $this->getOptions()['earliestDate'] ?? $this->getConfig('defaults')['earliestDate'];
-        if ($earliestDateString != '') {
+        /*$earliestDateString = $this->getOptions()['earliestDate'] ?? $this->getConfig('defaults')['earliestDate'];
+        if ($earliestDateString != '' && !is_null($earliestDateString)) {
             $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
 
             if (! $earliestDate instanceof \Carbon\Carbon) {
@@ -123,7 +138,7 @@ class DateRangeFilter extends Filter
         }
 
         $latestDateString = $this->getOptions()['latestDate'] ?? $this->getConfig('defaults')['latestDate'];
-        if ($latestDateString != '') {
+        if ($latestDateString != '' && !is_null($latestDateString)) {
             $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
 
             if (! $latestDate instanceof \Carbon\Carbon) {
@@ -133,7 +148,7 @@ class DateRangeFilter extends Filter
             if ($endDate->gt($latestDate)) {
                 return false;
             }
-        }
+        }*/
 
         return $returnedValues;
     }
@@ -156,11 +171,12 @@ class DateRangeFilter extends Filter
         if ($validatedValue) {
             $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
             $ariaDateFormat = $this->getConfig('ariaDateFormat') ?? $this->getConfig('defaults')['ariaDateFormat'];
-            if ($value['minDate'] == null || $value['maxDate'] == null) {
+
+            if ($validatedValue['minDate'] == null || $validatedValue['maxDate'] == null) {
                 return '';
             }
-            $minDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $value['minDate']);
-            $maxDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $value['maxDate']);
+            $minDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['minDate']);
+            $maxDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['maxDate']);
 
             if (! $minDateCarbon || ! $maxDateCarbon) {
                 return '';
@@ -179,11 +195,46 @@ class DateRangeFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        if (is_null($value) || empty($value) || $value == $this->getDefaultValue() || ! isset($value['minDate']) || ! isset($value['maxDate']) || $value['minDate'] == '' || $value['maxDate'] == '' || is_null($value['maxDate']) || is_null($value['minDate']) || empty($value['maxDate']) || empty($value['minDate'])) {
-            return true;
-        } else {
-            return false;
+        $values = [];
+        if (is_array($value))
+        {
+            if (!isset($value['minDate']) || !isset($value['maxDate']))
+            {
+                if (isset($value[0]))
+                {
+                    $values['minDate'] = $value[0];
+                }
+                else
+                {
+                    return true;
+                }
+
+                if (isset($value[1]))
+                {
+                    $values['maxDate'] = $value[1];
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (is_null($value['minDate']) || is_null($value['maxDate']))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
+        else
+        {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -192,7 +243,7 @@ class DateRangeFilter extends Filter
     public function render(DataTableComponent $component)
     {
         if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
-            $component->resetFilter($this);
+            $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
         }
 
         return view('livewiretablesadvancedfilters::components.tools.filters.dateRange', [

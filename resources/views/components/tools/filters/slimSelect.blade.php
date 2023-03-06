@@ -5,6 +5,9 @@
     $options = [];
     $empty = [];
     $options = $filter->getOptions();
+    $filterLabelPath = $tableName . '-filter-' . $filterKey;
+    $filterName = $filter->getName();
+
 @endphp
 
 @pushOnce('scripts')
@@ -14,10 +17,8 @@
 
 <div>
     @if ($theme === 'tailwind')
-        <label for="{{ $tableName }}-filter-{{ $filterKey }}"
-            class="block text-sm font-medium leading-5 text-gray-700 dark:text-white">
-            {{ $filter->getName() }}
-        </label>
+        <x-livewiretablesadvancedfilters::elements.labelInternal-tw :filterLabelPath=$filterLabelPath
+            :filterName=$filterName />
         <div wire:ignore wire:key>
             <div wire:key class="rounded-md shadow-sm" x-data="{
                 slimSelect: [],
@@ -38,7 +39,7 @@
                                 } else {
                                     this.booting = false;
                                 }
-            
+
                             }
                         }
                     });
@@ -50,7 +51,7 @@
                     } else {
                         this.slimSelect.setData({{ json_encode($filter->getOptions()) }});
                     }
-            
+
                 },
                 init() {
                     this.booting = true;
@@ -66,10 +67,8 @@
             </div>
         </div>
     @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
-        <label for="{{ $tableName }}-filter-{{ $filterKey }}"
-            class="block text-sm font-medium leading-5 text-gray-700 dark:text-white">
-            {{ $filter->getName() }}
-        </label>
+        <x-livewiretablesadvancedfilters::elements.labelInternal-bs :filterLabelPath=$filterLabelPath
+            :filterName=$filterName />
         <div wire:ignore wire:key>
             <div wire:key class="rounded-md shadow-sm" x-data="{
                 slimSelect: [],
@@ -90,7 +89,7 @@
                                 } else {
                                     this.booting = false;
                                 }
-            
+
                             }
                         }
                     });
@@ -102,7 +101,7 @@
                     } else {
                         this.slimSelect.setData({{ json_encode($filter->getOptions()) }});
                     }
-            
+
                 },
                 init() {
                     this.booting = true;

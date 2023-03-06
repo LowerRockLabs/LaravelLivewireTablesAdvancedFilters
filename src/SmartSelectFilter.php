@@ -233,8 +233,7 @@ class SmartSelectFilter extends Filter
         //$this->filterdata[$component->getTableName()][$this->getKey()] = $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
         //$this->filterdatas[$component->getTableName()][$this->getKey()] = 'test';
 
-        if (isset($component->filterData))
-        {
+        if (isset($component->filterData)) {
             $component->filterData[$this->getKey()] = $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
         }
 

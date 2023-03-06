@@ -120,29 +120,25 @@ class DateRangeFilter extends Filter
         }
 
         $earliestDateString = ($this->getOptions()['earliestDate'] != '') ? $this->getOptions()['earliestDate'] : $this->getConfig('defaults')['earliestDate'];
-        $latestDateString = ($this->getOptions()['latestDate'] != '') ? $this->getOptions()['latestDate'] : $this->getConfig('defaults')['latestDate'];
+        if ($earliestDateString != '' && !is_null($earliestDateString)) {
+            $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
 
-        if ($earliestDateString != '' && !is_null($earliestDateString && $latestDateString != '' && !is_null($latestDateString))) {
-            $dateLimits = ['earliest' => $earliestDateString, 'latest' => $latestDateString];
-            $earlyLateValidator = \Illuminate\Support\Facades\Validator::make($dateLimits, [
-                'earliest' => 'date_format:' . $dateFormat,
-                'latest' => 'date_format:' . $dateFormat,
-            ]);
-            if (!$earlyLateValidator->fails()) {
-                $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
-                $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
+            if ($earliestDate instanceof \Carbon\Carbon) {
+                if ($startDate->lt($earliestDate)) {
+                    return false;
+                }
+            }
+        }
 
-                if ($earliestDate instanceof \Carbon\Carbon) {
-                    if ($startDate->lt($earliestDate)) {
-                        return false;
-                    }
+        $latestDateString = $this->getOptions()['latestDate'] ?? $this->getConfig('defaults')['latestDate'];
+        if ($latestDateString != '' && !is_null($latestDateString)) {
+            $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
+
+            if ($latestDate instanceof \Carbon\Carbon) {
+                if ($endDate->gt($latestDate)) {
+                    return false;
                 }
-                if ($latestDate instanceof \Carbon\Carbon) {
-                    if ($endDate->gt($latestDate)) {
-                        return false;
-                    }
-                }
-             }
+            }
         }
 
         return $returnedValues;
@@ -174,7 +170,7 @@ class DateRangeFilter extends Filter
             $maxDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['maxDate']);
 
 
-            if (!$minDateCarbon instanceof \Carbon\Carbon || !$maxDateCarbon instanceof \Carbon\Carbon) {
+            if (! $minDateCarbon instanceof \Carbon\Carbon || ! $maxDateCarbon instanceof \Carbon\Carbon) {
                 return 'minDateCarbon Issue';
             }
 

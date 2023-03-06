@@ -42,13 +42,17 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer--${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer-
 
+      - name: Add token
+        run: |
+          composer config github-oauth.github.com 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
+
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
 
       - name: Update dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --${{ matrix.stability }} --prefer-source
+        run: composer update --${{ matrix.stability }} --no-interaction --prefer-source
 
       - name: Run Unit Tests
         run: XDEBUG_MODE_COVERAGE=coverage vendor/bin/phpunit

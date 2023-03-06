@@ -52,7 +52,7 @@ jobs:
 
       - name: Update dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --${{ matrix.stability }} --prefer-source
+        run: composer update --${{ matrix.stability }} --no-interaction --prefer-source
 
       - name: Setup problem matchers
         run: |

@@ -2,7 +2,7 @@ name: php-stan
 on:
   push:
     branches:
-      - develop
+      - dev
 
 jobs:
   test:

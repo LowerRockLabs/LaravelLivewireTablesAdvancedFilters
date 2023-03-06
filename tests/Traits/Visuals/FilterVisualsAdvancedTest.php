@@ -108,14 +108,14 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
     public function filters_daterange_can_be_seen(): void
     {
         Livewire::test(PetsTableAdvanced::class)
-            ->assertSeeHtml('mode:"range"');
+            ->assertSeeHtml("mode: 'range'");
     }
 
     /** @test */
     public function filters_datepicker_can_be_seen(): void
     {
         Livewire::test(PetsTableAdvanced::class)
-            ->assertSeeHtml('mode:"single"');
+            ->assertSeeHtml("mode: 'single'");
     }
 
         /** @test */

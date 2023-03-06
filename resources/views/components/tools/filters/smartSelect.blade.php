@@ -101,7 +101,7 @@
                 <div x-cloak
                     class="w-full rounded-md relative inline-flex place-items-end justify-items-end items-end pr-2"
                     style="top: -3.3em" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-                        <x-livewiretablesadvancedfilters::elements.smartselect-popover-tw :iconStyling="$iconStyling" />
+                    <x-livewiretablesadvancedfilters::elements.smartselect-popover-tw :iconStyling="$iconStyling" />
                 </div>
                 <!-- Stop Existing Pop-Over -->
 
@@ -116,12 +116,15 @@
                         class="flex-col w-full overflow-visible z-50">
                         <ul class="bg-white dark:bg-gray-700 flex-col w-full ">
                             <template x-for="(filteredItem, index) in currentFilteredList" :key="filteredItem.id">
-                                <li class="px-2 py-1 hover:bg-blue-500 dark:hover:bg-gray-400" :class="{ 'dark:bg-gray-800': (index % 2) }">
+                                <li class="px-2 py-1 hover:bg-blue-500 dark:hover:bg-gray-400"
+                                    :class="{ 'dark:bg-gray-800': (index % 2) }">
                                     <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
-                                        <x-livewiretablesadvancedfilters::elements.smartselect-item-rem-tw :iconStyling=$iconStyling />
+                                        <x-livewiretablesadvancedfilters::elements.smartselect-item-rem-tw
+                                            :iconStyling=$iconStyling />
                                     </template>
                                     <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
-                                        <x-livewiretablesadvancedfilters::elements.smartselect-item-add-tw :iconStyling=$iconStyling />
+                                        <x-livewiretablesadvancedfilters::elements.smartselect-item-add-tw
+                                            :iconStyling=$iconStyling />
                                     </template>
                                 </li>
                             </template>
@@ -132,56 +135,59 @@
             </div>
         </div>
     @elseif ($theme === 'bootstrap-4')
-    <div class="absolute">
-        <div class="relative">
-            <!-- Start Label Replacement -->
-            <div class="flex flex-cols w-full hidden h-8 pr-4"
-                id="{{ $tableName }}-filter-{{ $filterKey }}-label2">
-                <label for="{{ $tableName }}-filter-{{ $filterKey }}"
-                    class="inline-block w-11/12 text-sm font-medium leading-5 text-gray-700 dark:text-white ">
-                    {{ $filter->getName() }}
-                </label>
-                <div class="inline-block w-1/12">
-                    <x-livewiretablesadvancedfilters::buttons.popover-open-tw />
+        <div class="absolute">
+            <div class="relative">
+                <!-- Start Label Replacement -->
+                <div class="flex flex-cols w-full hidden h-8 pr-4"
+                    id="{{ $tableName }}-filter-{{ $filterKey }}-label2">
+                    <label for="{{ $tableName }}-filter-{{ $filterKey }}"
+                        class="inline-block w-11/12 text-sm font-medium leading-5 text-gray-700 dark:text-white ">
+                        {{ $filter->getName() }}
+                    </label>
+                    <div class="inline-block w-1/12">
+                        <x-livewiretablesadvancedfilters::buttons.popover-open-tw />
+                    </div>
                 </div>
-            </div>
-            <!-- End Label Replacement -->
+                <!-- End Label Replacement -->
 
-            <!-- Start Existing Pop-Over -->
-            <div x-cloak
-                class="w-full rounded-md relative inline-flex place-items-end justify-items-end items-end pr-2"
-                style="top: -3.3em" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+                <!-- Start Existing Pop-Over -->
+                <div x-cloak
+                    class="w-full rounded-md relative inline-flex place-items-end justify-items-end items-end pr-2"
+                    style="top: -3.3em" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
                     <x-livewiretablesadvancedfilters::elements.smartselect-popover-tw :iconStyling="$iconStyling" />
-            </div>
-            <!-- Stop Existing Pop-Over -->
-
-            <!-- Start Drop Down -->
-            <div class=" w-full flex flex-col items-center justify-center text-black dark:text-white pr-4 ">
-                <x-livewiretablesadvancedfilters::forms.smartselect-textinput-tw :xRefKey=$xRefKey />
-
-                <div :class="{
-                    'border-solid border-2 rounded-md border-gray-300 dark:border-gray-600': currentFilteredList
-                        .length > 0
-                }"
-                    class="flex-col w-full overflow-visible z-50">
-                    <ul class="bg-white dark:bg-gray-700 flex-col w-full ">
-                        <template x-for="(filteredItem, index) in currentFilteredList" :key="filteredItem.id">
-                            <li class="px-2 py-1 hover:bg-blue-500 dark:hover:bg-gray-400" :class="{ 'dark:bg-gray-800': (index % 2) }">
-                                <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
-                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-rem-tw :iconStyling=$iconStyling />
-                                </template>
-                                <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
-                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-add-tw :iconStyling=$iconStyling />
-                                </template>
-                            </li>
-                        </template>
-                    </ul>
                 </div>
+                <!-- Stop Existing Pop-Over -->
+
+                <!-- Start Drop Down -->
+                <div class=" w-full flex flex-col items-center justify-center text-black dark:text-white pr-4 ">
+                    <x-livewiretablesadvancedfilters::forms.smartselect-textinput-tw :xRefKey=$xRefKey />
+
+                    <div :class="{
+                        'border-solid border-2 rounded-md border-gray-300 dark:border-gray-600': currentFilteredList
+                            .length > 0
+                    }"
+                        class="flex-col w-full overflow-visible z-50">
+                        <ul class="bg-white dark:bg-gray-700 flex-col w-full ">
+                            <template x-for="(filteredItem, index) in currentFilteredList" :key="filteredItem.id">
+                                <li class="px-2 py-1 hover:bg-blue-500 dark:hover:bg-gray-400"
+                                    :class="{ 'dark:bg-gray-800': (index % 2) }">
+                                    <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
+                                        <x-livewiretablesadvancedfilters::elements.smartselect-item-rem-tw
+                                            :iconStyling=$iconStyling />
+                                    </template>
+                                    <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
+                                        <x-livewiretablesadvancedfilters::elements.smartselect-item-add-tw
+                                            :iconStyling=$iconStyling />
+                                    </template>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+                <!-- End Drop Down -->
             </div>
-            <!-- End Drop Down -->
         </div>
-    </div>
-        @elseif ($theme === 'bootstrap-5')
+    @elseif ($theme === 'bootstrap-5')
         <div>
             <!-- Start Graph API Pin -->
             <div class="rounded-md position-relative">
@@ -192,9 +198,8 @@
                             id="menu-button" aria-expanded="true" aria-haspopup="true">
                             <span class="visually-hidden-focusable">Open options</span>
                             <!-- Heroicon name: solid/dots-vertical -->
-                            <svg class="inline w-5 h-5" width="1em" height="1em"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                aria-hidden="true">
+                            <svg class="inline w-5 h-5" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path
                                     d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                             </svg>
@@ -210,8 +215,8 @@
                             <a href="#" x-on:click="popOpen = false"
                                 class="text-gray-700 inline-block w-100 text-right text-lg" role="menuitem"
                                 tabindex="-1" id="menu-item-0">
-                                <svg class="inline" width="2em" height="2em" viewBox="0 0 24 24"
-                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="inline" width="2em" height="2em" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <rect width="24" height="24" fill="white" />
                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                         d="M14 7C14 6.44772 13.5523 6 13 6C12.4477 6 12 6.44772 12 7V8V10.5C12 11.3284 12.6716 12 13.5 12H16H17C17.5523 12 18 11.5523 18 11C18 10.4477 17.5523 10 17 10H16L14 10V8V7ZM6 13C6 13.5523 6.44772 14 7 14H8H9.99991L9.99997 16L10 17C10 17.5523 10.4477 18 11 18C11.5523 18 12 17.5523 12 17L12 16L11.9999 13.5C11.9999 12.6719 11.3287 12 10.5 12H8H7C6.44771 12 6 12.4477 6 13ZM2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12Z"

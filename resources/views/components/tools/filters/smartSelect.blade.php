@@ -86,7 +86,7 @@
         $watch('allFilters', value => this.swapLabels());
 
     },
-}" x-on:mouseenter="swapLabels" class="h-16">
+}" class="h-16">
     @if ($theme === 'tailwind')
         <div class="absolute">
             <div class="relative">
@@ -145,7 +145,7 @@
             <div class="relative">
                 <!-- Start Label Replacement -->
                 <div class="flex flex-cols w-full hidden h-8 pr-4"
-                    id="{{ $tableName }}-filter-{{ $filterKey }}-label2">
+                    id="{{ $tableName }}-filter-{{ $filterKey }}-labelInternal">
                     <label for="{{ $tableName }}-filter-{{ $filterKey }}"
                         class="inline-block w-11/12 text-sm font-medium leading-5 text-gray-700 dark:text-white ">
                         {{ $filter->getName() }}

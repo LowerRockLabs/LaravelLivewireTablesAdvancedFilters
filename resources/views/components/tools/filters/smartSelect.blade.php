@@ -9,6 +9,8 @@
     $iconStyling = $configs['iconStyling'];
     $listStyling = $configs['listStyling'];
     $displayIdEnabled = $configs['displayIdEnabled'] ?? 'false';
+    $filterLabelPath = $tableName . '-filter-' . $filterKey;
+    $filterName = $filter->getName();
 
     $optionsMethod = $configs['optionsMethod'];
 

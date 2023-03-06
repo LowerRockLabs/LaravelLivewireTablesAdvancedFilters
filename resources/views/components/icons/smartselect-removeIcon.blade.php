@@ -1,10 +1,10 @@
-@props(['iconStyling'])
+@aware(['iconStyling'])
 <svg @class([
     'inline-block' => $iconStyling['delete']['defaults'],
-    $iconStyling['delete']['classes'], ]) fill="currentColor"
-    width="{{ $iconStyling['delete']['svgSize'] }}"
-    height="{{ $iconStyling['delete']['svgSize'] }}" viewBox="0 0 297 297"
-    xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+    $iconStyling['delete']['classes'],
+]) fill="currentColor" width="{{ $iconStyling['delete']['svgSize'] }}"
+    height="{{ $iconStyling['delete']['svgSize'] }}" viewBox="0 0 297 297" xml:space="preserve"
+    xmlns="http://www.w3.org/2000/svg">
     <path
         d="m150.33 203.76c0-32.35 26.317-58.667 58.667-58.667 6.527 0 12.8 1.087 18.669 3.063l4.882-58.587h-185.39l14.518 174.21c1.552 18.627 17.41 33.219 36.103 33.219h84.147c18.692 0 34.551-14.592 36.103-33.219l0.173-2.081c-3.001 0.475-6.075 0.729-9.207 0.729-32.349 0-58.667-26.317-58.667-58.667z" />
     <path

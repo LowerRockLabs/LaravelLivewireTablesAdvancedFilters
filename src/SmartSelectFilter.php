@@ -240,6 +240,7 @@ class SmartSelectFilter extends Filter
 
         return view('livewiretablesadvancedfilters::components.tools.filters.smartSelect', [
             'component' => $component,
+            'theme' => $component->getTheme(),
             'filter' => $this,
         ]);
     }

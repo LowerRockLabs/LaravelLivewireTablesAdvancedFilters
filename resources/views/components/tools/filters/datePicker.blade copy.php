@@ -1,24 +1,21 @@
-@props(['theme'])
 @php
+    $theme = $component->getTheme();
     $tableName = $component->getTableName();
     $filterKey = $filter->getKey();
-    $filterLabelPath = $tableName . '-filter-' . $filterKey;
-    $filterBasePath = $tableName . '.filters.' . $filterKey;
-    $filterName = $filter->getName();
-    $filterConfigs = $filter->getConfigs();
-
     $dateString = !is_null($this->{$tableName}['filters'][$filterKey]) && $this->{$tableName}['filters'][$filterKey] != '' ? $this->{$tableName}['filters'][$filterKey] : date('Y-m-d');
+    $filterLabelPath = $tableName . '-filter-' . $filterKey;
+    $filterName = $filter->getName();
 
 @endphp
 <div id="datePickerContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
     swapLabels() {
-        if (document.getElementById('{{ $filterLabelPath }}-label') === null) {
+        if (document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label') === null) {
             document.getElementById('datePickerContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
         } else {
-            document.getElementById('{{ $filterLabelPath }}-label').classList.add('hidden');
+            document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label').classList.add('hidden');
         }
-        document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
+        document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-labelInternal').classList.remove('hidden');
 
     },
     init() {
@@ -77,27 +74,27 @@
 
 
         @if ($theme === 'tailwind')
-            <x-livewiretablesadvancedfilters::elements.labelInternal :filterLabelPath="$filterLabelPath" :theme="$theme"
-                :filterName="$filterName" />
+            <x-livewiretablesadvancedfilters::elements.labelInternal :filterLabelPath=$filterLabelPath
+                :filterName=$filterName />
 
             <div x-on:click="flatpickrInstance.toggle()" class="w-full rounded-md shadow-sm text-right"
                 placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
-                <x-livewiretablesadvancedfilters::forms.datePicker-textinput :filterKey="$filterKey" :theme="$theme"
-                    :tableName="$tableName" :dateString="$dateString" :filterLabelPath="$filterLabelPath" :filterBasePath="$filterBasePath" />
+                <x-livewiretablesadvancedfilters::forms.datePicker-textinput :filterKey=$filterKey :tableName=$tableName
+                    :dateString=$dateString />
 
-                <x-livewiretablesadvancedfilters::icons.calendarIcon :theme="$theme" />
+                <x-livewiretablesadvancedfilters::icons.calendarIcon />
             </div>
         @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
-            <x-livewiretablesadvancedfilters::elements.labelInternal :filterLabelPath="$filterLabelPath" :theme="$theme"
-                :filterName="$filterName" />
+            <x-livewiretablesadvancedfilters::elements.labelInternal :filterLabelPath=$filterLabelPath
+                :filterName=$filterName />
             <div class="w-fullmb-3 mb-md-0 -ml-2 -px-2 input-group"
                 placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
-                <x-livewiretablesadvancedfilters::forms.datePicker-textinput :filterKey="$filterKey" :theme="$theme"
-                    :tableName="$tableName" :dateString="$dateString" :filterLabelPath="$filterLabelPath" :filterBasePath="$filterBasePath" />
+                <x-livewiretablesadvancedfilters::forms.datePicker-textinput :filterKey=$filterKey :tableName=$tableName
+                    :dateString=$dateString />
 
-                <x-livewiretablesadvancedfilters::icons.calendarIcon :theme="$theme" />
+                <x-livewiretablesadvancedfilters::icons.calendarIcon />
             </div>
         @endif
     </div>

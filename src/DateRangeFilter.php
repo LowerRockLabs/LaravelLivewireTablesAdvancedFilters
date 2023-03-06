@@ -145,6 +145,11 @@ class DateRangeFilter extends Filter
             }
         }
 
+        if ($returnedValues['minDate'] == date('Y-m-d') && $returnedValues['maxDate'] == date('Y-m-d'))
+        {
+            return false;
+        }
+
         return $returnedValues;
     }
 
@@ -235,6 +240,7 @@ class DateRangeFilter extends Filter
 
         return view('livewiretablesadvancedfilters::components.tools.filters.dateRange', [
             'component' => $component,
+            'theme' => $component->getTheme(),
             'filter' => $this,
         ]);
     }

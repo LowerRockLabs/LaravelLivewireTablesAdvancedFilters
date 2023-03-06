@@ -154,6 +154,7 @@ class DatePickerFilter extends Filter
 
         return view('livewiretablesadvancedfilters::components.tools.filters.datePicker', [
             'component' => $component,
+            'theme' => $component->getTheme(),
             'filter' => $this,
         ]);
     }

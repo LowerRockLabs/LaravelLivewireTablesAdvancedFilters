@@ -1,12 +1,10 @@
-@props(['iconStyling'])
+@aware(['iconStyling'])
 <svg @class([
     'inline-block' => $iconStyling['add']['defaults'],
     $iconStyling['add']['classes'],
-])
-    width="{{ $iconStyling['add']['svgSize'] }}"
-    height="{{ $iconStyling['add']['svgSize'] }}" version="1.1"
-    viewBox="0 0 297 297" xml:space="preserve" fill="currentColor"
-    xmlns="http://www.w3.org/2000/svg">
+]) width="{{ $iconStyling['add']['svgSize'] }}"
+    height="{{ $iconStyling['add']['svgSize'] }}" version="1.1" viewBox="0 0 297 297" xml:space="preserve"
+    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path
         d="m182.41 170.37c-11.317 0-22.632 4.307-31.248 12.922-17.23 17.231-17.23 45.265 0 62.496 17.232 17.23 45.264 17.23 62.496 0 17.23-17.231 17.23-45.265 0-62.496-8.615-8.614-19.931-12.922-31.248-12.922zm23.981 50.851h-17.301v17.301c0 3.689-2.991 6.68-6.68 6.68s-6.68-2.991-6.68-6.68v-17.301h-17.301c-3.689 0-6.68-2.991-6.68-6.68s2.991-6.68 6.68-6.68h17.301v-17.301c0-3.689 2.991-6.68 6.68-6.68s6.68 2.991 6.68 6.68v17.301h17.301c3.689 0 6.68 2.991 6.68 6.68s-2.99 6.68-6.68 6.68z" />
     <path

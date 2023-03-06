@@ -111,6 +111,7 @@ class SlimSelectFilter extends Filter
 
         return view('livewiretablesadvancedfilters::components.tools.filters.slimSelect', [
             'component' => $component,
+            'theme' => $component->getTheme(),
             'filter' => $this,
         ]);
     }

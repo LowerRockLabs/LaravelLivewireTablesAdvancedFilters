@@ -1,13 +1,13 @@
 @php
-    $theme = $component->getTheme();
     $tableName = $component->getTableName();
     $filterKey = $filter->getKey();
     $filterLabelPath = $tableName . '-filter-' . $filterKey;
+    $filterBasePath = $tableName . '.filters.' . $filterKey;
     $filterName = $filter->getName();
+    $filterConfigs = $filter->getConfigs();
 
     $defaultMin = $currentMin = $filterMin = $minRange = $filter->getConfig('minRange');
     $defaultMax = $currentMax = $filterMax = $maxRange = $filter->getConfig('maxRange');
-    $filterBasePath = $tableName . '.filters.' . $filterKey;
     $minFilterWirePath = $filterBasePath . '.min';
     $maxFilterWirePath = $filterBasePath . '.max';
 
@@ -30,12 +30,12 @@
     defaultMax: {{ $maxRange }},
     restrictUpdates: true,
     swapLabels() {
-        if (document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label') === null) {
+        if (document.getElementById('{{ $filterLabelPath }}-label') === null) {
             document.getElementById('numberRangeContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
         } else {
-            document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-label').classList.add('hidden');
+            document.getElementById('{{ $filterLabelPath }}-label').classList.add('hidden');
         }
-        document.getElementById('{{ $tableName }}-filter-{{ $filterKey }}-labelInternal').classList.remove('hidden');
+        document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
     },
     updateStyles() {
         document.getElementById('{{ $filterBasePath }}').style.setProperty('--value-b', $refs.filterMin.value);
@@ -83,8 +83,8 @@
     },
 }">
     @if ($theme === 'tailwind')
-        <x-livewiretablesadvancedfilters::elements.labelInternal-tw :filterLabelPath=$filterLabelPath
-            :filterName=$filterName />
+        <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
+            :filterName="$filterName" />
         <div class="mt-4 h-22 pt-8 pb-4 grid gap-10">
             <div x-on:mouseleave="allowUpdates" class="range-slider flat" id="{{ $filterBasePath }}"
                 data-ticks-position='bottom'
@@ -107,8 +107,8 @@
             </div>
         </div>
     @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
-        <x-livewiretablesadvancedfilters::elements.labelInternal-bs :filterLabelPath=$filterLabelPath
-            :filterName=$filterName />
+        <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
+            :filterName="$filterName" />
         <div x-on:mouseleave="allowUpdates" class="range-slider flat w-100" id="{{ $filterBasePath }}"
             data-ticks-position='bottom'
             style='--min:{{ $minRange }};

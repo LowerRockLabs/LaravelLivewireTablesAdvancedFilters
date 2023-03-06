@@ -163,6 +163,7 @@ class NumberRangeFilter extends Filter
 
         return view('livewiretablesadvancedfilters::components.tools.filters.numberRange', [
             'component' => $component,
+            'theme' => $component->getTheme(),
             'filter' => $this,
         ]);
     }

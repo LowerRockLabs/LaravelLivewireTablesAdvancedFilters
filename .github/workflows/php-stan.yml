@@ -1,11 +1,8 @@
 name: php-stan
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
-      - develop
+      - dev
 
 jobs:
   test:
@@ -42,18 +39,22 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer--${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer-
 
+      - name: Add token
+        run: |
+          composer config github-oauth.github.com ${{ secrets.LRL_GH_SECRET }}
+
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
 
       - name: Update dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+        run: composer update --${{ matrix.stability }} --no-interaction
 
       - name: Setup problem matchers
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-          
+
       - name: Run PHPStan
         run: phpstan analyse src
 

@@ -64,7 +64,7 @@ class DatePickerFilter extends Filter
         $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
 
         $validator = \Illuminate\Support\Facades\Validator::make($returnedValues, [
-            'date' => 'required|date_format:' . $dateFormat,
+            'date' => 'required|date_format:'.$dateFormat,
         ]);
         if ($validator->fails()) {
             return false;
@@ -105,7 +105,7 @@ class DatePickerFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        if ($value == '' || empty($value)) {
+        if ($value === '' || empty($value) || is_null($value)) {
             return true;
         } else {
             return false;
@@ -136,10 +136,22 @@ class DatePickerFilter extends Filter
     }
 
     /**
+     * @return null
+     */
+    public function getDefaultValue(): null
+    {
+        return null;
+    }
+
+    /**
      * @return \Illuminate\View\View|\Illuminate\View\Factory
      */
     public function render(DataTableComponent $component)
     {
+        if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
+            $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
+        }
+
         return view('livewiretablesadvancedfilters::components.tools.filters.datePicker', [
             'component' => $component,
             'filter' => $this,

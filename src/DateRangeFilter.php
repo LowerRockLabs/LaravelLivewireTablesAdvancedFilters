@@ -5,6 +5,7 @@ namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 // @codeCoverageIgnoreStart
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
+
 // @codeCoverageIgnoreEnd
 
 class DateRangeFilter extends Filter
@@ -35,13 +36,10 @@ class DateRangeFilter extends Filter
      */
     public function options($options = []): DateRangeFilter
     {
-        foreach ($this->options as $index => $value)
-        {
-            if (isset($options[$index]))
-            {
+        foreach ($this->options as $index => $value) {
+            if (isset($options[$index])) {
                 $this->options[$index] = $options[$index];
             }
-
         }
         //$this->options = array_merge($this->options,$options);
 
@@ -115,7 +113,7 @@ class DateRangeFilter extends Filter
         if ($earliestDateString != '') {
             $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
 
-            if (!$earliestDate instanceof \Carbon\Carbon) {
+            if (! $earliestDate instanceof \Carbon\Carbon) {
                 return false;
             }
 
@@ -128,7 +126,7 @@ class DateRangeFilter extends Filter
         if ($latestDateString != '') {
             $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
 
-            if (!$latestDate instanceof \Carbon\Carbon) {
+            if (! $latestDate instanceof \Carbon\Carbon) {
                 return false;
             }
 

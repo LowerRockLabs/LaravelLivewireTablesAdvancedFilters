@@ -122,7 +122,7 @@ class DateRangeFilter extends Filter
         $earliestDateString = ($this->getOptions()['earliestDate'] != '') ? $this->getOptions()['earliestDate'] : $this->getConfig('defaults')['earliestDate'];
         $latestDateString = ($this->getOptions()['latestDate'] != '') ? $this->getOptions()['latestDate'] : $this->getConfig('defaults')['latestDate'];
 
-        if ($earliestDateString != '' && !is_null($earliestDateString) && $latestDateString != '' && !is_null($latestDateString)) {
+        if ($earliestDateString != '' && ! is_null($earliestDateString) && $latestDateString != '' && ! is_null($latestDateString)) {
             $dateLimits = ['earliest' => $earliestDateString, 'latest' => $latestDateString];
             $earlyLateValidator = \Illuminate\Support\Facades\Validator::make($dateLimits, [
                 'earliest' => 'date_format:' . $dateFormat,
@@ -168,11 +168,10 @@ class DateRangeFilter extends Filter
             $dateFormat = $this->getOptions()['dateFormat'] ?? $this->getConfig('defaults')['dateFormat'];
             $ariaDateFormat = $this->getOptions()['ariaDateFormat'] ?? $this->getConfig('defaults')['ariaDateFormat'];
 
-            if (!isset($validatedValue['minDate']) || !isset($validatedValue['maxDate'])) {
+            if (! isset($validatedValue['minDate']) || ! isset($validatedValue['maxDate'])) {
                 return '';
             }
-            if (is_null($validatedValue['minDate']) || is_null($validatedValue['maxDate']))
-            {
+            if (is_null($validatedValue['minDate']) || is_null($validatedValue['maxDate'])) {
                 return '';
             }
             $minDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['minDate']);

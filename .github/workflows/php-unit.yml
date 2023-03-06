@@ -13,7 +13,7 @@ jobs:
         os: [ubuntu-20.04]
         php: [8.0, 8.2]
         laravel: [9.*, 10.*]
-        stability: [prefer-stable]
+        stability: [prefer-dev]
         exclude:
           - laravel: 10.*
             php: 8.0

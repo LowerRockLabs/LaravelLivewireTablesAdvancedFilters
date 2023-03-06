@@ -173,7 +173,7 @@ class DateRangeFilterTest extends TestCaseAdvanced
     /** @test */
     public function filter_pill_values_can_be_set_for_daterange_customformat(): void
     {
-        $filter = DateRangeFilter::make('Active')->config(['ariaDateFormat' => 'Y', 'latestDate' => '2022-01-01']);
+        $filter = DateRangeFilter::make('Active')->options(['ariaDateFormat' => 'Y', 'latestDate' => '2022-01-01']);
 
         $this->assertEquals('2020 to 2021', $filter->getFilterPillValue(['minDate' => '2020-02-02', 'maxDate' => '2021-02-05']));
         $this->assertEquals('', $filter->getFilterPillValue(['minDate' => '20220-02-02', 'maxDate' => '2020-02-05']));

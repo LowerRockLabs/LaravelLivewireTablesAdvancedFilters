@@ -124,16 +124,14 @@ class DateRangeFilter extends Filter
             return false;
         }
 
-        /*$earliestDateString = $this->getOptions()['earliestDate'] ?? $this->getConfig('defaults')['earliestDate'];
+        $earliestDateString = ($this->getOptions()['earliestDate'] != '') ? $this->getOptions()['earliestDate'] : $this->getConfig('defaults')['earliestDate'];
         if ($earliestDateString != '' && !is_null($earliestDateString)) {
             $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
 
-            if (! $earliestDate instanceof \Carbon\Carbon) {
-                return false;
-            }
-
-            if ($startDate->lt($earliestDate)) {
-                return false;
+            if ($earliestDate instanceof \Carbon\Carbon) {
+                if ($startDate->lt($earliestDate)) {
+                    return false;
+                }
             }
         }
 
@@ -141,14 +139,12 @@ class DateRangeFilter extends Filter
         if ($latestDateString != '' && !is_null($latestDateString)) {
             $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
 
-            if (! $latestDate instanceof \Carbon\Carbon) {
-                return false;
+            if ($latestDate instanceof \Carbon\Carbon) {
+                if ($endDate->gt($latestDate)) {
+                    return false;
+                }
             }
-
-            if ($endDate->gt($latestDate)) {
-                return false;
-            }
-        }*/
+        }
 
         return $returnedValues;
     }
@@ -169,18 +165,20 @@ class DateRangeFilter extends Filter
         $validatedValue = $this->validate($value);
 
         if ($validatedValue) {
-            $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
-            $ariaDateFormat = $this->getConfig('ariaDateFormat') ?? $this->getConfig('defaults')['ariaDateFormat'];
+            $dateFormat = $this->getOptions()['dateFormat'] ?? $this->getConfig('defaults')['dateFormat'];
+            $ariaDateFormat = $this->getOptions()['ariaDateFormat'] ?? $this->getConfig('defaults')['ariaDateFormat'];
 
-            if ($validatedValue['minDate'] == null || $validatedValue['maxDate'] == null) {
-                return '';
+            if (is_null($validatedValue['minDate']) || is_null($validatedValue['maxDate'])) {
+                return 'Null ValidatedValue';
             }
             $minDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['minDate']);
             $maxDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['maxDate']);
 
-            if (! $minDateCarbon || ! $maxDateCarbon) {
-                return '';
+
+            if (!$minDateCarbon instanceof \Carbon\Carbon || !$maxDateCarbon instanceof \Carbon\Carbon) {
+                return 'minDateCarbon Issue';
             }
+
             $minDate = $minDateCarbon->format($ariaDateFormat);
             $maxDate = $maxDateCarbon->format($ariaDateFormat);
 

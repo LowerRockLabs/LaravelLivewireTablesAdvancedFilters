@@ -104,8 +104,8 @@
         </div>
     @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
         <label for="{{ $tableName }}-filter-{{ $filterKey }}"
-            id="{{ $tableName }}-filter-{{ $filterKey }}-label2"
-            class="block text-sm font-medium leading-5 text-gray-700 dark:text-white">
+        id="{{ $tableName }}-filter-{{ $filterKey }}-labelInternal"
+        class="hidden block text-sm font-medium leading-5 text-gray-700 dark:text-white">
             {{ $filter->getName() }}
         </label>
         <div x-on:mouseleave="allowUpdates" class="range-slider flat w-100" id="{{ $filterBasePath }}"
@@ -460,5 +460,8 @@
     </style>
 
     @elseif ($filter->getConfig('cssInclude') == 'include')
-        <style>
-            @push('styles') <link href="{{ asset('css/numberRange.css') }}" rel="stylesheet">@endpush @endif</div>
+            @push('styles') <link href="{{ asset('css/numberRange.css') }}" rel="stylesheet">@endpush
+
+    @endif
+
+</div>

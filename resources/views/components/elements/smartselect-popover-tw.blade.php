@@ -9,7 +9,7 @@ tabindex="-1">
             <span class="inline-block pt-2 pl-2">
                 <h2><strong>{{ __('Selected Items') }}</strong></h2>
             </span>
-            <x-livewiretablesadvancedfilters::buttons.popover-close />
+            <x-livewiretablesadvancedfilters::buttons.popover-close-tw />
         </div>
 
         <div class="w-full flex flex-col">

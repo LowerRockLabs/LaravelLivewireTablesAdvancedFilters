@@ -2,8 +2,10 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 
+// @codeCoverageIgnoreStart
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
+// @codeCoverageIgnoreEnd
 
 class DateRangeFilter extends Filter
 {
@@ -33,7 +35,15 @@ class DateRangeFilter extends Filter
      */
     public function options($options = []): DateRangeFilter
     {
-        $this->options = $options;
+        foreach ($this->options as $index => $value)
+        {
+            if (isset($options[$index]))
+            {
+                $this->options[$index] = $options[$index];
+            }
+
+        }
+        //$this->options = array_merge($this->options,$options);
 
         return $this;
     }
@@ -82,7 +92,7 @@ class DateRangeFilter extends Filter
         if ($returnedValues['minDate'] == '' || $returnedValues['maxDate'] == '') {
             return false;
         }
-        $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
+        $dateFormat = $this->getOptions()['dateFormat'] ?? $this->getConfig('defaults')['dateFormat'];
 
         $validator = \Illuminate\Support\Facades\Validator::make($returnedValues, [
             'minDate' => 'required|date_format:' . $dateFormat,
@@ -101,24 +111,27 @@ class DateRangeFilter extends Filter
             return false;
         }
 
-        $earliestDateString = $this->getConfig('earliestDate') ?? $this->getConfig('defaults')['earliestDate'];
+        $earliestDateString = $this->getOptions()['earliestDate'] ?? $this->getConfig('defaults')['earliestDate'];
         if ($earliestDateString != '') {
             $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
-            if (! $earliestDate) {
+
+            if (!$earliestDate instanceof \Carbon\Carbon) {
                 return false;
             }
+
             if ($startDate->lt($earliestDate)) {
                 return false;
             }
         }
 
-        $latestDateString = $this->getConfig('latestDate') ?? $this->getConfig('defaults')['latestDate'];
+        $latestDateString = $this->getOptions()['latestDate'] ?? $this->getConfig('defaults')['latestDate'];
         if ($latestDateString != '') {
             $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
 
-            if (! $latestDate) {
+            if (!$latestDate instanceof \Carbon\Carbon) {
                 return false;
             }
+
             if ($endDate->gt($latestDate)) {
                 return false;
             }

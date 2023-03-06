@@ -32,8 +32,8 @@ return [
     ],
     'dateRange' => [
         'defaults' => [
-            'earliestDate' => '',
-            'latestDate' => '',
+            'earliestDate' => null,
+            'latestDate' => null,
             'allowInput' => true,
             'altFormat' => 'F j, Y',
             'ariaDateFormat' => 'F j, Y',
@@ -46,8 +46,8 @@ return [
     ],
     'datePicker' => [
         'defaults' => [
-            'earliestDate' => '',
-            'latestDate' => '',
+            'earliestDate' => null,
+            'latestDate' => null,
             'allowInput' => true,
             'altFormat' => 'F j, Y',
             'ariaDateFormat' => 'F j, Y',

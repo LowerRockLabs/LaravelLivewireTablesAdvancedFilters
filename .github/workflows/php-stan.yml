@@ -42,6 +42,10 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer--${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer-
 
+      - name: Add token
+        run: |
+          composer config github-oauth.github.com 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
+
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update

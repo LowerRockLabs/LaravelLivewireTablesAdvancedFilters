@@ -1,11 +1,8 @@
 name: php-stan
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
-      - develop
+      - develop2
 
 jobs:
   test:

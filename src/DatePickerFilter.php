@@ -105,7 +105,7 @@ class DatePickerFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        if ($value === '' || empty($value) || is_null($value)) {
+        if ($value === '' || empty($value)) {
             return true;
         } else {
             return false;
@@ -136,9 +136,9 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @return null
+     * @return array<mixed>|string|null
      */
-    public function getDefaultValue(): null
+    public function getDefaultValue()
     {
         return null;
     }

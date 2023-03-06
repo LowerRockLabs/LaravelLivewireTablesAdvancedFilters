@@ -71,12 +71,9 @@ class DateRangeFilter extends Filter
      */
     public function validate($values)
     {
-
-
         $returnedValues = ['minDate' => '', 'maxDate' => ''];
         if (is_array($values)) {
-            if (!isset($values['minDate']) || !isset($values['maxDate']))
-            {
+            if (! isset($values['minDate']) || ! isset($values['maxDate'])) {
                 foreach ($values as $index => $value) {
                     if ($index === 0 || $index == "0" || strtolower($index) == 'mindate') {
                         $returnedValues['minDate'] = $value;
@@ -85,9 +82,7 @@ class DateRangeFilter extends Filter
                         $returnedValues['maxDate'] = $value;
                     }
                 }
-            }
-            else
-            {
+            } else {
                 $returnedValues['minDate'] = $values['minDate'];
                 $returnedValues['maxDate'] = $values['maxDate'];
             }
@@ -196,44 +191,30 @@ class DateRangeFilter extends Filter
     public function isEmpty($value): bool
     {
         $values = [];
-        if (is_array($value))
-        {
-            if (!isset($value['minDate']) || !isset($value['maxDate']))
-            {
-                if (isset($value[0]))
-                {
+        if (is_array($value)) {
+            if (! isset($value['minDate']) || ! isset($value['maxDate'])) {
+                if (isset($value[0])) {
                     $values['minDate'] = $value[0];
-                }
-                else
-                {
+                } else {
                     return true;
                 }
 
-                if (isset($value[1]))
-                {
+                if (isset($value[1])) {
                     $values['maxDate'] = $value[1];
-                }
-                else
-                {
+                } else {
                     return true;
                 }
-            }
-            else
-            {
-                if (is_null($value['minDate']) || is_null($value['maxDate']))
-                {
+            } else {
+                if (is_null($value['minDate']) || is_null($value['maxDate'])) {
                     return true;
-                }
-                else
-                {
+                } else {
                     return false;
                 }
             }
-        }
-        else
-        {
+        } else {
             return true;
         }
+
         return false;
     }
 

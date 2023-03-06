@@ -128,7 +128,7 @@ class DateRangeFilter extends Filter
                 'earliest' => 'date_format:' . $dateFormat,
                 'latest' => 'date_format:' . $dateFormat,
             ]);
-            if (!$earlyLateValidator->fails()) {
+            if (! $earlyLateValidator->fails()) {
                 $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
                 $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
 
@@ -142,7 +142,7 @@ class DateRangeFilter extends Filter
                         return false;
                     }
                 }
-             }
+            }
         }
 
         return $returnedValues;
@@ -179,7 +179,7 @@ class DateRangeFilter extends Filter
             $maxDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['maxDate']);
 
 
-            if (!$minDateCarbon instanceof \Carbon\Carbon || !$maxDateCarbon instanceof \Carbon\Carbon) {
+            if (! $minDateCarbon instanceof \Carbon\Carbon || ! $maxDateCarbon instanceof \Carbon\Carbon) {
                 return 'minDateCarbon Issue';
             }
 

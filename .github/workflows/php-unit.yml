@@ -48,7 +48,7 @@ jobs:
 
       - name: Update dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --dev
+        run: composer update --${{ matrix.stability }} --prefer-source
 
       - name: Run Unit Tests
         run: XDEBUG_MODE_COVERAGE=coverage vendor/bin/phpunit

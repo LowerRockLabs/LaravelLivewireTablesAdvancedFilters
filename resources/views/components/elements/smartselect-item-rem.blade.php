@@ -1,6 +1,6 @@
-@props(['theme', 'iconStyling'])
+@props(['theme', 'iconStyling', 'linkClass' => ''])
 @if ($theme == 'tailwind')
-    <a class="cursor-pointer inline-block w-full" x-on:click="removeSelectedItem(filteredItem.id.toString())">
+    <a class="cursor-pointer  inline-block w-full" x-on:click="removeSelectedItem(filteredItem.id.toString())">
         @if ($iconStyling['delete']['svgEnabled'])
             <x-livewiretablesadvancedfilters::icons.smartselect-removeIcon :theme="$theme" />
         @endif
@@ -14,7 +14,8 @@
         </span>
     </a>
 @else
-    <a class="cursor-pointer d-inline-block w-100" x-on:click="removeSelectedItem(filteredItem.id.toString())">
+    <a class="cursor-pointer  d-inline-block w-100 {{ $linkClass }}"
+        x-on:click="removeSelectedItem(filteredItem.id.toString())">
         @if ($iconStyling['delete']['svgEnabled'])
             <x-livewiretablesadvancedfilters::icons.smartselect-removeIcon :theme="$theme" />
         @endif

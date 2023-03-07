@@ -150,8 +150,7 @@
         <div class="position-relative">
             <!-- Start Label Replacement -->
             <div class="d-flex flex-column align-items-start w-100 hidden" id="{{ $filterLabelPath }}-labelInternal">
-                <label for="{{ $filterLabelPath }}"
-                    class="d-inline  text-sm font-medium leading-5 text-gray-700 dark:text-white ">
+                <label for="{{ $filterLabelPath }}" class="d-inline small leading-5 text-gray-700 dark:text-white ">
                     {{ $filter->getName() }}
                 </label>
                 <div class="d-inline align-self-end text-right position-absolute">
@@ -179,17 +178,20 @@
                         .length > 0
                 }"
                     class="flex-column w-100 overflow-visible z-50">
-                    <ul class="list-unstyled bg-white dark:bg-gray-700 flex-column w-100 ">
+                    <ul class="smartSelectDropDownList list-group bg-white dark:bg-gray-700 flex-column w-100 ">
                         <template x-for="(filteredItem, index) in currentFilteredList" :key="filteredItem.id">
-                            <li class="px-2 py-1 hover:bg-blue-500 dark:hover:bg-gray-400"
-                                :class="{ 'dark:bg-gray-800': (index % 2) }">
+                            <li class="list-group-item px-2 py-1"
+                                :class="{ 'bg-light': (index % 2), 'bg-secondary': !(index % 2) }">
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
                                     <x-livewiretablesadvancedfilters::elements.smartselect-item-rem :iconStyling="$iconStyling"
                                         :theme="$theme" />
                                 </template>
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
+
                                     <x-livewiretablesadvancedfilters::elements.smartselect-item-add :iconStyling="$iconStyling"
                                         :theme="$theme" />
+
+
                                 </template>
                             </li>
                         </template>
@@ -198,6 +200,43 @@
             </div>
             <!-- End Drop Down -->
         </div>
+        <style>
+            /*
+            ul.smartSelectDropDownList li {
+                background-color: #FFFFFF;
+                cursor: pointer;
+            }
+
+            /* bg-gray-700
+            .dark ul.smartSelectDropDownList li {
+                background-color: rgb(55 65 81);
+            }
+            /* bg-blue-500
+            ul.smartSelectDropDownList li:hover {
+                background-color: rgb(59 130 246);
+            }
+
+            /* bg-gray-400
+            .dark ul.smartSelectDropDownList li:hover {
+                background-color: rgb(156 163 175);
+            }
+            */
+            .bg-blue-500 {
+                background-color: rgb(59 130 246);
+            }
+
+            .bg-gray-400 {
+                background-color: rgb(156 163 175);
+            }
+
+            .bg-gray-700 {
+                background-color: rgb(55 65 81);
+            }
+
+            .bg-gray-800 {
+                background-color: rgb(31 41 55);
+            }
+        </style>
     @elseif ($theme === 'bootstrap-5')
         <div class="position-absolute">
 
@@ -236,18 +275,20 @@
                             .length > 0
                     }"
                         class="flex-col w-100 overflow-visible z-50">
-                        <ul class="bg-white dark:bg-gray-700 flex-col w-100 ">
+                        <ul class="smartSelectDropDownList bg-white dark:bg-gray-700 flex-col w-100 ">
                             <template x-for="(filteredItem, index) in currentFilteredList" :key="filteredItem.id">
                                 <li class="px-2 py-1 hover:bg-blue-500 dark:hover:bg-gray-400"
                                     :class="{ 'dark:bg-gray-800': (index % 2) }">
-                                    <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
-                                        <x-livewiretablesadvancedfilters::elements.smartselect-item-rem
-                                            :iconStyling="$iconStyling" :theme="$theme" />
-                                    </template>
-                                    <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
-                                        <x-livewiretablesadvancedfilters::elements.smartselect-item-add
-                                            :iconStyling="$iconStyling" :theme="$theme" />
-                                    </template>
+                                    <a href='#'>
+                                        <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
+                                            <x-livewiretablesadvancedfilters::elements.smartselect-item-rem
+                                                :iconStyling="$iconStyling" :theme="$theme" />
+                                        </template>
+                                        <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
+                                            <x-livewiretablesadvancedfilters::elements.smartselect-item-add
+                                                :iconStyling="$iconStyling" :theme="$theme" />
+                                        </template>
+                                    </a>
                                 </li>
                             </template>
                         </ul>
@@ -256,5 +297,51 @@
                 <!-- End Drop Down -->
             </div>
         </div>
+        <style>
+            div.smartSelectPopoverList div:hover {
+                background-color: rgb(59 130 246);
+            }
+
+            .dark div.smartSelectPopoverList div:hover {
+                background-color: rgb(156 163 175);
+            }
+
+            ul.smartSelectDropDownList li {
+                background-color: #FFFFFF;
+                cursor: pointer;
+            }
+
+            /* bg-gray-700 */
+            .dark ul.smartSelectDropDownList li {
+                background-color: rgb(55 65 81);
+            }
+
+            /* bg-blue-500 */
+            ul.smartSelectDropDownList li:hover {
+                background-color: rgb(59 130 246);
+            }
+
+            /* bg-gray-400 */
+            .dark ul.smartSelectDropDownList li:hover {
+                background-color: rgb(156 163 175);
+            }
+
+            .bg-blue-500 {
+                background-color: rgb(59 130 246);
+            }
+
+            .bg-gray-400 {
+                background-color: rgb(156 163 175);
+            }
+
+            .bg-gray-700 {
+                background-color: rgb(55 65 81);
+            }
+
+            .bg-gray-800 {
+                background-color: rgb(31 41 55);
+            }
+        </style>
     @endif
+
 </div>

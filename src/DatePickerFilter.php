@@ -72,8 +72,7 @@ class DatePickerFilter extends Filter
         $returnedValues['date'] = $value;
 
         $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
-        if (is_null($dateFormat))
-        {
+        if (is_null($dateFormat)) {
             return false;
         }
 
@@ -89,7 +88,6 @@ class DatePickerFilter extends Filter
         $latestDateString = $this->getConfig('latestDate') ?? $this->getConfig('defaults')['latestDate'];
 
         if ($earliestDateString != '') {
-
             $dateLimitArray['earliest'] = $earliestDateString;
             $earliestValidator = \Illuminate\Support\Facades\Validator::make($dateLimitArray, [
                 'earliest' => 'required|date_format:'.$dateFormat,
@@ -105,7 +103,6 @@ class DatePickerFilter extends Filter
         }
 
         if ($latestDateString != '') {
-
             $dateLimitArray['latest'] = $latestDateString;
             $latestValidator = \Illuminate\Support\Facades\Validator::make($dateLimitArray, [
                 'latest' => 'required|date_format:'.$dateFormat,

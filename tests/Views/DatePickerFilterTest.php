@@ -137,7 +137,8 @@ class DatePickerFilterTest extends TestCaseAdvanced
         /** @test */
         public function can_check_validation_rejects_invalid_earliest_latest_values(): void
         {
-            $filter = DatePickerFilter::make('Active')->config(['earliestDate' => '20q0-01-01', 'latestDate' => '20e0-10-10']);;
+            $filter = DatePickerFilter::make('Active')->config(['earliestDate' => '20q0-01-01', 'latestDate' => '20e0-10-10']);
+            ;
             $this->assertFalse($filter->validate('2020-01-01'));
             $this->assertFalse($filter->validate(''));
             $this->assertFalse($filter->validate('test'));
@@ -165,8 +166,6 @@ class DatePickerFilterTest extends TestCaseAdvanced
             $this->assertFalse($filter->validate('2010-14-22'));
             $this->assertFalse($filter->validate('2010-12-32'));
         }
-
-
 
         /** @test */
         public function can_check_validation_rejects_values_before_earliest_or_after_latest_with_dateformat(): void

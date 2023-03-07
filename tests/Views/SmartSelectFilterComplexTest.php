@@ -331,12 +331,19 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
         $this->assertTrue($filter->hasConfig('optionsMethod'));
 
         $this->assertSame('complex', $filter->getConfig('optionsMethod'));
+        $this->assertSame('complex', $filter->getConfigs()['optionsMethod']);
 
         $filter->config(['foo' => 'bar']);
 
+        $filter->config(['optionsMethod' => 'simple']);
+
+        $this->assertSame('simple', $filter->getConfig('optionsMethod'));
+
+        $this->assertSame('simple', $filter->getConfigs()['optionsMethod']);
+
         $this->assertTrue($filter->hasConfig('optionsMethod'));
 
-        $this->assertFalse($filter->hasConfig('foo'));
+        $this->assertTrue($filter->hasConfig('foo'));
 
         $this->assertFalse($filter->hasConfig('bar'));
     }

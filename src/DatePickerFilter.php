@@ -47,8 +47,11 @@ class DatePickerFilter extends Filter
      */
     public function config($config = []): DatePickerFilter
     {
-        $this->config = array_merge($this->config, $config);
-
+        $flattened  = \Illuminate\Support\Arr::dot($config);
+        foreach($flattened as $key => $val)
+        {
+            \Illuminate\Support\Arr::set($this->config,$key,$val);
+        }
         return $this;
     }
 

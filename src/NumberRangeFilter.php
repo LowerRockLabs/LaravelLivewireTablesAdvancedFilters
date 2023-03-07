@@ -47,8 +47,11 @@ class NumberRangeFilter extends Filter
      */
     public function config($config = []): NumberRangeFilter
     {
-        $this->config = array_merge($this->config, $config);
-
+        $flattened  = \Illuminate\Support\Arr::dot($config);
+        foreach($flattened as $key => $val)
+        {
+            \Illuminate\Support\Arr::set($this->config,$key,$val);
+        }
         return $this;
     }
 

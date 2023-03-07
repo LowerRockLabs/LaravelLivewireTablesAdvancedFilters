@@ -32,33 +32,12 @@ class SmartSelectFilter extends Filter
      */
     public function config($config = []): SmartSelectFilter
     {
-        if (isset($config['optionsMethod']))
-        {
-            $this->config['optionsMethod'] = $config['optionsMethod'];
-        }
+        $flattened  = \Illuminate\Support\Arr::dot($config);
 
-        if (isset($config['popoverMethod']))
-        {
-            $this->config['popoverMethod'] = $config['popoverMethod'];
-        }
-
-        if (isset($config['iconStyling']))
-        {
-            if (isset($config['iconStyling']['add']))
-            {
-                foreach ($config['iconStyling']['add'] as $key => $val)
-                {
-                    $this->config['iconStyling']['add'][$key] = $val;
-                }
-            }
-            if (isset($config['iconStyling']['delete']))
-            {
-                foreach ($config['iconStyling']['delete'] as $key => $val)
-                {
-                    $this->config['iconStyling']['delete'][$key] = $val;
-                }
-            }
-        }
+        \Illuminate\Support\Arr::map($flattened, function (string $value, string $key) {
+            \Illuminate\Support\Arr::set($this->config,$key,$value);
+            return true;
+        });
 
         return $this;
     }

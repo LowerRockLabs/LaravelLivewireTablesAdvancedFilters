@@ -60,10 +60,12 @@ class DateRangeFilter extends Filter
      */
     public function config($config = []): DateRangeFilter
     {
-        $this->config = array_merge($this->config, $config);
-
-        return $this;
-    }
+        $flattened  = \Illuminate\Support\Arr::dot($config);
+        foreach($flattened as $key => $val)
+        {
+            \Illuminate\Support\Arr::set($this->config,$key,$val);
+        }
+        return $this;    }
 
     /**
      * @param  array<mixed>|string  $values

@@ -66,7 +66,8 @@ This depends on custom CSS, which can be included in your component by using one
 3. Included as part of your webpack/bundle, by setting numberRange.cssInclude to "none"
 
 ### Configuration Options
-The colours in use are fully customisable, designed for class-based "dark/light" themes approach, as are the default min/max options, see guidance below.  Any of these can be over-ridden on a per-filter basis using the "config()" option on the filter.
+The colours in use are fully customisable, designed for class-based "dark/light" themes approach, as are the default min/max options, see guidance below.  Any of these can be over-ridden on a per-filter basis using the "config()" option on the filter.  You can set as many or as few configuration options as you like, the remainder will be set to the default from the configuration file.
+
 ```php
     'numberRange' => [
         'defaults' => [
@@ -131,7 +132,8 @@ DateRangeFilter::make('Created Date')
 ```
 
 #### Configuration Options
-Sensible defaults can be set within the configuration file.  However, the following variables can be set on a per-filter basis
+Sensible defaults can be set within the configuration file.  However, the following variables can be set on a per-filter basis.  You can set as many or as few configuration options as you like, the remainder will be set to the default from the configuration file.
+
 ```php
 DateRangeFilter::make('Created Date')
 ->config([
@@ -167,7 +169,7 @@ DatePickerFilter::make('Created Date')
 ```
 
 #### Configuration Options
-Sensible defaults can be set within the configuration file.  However, the following variables can be set on a per-filter basis
+Sensible defaults can be set within the configuration file.  However, the following variables can be set on a per-filter basis. You can set as many or as few configuration options as you like, the remainder will be set to the default from the configuration file.
 
 ```php
 DatePickerFilter::make('Created Date')
@@ -250,7 +252,8 @@ To use the standard approach for the PopOver for Currently Selected Items, you s
 If you would prefer to utilise an on-the-fly Alpine lookup for the name, then you should set *popoverMethod* in the configuration to lookup
 
 ### Configuration options
-The below can either be set in the configuration file, or specified per-filter by passing an array into the config() method of the filter.
+The below can either be set in the configuration file, or specified per-filter by passing an array into the config() method of the filter. You can set as many or as few configuration options as you like, the remainder will be set to the default from the configuration file.
+
 
 ```php
 'smartSelect' => [

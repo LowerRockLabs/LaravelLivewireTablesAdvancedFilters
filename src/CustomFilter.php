@@ -45,11 +45,11 @@ class CustomFilter extends Filter
      */
     public function config($config = []): CustomFilter
     {
-        $flattened  = Arr::dot($config);
-        foreach($flattened as $key => $val)
-        {
-            Arr::set($this->config,$key,$val);
+        $flattened = Arr::dot($config);
+        foreach ($flattened as $key => $val) {
+            Arr::set($this->config, $key, $val);
         }
+
         return $this;
     }
 

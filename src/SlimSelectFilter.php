@@ -114,10 +114,12 @@ class SlimSelectFilter extends Filter
      */
     public function render(DataTableComponent $component)
     {
+        // @codeCoverageIgnoreStart
         if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
             $component->{$component->getTableName()}['filters'][$this->getKey()] = [];
         }
 
+        // @codeCoverageIgnoreEnd
         return view('livewiretablesadvancedfilters::components.tools.filters.slimSelect', [
             'component' => $component,
             'theme' => $component->getTheme(),

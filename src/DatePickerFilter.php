@@ -68,9 +68,13 @@ class DatePickerFilter extends Filter
             return false;
         }
 
+        $dateLimitArray = [];
         $returnedValues['date'] = $value;
 
         $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
+        if (is_null($dateFormat)) {
+            return false;
+        }
 
         $validator = \Illuminate\Support\Facades\Validator::make($returnedValues, [
             'date' => 'required|date_format:'.$dateFormat,
@@ -78,31 +82,47 @@ class DatePickerFilter extends Filter
         if ($validator->fails()) {
             return false;
         }
-
-        $date = \Carbon\Carbon::createFromFormat($dateFormat, $value);
-        if (! $date) {
+        $date = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['date']);
+        if (! ($date instanceof \Carbon\Carbon)) {
             return false;
         }
 
         $earliestDateString = $this->getConfig('earliestDate') ?? $this->getConfig('defaults')['earliestDate'];
+        $latestDateString = $this->getConfig('latestDate') ?? $this->getConfig('defaults')['latestDate'];
+
         if ($earliestDateString != '') {
-            $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
-            if (! $earliestDate) {
+            $dateLimitArray['earliest'] = $earliestDateString;
+            $earliestValidator = \Illuminate\Support\Facades\Validator::make($dateLimitArray, [
+                'earliest' => 'required|date_format:'.$dateFormat,
+            ]);
+            if ($earliestValidator->fails()) {
                 return false;
             }
-            if ($date->lt($earliestDate)) {
-                return false;
+
+            $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
+
+            if ($earliestDate instanceof \Carbon\Carbon) {
+                if ($date->lt($earliestDate)) {
+                    return false;
+                }
             }
         }
 
-        $latestDateString = $this->getConfig('latestDate') ?? $this->getConfig('defaults')['latestDate'];
         if ($latestDateString != '') {
-            $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
-            if (! $latestDate) {
+            $dateLimitArray['latest'] = $latestDateString;
+            $latestValidator = \Illuminate\Support\Facades\Validator::make($dateLimitArray, [
+                'latest' => 'required|date_format:'.$dateFormat,
+            ]);
+            if ($latestValidator->fails()) {
                 return false;
             }
-            if ($date->gt($latestDate)) {
-                return false;
+
+            $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
+
+            if ($latestDate instanceof \Carbon\Carbon) {
+                if ($date->gt($latestDate)) {
+                    return false;
+                }
             }
         }
 
@@ -134,11 +154,10 @@ class DatePickerFilter extends Filter
 
             $carbonInstance = \Carbon\Carbon::createFromFormat($dateFormat, $value);
 
-            if (! $carbonInstance) {
-                return '';
-            }
 
-            return $carbonInstance->format($ariaDateFormat);
+            if ($carbonInstance instanceof \Carbon\Carbon) {
+                return $carbonInstance->format($ariaDateFormat);
+            }
         }
 
         return '';
@@ -157,9 +176,12 @@ class DatePickerFilter extends Filter
      */
     public function render(DataTableComponent $component)
     {
+        // @codeCoverageIgnoreStart
         if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
             $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
         }
+
+        // @codeCoverageIgnoreEnd
 
         return view('livewiretablesadvancedfilters::components.tools.filters.datePicker', [
             'component' => $component,

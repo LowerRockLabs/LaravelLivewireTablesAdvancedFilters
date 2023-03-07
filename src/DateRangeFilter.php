@@ -113,14 +113,9 @@ class DateRangeFilter extends Filter
         $startDate = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['minDate']);
         $endDate = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['maxDate']);
 
-        if (! $startDate instanceof \Carbon\Carbon) {
+        if (! ($startDate instanceof \Carbon\Carbon) || ! ($endDate instanceof \Carbon\Carbon)) {
             return false;
         }
-
-        if (! $endDate instanceof \Carbon\Carbon) {
-            return false;
-        }
-
         if ($startDate->gt($endDate)) {
             return false;
         }
@@ -151,10 +146,6 @@ class DateRangeFilter extends Filter
             }
         }
 
-        if ($returnedValues['minDate'] == date('Y-m-d') && $returnedValues['maxDate'] == date('Y-m-d')) {
-            return false;
-        }
-
         return $returnedValues;
     }
 
@@ -182,15 +173,12 @@ class DateRangeFilter extends Filter
             $minDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['minDate']);
             $maxDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['maxDate']);
 
+            if (($minDateCarbon instanceof \Carbon\Carbon) && $maxDateCarbon instanceof \Carbon\Carbon) {
+                $minDate = $minDateCarbon->format($ariaDateFormat);
+                $maxDate = $maxDateCarbon->format($ariaDateFormat);
 
-            if (! $minDateCarbon instanceof \Carbon\Carbon || ! $maxDateCarbon instanceof \Carbon\Carbon) {
-                return '';
+                return $minDate . ' ' . __('to') . ' ' . $maxDate;
             }
-
-            $minDate = $minDateCarbon->format($ariaDateFormat);
-            $maxDate = $maxDateCarbon->format($ariaDateFormat);
-
-            return $minDate . ' ' . __('to') . ' ' . $maxDate;
         }
 
         return '';
@@ -216,11 +204,7 @@ class DateRangeFilter extends Filter
                     return true;
                 }
             } else {
-                if (is_null($value['minDate']) || is_null($value['maxDate'])) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return false;
             }
         } else {
             return true;
@@ -234,9 +218,13 @@ class DateRangeFilter extends Filter
      */
     public function render(DataTableComponent $component)
     {
+        // @codeCoverageIgnoreStart
         if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
             $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
         }
+
+        // @codeCoverageIgnoreEnd
+
 
         return view('livewiretablesadvancedfilters::components.tools.filters.dateRange', [
             'component' => $component,

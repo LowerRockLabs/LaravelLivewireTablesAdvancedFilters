@@ -144,10 +144,19 @@ class DateRangeFilterTest extends TestCaseAdvanced
         $this->assertFalse($filter->validate(['minDate' => '2020-04-05', 'maxDate' => '2020-02-02']));
         $this->assertFalse($filter->validate(['minDate' => '2019-01-05', 'maxDate' => '2020-02-02']));
         $this->assertFalse($filter->validate(['minDate' => '2020-01-05', 'maxDate' => '2021-02-02']));
+
         $this->assertFalse($filter->validate(['minDate' => '2021-01-05', 'maxDate' => '2021-02-02']));
         $this->assertFalse($filter->validate(['minDate' => '2021-01-05', 'maxDate' => '2020-02-02']));
         $this->assertFalse($filter->validate(['minDate' => '2019-01-05', 'maxDate' => '2019-02-02']));
         $this->assertFalse($filter->validate(['minDate' => '2021-01-05', 'maxDate' => '2021-02-02']));
+    }
+
+    /** @test */
+    public function can_check_validation_rejects_values_2_dateformat(): void
+    {
+        $filter = DateRangeFilter::make('Active')->options(['earliestDate' => '2020-01-01', 'latestDate' => '2020-10-10']);
+        $this->assertSame(['minDate' => '2020-01-02', 'maxDate' => '2020-03-02'], $filter->validate(['minDate' => '2020-01-02', 'maxDate' => '2020-03-02']));
+        $this->assertFalse($filter->validate(['minDate' => '2020-01-05', 'maxDate' => '2020-02-30']));
     }
 
     /** @test */

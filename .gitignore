@@ -2,7 +2,6 @@
 node_modules/
 npm-debug.log
 yarn-error.log
-/build/
 bootstrap/compiled.php
 app/storage/
 public/storage
@@ -18,13 +17,9 @@ Homestead.json
 LaravelLivewireTablesAdvancedFilters.code-workspace
 composer.lock
 phpunit.txt
-build/*
 .php-cs-fixer.cache
 src/DateRangeFilter.php
 .phpunit.cache/*
 docs/images/badges/phpunit-coverage-develop.svg
-build/report.junit.xml
-build/report.junit.xml
 tests/Views/SmartSelectFilterTest.php
-build/report.junit.xml
 srcb/

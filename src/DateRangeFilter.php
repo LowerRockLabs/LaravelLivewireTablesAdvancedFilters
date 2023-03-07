@@ -113,8 +113,9 @@ class DateRangeFilter extends Filter
         $startDate = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['minDate']);
         $endDate = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['maxDate']);
 
-
-
+        if (!($startDate instanceof \Carbon\Carbon) || !($endDate instanceof \Carbon\Carbon)) {
+            return false;
+        }
         if ($startDate->gt($endDate)) {
             return false;
         }
@@ -172,13 +173,12 @@ class DateRangeFilter extends Filter
             $minDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['minDate']);
             $maxDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['maxDate']);
 
-
-            $minDate = $minDateCarbon->format($ariaDateFormat);
-            $maxDate = $maxDateCarbon->format($ariaDateFormat);
-
-            return $minDate . ' ' . __('to') . ' ' . $maxDate;
+            if (($minDateCarbon instanceof \Carbon\Carbon) && $maxDateCarbon instanceof \Carbon\Carbon) {
+                $minDate = $minDateCarbon->format($ariaDateFormat);
+                $maxDate = $maxDateCarbon->format($ariaDateFormat);
+                return $minDate . ' ' . __('to') . ' ' . $maxDate;
+            }
         }
-
         return '';
     }
 

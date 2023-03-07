@@ -83,6 +83,9 @@ class DatePickerFilter extends Filter
             return false;
         }
         $date = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['date']);
+        if (!($date instanceof \Carbon\Carbon)) {
+            return false;
+        }
 
         $earliestDateString = $this->getConfig('earliestDate') ?? $this->getConfig('defaults')['earliestDate'];
         $latestDateString = $this->getConfig('latestDate') ?? $this->getConfig('defaults')['latestDate'];
@@ -96,10 +99,13 @@ class DatePickerFilter extends Filter
                 return false;
             }
 
-            $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $dateLimitArray['earliest']);
-            if ($date->lt($earliestDate)) {
-                return false;
-            }
+            $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
+
+            if ($earliestDate instanceof \Carbon\Carbon) {
+                if ($date->lt($earliestDate)) {
+                    return false;
+                }
+             }
         }
 
         if ($latestDateString != '') {
@@ -111,10 +117,12 @@ class DatePickerFilter extends Filter
                 return false;
             }
 
-            $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $dateLimitArray['latest']);
+            $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
 
-            if ($date->gt($latestDate)) {
-                return false;
+            if ($latestDate instanceof \Carbon\Carbon) {
+                if ($date->gt($latestDate)) {
+                    return false;
+                }
             }
         }
 
@@ -147,8 +155,10 @@ class DatePickerFilter extends Filter
             $carbonInstance = \Carbon\Carbon::createFromFormat($dateFormat, $value);
 
 
+            if ($carbonInstance instanceof \Carbon\Carbon) {
+                return $carbonInstance->format($ariaDateFormat);
+            }
 
-            return $carbonInstance->format($ariaDateFormat);
         }
 
         return '';

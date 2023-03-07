@@ -202,7 +202,7 @@ class DateRangeFilter extends Filter
                     return true;
                 }
             } else {
-                    return false;
+                return false;
             }
         } else {
             return true;
@@ -216,7 +216,6 @@ class DateRangeFilter extends Filter
      */
     public function render(DataTableComponent $component)
     {
-
         // @codeCoverageIgnoreStart
         if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
             $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();

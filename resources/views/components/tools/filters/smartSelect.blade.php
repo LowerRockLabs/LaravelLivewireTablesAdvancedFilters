@@ -14,7 +14,6 @@
     $listStyling = $filterConfigs['listStyling'];
     $displayIdEnabled = $filterConfigs['displayIdEnabled'] ?? 'false';
     $optionsMethod = $filterConfigs['optionsMethod'];
-
 @endphp
 
 <div id="smartSelectContainer{{ $filterKey }}" x-data="{

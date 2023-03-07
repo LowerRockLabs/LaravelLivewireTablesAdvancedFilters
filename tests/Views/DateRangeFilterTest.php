@@ -68,6 +68,13 @@ class DateRangeFilterTest extends TestCaseAdvanced
     {
         $filter = DateRangeFilter::make('Active');
         $this->assertTrue($filter->isEmpty(''));
+        $this->assertFalse($filter->isEmpty(['minDate' => '2020-01-01', 'maxDate' => '2020-02-02']));
+        $this->assertTrue($filter->isEmpty(['minDate' => '2020-01-01', 'maxDate' => null]));
+        $this->assertTrue($filter->isEmpty(['minDate' => null, 'maxDate' => '2020-02-02']));
+
+        $this->assertTrue($filter->isEmpty(['minDate' => '2020-01-01']));
+        $this->assertFalse($filter->isEmpty([0 => '2020-01-01', 1 => '2020-02-02']));
+        $this->assertFalse($filter->isEmpty(['2020-01-01','2020-02-02']));
         $this->assertTrue($filter->isEmpty('test'));
     }
 
@@ -158,8 +165,23 @@ class DateRangeFilterTest extends TestCaseAdvanced
         $filter = DateRangeFilter::make('Active');
 
         $this->assertEquals('February 2, 2020 to February 5, 2020', $filter->getFilterPillValue(['minDate' => '2020-02-02', 'maxDate' => '2020-02-05']));
+
         $this->assertEquals('February 2, 2010 to February 5, 2020', $filter->getFilterPillValue(['minDate' => '2010-02-02', 'maxDate' => '2020-02-05']));
+
+
     }
+
+    /** @test */
+    public function filter_pill_values_cannot_be_set_for_invalid_dates(): void
+    {
+        $filter = DateRangeFilter::make('Active')->options(['dateFormat' => 'd-m-Y', 'earliestDate' => '01-01-2020', 'latestDate' => '1d-10-2020']);
+
+        $this->assertEquals('', $filter->getFilterPillValue(['minDate' => '20q0-02-02', 'maxDate' => '2020-02-05']));
+        $this->assertEquals('', $filter->getFilterPillValue(['minDate' => '2020-02-02', 'maxDate' => '2020-13-05']));
+        $this->assertEquals('', $filter->getFilterPillValue(['minDate' => '2010-02-02', 'maxDate' => '2020-02-05']));
+
+    }
+
 
     /** @test */
     public function filter_pill_values_can_be_set_for_daterange_limits(): void

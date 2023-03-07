@@ -2,8 +2,10 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 
+// @codeCoverageIgnoreStart
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
+// @codeCoverageIgnoreEnd
 
 class SlimSelectFilter extends Filter
 {

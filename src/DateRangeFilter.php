@@ -5,7 +5,6 @@ namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 // @codeCoverageIgnoreStart
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
-
 // @codeCoverageIgnoreEnd
 
 class DateRangeFilter extends Filter
@@ -172,18 +171,13 @@ class DateRangeFilter extends Filter
             $dateFormat = $this->getOptions()['dateFormat'] ?? $this->getConfig('defaults')['dateFormat'];
             $ariaDateFormat = $this->getOptions()['ariaDateFormat'] ?? $this->getConfig('defaults')['ariaDateFormat'];
 
-            if (! isset($validatedValue['minDate']) || ! isset($validatedValue['maxDate'])) {
-                return '';
-            }
-            if (is_null($validatedValue['minDate']) || is_null($validatedValue['maxDate'])) {
-                return '';
-            }
+
             $minDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['minDate']);
             $maxDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['maxDate']);
 
 
             if (! $minDateCarbon instanceof \Carbon\Carbon || ! $maxDateCarbon instanceof \Carbon\Carbon) {
-                return 'minDateCarbon Issue';
+                return '';
             }
 
             $minDate = $minDateCarbon->format($ariaDateFormat);

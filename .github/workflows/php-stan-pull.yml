@@ -39,7 +39,7 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer--${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer-
 
-      - name: Add token
+      - name: Add tokens
         run: |
           composer config github-oauth.github.com ${{ secrets.LRL_GH_SECRET }}
 

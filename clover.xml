@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1678212897">
-  <project timestamp="1678212897">
+<coverage generated="1678213197">
+  <project timestamp="1678213197">
     <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/CustomFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\CustomFilter" namespace="global">
         <metrics complexity="11" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="27" coveredelements="0"/>

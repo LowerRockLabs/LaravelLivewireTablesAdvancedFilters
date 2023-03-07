@@ -167,8 +167,6 @@ class DateRangeFilterTest extends TestCaseAdvanced
         $this->assertEquals('February 2, 2020 to February 5, 2020', $filter->getFilterPillValue(['minDate' => '2020-02-02', 'maxDate' => '2020-02-05']));
 
         $this->assertEquals('February 2, 2010 to February 5, 2020', $filter->getFilterPillValue(['minDate' => '2010-02-02', 'maxDate' => '2020-02-05']));
-
-
     }
 
     /** @test */
@@ -179,9 +177,7 @@ class DateRangeFilterTest extends TestCaseAdvanced
         $this->assertEquals('', $filter->getFilterPillValue(['minDate' => '20q0-02-02', 'maxDate' => '2020-02-05']));
         $this->assertEquals('', $filter->getFilterPillValue(['minDate' => '2020-02-02', 'maxDate' => '2020-13-05']));
         $this->assertEquals('', $filter->getFilterPillValue(['minDate' => '2010-02-02', 'maxDate' => '2020-02-05']));
-
     }
-
 
     /** @test */
     public function filter_pill_values_can_be_set_for_daterange_limits(): void

@@ -129,8 +129,6 @@ class FilterHelpersAdvancedTest extends TestCaseAdvanced
         $this->advancedTable->setFilter('range', ['min' => '50', 'max' => '50']);
 
         $this->assertSame(['min' => '50', 'max' => '50'], $this->advancedTable->getAppliedFilterWithValue('range'));
-
-
     }
 
     /** @test */

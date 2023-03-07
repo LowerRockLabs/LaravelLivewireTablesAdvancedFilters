@@ -37,21 +37,32 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
 
         $this->assertSame(config('livewiretablesadvancedfilters.smartSelect'), $filter->getConfigs());
 
-        $filter->config(['optionsMethod' => 'complex']);
+        $filter->config(['popoverMethod' => 'complex']);
 
-        $this->assertSame(array_merge(config('livewiretablesadvancedfilters.smartSelect'), ['optionsMethod' => 'complex']), $filter->getConfigs());
+        $this->assertSame('complex', $filter->getConfigs()['popoverMethod']);
 
-        $filter->config(['foo' => 'bar']);
+        $filter->config(['popoverMethod' => 'see']);
+    }
 
-        $this->assertSame(array_merge(config('livewiretablesadvancedfilters.smartSelect'), ['optionsMethod' => 'complex', 'foo' => 'bar']), $filter->getConfigs());
+    /** @test */
+    public function can_set_individual_filter_config_values(): void
+    {
+        $filter = SmartSelectFilter::make('Active');
+
+        $this->assertSame(config('livewiretablesadvancedfilters.smartSelect'), $filter->getConfigs());
+
+        $filter->config(['iconStyling' => ['add' => ['classes' => 'test']]]);
+
+        $this->assertSame('', $filter->getConfigs()['iconStyling']['delete']['classes']);
+        $this->assertSame('test', $filter->getConfigs()['iconStyling']['add']['classes']);
     }
 
     /** @test */
     public function get_a_single_filter_config_complex(): void
     {
-        $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'complex', 'foo' => 'bar']);
+        $filter = SmartSelectFilter::make('Active')->config(['popoverMethod' => 'test123']);
 
-        $this->assertSame('bar', $filter->getConfig('foo'));
+        $this->assertSame('test123', $filter->getConfig('popoverMethod'));
     }
 
     /** @test */
@@ -318,8 +329,15 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
         $this->assertTrue($filter->hasConfig('optionsMethod'));
 
         $this->assertSame('complex', $filter->getConfig('optionsMethod'));
+        $this->assertSame('complex', $filter->getConfigs()['optionsMethod']);
 
         $filter->config(['foo' => 'bar']);
+
+        $filter->config(['optionsMethod' => 'simple']);
+
+        $this->assertSame('simple', $filter->getConfig('optionsMethod'));
+
+        $this->assertSame('simple', $filter->getConfigs()['optionsMethod']);
 
         $this->assertTrue($filter->hasConfig('optionsMethod'));
 

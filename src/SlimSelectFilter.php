@@ -32,7 +32,13 @@ class SlimSelectFilter extends Filter
      */
     public function config($config = []): SlimSelectFilter
     {
-        $this->config = (empty($this->config) ? array_merge(config('livewiretablesadvancedfilters.slimSelect'), $config) : array_merge($this->config, $config));
+        $flattened = \Illuminate\Support\Arr::dot($config);
+
+        \Illuminate\Support\Arr::map($flattened, function (string $value, string $key) {
+            \Illuminate\Support\Arr::set($this->config, $key, $value);
+
+            return true;
+        });
 
         return $this;
     }

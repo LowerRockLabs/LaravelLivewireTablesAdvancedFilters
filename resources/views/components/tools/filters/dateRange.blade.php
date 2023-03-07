@@ -3,9 +3,9 @@
     $filterKey = $filter->getKey();
     $filterLabelPath = $tableName . '-filter-' . $filterKey;
     $filterBasePath = $tableName . '.filters.' . $filterKey;
+    $filterMenuLabel = '[aria-labelledby="filters-menu"]';
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
-    $filterMenuLabel = '[aria-labelledby="filters-menu"]';
     $yesterday = date('Y-m-d', strtotime('-1 days'));
     $dateInput = isset($this->{$tableName}['filters'][$filterKey]) ? $this->{$tableName}['filters'][$filterKey] : '';
     if ($dateInput != '') {
@@ -32,24 +32,13 @@
 
 <div id="dateRangeContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
-    swapLabels() {
+    twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'),
+    bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'),
+    setupFilterMenu() {
         if (document.querySelector('{{ $filterMenuLabel }}') !== null) {
             document.querySelector('{{ $filterMenuLabel }}').classList.add('md:w-80');
             document.querySelector('{{ $filterMenuLabel }}').classList.remove('md:w-56');
         }
-
-        const twMenuElements = document.getElementsByClassName('relative block md:inline-block text-left');
-        for (let i = 0; i < twMenuElements.length; i++) {
-            twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
-            twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-        }
-
-        const bsMenuElements = document.getElementsByClassName('btn-group d-block d-md-inline');
-        for (let i = 0; i < bsMenuElements.length; i++) {
-            bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
-            bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-        }
-
 
         if (document.getElementById('{{ $filterLabelPath }}-label') === null) {
             if (document.getElementById('dateRangeContainer{{ $filterKey }}').parentElement.firstElementChild !== null) {
@@ -59,17 +48,30 @@
         } else {
             document.getElementById('{{ $filterLabelPath }}-label').classList.add('hidden');
             document.getElementById('{{ $filterLabelPath }}-label').classList.add('d-none');
-
         }
+
         if (document.getElementById('{{ $filterLabelPath }}-labelInternal') !== null) {
             document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
             document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('d-none');
         }
 
+        for (let i = 0; i < this.twMenuElements.length; i++) {
+            if (this.twMenuElements.item(i).getAttribute('x-data') != '{ open: true, childElementOpen: true  }') {
+                this.twMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
+                this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+            }
+        }
+
+        for (let i = 0; i < this.bsMenuElements.length; i++) {
+            if (this.bsMenuElements.item(i).getAttribute('x-data') != '{ open: true, childElementOpen: true  }') {
+                this.bsMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
+                this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+            }
+        }
     },
     init() {
-        $watch('open', value => this.swapLabels());
-        $watch('allFilters', value => this.swapLabels());
+        $watch('open', value => this.setupFilterMenu());
+        $watch('allFilters', value => this.setupFilterMenu());
     }
 }">
     @if (Config::get('livewiretablesadvancedfilters.dateRange.publishFlatpickrJS'))

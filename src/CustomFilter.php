@@ -45,7 +45,13 @@ class CustomFilter extends Filter
      */
     public function config($config = []): CustomFilter
     {
-        $this->config = $config;
+        $flattened = \Illuminate\Support\Arr::dot($config);
+
+        \Illuminate\Support\Arr::map($flattened, function (string $value, string $key) {
+            \Illuminate\Support\Arr::set($this->config, $key, $value);
+
+            return true;
+        });
 
         return $this;
     }

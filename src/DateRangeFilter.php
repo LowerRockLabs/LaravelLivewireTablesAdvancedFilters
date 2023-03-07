@@ -60,7 +60,13 @@ class DateRangeFilter extends Filter
      */
     public function config($config = []): DateRangeFilter
     {
-        $this->config = array_merge($this->config, $config);
+        $flattened = \Illuminate\Support\Arr::dot($config);
+
+        \Illuminate\Support\Arr::map($flattened, function (string $value, string $key) {
+            \Illuminate\Support\Arr::set($this->config, $key, $value);
+
+            return true;
+        });
 
         return $this;
     }
@@ -168,7 +174,7 @@ class DateRangeFilter extends Filter
         $validatedValue = [];
         $validatedValue = $this->validate($value);
 
-        if ($validatedValue) {
+        if (is_array($validatedValue)) {
             $dateFormat = $this->getOptions()['dateFormat'] ?? $this->getConfig('defaults')['dateFormat'];
             $ariaDateFormat = $this->getOptions()['ariaDateFormat'] ?? $this->getConfig('defaults')['ariaDateFormat'];
 

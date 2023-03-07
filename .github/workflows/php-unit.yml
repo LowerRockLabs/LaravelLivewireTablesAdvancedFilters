@@ -60,6 +60,13 @@ jobs:
       - name: Run Unit Tests
         run: php -d pcov.enabled=1 ./vendor/bin/paratest --passthru-php="'-d pcov.enabled=1'"
 
+      - name: phpunit-coverage-badge
+        uses: timkrase/phpunit-coverage-badge@v1.2.1
+        with:
+          coverage_badge_path: 'docs/images/badges/phpunit-coverage-${{ matrix.php }}-${{ matrix.laravel }}-develop.svg'
+          push_badge: true
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run PHPStan
         run: phpstan analyse src
 

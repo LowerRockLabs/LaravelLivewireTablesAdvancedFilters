@@ -68,9 +68,14 @@ class DatePickerFilter extends Filter
             return false;
         }
 
+        $dateLimitArray = [];
         $returnedValues['date'] = $value;
 
         $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
+        if (is_null($dateFormat))
+        {
+            return false;
+        }
 
         $validator = \Illuminate\Support\Facades\Validator::make($returnedValues, [
             'date' => 'required|date_format:'.$dateFormat,
@@ -78,29 +83,39 @@ class DatePickerFilter extends Filter
         if ($validator->fails()) {
             return false;
         }
-
-        $date = \Carbon\Carbon::createFromFormat($dateFormat, $value);
-        if (! $date) {
-            return false;
-        }
+        $date = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['date']);
 
         $earliestDateString = $this->getConfig('earliestDate') ?? $this->getConfig('defaults')['earliestDate'];
+        $latestDateString = $this->getConfig('latestDate') ?? $this->getConfig('defaults')['latestDate'];
+
         if ($earliestDateString != '') {
-            $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
-            if (! $earliestDate) {
+
+            $dateLimitArray['earliest'] = $earliestDateString;
+            $earliestValidator = \Illuminate\Support\Facades\Validator::make($dateLimitArray, [
+                'earliest' => 'required|date_format:'.$dateFormat,
+            ]);
+            if ($earliestValidator->fails()) {
                 return false;
             }
+
+            $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $dateLimitArray['earliest']);
             if ($date->lt($earliestDate)) {
                 return false;
             }
         }
 
-        $latestDateString = $this->getConfig('latestDate') ?? $this->getConfig('defaults')['latestDate'];
         if ($latestDateString != '') {
-            $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
-            if (! $latestDate) {
+
+            $dateLimitArray['latest'] = $latestDateString;
+            $latestValidator = \Illuminate\Support\Facades\Validator::make($dateLimitArray, [
+                'latest' => 'required|date_format:'.$dateFormat,
+            ]);
+            if ($latestValidator->fails()) {
                 return false;
             }
+
+            $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $dateLimitArray['latest']);
+
             if ($date->gt($latestDate)) {
                 return false;
             }

@@ -185,8 +185,6 @@ class SmartSelectFilter extends Filter
                 } else {
                     if (is_array($movedItem)) {
                         $values[] = implode(" - ", $movedItem);
-                    } else {
-                        $values[] = $movedItem;
                     }
                 }
             }

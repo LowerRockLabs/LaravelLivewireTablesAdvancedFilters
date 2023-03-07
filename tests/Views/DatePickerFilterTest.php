@@ -135,6 +135,40 @@ class DatePickerFilterTest extends TestCaseAdvanced
         }
 
         /** @test */
+        public function can_check_validation_rejects_invalid_earliest_latest_values(): void
+        {
+            $filter = DatePickerFilter::make('Active')->config(['earliestDate' => '20q0-01-01', 'latestDate' => '20e0-10-10']);;
+            $this->assertFalse($filter->validate('2020-01-01'));
+            $this->assertFalse($filter->validate(''));
+            $this->assertFalse($filter->validate('test'));
+            $this->assertFalse($filter->validate(['test']));
+            $this->assertFalse($filter->validate(['2020-10-22']));
+            $this->assertFalse($filter->validate(['2020-13-22']));
+            $this->assertFalse($filter->validate(['20110-12-22']));
+            $this->assertFalse($filter->validate('20110-12-22'));
+            $this->assertFalse($filter->validate('2010-14-22'));
+            $this->assertFalse($filter->validate('2010-12-32'));
+        }
+
+        /** @test */
+        public function can_check_validation_rejects_null_date_format(): void
+        {
+            $filter = DatePickerFilter::make('Active')->config(['dateFormat' => '']);
+            $this->assertFalse($filter->validate('2020-01-01'));
+            $this->assertFalse($filter->validate(''));
+            $this->assertFalse($filter->validate('test'));
+            $this->assertFalse($filter->validate(['test']));
+            $this->assertFalse($filter->validate(['2020-10-22']));
+            $this->assertFalse($filter->validate(['2020-13-22']));
+            $this->assertFalse($filter->validate(['20110-12-22']));
+            $this->assertFalse($filter->validate('20110-12-22'));
+            $this->assertFalse($filter->validate('2010-14-22'));
+            $this->assertFalse($filter->validate('2010-12-32'));
+        }
+
+
+
+        /** @test */
         public function can_check_validation_rejects_values_before_earliest_or_after_latest_with_dateformat(): void
         {
             $filter = DatePickerFilter::make('Active')->config(['dateFormat' => 'Y-m-d', 'earliestDate' => '2020-01-01', 'latestDate' => '2020-10-10']);

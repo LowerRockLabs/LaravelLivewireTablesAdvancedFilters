@@ -151,7 +151,7 @@ class SmartSelectFilter extends Filter
         $values = [];
         $values = $this->generatePillArray($value);
 
-        return (count($values) > 0) ? implode(", ", $values) : "";
+        return (is_array($values) && (count($values) > 0)) ? implode(", ", $values) : "";
     }
 
     /**

@@ -32,11 +32,9 @@ class SlimSelectFilter extends Filter
      */
     public function config($config = []): SlimSelectFilter
     {
-
-        $flattened  = \Illuminate\Support\Arr::dot($config);
-        foreach($flattened as $key => $val)
-        {
-            \Illuminate\Support\Arr::set($this->config,$key,$val);
+        $flattened = \Illuminate\Support\Arr::dot($config);
+        foreach ($flattened as $key => $val) {
+            \Illuminate\Support\Arr::set($this->config, $key, $val);
         }
 
         return $this;

@@ -32,10 +32,11 @@ class SmartSelectFilter extends Filter
      */
     public function config($config = []): SmartSelectFilter
     {
-        $flattened  = \Illuminate\Support\Arr::dot($config);
+        $flattened = \Illuminate\Support\Arr::dot($config);
 
         \Illuminate\Support\Arr::map($flattened, function (string $value, string $key) {
-            \Illuminate\Support\Arr::set($this->config,$key,$value);
+            \Illuminate\Support\Arr::set($this->config, $key, $value);
+
             return true;
         });
 

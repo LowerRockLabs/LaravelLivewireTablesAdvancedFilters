@@ -47,11 +47,11 @@ class NumberRangeFilter extends Filter
      */
     public function config($config = []): NumberRangeFilter
     {
-        $flattened  = \Illuminate\Support\Arr::dot($config);
-        foreach($flattened as $key => $val)
-        {
-            \Illuminate\Support\Arr::set($this->config,$key,$val);
+        $flattened = \Illuminate\Support\Arr::dot($config);
+        foreach ($flattened as $key => $val) {
+            \Illuminate\Support\Arr::set($this->config, $key, $val);
         }
+
         return $this;
     }
 

@@ -28,8 +28,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, xdebug, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: xdebug
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, pcov, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: pcov
           tools: phpstan
 
       - name: Get composer cache directory
@@ -56,7 +56,7 @@ jobs:
         run: composer update --${{ matrix.stability }} --no-interaction
 
       - name: Run Unit Tests
-        run: XDEBUG_MODE_COVERAGE=coverage vendor/bin/phpunit
+        run: php -d pcov.enabled=1 vendor/bin/paratest --passthru-php="'-d pcov.enabled=1'
 
       - name: Setup problem matchers
         run: |

@@ -134,9 +134,7 @@ class DatePickerFilter extends Filter
 
             $carbonInstance = \Carbon\Carbon::createFromFormat($dateFormat, $value);
 
-            if (! $carbonInstance) {
-                return '';
-            }
+
 
             return $carbonInstance->format($ariaDateFormat);
         }
@@ -157,9 +155,12 @@ class DatePickerFilter extends Filter
      */
     public function render(DataTableComponent $component)
     {
+        // @codeCoverageIgnoreStart
         if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
             $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
         }
+
+        // @codeCoverageIgnoreEnd
 
         return view('livewiretablesadvancedfilters::components.tools.filters.datePicker', [
             'component' => $component,

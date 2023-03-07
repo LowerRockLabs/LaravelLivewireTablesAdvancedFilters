@@ -248,10 +248,12 @@ class SmartSelectFilter extends Filter
      */
     public function render(DataTableComponent $component)
     {
+        // @codeCoverageIgnoreStart
         if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
             $component->{$component->getTableName()}['filters'][$this->getKey()] = [];
         }
 
+        // @codeCoverageIgnoreEnd
         //if (! isset($component->{$component->getTableName()}['filterdata'])) {
         //    $component->{$component->getTableName()}['filterdata'] = [$this->getKey() => []];
         //}

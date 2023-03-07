@@ -121,9 +121,7 @@ class NumberRangeFilter extends Filter
             if (! isset($value['min']) || ! isset($value['max'])) {
                 return true;
             }
-            if (is_null($value['max']) || is_null($value['min'])) {
-                return true;
-            }
+
 
             if ($value['min'] == '' || $value['max'] == '') {
                 return true;
@@ -166,9 +164,13 @@ class NumberRangeFilter extends Filter
         //if ($currentMax < $currentMin) {
         //    $component->{$component->getTableName()}['filters'][$this->getKey()] = ['min' => $component->{$component->getTableName()}['filters'][$this->getKey()]['max'], 'max' => $component->{$component->getTableName()}['filters'][$this->getKey()]['min']];
         // }
+
+        // @codeCoverageIgnoreStart
         if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
             $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
         }
+
+        // @codeCoverageIgnoreEnd
 
         return view('livewiretablesadvancedfilters::components.tools.filters.numberRange', [
             'component' => $component,

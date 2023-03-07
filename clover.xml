@@ -1,40 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1678213197">
-  <project timestamp="1678213197">
-    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/CustomFilter.php">
-      <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\CustomFilter" namespace="global">
-        <metrics complexity="11" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="27" coveredelements="0"/>
-      </class>
-      <line num="18" type="method" name="__construct" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="20" type="stmt" count="0"/>
-      <line num="27" type="method" name="options" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="29" type="stmt" count="0"/>
-      <line num="31" type="stmt" count="0"/>
-      <line num="37" type="method" name="getOptions" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="39" type="stmt" count="0"/>
-      <line num="46" type="method" name="config" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="48" type="stmt" count="0"/>
-      <line num="50" type="stmt" count="0"/>
-      <line num="51" type="stmt" count="0"/>
-      <line num="53" type="stmt" count="0"/>
-      <line num="54" type="stmt" count="0"/>
-      <line num="56" type="stmt" count="0"/>
-      <line num="63" type="method" name="validate" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="65" type="stmt" count="0"/>
-      <line num="71" type="method" name="isEmpty" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="73" type="stmt" count="0"/>
-      <line num="79" type="method" name="getFilterPillValue" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="81" type="stmt" count="0"/>
-      <line num="87" type="method" name="getDefaultValue" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="89" type="stmt" count="0"/>
-      <line num="95" type="method" name="render" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="104" type="stmt" count="0"/>
-      <line num="105" type="stmt" count="0"/>
-      <line num="106" type="stmt" count="0"/>
-      <line num="107" type="stmt" count="0"/>
-      <metrics loc="110" ncloc="76" classes="1" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="27" coveredelements="0"/>
-    </file>
-    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
+<coverage generated="1678213451">
+  <project timestamp="1678213451">
+    <file name="/var/www/tabledemo/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter" namespace="global">
         <metrics complexity="27" methods="9" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="69" coveredstatements="66" elements="78" coveredelements="74"/>
       </class>
@@ -118,7 +85,7 @@
       <line num="190" type="stmt" count="15"/>
       <metrics loc="193" ncloc="159" classes="1" methods="9" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="69" coveredstatements="66" elements="78" coveredelements="74"/>
     </file>
-    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/DateRangeFilter.php">
+    <file name="/var/www/tabledemo/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/DateRangeFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DateRangeFilter" namespace="global">
         <metrics complexity="52" methods="10" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="91" coveredstatements="90" elements="101" coveredelements="99"/>
       </class>
@@ -225,7 +192,7 @@
       <line num="233" type="stmt" count="15"/>
       <metrics loc="236" ncloc="198" classes="1" methods="10" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="91" coveredstatements="90" elements="101" coveredelements="99"/>
     </file>
-    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/LaravelLivewireTablesAdvancedFiltersServiceProvider.php">
+    <file name="/var/www/tabledemo/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/LaravelLivewireTablesAdvancedFiltersServiceProvider.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\LaravelLivewireTablesAdvancedFiltersServiceProvider" namespace="global">
         <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="32" elements="34" coveredelements="34"/>
       </class>
@@ -265,7 +232,7 @@
       <line num="65" type="stmt" count="339"/>
       <metrics loc="68" ncloc="59" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="32" elements="34" coveredelements="34"/>
     </file>
-    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/NumberRangeFilter.php">
+    <file name="/var/www/tabledemo/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/NumberRangeFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter" namespace="global">
         <metrics complexity="43" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="57" coveredstatements="57" elements="66" coveredelements="66"/>
       </class>
@@ -337,7 +304,7 @@
       <line num="179" type="stmt" count="15"/>
       <metrics loc="182" ncloc="143" classes="1" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="57" coveredstatements="57" elements="66" coveredelements="66"/>
     </file>
-    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/SlimSelectFilter.php">
+    <file name="/var/www/tabledemo/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/SlimSelectFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SlimSelectFilter" namespace="global">
         <metrics complexity="12" methods="10" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="22" elements="32" coveredelements="32"/>
       </class>
@@ -375,7 +342,7 @@
       <line num="127" type="stmt" count="15"/>
       <metrics loc="130" ncloc="88" classes="1" methods="10" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="22" elements="32" coveredelements="32"/>
     </file>
-    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/SmartSelectFilter.php">
+    <file name="/var/www/tabledemo/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/SmartSelectFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter" namespace="global">
         <metrics complexity="46" methods="13" coveredmethods="13" conditionals="0" coveredconditionals="0" statements="82" coveredstatements="82" elements="95" coveredelements="95"/>
       </class>
@@ -476,6 +443,6 @@
       <line num="271" type="stmt" count="15"/>
       <metrics loc="274" ncloc="198" classes="1" methods="13" coveredmethods="13" conditionals="0" coveredconditionals="0" statements="82" coveredstatements="82" elements="95" coveredelements="95"/>
     </file>
-    <metrics files="7" loc="1193" ncloc="921" classes="7" methods="62" coveredmethods="51" conditionals="0" coveredconditionals="0" statements="371" coveredstatements="349" elements="433" coveredelements="400"/>
+    <metrics files="6" loc="1083" ncloc="845" classes="6" methods="53" coveredmethods="51" conditionals="0" coveredconditionals="0" statements="353" coveredstatements="349" elements="406" coveredelements="400"/>
   </project>
 </coverage>

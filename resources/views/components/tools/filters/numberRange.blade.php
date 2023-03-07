@@ -32,10 +32,16 @@
     swapLabels() {
         if (document.getElementById('{{ $filterLabelPath }}-label') === null) {
             document.getElementById('numberRangeContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
+            document.getElementById('numberRangeContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('d-none');
+
         } else {
             document.getElementById('{{ $filterLabelPath }}-label').classList.add('hidden');
+            document.getElementById('{{ $filterLabelPath }}-label').classList.add('d-none');
+
         }
         document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
+        document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('d-none');
+
     },
     updateStyles() {
         document.getElementById('{{ $filterBasePath }}').style.setProperty('--value-b', $refs.filterMin.value);
@@ -106,21 +112,42 @@
                 <div class='range-slider__progress'></div>
             </div>
         </div>
-    @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
+    @elseif ($theme === 'bootstrap-4')
         <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
             :filterName="$filterName" />
-        <div x-on:mouseleave="allowUpdates" class="range-slider flat w-100" id="{{ $filterBasePath }}"
-            data-ticks-position='bottom'
-            style='--min:{{ $minRange }};
-        --max:{{ $maxRange }};
-        --value-a:{{ $currentMax }};
-        --value-b:{{ $currentMin }};
-        --suffix:"%";
-        --text-value-a:"{{ $currentMax }}";
-        --text-value-b:"{{ $currentMin }}";
-        '>
-            <div class="range-slider flat w-100" data-ticks-position='bottom' id=""
-                style='--min:{{ $filterMin }}; --max:{{ $filterMax }}; --value-a:{{ $currentMax }}; --value-b:{{ $currentMin }}; --suffix:"%"; --text-value-a:"{{ $currentMax }}"; --text-value-b:"{{ $currentMin }}";'>
+        <div class="mt-4 h-22 w-100 pb-4 pt-2  grid gap-10" x-on:mouseleave="allowUpdates">
+            <div class="range-slider flat w-100" id="{{ $filterBasePath }}" data-ticks-position='bottom'
+                style='--min:{{ $minRange }};
+                    --max:{{ $maxRange }};
+                    --value-a:{{ $currentMax }};
+                    --value-b:{{ $currentMin }};
+                    --suffix:"%";
+                    --text-value-a:"{{ $currentMax }}";
+                    --text-value-b:"{{ $currentMin }}";
+                    '>
+
+                <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
+                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()">
+                <output></output>
+                <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMin }}"
+                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()">
+                <output></output>
+                <div class='range-slider__progress'></div>
+            </div>
+        </div>
+    @elseif ($theme === 'bootstrap-5')
+        <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
+            :filterName="$filterName" />
+        <div class="mt-4 h-22 w-100 pb-4 pt-2  grid gap-10" x-on:mouseleave="allowUpdates">
+            <div class="range-slider flat w-100" id="{{ $filterBasePath }}" data-ticks-position='bottom'
+                style='--min:{{ $minRange }};
+            --max:{{ $maxRange }};
+            --value-a:{{ $currentMax }};
+            --value-b:{{ $currentMin }};
+            --suffix:"%";
+            --text-value-a:"{{ $currentMax }}";
+            --text-value-b:"{{ $currentMin }}";
+            '>
 
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
                     id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()">

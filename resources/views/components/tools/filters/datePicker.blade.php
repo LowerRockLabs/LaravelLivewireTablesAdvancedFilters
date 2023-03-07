@@ -15,10 +15,15 @@
     swapLabels() {
         if (document.getElementById('{{ $filterLabelPath }}-label') === null) {
             document.getElementById('datePickerContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
+            document.getElementById('datePickerContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('d-none');
+
         } else {
             document.getElementById('{{ $filterLabelPath }}-label').classList.add('hidden');
+            document.getElementById('{{ $filterLabelPath }}-label').classList.add('d-none');
+
         }
         document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
+        document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('d-none');
 
     },
     init() {
@@ -50,6 +55,8 @@
             },
             onChange: function(selectedDates, dateStr, instance) {
                 if ($refs.datePickerInput{{ $filterKey }}.value != dateStr) {
+                    $wire.set('{{ $filterBasePath }}', dateStr);
+
                     $refs.datePickerInput{{ $filterKey }}.value = dateStr;
                 }
 
@@ -59,6 +66,7 @@
             },
             mode: 'single',
             clickOpens: false,
+            allowInvalidPreload: true,
             ariaDateFormat: '{{ $filter->getConfig('ariaDateFormat') }}',
             allowInput: '{{ $filter->getConfig('allowInput') }}',
             altFormat: '{{ $filter->getConfig('altFormat') }}',
@@ -77,8 +85,9 @@
 
 
         @if ($theme === 'tailwind')
-            <x-livewiretablesadvancedfilters::elements.labelInternal :filterLabelPath="$filterLabelPath" :theme="$theme"
+            <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />
+
 
             <div x-on:click="flatpickrInstance.toggle()" class="w-full rounded-md shadow-sm text-right"
                 placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
@@ -89,9 +98,10 @@
                 <x-livewiretablesadvancedfilters::icons.calendarIcon :theme="$theme" />
             </div>
         @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
-            <x-livewiretablesadvancedfilters::elements.labelInternal :filterLabelPath="$filterLabelPath" :theme="$theme"
+            <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />
-            <div class="w-fullmb-3 mb-md-0 -ml-2 -px-2 input-group"
+
+            <div x-on:click="flatpickrInstance.toggle()" class="d-inline-block w-100 mb-3 mb-md-0 input-group"
                 placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
                 <x-livewiretablesadvancedfilters::forms.datePicker-textinput :filterKey="$filterKey" :theme="$theme"

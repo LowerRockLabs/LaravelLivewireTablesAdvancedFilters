@@ -14,7 +14,7 @@
         </span>
     </a>
 @else
-    <a class="cursor-pointer inline-block w-full" x-on:click="addSelectedItem(filteredItem.id.toString())">
+    <a class="cursor-pointer d-inline-block w-100" x-on:click="addSelectedItem(filteredItem.id.toString())">
         @if ($iconStyling['add']['svgEnabled'])
             <x-livewiretablesadvancedfilters::icons.smartselect-addIcon :theme="$theme" />
         @endif

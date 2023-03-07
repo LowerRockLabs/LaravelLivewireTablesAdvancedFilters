@@ -5,7 +5,7 @@
     $filterBasePath = $tableName . '.filters.' . $filterKey;
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
-
+    $filterMenuLabel = '[aria-labelledby="filters-menu"]';
     $yesterday = date('Y-m-d', strtotime('-1 days'));
     $dateInput = isset($this->{$tableName}['filters'][$filterKey]) ? $this->{$tableName}['filters'][$filterKey] : '';
     if ($dateInput != '') {
@@ -33,13 +33,38 @@
 <div id="dateRangeContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
     swapLabels() {
+        if (document.querySelector('{{ $filterMenuLabel }}') !== null) {
+            document.querySelector('{{ $filterMenuLabel }}').classList.add('md:w-80');
+            document.querySelector('{{ $filterMenuLabel }}').classList.remove('md:w-56');
+        }
+
+        const twMenuElements = document.getElementsByClassName('relative block md:inline-block text-left');
+        for (let i = 0; i < twMenuElements.length; i++) {
+            twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
+            twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+        }
+
+        const bsMenuElements = document.getElementsByClassName('btn-group d-block d-md-inline');
+        for (let i = 0; i < bsMenuElements.length; i++) {
+            bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
+            bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+        }
+
 
         if (document.getElementById('{{ $filterLabelPath }}-label') === null) {
-            document.getElementById('dateRangeContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
+            if (document.getElementById('dateRangeContainer{{ $filterKey }}').parentElement.firstElementChild !== null) {
+                document.getElementById('dateRangeContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
+                document.getElementById('dateRangeContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('d-none');
+            }
         } else {
             document.getElementById('{{ $filterLabelPath }}-label').classList.add('hidden');
+            document.getElementById('{{ $filterLabelPath }}-label').classList.add('d-none');
+
         }
-        document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
+        if (document.getElementById('{{ $filterLabelPath }}-labelInternal') !== null) {
+            document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
+            document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('d-none');
+        }
 
     },
     init() {
@@ -66,6 +91,7 @@
         flatpickrInstance: flatpickr($refs.dateRangeInput{{ $filterKey }}, {
             mode: 'range',
             clickOpens: false,
+            allowInvalidPreload: true,
             defaultDate: [$refs.dateRangeInput{{ $filterKey }}.value.split(' ')[0], $refs.dateRangeInput{{ $filterKey }}.value.split(' ')[2]],
             ariaDateFormat: '{{ $filter->getConfig('ariaDateFormat') }}',
             allowInput: '{{ $filter->getConfig('allowInput') }}',
@@ -96,6 +122,7 @@
             <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />
 
+
             <div x-on:click="flatpickrInstance.toggle()" class="w-full rounded-md shadow-sm text-right"
                 placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
@@ -105,12 +132,25 @@
                 <x-livewiretablesadvancedfilters::icons.calendarIcon :theme="$theme" />
 
             </div>
-        @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
+        @elseif ($theme === 'bootstrap-4')
             <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />
 
-            <div x-on:click="flatpickrInstance.toggle()" class="w-full text-right rounded-md shadow-sminput-group "
+            <div x-on:click="flatpickrInstance.toggle()" class="d-inline-block w-100 mb-3 mb-md-0 input-group"
                 placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
+
+                <x-livewiretablesadvancedfilters::forms.dateRange-textinput :theme="$theme" :filterKey="$filterKey"
+                    :dateString="$dateString" :filterLabelPath="$filterLabelPath" />
+
+                <x-livewiretablesadvancedfilters::icons.calendarIcon :theme="$theme" />
+            </div>
+        @elseif ($theme === 'bootstrap-5')
+            <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
+                :filterName="$filterName" />
+
+            <div x-on:click="flatpickrInstance.toggle()" class="d-inline-block w-100 mb-3 mb-md-0 input-group"
+                placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
+
 
                 <x-livewiretablesadvancedfilters::forms.dateRange-textinput :theme="$theme" :filterKey="$filterKey"
                     :dateString="$dateString" :filterLabelPath="$filterLabelPath" />

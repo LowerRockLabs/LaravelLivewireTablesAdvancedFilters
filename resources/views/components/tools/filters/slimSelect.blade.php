@@ -25,10 +25,16 @@
     swapLabels() {
         if (document.getElementById('{{ $filterLabelPath }}-label') === null) {
             document.getElementById('slimSelectContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
+            document.getElementById('slimSelectContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('d-none');
+
         } else {
             document.getElementById('{{ $filterLabelPath }}-label').classList.add('hidden');
+            document.getElementById('{{ $filterLabelPath }}-label').classList.add('d-none');
+
         }
         document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
+        document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('d-none');
+
     },
     bootSlimSelect() {
         this.slimSelect = new SlimSelect({

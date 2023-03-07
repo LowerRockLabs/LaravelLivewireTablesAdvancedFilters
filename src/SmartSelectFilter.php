@@ -5,6 +5,7 @@ namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 // @codeCoverageIgnoreStart
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
+
 // @codeCoverageIgnoreEnd
 
 class SmartSelectFilter extends Filter
@@ -110,10 +111,9 @@ class SmartSelectFilter extends Filter
                 // Remove the bad value
                 if (in_array(intval($val), $this->getKeys())) {
                     $this->fullSelectedList[$val] = ['id' => $val, 'name' => $this->getOptions()[$val]['name']];
-                }
-                else
-                {
+                } else {
                     unset($value[$index]);
+
                     continue;
                 }
             }
@@ -144,6 +144,7 @@ class SmartSelectFilter extends Filter
     {
         $values = [];
         $values = $this->generatePillArray($value);
+
         return (count($values) > 0) ? implode(", ", $values) : "";
     }
 
@@ -159,12 +160,10 @@ class SmartSelectFilter extends Filter
         $itemKey = '';
         if (is_array($value)) {
             foreach ($value as $item) {
-                if (is_array($item))
-                {
+                if (is_array($item)) {
                     $movedItem = $item;
                     $itemKey = array_keys($item)[0];
-                    while (is_array($item))
-                    {
+                    while (is_array($item)) {
                         $item = array_values($item)[0];
                     }
                 }
@@ -174,17 +173,13 @@ class SmartSelectFilter extends Filter
                     if (is_array($found)) {
                         $found = (isset($found['name']) ? $found['name'] : (isset($found[1]) ? $found[1] : ''));
                     }
-                    if ($found != '')
-                    {
+                    if ($found != '') {
                         $values[$itemKey] = $found;
                     }
                 } else {
-                    if (is_array($movedItem))
-                    {
+                    if (is_array($movedItem)) {
                         $values[] = implode(" - ", $movedItem);
-                    }
-                    else
-                    {
+                    } else {
                         $values[] = $movedItem;
                     }
                 }

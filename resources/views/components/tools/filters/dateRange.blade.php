@@ -32,24 +32,11 @@
 
 <div id="dateRangeContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
-    swapLabels() {
+    setupFilterMenu() {
         if (document.querySelector('{{ $filterMenuLabel }}') !== null) {
             document.querySelector('{{ $filterMenuLabel }}').classList.add('md:w-80');
             document.querySelector('{{ $filterMenuLabel }}').classList.remove('md:w-56');
         }
-
-        const twMenuElements = document.getElementsByClassName('relative block md:inline-block text-left');
-        for (let i = 0; i < twMenuElements.length; i++) {
-            twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
-            twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-        }
-
-        const bsMenuElements = document.getElementsByClassName('btn-group d-block d-md-inline');
-        for (let i = 0; i < bsMenuElements.length; i++) {
-            bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
-            bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-        }
-
 
         if (document.getElementById('{{ $filterLabelPath }}-label') === null) {
             if (document.getElementById('dateRangeContainer{{ $filterKey }}').parentElement.firstElementChild !== null) {
@@ -59,17 +46,28 @@
         } else {
             document.getElementById('{{ $filterLabelPath }}-label').classList.add('hidden');
             document.getElementById('{{ $filterLabelPath }}-label').classList.add('d-none');
-
         }
+
         if (document.getElementById('{{ $filterLabelPath }}-labelInternal') !== null) {
             document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
             document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('d-none');
         }
 
+        const twMenuElements = document.getElementsByClassName('relative block md:inline-block text-left');
+        for (let i = 0; i < twMenuElements.length; i++) {
+            twMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
+            twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+        }
+
+        const bsMenuElements = document.getElementsByClassName('btn-group d-block d-md-inline');
+        for (let i = 0; i < bsMenuElements.length; i++) {
+            bsMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
+            bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+        }
     },
     init() {
-        $watch('open', value => this.swapLabels());
-        $watch('allFilters', value => this.swapLabels());
+        $watch('open', value => this.setupFilterMenu());
+        $watch('allFilters', value => this.setupFilterMenu());
     }
 }">
     @if (Config::get('livewiretablesadvancedfilters.dateRange.publishFlatpickrJS'))

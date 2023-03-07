@@ -15,9 +15,8 @@ Advanced filters for Rappasoft Laravel Livewire Tables v2.0 and above
 * Date Picker Filter
 * Smart Select (Select2 Style)
 
-Package is currently under active development & testing, please use caution when using.
+Package is currently under active development & testing, please use caution when using in a production environment.
 
-*Currently only supports Tailwind (no Bootstrap).*
 
 # Installation
 This package is available to be installed via Composer
@@ -314,3 +313,7 @@ Please exercise restraint when publishing the views, as this package is in activ
 php artisan vendor:publish livewiretablesadvancedfilters-views
 ```
 
+## Other Notes
+This package makes several on-the-fly adjustments to the default toolbar blade, including:
+* Customisable width of the filter menu
+* Filter menu will lock open until you click to close the menu

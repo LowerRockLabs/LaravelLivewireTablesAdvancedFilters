@@ -58,7 +58,7 @@ jobs:
         run: composer update --${{ matrix.stability }} --no-interaction
 
       - name: Run Unit Tests
-        run: php -d pcov.enabled=1 vendor/bin/paratest --passthru-php="'-d pcov.enabled=1'"
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --passthru-php="'-d pcov.enabled=1'"
 
       - name: Run PHPStan
         run: phpstan analyse src

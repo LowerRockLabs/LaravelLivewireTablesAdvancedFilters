@@ -24,4 +24,8 @@ docs/images/badges/phpunit-coverage-develop.svg
 tests/Views/SmartSelectFilterTest.php
 srcb/
 /build/
+<<<<<<< HEAD
 build/
+=======
+docs/images/badges/
+>>>>>>> 60c46dd6f50e75c9e8e588d95ce3589a572da8fe

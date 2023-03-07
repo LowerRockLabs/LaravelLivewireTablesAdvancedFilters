@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1678213451">
-  <project timestamp="1678213451">
-    <file name="/var/www/tabledemo/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
+<coverage generated="1678216598">
+  <project timestamp="1678216598">
+    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/CustomFilter.php">
+      <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\CustomFilter" namespace="global">
+        <metrics complexity="11" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="27" coveredelements="0"/>
+      </class>
+      <line num="18" type="method" name="__construct" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="20" type="stmt" count="0"/>
+      <line num="27" type="method" name="options" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="29" type="stmt" count="0"/>
+      <line num="31" type="stmt" count="0"/>
+      <line num="37" type="method" name="getOptions" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="39" type="stmt" count="0"/>
+      <line num="46" type="method" name="config" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="48" type="stmt" count="0"/>
+      <line num="50" type="stmt" count="0"/>
+      <line num="51" type="stmt" count="0"/>
+      <line num="53" type="stmt" count="0"/>
+      <line num="54" type="stmt" count="0"/>
+      <line num="56" type="stmt" count="0"/>
+      <line num="63" type="method" name="validate" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="65" type="stmt" count="0"/>
+      <line num="71" type="method" name="isEmpty" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="73" type="stmt" count="0"/>
+      <line num="79" type="method" name="getFilterPillValue" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="81" type="stmt" count="0"/>
+      <line num="87" type="method" name="getDefaultValue" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="89" type="stmt" count="0"/>
+      <line num="95" type="method" name="render" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="104" type="stmt" count="0"/>
+      <line num="105" type="stmt" count="0"/>
+      <line num="106" type="stmt" count="0"/>
+      <line num="107" type="stmt" count="0"/>
+      <metrics loc="110" ncloc="76" classes="1" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="27" coveredelements="0"/>
+    </file>
+    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter" namespace="global">
         <metrics complexity="27" methods="9" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="69" coveredstatements="66" elements="78" coveredelements="74"/>
       </class>

@@ -3,6 +3,7 @@
     $filterKey = $filter->getKey();
     $filterLabelPath = $tableName . '-filter-' . $filterKey;
     $filterBasePath = $tableName . '.filters.' . $filterKey;
+    $filterMenuLabel = '[aria-labelledby="filters-menu"]';
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
 
@@ -20,6 +21,8 @@
 
 <div id="slimSelectContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
+    twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'),
+    bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'),
     slimSelect: [],
     booting: true,
     setupFilterMenu() {
@@ -42,17 +45,18 @@
             document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
             document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('d-none');
         }
-
-        const twMenuElements = document.getElementsByClassName('relative block md:inline-block text-left');
-        for (let i = 0; i < twMenuElements.length; i++) {
-            twMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
-            twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+        for (let i = 0; i < this.twMenuElements.length; i++) {
+            if (this.twMenuElements.item(i).getAttribute('x-data') != '{ open: true, childElementOpen: true  }') {
+                this.twMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
+                this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+            }
         }
 
-        const bsMenuElements = document.getElementsByClassName('btn-group d-block d-md-inline');
-        for (let i = 0; i < bsMenuElements.length; i++) {
-            bsMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
-            bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+        for (let i = 0; i < this.bsMenuElements.length; i++) {
+            if (this.bsMenuElements.item(i).getAttribute('x-data') != '{ open: true, childElementOpen: true  }') {
+                this.bsMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
+                this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+            }
         }
     },
     bootSlimSelect() {

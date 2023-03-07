@@ -54,13 +54,10 @@
             }
         }
     },
-    newSelectedItems: $wire.entangle('{{ $selectedWireKey }}'),
     optionsMethod: '{{ $optionsMethod }}',
     displayIdEnabled: {{ $displayIdEnabled }},
     currentFilteredList: [],
-    presentlySelectedList: [],
     filteredList: [],
-    nameMapping: [],
     popOpen: false,
     selectedItems: $wire.entangle('{{ $filterBasePath }}'),
     resetCurrentFilteredList() {
@@ -106,7 +103,6 @@
         this.setupFilterMenu();
         this.currentFilteredList = [];
         var testObject = Object.entries({{ json_encode($filter->getOptions()) }}).map((entry) => this.filteredList[entry[0]] = entry[1]);
-        $watch('newSelectedItems', value => this.setupFilterMenu());
         $watch('open', value => this.setupFilterMenu());
         $watch('allFilters', value => this.setupFilterMenu());
     },

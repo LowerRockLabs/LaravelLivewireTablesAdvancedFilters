@@ -18,9 +18,9 @@ class SmartSelectFilterConfigurationTest extends TestCaseAdvanced
             'test' => 'cfg',
         ]);
 
-        $this->assertCount(count(config('livewiretablesadvancedfilters.smartSelect')) + 1, $filter->getConfigs());
+        $this->assertCount(count(config('livewiretablesadvancedfilters.smartSelect')), $filter->getConfigs());
 
-        $this->assertEquals('cfg', $filter->getConfig('test'));
+        $this->assertEquals(config('livewiretablesadvancedfilters.smartSelect'), $filter->getConfigs());
     }
 
     /** @test */

@@ -14,9 +14,17 @@ Advanced filters for Rappasoft Laravel Livewire Tables v2.0 and above
 * Date Range Filter
 * Date Picker Filter
 * Smart Select (Select2 Style)
+* Component Filter (Under Development)
 
 Package is currently under active development & testing, please use caution when using in a production environment.
-
+# Current Status
+|        Filter     | Tailwind | Bootstrap 4 | Bootstrap 5 |
+| :--- | :---: | :---: | :---: |
+| Number Range      | Y    | Y  | Y    |
+| Date Range        | Y    |Y  |  Y  | 
+| Date/Time Picker  | Y    |Y |    Y   | 
+| SmartSelect       | Y    |  UI Tweaks  |  UI Tweaks  |
+| Component Filter  | Testing | N | N |
 
 # Installation
 This package is available to be installed via Composer
@@ -33,7 +41,7 @@ Filter with a configurable Minimum/Maximum value, provides two values to the fil
 ![Number Range Filter](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/NumberRangeFilter.png)
 ![Number Range Filter](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/NumberRangeFilter-Light.png)
 
-Include the class after your namespace declaration
+Include the class after your namespace declaration and standard Rappasoft filters
 ```php
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter;
 ```
@@ -52,7 +60,7 @@ NumberRangeFilter::make('Age')
 ```
 
 ### Dependencies
-This depends on custom CSS, which can be included in your component by using the "numberRange.cssInclude" configuration option.
+This depends on custom CSS, which can be included in your component by using one of three "numberRange.cssInclude" configuration options below.
 1. Included within the blade, by setting numberRange.cssInclude to "inline" in the config file.
 2. Included from a minified file, this requires publishing the CSS files, and setting numberRange.cssInclude to "include"
 3. Included as part of your webpack/bundle, by setting numberRange.cssInclude to "none"
@@ -212,46 +220,41 @@ Include the class after your namespace declaration
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter;
 ```
 
-There are two approaches, one is to pass the filter a simple array (id => name), the other is to pass it a more complex array (# => { id: val, name: val, extraField: val}), which is presently for future enhancements.
+To use this, you should pass the filter an array of options with values for the following keys, using the map function to return a relevant value for name.
+* id
+* name
+
+This should take the format of: (# => { id: val, name: val })
 
 In the filters() function in your data table component:
 
-### Flat array approach
-
 ```php
-SmartSelectFilter::make('Tag')
-->config(['optionsMethod' => 'simple'])  // Optional, this is the default
-->options(
-    Tag::query()
-    ->select('id', 'name')
-    ->orderBy('name')
-    ->pluck('name','id')
-    ->toArray()
-)->filter(function (Builder $builder, array $values) {
-    $builder->whereHas('tags', fn ($query) => $query->whereIn('tags.id', $values));
-}),
+    SmartSelectFilter::make('Parent')
+    ->options(
+        Tag::select('id', 'name', 'created_at')
+            ->orderBy('name')
+            ->get()
+            ->map(function ($tag) {
+                $tagValue['id'] = $tag->id;
+                $tagValue['name'] = $tag->name;
 
+                return $tagValue;
+            })->keyBy('id')->toArray()
+        )
+    ->filter(function (Builder $builder, array $values) {
+        $builder->whereHas('tags', fn ($query) => $query->whereIn('tags.id', $values));
+    }),
 ```
+To use the standard approach for the PopOver for Currently Selected Items, you should add a public array to your Data Component for storing the compiled selected items.  This offers the best end-user experience.
 
-### Complex array approach
-```php
-SmartSelectFilter::make('Parent')
-->config(['optionsMethod' => 'complex'])
-->options(
-    User::query()
-        ->select('id', 'title', 'name')
-        ->orderBy('name')
-        ->get()
-        ->toArray()
-)->filter(function (Builder $builder, array $values) {
-     $builder->whereIn('parent_id',$values);
-}),
-```
-{{ $iconStyling['delete']['svgFill'] }}
+If you would prefer to utilise an on-the-fly Alpine lookup for the name, then you should set *popoverMethod* in the configuration to lookup
+
 ### Configuration options
+The below can either be set in the configuration file, or specified per-filter by passing an array into the config() method of the filter.
+
 ```php
 'smartSelect' => [
-    'optionsMethod' => 'simple',    // Should be set to either simple/complex.
+    'popoverMethod' => 'standard',  // Should be set to either standard or lookup
     'iconStyling' => [
         'add' => [
             'classes' => '',        // Base classes for the "add" icon
@@ -280,7 +283,6 @@ SmartSelectFilter::make('Parent')
 ### Dependencies
 This uses AlpineJS, there are no other dependencies.
 
-
 # Publishing Assets
 To publish assets to make modifications, please see below
 
@@ -293,7 +295,7 @@ php artisan vendor:publish livewiretablesadvancedfilters-config
 ### Including in WebPack / Vite etc
 Add the following to your app.js file.
 ```js
-import '../../vendor/lowerrocklabs/resources/css/numberRange.min.css';
+import '../../vendor/lowerrocklabs/laravel-livewire-tables-advanced-filters/resources/css/numberRange.min.css';
 ```
 
 ### Publishing CSS

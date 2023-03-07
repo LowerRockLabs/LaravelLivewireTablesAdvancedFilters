@@ -110,8 +110,8 @@
 
                 <!-- Start Existing Pop-Over -->
                 <div x-cloak
-                    class="w-full rounded-md relative inline-flex place-items-end justify-items-end items-end pr-2"
-                    style="top: -3.3em" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+                    class="w-full rounded-md relative inline-flex place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
+                    role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
                     <x-livewiretablesadvancedfilters::elements.smartselect-popover :theme="$theme"
                         :iconStyling="$iconStyling" />
                 </div>
@@ -149,7 +149,7 @@
     @elseif ($theme === 'bootstrap-4')
         <div class="position-relative">
             <!-- Start Label Replacement -->
-            <div class="d-flex flex-column align-items-start w-100 hidden" id="{{ $filterLabelPath }}-labelInternal">
+            <div class="d-flex flex-column align-items-start w-100 d-none" id="{{ $filterLabelPath }}-labelInternal">
                 <label for="{{ $filterLabelPath }}" class="d-inline small leading-5 text-gray-700 dark:text-white ">
                     {{ $filter->getName() }}
                 </label>
@@ -163,8 +163,8 @@
 
             <!-- Start Existing Pop-Over -->
             <div x-cloak id="existingPopover"
-                class="w-100 rounded-md position-relative d-inline-flex place-items-end justify-items-end items-end pr-2"
-                style="top: -3.3em" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+                class="w-100 rounded-md position-relative d-inline-flex place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
+                role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
                 <x-livewiretablesadvancedfilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
             </div>
             <!-- Stop Existing Pop-Over -->
@@ -201,6 +201,20 @@
             <!-- End Drop Down -->
         </div>
         <style>
+            .smartSelectExistingPopOverWrapper {
+                top: -3.3em;
+            }
+
+            .smartSelectExistingPopOverElement {
+                left: 16em;
+                width: 18em;
+            }
+
+            .filterCalendarIcon {
+                right: 0.5em;
+                top: 0.25em;
+            }
+
             /*
             ul.smartSelectDropDownList li {
                 background-color: #FFFFFF;
@@ -244,9 +258,9 @@
             <div class="position-relative">
 
                 <!-- Start Label Replacement -->
-                <div class="d-flex flex-cols w-100 hidden h-8 pr-4" id="{{ $filterLabelPath }}-labelInternal">
+                <div class="d-flex flex-column w-100 d-none h-8 pr-4" id="{{ $filterLabelPath }}-labelInternal">
                     <label for="{{ $filterLabelPath }}"
-                        class="d-inline-block w-11/12 text-sm font-medium leading-5 text-gray-700 dark:text-white ">
+                        class="d-inline-block w-11/12 small leading-5 text-gray-700 dark:text-white ">
                         {{ $filter->getName() }}
                     </label>
                     <div class="d-inline-block w-1/12">
@@ -258,15 +272,15 @@
 
                 <!-- Start Existing Pop-Over -->
                 <div id="existingPopover" x-cloak
-                    class="w-100 rounded-md position-relative d-inline-flex place-items-end justify-items-end items-end pr-2"
-                    style="top: -3.3em" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+                    class="w-100 rounded-md position-relative d-inline-flex place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
+                    role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
                     <x-livewiretablesadvancedfilters::elements.smartselect-popover :theme="$theme"
                         :iconStyling="$iconStyling" />
                 </div>
                 <!-- Stop Existing Pop-Over -->
 
                 <!-- Start Drop Down -->
-                <div class=" w-100 d-flex flex-col items-center justify-center text-black dark:text-white pr-4 ">
+                <div class=" w-100 d-flex flex-column items-center justify-center text-black dark:text-white pr-4 ">
                     <x-livewiretablesadvancedfilters::forms.smartselect-textinput :theme="$theme"
                         :xRefKey="$xRefKey" />
 
@@ -274,10 +288,10 @@
                         'border-solid border-2 rounded-md border-gray-300 dark:border-gray-600': currentFilteredList
                             .length > 0
                     }"
-                        class="flex-col w-100 overflow-visible z-50">
-                        <ul class="smartSelectDropDownList bg-white dark:bg-gray-700 flex-col w-100 ">
+                        class="flex-column w-100 overflow-visible z-50">
+                        <ul class="smartSelectDropDownList list-group bg-white dark:bg-gray-700 flex-column w-100 ">
                             <template x-for="(filteredItem, index) in currentFilteredList" :key="filteredItem.id">
-                                <li class="px-2 py-1 hover:bg-blue-500 dark:hover:bg-gray-400"
+                                <li class="list-group-item px-2 py-1 hover:bg-blue-500 dark:hover:bg-gray-400"
                                     :class="{ 'dark:bg-gray-800': (index % 2) }">
                                     <a href='#'>
                                         <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
@@ -298,6 +312,21 @@
             </div>
         </div>
         <style>
+            .smartSelectExistingPopOverWrapper {
+                top: -3.3em;
+            }
+
+            .smartSelectExistingPopOverElement {
+                left: 16em;
+                width: 18em;
+            }
+
+            .filterCalendarIcon {
+                right: 0.5em;
+                top: 0.25em;
+            }
+
+
             div.smartSelectPopoverList div:hover {
                 background-color: rgb(59 130 246);
             }

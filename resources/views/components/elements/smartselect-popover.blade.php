@@ -35,8 +35,8 @@
     </div>
 @elseif ($theme == 'bootstrap-4')
     <div x-show="popOpen" x-transition @click.outside="popOpen = false" :class="{ 'pb-2': popOpen }"
-        class="position-absolute pb-2 origin-top-right md:left-64 right-0 md:top-0 md:w-56 rounded-md shadow-lg bg-white dark:bg-gray-700 text-black dark:text-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-        tabindex="-1" style="left: 16em; width: 18em;">
+        class="position-absolute pb-2 origin-top-right md:left-64 right-0 md:top-0 md:w-56 rounded-md shadow-lg bg-white dark:bg-gray-700 text-black dark:text-white ring-1 ring-black ring-opacity-5 focus:outline-none smartSelectExistingPopOverElement"
+        tabindex="-1">
         <div class="pt-1 z-50">
             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
             <div class="d-flex align-items-start ml-auto flex-row flex-nowrap">
@@ -81,8 +81,8 @@
     </div>
 @elseif ($theme == 'bootstrap-5')
     <div x-show="popOpen" x-transition @click.outside="popOpen = false" :class="{ 'pb-2': popOpen }"
-        class="position-absolute pb-2 origin-top-right md:left-64 right-0 md:top-0 md:w-56 rounded-md shadow-lg bg-white dark:bg-gray-700 text-black dark:text-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-        tabindex="-1" style="left: 16em; width: 18em;">
+        class="position-absolute pb-2 origin-top-right md:left-64 right-0 md:top-0 md:w-56 rounded-md shadow-lg bg-white dark:bg-gray-700 text-black dark:text-white ring-1 ring-black ring-opacity-5 focus:outline-none smartSelectExistingPopOverElement"
+        tabindex="-1">
         <div class="pt-1 z-50">
             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
             <div class="d-flex align-items-start ml-auto flex-row flex-nowrap">

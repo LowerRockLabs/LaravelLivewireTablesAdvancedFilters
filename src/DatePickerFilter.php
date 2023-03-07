@@ -2,8 +2,11 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 
+// @codeCoverageIgnoreStart
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
+
+// @codeCoverageIgnoreEnd
 
 class DatePickerFilter extends Filter
 {
@@ -154,6 +157,7 @@ class DatePickerFilter extends Filter
 
         return view('livewiretablesadvancedfilters::components.tools.filters.datePicker', [
             'component' => $component,
+            'theme' => $component->getTheme(),
             'filter' => $this,
         ]);
     }

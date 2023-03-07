@@ -1,5 +1,4 @@
 @php
-    $theme = $component->getTheme();
     $tableName = $component->getTableName();
     $filterKey = $filter->getKey();
     $wireKey = $tableName . '.filters.' . $filterKey;

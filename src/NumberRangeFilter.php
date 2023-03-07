@@ -2,8 +2,11 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 
+// @codeCoverageIgnoreStart
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
+
+// @codeCoverageIgnoreEnd
 
 class NumberRangeFilter extends Filter
 {
@@ -163,6 +166,7 @@ class NumberRangeFilter extends Filter
 
         return view('livewiretablesadvancedfilters::components.tools.filters.numberRange', [
             'component' => $component,
+            'theme' => $component->getTheme(),
             'filter' => $this,
         ]);
     }

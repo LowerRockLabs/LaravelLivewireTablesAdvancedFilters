@@ -73,13 +73,18 @@ class DateRangeFilter extends Filter
     {
         $returnedValues = ['minDate' => '', 'maxDate' => ''];
         if (is_array($values)) {
-            foreach ($values as $index => $value) {
-                if ($index == 0 || strtolower($index) == 'mindate') {
-                    $returnedValues['minDate'] = $value;
+            if (! isset($values['minDate']) || ! isset($values['maxDate'])) {
+                foreach ($values as $index => $value) {
+                    if ($index === 0 || $index == "0" || strtolower($index) == 'mindate') {
+                        $returnedValues['minDate'] = $value;
+                    }
+                    if ($index == 1 || $index == "1" || strtolower($index) == 'maxdate') {
+                        $returnedValues['maxDate'] = $value;
+                    }
                 }
-                if ($index == 1 || strtolower($index) == 'maxdate') {
-                    $returnedValues['maxDate'] = $value;
-                }
+            } else {
+                $returnedValues['minDate'] = $values['minDate'];
+                $returnedValues['maxDate'] = $values['maxDate'];
             }
         } else {
             $valueArray = explode(' ', $values);
@@ -99,40 +104,49 @@ class DateRangeFilter extends Filter
         if ($validator->fails()) {
             return false;
         }
-
         $startDate = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['minDate']);
         $endDate = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['maxDate']);
-        if (! $startDate || ! $endDate) {
+
+        if (! $startDate instanceof \Carbon\Carbon) {
             return false;
         }
+
+        if (! $endDate instanceof \Carbon\Carbon) {
+            return false;
+        }
+
         if ($startDate->gt($endDate)) {
             return false;
         }
 
-        $earliestDateString = $this->getOptions()['earliestDate'] ?? $this->getConfig('defaults')['earliestDate'];
-        if ($earliestDateString != '') {
-            $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
+        $earliestDateString = ($this->getOptions()['earliestDate'] != '') ? $this->getOptions()['earliestDate'] : $this->getConfig('defaults')['earliestDate'];
+        $latestDateString = ($this->getOptions()['latestDate'] != '') ? $this->getOptions()['latestDate'] : $this->getConfig('defaults')['latestDate'];
 
-            if (! $earliestDate instanceof \Carbon\Carbon) {
-                return false;
-            }
+        if ($earliestDateString != '' && ! is_null($earliestDateString) && $latestDateString != '' && ! is_null($latestDateString)) {
+            $dateLimits = ['earliest' => $earliestDateString, 'latest' => $latestDateString];
+            $earlyLateValidator = \Illuminate\Support\Facades\Validator::make($dateLimits, [
+                'earliest' => 'date_format:' . $dateFormat,
+                'latest' => 'date_format:' . $dateFormat,
+            ]);
+            if (! $earlyLateValidator->fails()) {
+                $earliestDate = \Carbon\Carbon::createFromFormat($dateFormat, $earliestDateString);
+                $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
 
-            if ($startDate->lt($earliestDate)) {
-                return false;
+                if ($earliestDate instanceof \Carbon\Carbon) {
+                    if ($startDate->lt($earliestDate)) {
+                        return false;
+                    }
+                }
+                if ($latestDate instanceof \Carbon\Carbon) {
+                    if ($endDate->gt($latestDate)) {
+                        return false;
+                    }
+                }
             }
         }
 
-        $latestDateString = $this->getOptions()['latestDate'] ?? $this->getConfig('defaults')['latestDate'];
-        if ($latestDateString != '') {
-            $latestDate = \Carbon\Carbon::createFromFormat($dateFormat, $latestDateString);
-
-            if (! $latestDate instanceof \Carbon\Carbon) {
-                return false;
-            }
-
-            if ($endDate->gt($latestDate)) {
-                return false;
-            }
+        if ($returnedValues['minDate'] == date('Y-m-d') && $returnedValues['maxDate'] == date('Y-m-d')) {
+            return false;
         }
 
         return $returnedValues;
@@ -151,20 +165,22 @@ class DateRangeFilter extends Filter
      */
     public function getFilterPillValue($value): ?string
     {
+        $validatedValue = [];
         $validatedValue = $this->validate($value);
 
         if ($validatedValue) {
-            $dateFormat = $this->getConfig('dateFormat') ?? $this->getConfig('defaults')['dateFormat'];
-            $ariaDateFormat = $this->getConfig('ariaDateFormat') ?? $this->getConfig('defaults')['ariaDateFormat'];
-            if ($value['minDate'] == null || $value['maxDate'] == null) {
-                return '';
-            }
-            $minDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $value['minDate']);
-            $maxDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $value['maxDate']);
+            $dateFormat = $this->getOptions()['dateFormat'] ?? $this->getConfig('defaults')['dateFormat'];
+            $ariaDateFormat = $this->getOptions()['ariaDateFormat'] ?? $this->getConfig('defaults')['ariaDateFormat'];
 
-            if (! $minDateCarbon || ! $maxDateCarbon) {
+
+            $minDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['minDate']);
+            $maxDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['maxDate']);
+
+
+            if (! $minDateCarbon instanceof \Carbon\Carbon || ! $maxDateCarbon instanceof \Carbon\Carbon) {
                 return '';
             }
+
             $minDate = $minDateCarbon->format($ariaDateFormat);
             $maxDate = $maxDateCarbon->format($ariaDateFormat);
 
@@ -179,11 +195,32 @@ class DateRangeFilter extends Filter
      */
     public function isEmpty($value): bool
     {
-        if (is_null($value) || empty($value) || $value == $this->getDefaultValue() || ! isset($value['minDate']) || ! isset($value['maxDate']) || $value['minDate'] == '' || $value['maxDate'] == '' || is_null($value['maxDate']) || is_null($value['minDate']) || empty($value['maxDate']) || empty($value['minDate'])) {
-            return true;
+        $values = [];
+        if (is_array($value)) {
+            if (! isset($value['minDate']) || ! isset($value['maxDate'])) {
+                if (isset($value[0])) {
+                    $values['minDate'] = $value[0];
+                } else {
+                    return true;
+                }
+
+                if (isset($value[1])) {
+                    $values['maxDate'] = $value[1];
+                } else {
+                    return true;
+                }
+            } else {
+                if (is_null($value['minDate']) || is_null($value['maxDate'])) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         } else {
-            return false;
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -192,11 +229,12 @@ class DateRangeFilter extends Filter
     public function render(DataTableComponent $component)
     {
         if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
-            $component->resetFilter($this);
+            $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
         }
 
         return view('livewiretablesadvancedfilters::components.tools.filters.dateRange', [
             'component' => $component,
+            'theme' => $component->getTheme(),
             'filter' => $this,
         ]);
     }

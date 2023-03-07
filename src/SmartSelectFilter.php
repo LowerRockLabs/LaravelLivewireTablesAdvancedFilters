@@ -2,8 +2,11 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 
+// @codeCoverageIgnoreStart
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
+
+// @codeCoverageIgnoreEnd
 
 class SmartSelectFilter extends Filter
 {
@@ -102,15 +105,17 @@ class SmartSelectFilter extends Filter
             if (count($value) == 0) {
                 return false;
             }
-            $value = array_unique($value);
+            //$value = array_unique($value);
 
             foreach ($value as $index => $val) {
                 // Remove the bad value
-                if (! in_array($val, $this->getKeys())) {
+                if (in_array(intval($val), $this->getKeys())) {
+                    $this->fullSelectedList[$val] = ['id' => $val, 'name' => $this->getOptions()[$val]['name']];
+                } else {
                     unset($value[$index]);
-                }
 
-                $this->fullSelectedList[$val] = ['id' => $val, 'name' => $this->getOptions()[$val]['name']];
+                    continue;
+                }
             }
 
             if (count($value) == 0) {
@@ -133,14 +138,14 @@ class SmartSelectFilter extends Filter
     }
 
     /**
-     * @param  string|array<mixed>  $value
+     * @param  mixed  $value
      */
     public function getFilterPillValue($value): ?string
     {
         $values = [];
         $values = $this->generatePillArray($value);
 
-        return implode(', ', $values);
+        return (count($values) > 0) ? implode(", ", $values) : "";
     }
 
     /**
@@ -151,21 +156,36 @@ class SmartSelectFilter extends Filter
     public function generatePillArray($value): ?array
     {
         $values = [];
+        $movedItem = [];
+        $itemKey = '';
         if (is_array($value)) {
             foreach ($value as $item) {
-                $found = $this->getCustomFilterPillValue($item) ?? $this->getOptions()[$item] ?? null;
+                if (is_array($item)) {
+                    $movedItem = $item;
+                    $itemKey = array_keys($item)[0];
+                    while (is_array($item)) {
+                        $item = array_values($item)[0];
+                    }
+                }
+                $found = $this->getCustomFilterPillValue($item) ?? $this->getOptions()[$item] ?? $this->getOptions()[$itemKey] ?? $this->getCustomFilterPillValue($itemKey) ?? null;
 
                 if ($found) {
                     if (is_array($found)) {
                         $found = (isset($found['name']) ? $found['name'] : (isset($found[1]) ? $found[1] : ''));
                     }
-                    $values[$item] = $found;
+                    if ($found != '') {
+                        $values[$itemKey] = $found;
+                    }
                 } else {
-                    $values[] = implode($item);
+                    if (is_array($movedItem)) {
+                        $values[] = implode(" - ", $movedItem);
+                    } else {
+                        $values[] = $movedItem;
+                    }
                 }
             }
-        } elseif (isset($this->getOptions()[$value])) {
-            $values[$value] = $this->getOptions()[$value];
+        } elseif (isset($this->getOptions()[intval($value)])) {
+            $values[intval($value)] = $this->getOptions()[intval($value)]['name'];
         }
 
         return array_unique($values);
@@ -240,6 +260,7 @@ class SmartSelectFilter extends Filter
 
         return view('livewiretablesadvancedfilters::components.tools.filters.smartSelect', [
             'component' => $component,
+            'theme' => $component->getTheme(),
             'filter' => $this,
         ]);
     }

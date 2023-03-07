@@ -2,8 +2,11 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters;
 
+// @codeCoverageIgnoreStart
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
+
+// @codeCoverageIgnoreEnd
 
 class SlimSelectFilter extends Filter
 {
@@ -111,6 +114,7 @@ class SlimSelectFilter extends Filter
 
         return view('livewiretablesadvancedfilters::components.tools.filters.slimSelect', [
             'component' => $component,
+            'theme' => $component->getTheme(),
             'filter' => $this,
         ]);
     }

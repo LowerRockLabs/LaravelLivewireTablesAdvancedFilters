@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser\Pages;
+namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Browser\Pages;
 
 use Laravel\Dusk\Page as BasePage;
 

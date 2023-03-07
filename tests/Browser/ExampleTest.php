@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Browser;
+namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Browser;
 
 use Laravel\Dusk\Browser;
-use Tests\DuskTestCase;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\DuskTestCase;
 
 class ExampleTest extends DuskTestCase
 {

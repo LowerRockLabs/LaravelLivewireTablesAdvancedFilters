@@ -83,7 +83,7 @@ class DatePickerFilter extends Filter
             return false;
         }
         $date = \Carbon\Carbon::createFromFormat($dateFormat, $returnedValues['date']);
-        if (!($date instanceof \Carbon\Carbon)) {
+        if (! ($date instanceof \Carbon\Carbon)) {
             return false;
         }
 
@@ -105,7 +105,7 @@ class DatePickerFilter extends Filter
                 if ($date->lt($earliestDate)) {
                     return false;
                 }
-             }
+            }
         }
 
         if ($latestDateString != '') {
@@ -158,7 +158,6 @@ class DatePickerFilter extends Filter
             if ($carbonInstance instanceof \Carbon\Carbon) {
                 return $carbonInstance->format($ariaDateFormat);
             }
-
         }
 
         return '';

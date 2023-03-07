@@ -42,7 +42,6 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
         $this->assertSame('complex', $filter->getConfigs()['popoverMethod']);
 
         $filter->config(['popoverMethod' => 'see']);
-
     }
 
     /** @test */
@@ -56,7 +55,6 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
 
         $this->assertSame('', $filter->getConfigs()['iconStyling']['delete']['classes']);
         $this->assertSame('test', $filter->getConfigs()['iconStyling']['add']['classes']);
-
     }
 
     /** @test */

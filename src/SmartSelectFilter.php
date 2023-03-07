@@ -32,29 +32,22 @@ class SmartSelectFilter extends Filter
      */
     public function config($config = []): SmartSelectFilter
     {
-        if (isset($config['optionsMethod']))
-        {
+        if (isset($config['optionsMethod'])) {
             $this->config['optionsMethod'] = $config['optionsMethod'];
         }
 
-        if (isset($config['popoverMethod']))
-        {
+        if (isset($config['popoverMethod'])) {
             $this->config['popoverMethod'] = $config['popoverMethod'];
         }
 
-        if (isset($config['iconStyling']))
-        {
-            if (isset($config['iconStyling']['add']))
-            {
-                foreach ($config['iconStyling']['add'] as $key => $val)
-                {
+        if (isset($config['iconStyling'])) {
+            if (isset($config['iconStyling']['add'])) {
+                foreach ($config['iconStyling']['add'] as $key => $val) {
                     $this->config['iconStyling']['add'][$key] = $val;
                 }
             }
-            if (isset($config['iconStyling']['delete']))
-            {
-                foreach ($config['iconStyling']['delete'] as $key => $val)
-                {
+            if (isset($config['iconStyling']['delete'])) {
+                foreach ($config['iconStyling']['delete'] as $key => $val) {
                     $this->config['iconStyling']['delete'][$key] = $val;
                 }
             }

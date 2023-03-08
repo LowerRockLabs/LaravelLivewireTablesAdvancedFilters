@@ -20,9 +20,9 @@ abstract class DuskTestCase extends BaseTestCase
     {
         parent::setUp();
 
-        Browser::$storeScreenshotsAt = '/var/www/html/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/tests/dusk/Web/screenshots';
+        Browser::$storeScreenshotsAt = '/var/www/html/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/tests/Dusk/Web/screenshots';
 
-        Browser::$storeConsoleLogAt = '/var/www/html/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/tests/dusk/Web/console';
+        Browser::$storeConsoleLogAt = '/var/www/html/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/tests/Dusk/Web/console';
     }
 
     /**

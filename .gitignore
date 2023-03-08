@@ -24,32 +24,9 @@ docs/images/badges/phpunit-coverage-develop.svg
 tests/Views/SmartSelectFilterTest.php
 srcb/
 /build/
-<<<<<<< HEAD
-build/coverage/dashboard.html
-build/coverage/DatePickerFilter.php.html
-build/coverage/DateRangeFilter.php.html
-build/coverage/index.html
-build/coverage/LaravelLivewireTablesAdvancedFiltersServiceProvider.php.html
-build/coverage/NumberRangeFilter.php.html
-build/coverage/SlimSelectFilter.php.html
-build/coverage/SmartSelectFilter.php.html
-build/coverage/_css/style.css
+./build
+./build/
+/build
 build/coverage.txt
 build/report.junit.xml
-build/coverage/CustomFilter.php.html
-build/coverage/dashboard.html
-build/coverage/DatePickerFilter.php.html
-build/coverage/DateRangeFilter.php.html
-build/coverage/index.html
-build/coverage/LaravelLivewireTablesAdvancedFiltersServiceProvider.php.html
-build/coverage/NumberRangeFilter.php.html
-build/coverage/SlimSelectFilter.php.html
-build/coverage/SmartSelectFilter.php.html
-build/coverage/_css/style.css
-=======
-<<<<<<< HEAD
-build/
-=======
 docs/images/badges/
->>>>>>> 60c46dd6f50e75c9e8e588d95ce3589a572da8fe
->>>>>>> 42f0a96f702afd55e601607b622bdbca93e7a7fc

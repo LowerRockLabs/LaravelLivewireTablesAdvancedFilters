@@ -25,7 +25,7 @@ class ExampleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/tailwind')
-                    ->assertSee('Telly Strokes');
+                    ->assertSee('Telly Stokes');
         });
     }
 
@@ -36,7 +36,7 @@ class ExampleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/tailwind3')
-                    ->assertSee('Telly Strokes');
+                    ->assertSee('Telly Stokes');
         });
     }
 
@@ -47,7 +47,7 @@ class ExampleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/bootstrap-4')
-                    ->assertSee('Telly Strokes');
+                    ->assertSee('Telly Stokes');
         });
     }
 
@@ -58,7 +58,7 @@ class ExampleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/bootstrap-5')
-                    ->assertSee('Telly Strokes');
+                    ->assertSee('Telly Stokes');
         });
     }
 }

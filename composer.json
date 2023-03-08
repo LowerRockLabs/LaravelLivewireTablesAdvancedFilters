@@ -46,8 +46,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\Tests\\Standard\\": "tests",
-            "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\Tests\\Dusk\\": "dusk"
+            "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\Tests\\": "tests",
+            "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\Tests\\Dusk": "dusk",
+            "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\Tests\\Standard": "standard"
         }
     },
     "scripts": {

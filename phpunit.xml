@@ -6,7 +6,7 @@
 
     <testsuites>
         <testsuite name="LaravelLivewireTablesAdvancedFilters Test Suite">
-            <directory>tests/standard</directory>
+            <directory>tests/Standard</directory>
         </testsuite>
     </testsuites>
     <coverage cacheDirectory=".phpunit.cache/code-coverage" processUncoveredFiles="true">

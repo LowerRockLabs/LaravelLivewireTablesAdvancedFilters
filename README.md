@@ -30,6 +30,8 @@ Package is currently under active development & testing, please use caution when
 | 9 | Y |
 | 10 | Y |
 
+This package uses Arr::map, which is not supported under Laravel 8.  If there is demand, then a version will be released supporting Laravel 8
+
 # Installation
 This package is available to be installed via Composer
 ```terminal

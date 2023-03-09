@@ -11,9 +11,9 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-22.04]
         php: [8.1, 8.2]
-        laravel: [8.*, 9.*, 10.*]
+        laravel: [9.*, 10.*]
         stability: [prefer-stable]
         exclude:
           - laravel: 10.*
@@ -62,10 +62,6 @@ jobs:
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-
-      - name: Run Unit Tests L8
-        if: ${{ matrix.laravel }} == '8.*'
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Laravel8' --passthru-php="'-d pcov.enabled=1'"
 
       - name: Run Unit Tests L9 L10
         if: ${{ matrix.laravel }} != '8.*'

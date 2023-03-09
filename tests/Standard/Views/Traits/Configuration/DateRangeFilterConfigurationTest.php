@@ -12,14 +12,15 @@ class DateRangeFilterConfigurationTest extends TestCaseAdvanced
     {
         // Check Config
         $filter = DateRangeFilter::make('Active');
+        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.dateRange'), ['customFilterMenuWidth' => 'md:w-80']);
 
-        $this->assertEquals(config('livewiretablesadvancedfilters.dateRange'), $filter->getConfigs());
+        $this->assertEquals($defaultConfig, $filter->getConfigs());
 
         $filter->config([
             'test' => 'cfg',
         ]);
 
-        $this->assertCount(count(config('livewiretablesadvancedfilters.dateRange')) + 1, $filter->getConfigs());
+        $this->assertCount(count($defaultConfig) + 1, $filter->getConfigs());
 
         $this->assertEquals('cfg', $filter->getConfig('test'));
     }

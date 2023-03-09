@@ -30,3 +30,5 @@ srcb/
 build/coverage.txt
 build/report.junit.xml
 docs/images/badges/
+clover.xml
+clover.xml

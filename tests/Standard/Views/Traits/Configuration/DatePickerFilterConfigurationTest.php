@@ -12,13 +12,15 @@ class DatePickerFilterConfigurationTest extends TestCaseAdvanced
     {
         $filter = DatePickerFilter::make('Active');
         // Check Config
-        $this->assertEquals(config('livewiretablesadvancedfilters.datePicker'), $filter->getConfigs());
+        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.datePicker'), ['customFilterMenuWidth' => 'md:w-80']);
+
+        $this->assertEquals($defaultConfig, $filter->getConfigs());
 
         $filter->config([
             'test' => 'cfg',
         ]);
 
-        $this->assertCount(count(config('livewiretablesadvancedfilters.datePicker')) + 1, $filter->getConfigs());
+        $this->assertCount(count($defaultConfig) + 1, $filter->getConfigs());
 
         $this->assertEquals('cfg', $filter->getConfig('test'));
     }

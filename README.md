@@ -18,11 +18,11 @@ Package is currently under active development & testing, please use caution when
 # Current Status
 |        Filter     | Tailwind | Bootstrap 4 | Bootstrap 5 |
 | :--- | :---: | :---: | :---: |
-| Number Range      | Y    | Y  | Y    |
-| Date Range        | Y    |Y  |  Y  | 
-| Date/Time Picker  | Y    |Y |    Y   | 
-| SmartSelect       | Y    |  UI Tweaks  |  UI Tweaks  |
-| Component Filter  | Testing | N | N |
+| Number Range      | &check;    | &check;  | &check;    |
+| Date Range        | &check;    |&check;  |  &check;  | 
+| Date/Time Picker  | &check;    |&check; |    &check;   | 
+| SmartSelect       | &check;    |  &cross; UI Tweaks  |  &cross; UI Tweaks  |
+| Component Filter  | Testing | &cross;  | &cross;  |
 
 # Laravel Support
 | Version | Supported |

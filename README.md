@@ -24,6 +24,12 @@ Package is currently under active development & testing, please use caution when
 | SmartSelect       | Y    |  UI Tweaks  |  UI Tweaks  |
 | Component Filter  | Testing | N | N |
 
+# Laravel Support
+| Version | Supported |
+| 8 | X |
+| 9 | Y |
+| 10 | Y |
+
 # Installation
 This package is available to be installed via Composer
 ```terminal

@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <coverage generated="1678400269">
   <project timestamp="1678400269">
     <file name="/var/www/html/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/CustomFilter.php">
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\CustomFilter" namespace="global">
         <metrics complexity="11" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="0" elements="29" coveredelements="0"/>
+=======
+<coverage generated="1678400336">
+  <project timestamp="1678400336">
+    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/CustomFilter.php">
+      <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\CustomFilter" namespace="global">
+        <metrics complexity="11" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="27" coveredelements="0"/>
+>>>>>>> c5a1c700601a18c6f83949b9f6df5d6d90ef378d
       </class>
       <line num="18" type="method" name="__construct" visibility="public" complexity="2" crap="6" count="0"/>
       <line num="20" type="stmt" count="0"/>
@@ -32,9 +40,15 @@
       <line num="105" type="stmt" count="0"/>
       <line num="106" type="stmt" count="0"/>
       <line num="107" type="stmt" count="0"/>
+<<<<<<< HEAD
       <metrics loc="110" ncloc="76" classes="1" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="0" elements="29" coveredelements="0"/>
     </file>
     <file name="/var/www/html/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
+=======
+      <metrics loc="110" ncloc="76" classes="1" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="27" coveredelements="0"/>
+    </file>
+    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/DatePickerFilter.php">
+>>>>>>> c5a1c700601a18c6f83949b9f6df5d6d90ef378d
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter" namespace="global">
         <metrics complexity="27" methods="9" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="70" coveredstatements="67" elements="79" coveredelements="75"/>
       </class>
@@ -119,7 +133,11 @@
       <line num="191" type="stmt" count="15"/>
       <metrics loc="194" ncloc="160" classes="1" methods="9" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="70" coveredstatements="67" elements="79" coveredelements="75"/>
     </file>
+<<<<<<< HEAD
     <file name="/var/www/html/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/DateRangeFilter.php">
+=======
+    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/DateRangeFilter.php">
+>>>>>>> c5a1c700601a18c6f83949b9f6df5d6d90ef378d
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DateRangeFilter" namespace="global">
         <metrics complexity="52" methods="10" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="92" coveredstatements="91" elements="102" coveredelements="100"/>
       </class>
@@ -227,7 +245,11 @@
       <line num="233" type="stmt" count="15"/>
       <metrics loc="236" ncloc="198" classes="1" methods="10" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="92" coveredstatements="91" elements="102" coveredelements="100"/>
     </file>
+<<<<<<< HEAD
     <file name="/var/www/html/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/LaravelLivewireTablesAdvancedFiltersServiceProvider.php">
+=======
+    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/LaravelLivewireTablesAdvancedFiltersServiceProvider.php">
+>>>>>>> c5a1c700601a18c6f83949b9f6df5d6d90ef378d
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\LaravelLivewireTablesAdvancedFiltersServiceProvider" namespace="global">
         <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="32" elements="34" coveredelements="34"/>
       </class>
@@ -267,7 +289,11 @@
       <line num="65" type="stmt" count="339"/>
       <metrics loc="68" ncloc="59" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="32" elements="34" coveredelements="34"/>
     </file>
+<<<<<<< HEAD
     <file name="/var/www/html/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/NumberRangeFilter.php">
+=======
+    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/NumberRangeFilter.php">
+>>>>>>> c5a1c700601a18c6f83949b9f6df5d6d90ef378d
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter" namespace="global">
         <metrics complexity="43" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="58" coveredstatements="58" elements="67" coveredelements="67"/>
       </class>
@@ -340,7 +366,11 @@
       <line num="180" type="stmt" count="15"/>
       <metrics loc="183" ncloc="144" classes="1" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="58" coveredstatements="58" elements="67" coveredelements="67"/>
     </file>
+<<<<<<< HEAD
     <file name="/var/www/html/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/SlimSelectFilter.php">
+=======
+    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/SlimSelectFilter.php">
+>>>>>>> c5a1c700601a18c6f83949b9f6df5d6d90ef378d
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SlimSelectFilter" namespace="global">
         <metrics complexity="12" methods="10" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="23" elements="33" coveredelements="33"/>
       </class>
@@ -379,7 +409,11 @@
       <line num="128" type="stmt" count="15"/>
       <metrics loc="131" ncloc="89" classes="1" methods="10" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="23" elements="33" coveredelements="33"/>
     </file>
+<<<<<<< HEAD
     <file name="/var/www/html/vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/src/SmartSelectFilter.php">
+=======
+    <file name="/home/runner/work/LaravelLivewireTablesAdvancedFilters/LaravelLivewireTablesAdvancedFilters/src/SmartSelectFilter.php">
+>>>>>>> c5a1c700601a18c6f83949b9f6df5d6d90ef378d
       <class name="LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter" namespace="global">
         <metrics complexity="46" methods="13" coveredmethods="13" conditionals="0" coveredconditionals="0" statements="83" coveredstatements="83" elements="96" coveredelements="96"/>
       </class>
@@ -481,6 +515,10 @@
       <line num="269" type="stmt" count="15"/>
       <metrics loc="272" ncloc="198" classes="1" methods="13" coveredmethods="13" conditionals="0" coveredconditionals="0" statements="83" coveredstatements="83" elements="96" coveredelements="96"/>
     </file>
+<<<<<<< HEAD
     <metrics files="7" loc="1194" ncloc="924" classes="7" methods="62" coveredmethods="51" conditionals="0" coveredconditionals="0" statements="378" coveredstatements="354" elements="440" coveredelements="405"/>
+=======
+    <metrics files="7" loc="1194" ncloc="924" classes="7" methods="62" coveredmethods="51" conditionals="0" coveredconditionals="0" statements="376" coveredstatements="354" elements="438" coveredelements="405"/>
+>>>>>>> c5a1c700601a18c6f83949b9f6df5d6d90ef378d
   </project>
 </coverage>

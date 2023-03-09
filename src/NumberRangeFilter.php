@@ -19,6 +19,8 @@ class NumberRangeFilter extends Filter
     {
         parent::__construct($name, (isset($key) ? $key : null));
         $this->config = config('livewiretablesadvancedfilters.numberRange');
+        $this->config['customFilterMenuWidth'] = config('livewiretablesadvancedfilters.customFilterMenuWidth');
+
         $this->options = config('livewiretablesadvancedfilters.numberRange.defaults');
     }
 
@@ -122,7 +124,6 @@ class NumberRangeFilter extends Filter
                 return true;
             }
 
-
             if ($value['min'] == '' || $value['max'] == '') {
                 return true;
             }
@@ -148,7 +149,7 @@ class NumberRangeFilter extends Filter
     public function getFilterPillValue($values): ?string
     {
         if ($this->validate($values)) {
-            return __('Min:').$values['min'].', '.__('Max:').$values['max'];
+            return __('Min:') . $values['min'] . ', ' . __('Max:') . $values['max'];
         }
 
         return '';

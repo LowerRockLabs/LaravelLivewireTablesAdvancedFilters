@@ -319,4 +319,6 @@ php artisan vendor:publish livewiretablesadvancedfilters-views
 ## Other Notes
 This package makes several on-the-fly adjustments to the default toolbar blade, including:
 * Customisable width of the filter menu
+    Set the following value in the configuration file.  You may pass any valid width class/selectors to this field.
+    'customFilterMenuWidth' => 'md:w-80',
 * Filter menu will lock open until you click to close the menu

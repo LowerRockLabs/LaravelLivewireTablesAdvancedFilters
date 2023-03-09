@@ -2,13 +2,13 @@
 
 // config for LowerRockLabs/LaravelLivewireTablesAdvancedFilters
 return [
+    'customFilterMenuWidth' => 'md:w-80',
     'slimSelect' => [
         'defaults' => ['test' => 'test'],
     ],
     'smartSelect' => [
         'optionsMethod' => 'complex',  // Should be set to either standard or lookup
         'popoverMethod' => 'standard',  // Should be set to either standard or lookup.
-
         'iconStyling' => [
             'add' => [
                 'classes' => '',        // Base classes for the "add" icon

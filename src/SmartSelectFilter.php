@@ -24,6 +24,7 @@ class SmartSelectFilter extends Filter
     {
         parent::__construct($name, (isset($key) ? $key : null));
         $this->config = config('livewiretablesadvancedfilters.smartSelect');
+        $this->config['customFilterMenuWidth'] = config('livewiretablesadvancedfilters.customFilterMenuWidth');
     }
 
     /**
@@ -151,12 +152,11 @@ class SmartSelectFilter extends Filter
         $values = [];
         $values = $this->generatePillArray($value);
 
-        return (is_array($values) && (count($values) > 0)) ? implode(", ", $values) : "";
+        return (is_array($values) && (count($values) > 0)) ? implode(', ', $values) : '';
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return array<mixed>|null
      */
     public function generatePillArray($value): ?array
@@ -184,7 +184,7 @@ class SmartSelectFilter extends Filter
                     }
                 } else {
                     if (is_array($movedItem)) {
-                        $values[] = implode(" - ", $movedItem);
+                        $values[] = implode(' - ', $movedItem);
                     }
                 }
             }
@@ -224,8 +224,7 @@ class SmartSelectFilter extends Filter
     }
 
     /**
-     * @param mixed $itemList
-     *
+     * @param  mixed  $itemList
      * @return array<mixed>
      */
     public function getFullSelectedList($itemList): array
@@ -262,7 +261,6 @@ class SmartSelectFilter extends Filter
         if (isset($component->filterData)) {
             $component->filterData[$this->getKey()] = $this->getFullSelectedList($component->{$component->getTableName()}['filters'][$this->getKey()]);
         }
-
 
         return view('livewiretablesadvancedfilters::components.tools.filters.smartSelect', [
             'component' => $component,

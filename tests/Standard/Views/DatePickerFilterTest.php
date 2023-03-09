@@ -29,11 +29,13 @@ class DatePickerFilterTest extends TestCaseAdvanced
     {
         $filter = DatePickerFilter::make('Active');
 
-        $this->assertSame(config('livewiretablesadvancedfilters.datePicker'), $filter->getConfigs());
+        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.datePicker'), ['customFilterMenuWidth' => 'md:w-80']);
+
+        $this->assertSame($defaultConfig, $filter->getConfigs());
 
         $filter->config(['foo' => 'bar']);
 
-        $this->assertSame(array_merge(config('livewiretablesadvancedfilters.datePicker'), ['foo' => 'bar']), $filter->getConfigs());
+        $this->assertSame(array_merge($defaultConfig, ['foo' => 'bar']), $filter->getConfigs());
     }
 
     /** @test */

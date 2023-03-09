@@ -48,7 +48,8 @@
         "psr-4": {
             "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\Tests\\": "tests",
             "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\Tests\\Dusk\\": "dusk",
-            "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\Tests\\Standard\\": "standard"
+            "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\Tests\\Standard\\": "standard",
+            "LowerRockLabs\\LaravelLivewireTablesAdvancedFilters\\Tests\\Standard8\\": "standard8"
         }
     },
     "scripts": {

@@ -63,8 +63,13 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-      - name: Run Unit Tests
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --passthru-php="'-d pcov.enabled=1'"
+      - name: Run Unit Tests L8
+        if: ${{ matrix.laravel }} == '8.*'
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --passthru-php="'-d pcov.enabled=1 pcov.directory=./vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/Standard8'"
+
+      - name: Run Unit Tests L9 L10
+        if: ${{ matrix.laravel }} != '8.*'
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --passthru-php="'-d pcov.enabled=1 pcov.directory=./vendor/lowerrocklabs/LaravelLivewireTablesAdvancedFilters/Standard'"
 
       - name: Run PHPStan
         run: phpstan analyse src

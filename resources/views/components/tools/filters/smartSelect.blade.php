@@ -6,6 +6,7 @@
     $filterMenuLabel = '[aria-labelledby="filters-menu"]';
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
+    $customFilterMenuWidth = $filterConfigs['customFilterMenuWidth'];
 
     $wireKey = $tableName . '.filters.' . $filterKey;
     $selectedWireKey = 'filterData.' . $filterKey;
@@ -23,7 +24,7 @@
     bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'),
     setupFilterMenu() {
         if (document.querySelector('{{ $filterMenuLabel }}') !== null) {
-            document.querySelector('{{ $filterMenuLabel }}').classList.add('md:w-80');
+            document.querySelector('{{ $filterMenuLabel }}').classList.add('{{ $customFilterMenuWidth }}');
             document.querySelector('{{ $filterMenuLabel }}').classList.remove('md:w-56');
         }
 
@@ -114,7 +115,7 @@
     @if ($theme === 'tailwind')
         <div class="relative" class="h-16">
             <!-- Start Label Replacement -->
-            <div class="flex flex-cols w-full hidden h-8 pr-4" id="{{ $filterLabelPath }}-labelInternal">
+            <div class="flex flex-cols w-full hidden h-8" id="{{ $filterLabelPath }}-labelInternal">
                 <label for="{{ $filterLabelPath }}"
                     class="inline-block w-11/12 text-sm font-medium leading-5 text-gray-700 dark:text-white ">
                     {{ $filter->getName() }}
@@ -134,7 +135,7 @@
             <!-- Stop Existing Pop-Over -->
 
             <!-- Start Drop Down -->
-            <div class=" w-full flex flex-col items-center justify-center text-black dark:text-white pr-4 ">
+            <div class=" w-full flex flex-col items-center justify-center text-black dark:text-white ">
                 <x-livewiretablesadvancedfilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
 
                 <div :class="{
@@ -185,7 +186,7 @@
             <!-- Stop Existing Pop-Over -->
 
             <!-- Start Drop Down -->
-            <div class=" w-100 d-flex flex-column items-center justify-center text-black dark:text-white pr-4 ">
+            <div class=" w-100 d-flex flex-column items-center justify-center text-black dark:text-white ">
                 <x-livewiretablesadvancedfilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
 
                 <div :class="{
@@ -270,7 +271,7 @@
         <div class="position-relative">
 
             <!-- Start Label Replacement -->
-            <div class="d-flex flex-column w-100 d-none h-8 pr-4" id="{{ $filterLabelPath }}-labelInternal">
+            <div class="d-flex flex-column w-100 d-none h-8" id="{{ $filterLabelPath }}-labelInternal">
                 <label for="{{ $filterLabelPath }}"
                     class="d-inline-block w-11/12 small leading-5 text-gray-700 dark:text-white ">
                     {{ $filter->getName() }}
@@ -291,7 +292,7 @@
             <!-- Stop Existing Pop-Over -->
 
             <!-- Start Drop Down -->
-            <div class=" w-100 d-flex flex-column items-center justify-center text-black dark:text-white pr-4 ">
+            <div class=" w-100 d-flex flex-column items-center justify-center text-black dark:text-white ">
                 <x-livewiretablesadvancedfilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
 
                 <div :class="{

@@ -6,6 +6,7 @@
     $filterMenuLabel = '[aria-labelledby="filters-menu"]';
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
+    $customFilterMenuWidth = $filterConfigs['customFilterMenuWidth'];
 
     $options = [];
     $empty = [];
@@ -27,7 +28,7 @@
     booting: true,
     setupFilterMenu() {
         if (document.querySelector('{{ $filterMenuLabel }}') !== null) {
-            document.querySelector('{{ $filterMenuLabel }}').classList.add('md:w-80');
+            document.querySelector('{{ $filterMenuLabel }}').classList.add('{{ $customFilterMenuWidth }}');
             document.querySelector('{{ $filterMenuLabel }}').classList.remove('md:w-56');
         }
 

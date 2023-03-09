@@ -24,3 +24,11 @@ docs/images/badges/phpunit-coverage-develop.svg
 tests/Views/SmartSelectFilterTest.php
 srcb/
 /build/
+./build
+./build/
+/build
+build/coverage.txt
+build/report.junit.xml
+docs/images/badges/
+clover.xml
+clover.xml

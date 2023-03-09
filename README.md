@@ -5,8 +5,6 @@ Dev Branch
 ![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit.yml/badge.svg?branch=develop)
 ![PHP Stan](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-stan.yml/badge.svg?branch=develop)
 
-![PHP Unit Coverage](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/badges/phpunit-coverage-8.2-10.*-develop.svg)
-
 # LaravelLivewireTablesAdvancedFilters
 Advanced filters for Rappasoft Laravel Livewire Tables v2.0 and above
 
@@ -20,11 +18,19 @@ Package is currently under active development & testing, please use caution when
 # Current Status
 |        Filter     | Tailwind | Bootstrap 4 | Bootstrap 5 |
 | :--- | :---: | :---: | :---: |
-| Number Range      | Y    | Y  | Y    |
-| Date Range        | Y    |Y  |  Y  | 
-| Date/Time Picker  | Y    |Y |    Y   | 
-| SmartSelect       | Y    |  UI Tweaks  |  UI Tweaks  |
-| Component Filter  | Testing | N | N |
+| Number Range      | &check;    | &check;  | &check;    |
+| Date Range        | &check;    |&check;  |  &check;  | 
+| Date/Time Picker  | &check;    |&check; |    &check;   | 
+| SmartSelect       | &check;    |  &cross; UI Tweaks  |  &cross; UI Tweaks  |
+| Component Filter  | Testing | &cross;  | &cross;  |
+
+# Laravel Support
+| Version | Supported |
+| 8 | X |
+| 9 | Y |
+| 10 | Y |
+
+This package uses Arr::map, which is not supported under Laravel 8.  If there is demand, then a version will be released supporting Laravel 8
 
 # Installation
 This package is available to be installed via Composer
@@ -321,4 +327,6 @@ php artisan vendor:publish livewiretablesadvancedfilters-views
 ## Other Notes
 This package makes several on-the-fly adjustments to the default toolbar blade, including:
 * Customisable width of the filter menu
+    Set the following value in the configuration file.  You may pass any valid width class/selectors to this field.
+    'customFilterMenuWidth' => 'md:w-80',
 * Filter menu will lock open until you click to close the menu

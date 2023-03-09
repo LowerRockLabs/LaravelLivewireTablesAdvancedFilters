@@ -19,6 +19,8 @@ class DateRangeFilter extends Filter
     {
         parent::__construct($name, (isset($key) ? $key : null));
         $this->config = config('livewiretablesadvancedfilters.dateRange');
+        $this->config['customFilterMenuWidth'] = config('livewiretablesadvancedfilters.customFilterMenuWidth');
+
         $this->options = $this->config['defaults'];
     }
 
@@ -81,10 +83,10 @@ class DateRangeFilter extends Filter
         if (is_array($values)) {
             if (! isset($values['minDate']) || ! isset($values['maxDate'])) {
                 foreach ($values as $index => $value) {
-                    if ($index === 0 || $index == "0" || strtolower($index) == 'mindate') {
+                    if ($index === 0 || $index == '0' || strtolower($index) == 'mindate') {
                         $returnedValues['minDate'] = $value;
                     }
-                    if ($index == 1 || $index == "1" || strtolower($index) == 'maxdate') {
+                    if ($index == 1 || $index == '1' || strtolower($index) == 'maxdate') {
                         $returnedValues['maxDate'] = $value;
                     }
                 }
@@ -169,7 +171,6 @@ class DateRangeFilter extends Filter
             $dateFormat = $this->getOptions()['dateFormat'] ?? $this->getConfig('defaults')['dateFormat'];
             $ariaDateFormat = $this->getOptions()['ariaDateFormat'] ?? $this->getConfig('defaults')['ariaDateFormat'];
 
-
             $minDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['minDate']);
             $maxDateCarbon = \Carbon\Carbon::createFromFormat($dateFormat, $validatedValue['maxDate']);
 
@@ -224,7 +225,6 @@ class DateRangeFilter extends Filter
         }
 
         // @codeCoverageIgnoreEnd
-
 
         return view('livewiretablesadvancedfilters::components.tools.filters.dateRange', [
             'component' => $component,

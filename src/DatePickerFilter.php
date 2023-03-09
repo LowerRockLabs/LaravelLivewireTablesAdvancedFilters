@@ -19,6 +19,8 @@ class DatePickerFilter extends Filter
     {
         parent::__construct($name, (isset($key) ? $key : null));
         $this->config = config('livewiretablesadvancedfilters.datePicker');
+        $this->config['customFilterMenuWidth'] = config('livewiretablesadvancedfilters.customFilterMenuWidth');
+
         $this->options = config('livewiretablesadvancedfilters.datePicker.defaults');
     }
 
@@ -77,7 +79,7 @@ class DatePickerFilter extends Filter
         }
 
         $validator = \Illuminate\Support\Facades\Validator::make($returnedValues, [
-            'date' => 'required|date_format:'.$dateFormat,
+            'date' => 'required|date_format:' . $dateFormat,
         ]);
         if ($validator->fails()) {
             return false;
@@ -93,7 +95,7 @@ class DatePickerFilter extends Filter
         if ($earliestDateString != '') {
             $dateLimitArray['earliest'] = $earliestDateString;
             $earliestValidator = \Illuminate\Support\Facades\Validator::make($dateLimitArray, [
-                'earliest' => 'required|date_format:'.$dateFormat,
+                'earliest' => 'required|date_format:' . $dateFormat,
             ]);
             if ($earliestValidator->fails()) {
                 return false;
@@ -111,7 +113,7 @@ class DatePickerFilter extends Filter
         if ($latestDateString != '') {
             $dateLimitArray['latest'] = $latestDateString;
             $latestValidator = \Illuminate\Support\Facades\Validator::make($dateLimitArray, [
-                'latest' => 'required|date_format:'.$dateFormat,
+                'latest' => 'required|date_format:' . $dateFormat,
             ]);
             if ($latestValidator->fails()) {
                 return false;
@@ -153,7 +155,6 @@ class DatePickerFilter extends Filter
             $ariaDateFormat = $this->getConfig('ariaDateFormat') ?? $this->getConfig('defaults')['ariaDateFormat'];
 
             $carbonInstance = \Carbon\Carbon::createFromFormat($dateFormat, $value);
-
 
             if ($carbonInstance instanceof \Carbon\Carbon) {
                 return $carbonInstance->format($ariaDateFormat);

@@ -5,8 +5,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="LaravelLivewireTablesAdvancedFilters Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Standard">
+            <directory>tests/Standard</directory>
+        </testsuite>
+        <testsuite name="Laravel8">
+            <directory>tests/Standard8</directory>
         </testsuite>
     </testsuites>
     <coverage cacheDirectory=".phpunit.cache/code-coverage" processUncoveredFiles="true">

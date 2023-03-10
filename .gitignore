@@ -20,7 +20,6 @@ phpunit.txt
 .php-cs-fixer.cache
 src/DateRangeFilter.php
 .phpunit.cache/*
-docs/images/badges/phpunit-coverage-develop.svg
 tests/Views/SmartSelectFilterTest.php
 srcb/
 /build/
@@ -29,6 +28,5 @@ srcb/
 /build
 build/coverage.txt
 build/report.junit.xml
-docs/images/badges/
 clover.xml
 clover.xml

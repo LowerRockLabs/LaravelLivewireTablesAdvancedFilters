@@ -26,9 +26,10 @@ Package is currently under active development & testing, please use caution when
 
 # Laravel Support
 | Version | Supported |
-| 8 | X |
-| 9 | Y |
-| 10 | Y |
+| :---: | :---: |
+| 8 | &cross;  |
+| 9 | &check;  |
+| 10 | &check;  |
 
 This package uses Arr::map, which is not supported under Laravel 8.  If there is demand, then a version will be released supporting Laravel 8
 

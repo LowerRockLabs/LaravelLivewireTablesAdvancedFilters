@@ -18,8 +18,9 @@ Demo Available Here:
 
 Package is currently under active development & testing, please use caution when using in a production environment.
 # Current Status
+
 |        Filter     | Tailwind 3 | Tailwind 2 | Bootstrap 4 | Bootstrap 5 |
-| :--- | :---: | :---: | :---: |
+| :--- | :---: | :---: | :---: | :---: |
 | Number Range      | &check;    | &check;    | &check;  | &check; |
 | Date Range        | &check;    | &check;    | &check;  |  &check;  | 
 | Date/Time Picker  | &check;    | &check;    | &check; |    &check;   | 

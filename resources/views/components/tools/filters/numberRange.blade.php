@@ -7,6 +7,7 @@
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
     $customFilterMenuWidth = $filterConfigs['customFilterMenuWidth'];
+    $suffix = $filter->getConfig('suffix');
 
     $defaultMin = $currentMin = $filterMin = $minRange = $filter->getConfig('minRange');
     $defaultMax = $currentMax = $filterMax = $maxRange = $filter->getConfig('maxRange');
@@ -120,7 +121,7 @@
                 --max:{{ $maxRange }};
                 --value-a:{{ $currentMax }};
                 --value-b:{{ $currentMin }};
-                --suffix:"%";
+                --suffix:"{{ $suffix }}";
                 --text-value-a:"{{ $currentMax }}";
                 --text-value-b:"{{ $currentMin }}";
                 '>
@@ -143,7 +144,7 @@
                     --max:{{ $maxRange }};
                     --value-a:{{ $currentMax }};
                     --value-b:{{ $currentMin }};
-                    --suffix:"%";
+                    --suffix:"{{ $suffix }}";
                     --text-value-a:"{{ $currentMax }}";
                     --text-value-b:"{{ $currentMin }}";
                     '>
@@ -166,7 +167,7 @@
             --max:{{ $maxRange }};
             --value-a:{{ $currentMax }};
             --value-b:{{ $currentMin }};
-            --suffix:"%";
+            --suffix:"{{ $suffix }}";
             --text-value-a:"{{ $currentMax }}";
             --text-value-b:"{{ $currentMin }}";
             '>

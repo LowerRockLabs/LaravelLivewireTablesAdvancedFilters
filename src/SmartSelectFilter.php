@@ -150,7 +150,13 @@ class SmartSelectFilter extends Filter
     public function getFilterPillValue($value): ?string
     {
         $values = [];
-        $values = $this->generatePillArray($value);
+        if (is_array($value)) {
+            foreach ($value as $valItem) {
+                $values[] = implode(',', $this->generatePillArray($valItem));
+            }
+        } else {
+            $values[] = $this->generatePillArray($value);
+        }
 
         return (is_array($values) && (count($values) > 0)) ? implode(', ', $values) : '';
     }

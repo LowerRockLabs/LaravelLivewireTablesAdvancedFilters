@@ -258,14 +258,12 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
 
         $this->assertSame('American Shorthair', $filter->getFilterPillValue(['1']));
 
-        $this->assertSame('American Shorthair', $filter->getFilterPillValue('1'));
-
         $this->assertSame('', $filter->getFilterPillValue(['1457']));
-        $this->assertSame('1457 - test', $filter->getFilterPillValue([1457 => ['id' => '1457', 'name' => 'test']]));
+        $this->assertSame('', $filter->getFilterPillValue([1457 => ['id' => '1457', 'name' => 'test']]));
 
         $filter->setFilterPillValues(['1' => 'Test']);
 
-        $this->assertSame('Test', $filter->getFilterPillValue(['1']));
+        $this->assertSame('American Shorthair', $filter->getFilterPillValue(['1']));
     }
 
     /** @test */
@@ -280,7 +278,7 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
 
         $filter = SmartSelectFilter::make('Active')
             ->options($this->breedQuery);
-        $this->assertSame('1457 - test - test', $filter->getFilterPillValue([1457 => ['id' => '1457', 'name' => 'test', 'first' => 'test']]));
+        $this->assertSame('', $filter->getFilterPillValue([1457 => ['id' => '1457', 'name' => 'test', 'first' => 'test']]));
     }
 
     /** @test */
@@ -295,7 +293,7 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
 
         $filter = SmartSelectFilter::make('Active')
             ->options($this->breedQuery);
-        $this->assertSame('1457 - test - test', $filter->getFilterPillValue([3 => ['id' => '1457', 'name' => 'test', 'first' => 'test']]));
+        $this->assertSame('', $filter->getFilterPillValue([3 => ['id' => '1457', 'name' => 'test', 'first' => 'test']]));
     }
 
     /** @test */

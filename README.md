@@ -14,6 +14,9 @@ Advanced filters for Rappasoft Laravel Livewire Tables v2.0 and above
 * Smart Select (Select2 Style)
 * Component Filter (Under Development)
 
+Demo Available Here:
+[http://tabledemo.lowerrocklabs.com/](http://tabledemo.lowerrocklabs.com/)
+
 Package is currently under active development & testing, please use caution when using in a production environment.
 # Current Status
 |        Filter     | Tailwind 3 | Tailwind 2 | Bootstrap 4 | Bootstrap 5 |

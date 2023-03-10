@@ -115,8 +115,8 @@
         <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
             :filterName="$filterName" />
         <div class="mt-4 h-22 pt-8 pb-4 grid gap-10">
-            <div x-on:mouseleave="allowUpdates" class="range-slider flat" id="{{ $filterBasePath }}"
-                data-ticks-position='bottom'
+            <div x-on:mousedown.away="allowUpdates" x-on:touchstart.away="allowUpdates" x-on:mouseleave="allowUpdates"
+                class="range-slider flat" id="{{ $filterBasePath }}" data-ticks-position='bottom'
                 style='--min:{{ $minRange }};
                 --max:{{ $maxRange }};
                 --value-a:{{ $currentMax }};

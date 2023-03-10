@@ -128,7 +128,7 @@
 
             <!-- Start Existing Pop-Over -->
             <div x-cloak
-                class="w-full rounded-md relative inline-flex place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
+                class="w-full z-50 rounded-md relative inline-flex place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
                 <x-livewiretablesadvancedfilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
             </div>
@@ -142,7 +142,7 @@
                     'border-solid border-2 rounded-md border-gray-300 dark:border-gray-600': currentFilteredList
                         .length > 0
                 }"
-                    class="flex-col w-full overflow-visible z-50">
+                    class="flex-col w-full overflow-visible z-30">
                     <ul class="bg-white dark:bg-gray-700 flex-col w-full ">
                         <template x-for="(filteredItem, index) in currentFilteredList" :key="filteredItem.id">
                             <li class="px-2 py-1 hover:bg-blue-500 dark:hover:bg-gray-400"

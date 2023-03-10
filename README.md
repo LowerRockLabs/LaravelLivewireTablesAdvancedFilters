@@ -16,19 +16,20 @@ Advanced filters for Rappasoft Laravel Livewire Tables v2.0 and above
 
 Package is currently under active development & testing, please use caution when using in a production environment.
 # Current Status
-|        Filter     | Tailwind | Bootstrap 4 | Bootstrap 5 |
+|        Filter     | Tailwind 3 | Tailwind 2 | Bootstrap 4 | Bootstrap 5 |
 | :--- | :---: | :---: | :---: |
-| Number Range      | &check;    | &check;  | &check;    |
-| Date Range        | &check;    |&check;  |  &check;  | 
-| Date/Time Picker  | &check;    |&check; |    &check;   | 
-| SmartSelect       | &check;    |  &cross; UI Tweaks  |  &cross; UI Tweaks  |
-| Component Filter  | Testing | &cross;  | &cross;  |
+| Number Range      | &check;    | &check;    | &check;  | &check; |
+| Date Range        | &check;    | &check;    | &check;  |  &check;  | 
+| Date/Time Picker  | &check;    | &check;    | &check; |    &check;   | 
+| SmartSelect       | &check;    | &check;    | &check; <br />(Styling Improvements)  |  &check; <br />(Styling Improvements)  |
+| Component Filter  | Testing   | Testing | &cross;  | &cross;  |
 
 # Laravel Support
 | Version | Supported |
-| 8 | X |
-| 9 | Y |
-| 10 | Y |
+| :---: | :---: |
+| 8 | &cross;  |
+| 9 | &check;  |
+| 10 | &check;  |
 
 This package uses Arr::map, which is not supported under Laravel 8.  If there is demand, then a version will be released supporting Laravel 8
 
@@ -221,7 +222,8 @@ You can also set this at run-time via the config() option
 
 
 ## SmartSelect Filter
-A Select2 style Filter built in AlpineJS.  This takes a list of potential options, and allows the end-user to filter them on-the-fly, and select appropriate values.  
+A Select2 style Filter built in AlpineJS.  This takes a list of potential options, and allows the end-user to filter them on-the-fly, and select appropriate values. 
+
 
 Include the class after your namespace declaration
 ```php
@@ -290,7 +292,7 @@ The below can either be set in the configuration file, or specified per-filter b
 ```
 
 ### Dependencies
-This uses AlpineJS, there are no other dependencies.
+This uses AlpineJS.  There are no other dependencies.
 
 # Publishing Assets
 To publish assets to make modifications, please see below

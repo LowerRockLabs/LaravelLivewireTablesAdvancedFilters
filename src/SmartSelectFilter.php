@@ -152,7 +152,7 @@ class SmartSelectFilter extends Filter
         $values = [];
         if (is_array($value)) {
             foreach ($value as $valItem) {
-                $values[] = implode(',', $this->generatePillArray($valItem));
+                $values[] = implode(' - ', $this->generatePillArray($valItem));
             }
         } else {
             $values[] = $this->generatePillArray($value);

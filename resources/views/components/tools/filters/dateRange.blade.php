@@ -92,7 +92,6 @@
         @endPushOnce
     @endif
     <div x-data="{
-
         flatpickrInstance: flatpickr($refs.dateRangeInput{{ $filterKey }}, {
             mode: 'range',
             clickOpens: false,
@@ -110,8 +109,12 @@
                 childElementOpen = true;
             },
             onChange: function(selectedDates, dateStr, instance) {
-                if (selectedDates.length == 2) {
-                    $wire.set('{{ $filterBasePath }}', { 'minDate': dateStr.split(' ')[0], 'maxDate': dateStr.split(' ')[2] });
+                if (selectedDates.length > 1) {
+                    var startDate = dateStr.split(' ')[0];
+                    var endDate = dateStr.split(' ')[2];
+                    var wireDateArray = {};
+                    wireDateArray = { 'minDate': startDate, 'maxDate': endDate };
+                    $wire.set('{{ $filterBasePath }}', wireDateArray);
                 }
             },
             onClose: function() {

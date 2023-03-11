@@ -29,6 +29,7 @@
     bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'),
     currentMin: $refs.filterMin.value,
     currentMax: $refs.filterMax.value,
+    wireValues: $wire.entangle('{{ $filterBasePath }}'),
     minValue: $wire.entangle('{{ $minFilterWirePath }}'),
     maxValue: $wire.entangle('{{ $maxFilterWirePath }}'),
     defaultMin: {{ $minRange }},
@@ -89,13 +90,11 @@
         if (!this.restrictUpdates) {
             if (this.minValue === null || this.maxValue === null) {
                 if ($refs.filterMin.value != this.defaultMin || $refs.filterMax.value != this.defaultMax) {
-                    this.minValue = $refs.filterMin.value;
-                    this.maxValue = $refs.filterMax.value;
+                    this.wireValues = { 'min': this.minValue, 'max': this.maxValue };
                 }
             } else {
                 if (this.minValue != $refs.filterMin.value || this.maxValue != $refs.filterMax.value) {
-                    this.minValue = $refs.filterMin.value;
-                    this.maxValue = $refs.filterMax.value;
+                    this.wireValues = { 'min': this.minValue, 'max': this.maxValue };
                 }
             }
             this.restrictUpdates = true;
@@ -107,8 +106,6 @@
         $watch('open', value => this.setupFilterMenu());
         $watch('allFilters', value => this.setupFilterMenu());
         $watch('allFilters', value => this.setupWire());
-
-
     },
 }">
     @if ($theme === 'tailwind')

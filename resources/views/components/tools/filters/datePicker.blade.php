@@ -8,6 +8,8 @@
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
     $customFilterMenuWidth = $filterConfigs['customFilterMenuWidth'];
+    $pushFlatpickrCss = $filterConfigs['publishFlatpickrCSS'];
+    $pushFlatpickrJS = $filterConfigs['publishFlatpickrJS'];
 
     $dateString = !is_null($this->{$tableName}['filters'][$filterKey]) && $this->{$tableName}['filters'][$filterKey] != '' ? $this->{$tableName}['filters'][$filterKey] : date('Y-m-d');
 
@@ -56,16 +58,12 @@
     }
 }">
 
-    @if (Config::get('livewiretablesadvancedfilters.datePicker.publishFlatpickrJS'))
-        @pushOnce('scripts')
-            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        @endPushOnce
+    @if ($pushFlatpickrJS)
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endif
 
-    @if (Config::get('livewiretablesadvancedfilters.datePicker.publishFlatpickrCSS'))
-        @pushOnce('styles')
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-        @endPushOnce
+    @if ($pushFlatpickrCss)
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @endif
 
     <div x-data="{

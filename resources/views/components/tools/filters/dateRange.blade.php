@@ -79,18 +79,12 @@
     }
 }">
 
-    dd($pushFlatpickrJS);
-
     @if ($pushFlatpickrJS)
-        @pushOnce('scripts')
-            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        @endPushOnce
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @endif
 
     @if ($pushFlatpickrCss)
-        @pushOnce('styles')
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-        @endPushOnce
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @endif
     <div x-data="{
         flatpickrInstance: flatpickr($refs.dateRangeInput{{ $filterKey }}, {

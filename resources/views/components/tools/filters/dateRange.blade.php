@@ -77,16 +77,12 @@
     }
 }">
     @if (Config::get('livewiretablesadvancedfilters.dateRange.publishFlatpickrJS'))
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
         @pushOnce('scripts')
             <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         @endPushOnce
     @endif
 
     @if (Config::get('livewiretablesadvancedfilters.dateRange.publishFlatpickrCSS'))
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
         @pushOnce('styles')
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         @endPushOnce

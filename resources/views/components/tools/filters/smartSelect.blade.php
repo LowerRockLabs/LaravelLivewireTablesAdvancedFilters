@@ -216,57 +216,60 @@
             </div>
             <!-- End Drop Down -->
         </div>
-        <style>
-            .smartSelectExistingPopOverWrapper {
-                top: -3.3em;
-            }
 
-            .smartSelectExistingPopOverElement {
-                left: 16em;
-                width: 18em;
-            }
+        @pushOnce('styles')
+            <style>
+                .smartSelectExistingPopOverWrapper {
+                    top: -3.3em;
+                }
 
-            .filterCalendarIcon {
-                right: 0.5em;
-                top: 0.25em;
-            }
+                .smartSelectExistingPopOverElement {
+                    left: 16em;
+                    width: 18em;
+                }
 
-            /*
-            ul.smartSelectDropDownList li {
-                background-color: #FFFFFF;
-                cursor: pointer;
-            }
+                .filterCalendarIcon {
+                    right: 0.5em;
+                    top: 0.25em;
+                }
 
-            /* bg-gray-700
-            .dark ul.smartSelectDropDownList li {
-                background-color: rgb(55 65 81);
-            }
-            /* bg-blue-500
-            ul.smartSelectDropDownList li:hover {
-                background-color: rgb(59 130 246);
-            }
+                /*
+                    ul.smartSelectDropDownList li {
+                        background-color: #FFFFFF;
+                        cursor: pointer;
+                    }
 
-            /* bg-gray-400
-            .dark ul.smartSelectDropDownList li:hover {
-                background-color: rgb(156 163 175);
-            }
-            */
-            .bg-blue-500 {
-                background-color: rgb(59 130 246);
-            }
+                    /* bg-gray-700
+                    .dark ul.smartSelectDropDownList li {
+                        background-color: rgb(55 65 81);
+                    }
+                    /* bg-blue-500
+                    ul.smartSelectDropDownList li:hover {
+                        background-color: rgb(59 130 246);
+                    }
 
-            .bg-gray-400 {
-                background-color: rgb(156 163 175);
-            }
+                    /* bg-gray-400
+                    .dark ul.smartSelectDropDownList li:hover {
+                        background-color: rgb(156 163 175);
+                    }
+                    */
+                .bg-blue-500 {
+                    background-color: rgb(59 130 246);
+                }
 
-            .bg-gray-700 {
-                background-color: rgb(55 65 81);
-            }
+                .bg-gray-400 {
+                    background-color: rgb(156 163 175);
+                }
 
-            .bg-gray-800 {
-                background-color: rgb(31 41 55);
-            }
-        </style>
+                .bg-gray-700 {
+                    background-color: rgb(55 65 81);
+                }
+
+                .bg-gray-800 {
+                    background-color: rgb(31 41 55);
+                }
+            </style>
+        @endPushOnce
     @elseif ($theme === 'bootstrap-5')
         <div class="position-relative">
 
@@ -321,66 +324,67 @@
             </div>
             <!-- End Drop Down -->
         </div>
-        <style>
-            .smartSelectExistingPopOverWrapper {
-                top: -3.3em;
-            }
+        @pushOnce('styles')
+            <style>
+                .smartSelectExistingPopOverWrapper {
+                    top: -3.3em;
+                }
 
-            .smartSelectExistingPopOverElement {
-                left: 16em;
-                width: 18em;
-            }
+                .smartSelectExistingPopOverElement {
+                    left: 16em;
+                    width: 18em;
+                }
 
-            .filterCalendarIcon {
-                right: 0.5em;
-                top: 0.25em;
-            }
+                .filterCalendarIcon {
+                    right: 0.5em;
+                    top: 0.25em;
+                }
 
 
-            div.smartSelectPopoverList div:hover {
-                background-color: rgb(59 130 246);
-            }
+                div.smartSelectPopoverList div:hover {
+                    background-color: rgb(59 130 246);
+                }
 
-            .dark div.smartSelectPopoverList div:hover {
-                background-color: rgb(156 163 175);
-            }
+                .dark div.smartSelectPopoverList div:hover {
+                    background-color: rgb(156 163 175);
+                }
 
-            ul.smartSelectDropDownList li {
-                background-color: #FFFFFF;
-                cursor: pointer;
-            }
+                ul.smartSelectDropDownList li {
+                    background-color: #FFFFFF;
+                    cursor: pointer;
+                }
 
-            /* bg-gray-700 */
-            .dark ul.smartSelectDropDownList li {
-                background-color: rgb(55 65 81);
-            }
+                /* bg-gray-700 */
+                .dark ul.smartSelectDropDownList li {
+                    background-color: rgb(55 65 81);
+                }
 
-            /* bg-blue-500 */
-            ul.smartSelectDropDownList li:hover {
-                background-color: rgb(59 130 246);
-            }
+                /* bg-blue-500 */
+                ul.smartSelectDropDownList li:hover {
+                    background-color: rgb(59 130 246);
+                }
 
-            /* bg-gray-400 */
-            .dark ul.smartSelectDropDownList li:hover {
-                background-color: rgb(156 163 175);
-            }
+                /* bg-gray-400 */
+                .dark ul.smartSelectDropDownList li:hover {
+                    background-color: rgb(156 163 175);
+                }
 
-            .bg-blue-500 {
-                background-color: rgb(59 130 246);
-            }
+                .bg-blue-500 {
+                    background-color: rgb(59 130 246);
+                }
 
-            .bg-gray-400 {
-                background-color: rgb(156 163 175);
-            }
+                .bg-gray-400 {
+                    background-color: rgb(156 163 175);
+                }
 
-            .bg-gray-700 {
-                background-color: rgb(55 65 81);
-            }
+                .bg-gray-700 {
+                    background-color: rgb(55 65 81);
+                }
 
-            .bg-gray-800 {
-                background-color: rgb(31 41 55);
-            }
-        </style>
+                .bg-gray-800 {
+                    background-color: rgb(31 41 55);
+                }
+            </style>
+        @endPushOnce
     @endif
-
 </div>

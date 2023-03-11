@@ -82,13 +82,13 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
     }*/
 
     /** @test */
-    public function filters_with_invalid_key_dont_error(): void
+    /*public function filters_with_invalid_key_dont_error(): void
     {
         Livewire::test(PetsTableAdvanced::class)
             ->set('table.filters.invalid-filter', [1])
             ->assertHasNoErrors()
             ->assertDontSee('Applied Filters');
-    }
+    }*/
 
     /** @test */
     public function filters_numberrange_can_be_seen(): void

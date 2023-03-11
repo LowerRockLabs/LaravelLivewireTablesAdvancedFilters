@@ -15,8 +15,10 @@
     $maxFilterWirePath = $filterBasePath . '.max';
 
     if (isset($this->{$tableName}['filters'])) {
-        $currentMin = isset($this->{$tableName}['filters'][$filterKey]['min']) ? $this->{$tableName}['filters'][$filterKey]['min'] : $defaultMin;
-        $currentMax = isset($this->{$tableName}['filters'][$filterKey]['max']) ? $this->{$tableName}['filters'][$filterKey]['max'] : $defaultMax;
+        if (!empty($this->{$tableName}['filters'][$filterKey])) {
+            $currentMin = isset($this->{$tableName}['filters'][$filterKey]['min']) ? $this->{$tableName}['filters'][$filterKey]['min'] : $defaultMin;
+            $currentMax = isset($this->{$tableName}['filters'][$filterKey]['max']) ? $this->{$tableName}['filters'][$filterKey]['max'] : $defaultMax;
+        }
     }
     $lightStyling = $filter->getConfig('styling')['light'];
     $darkStyling = $filter->getConfig('styling')['dark'];
@@ -74,8 +76,13 @@
         document.getElementById('{{ $filterBasePath }}').style.setProperty('--text-value-a', JSON.stringify($refs.filterMax.value));
     },
     setupWire() {
-        $refs.filterMin.value = (this.wireValues['min']) ? this.wireValues['min'] : this.defaultMin;
-        $refs.filterMax.value = (this.wireValues['max']) ? this.wireValues['max'] : this.defaultMax;
+        if (this.wireValues !== undefined) {
+            $refs.filterMin.value = (this.wireValues['min'] !== undefined) ? this.wireValues['min'] : this.defaultMin;
+            $refs.filterMax.value = (this.wireValues['max'] !== undefined) ? this.wireValues['max'] : this.defaultMax;
+        } else {
+            $refs.filterMin.value = this.defaultMin;
+            $refs.filterMax.value = this.defaultMax;
+        }
         this.updateStyles();
     },
     allowUpdates() {

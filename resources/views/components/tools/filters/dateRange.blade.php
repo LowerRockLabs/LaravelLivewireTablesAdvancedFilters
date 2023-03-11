@@ -94,36 +94,35 @@
     <div x-data="{
 
         flatpickrInstance: flatpickr($refs.dateRangeInput{{ $filterKey }}, {
-                mode: 'range',
-                clickOpens: false,
-                allowInvalidPreload: true,
-                defaultDate: [$refs.dateRangeInput{{ $filterKey }}.value.split(' ')[0], $refs.dateRangeInput{{ $filterKey }}.value.split(' ')[2]],
-                ariaDateFormat: '{{ $filter->getConfig('ariaDateFormat') }}',
-                allowInput: '{{ $filter->getConfig('allowInput') }}',
-                altFormat: '{{ $filter->getConfig('altFormat') }}',
-                altInput: '{{ $filter->getConfig('altInput') }}',
-                dateFormat: '{{ $filter->getConfig('dateFormat') }}',
-                locale: '{{ App::currentLocale() }}',
-                @if ($filter->hasConfig('earliestDate')) minDate: '{{ $filter->getConfig('earliestDate') }}', @endif
-                @if ($filter->hasConfig('latestDate')) maxDate: '{{ $filter->getConfig('latestDate') }}', @endif
-                onOpen: function() {
-                    childElementOpen = true;
-                },
-                onChange: function(selectedDates, dateStr, instance) {
-                    if (selectedDates.length == 2) {
-                        $wire.set('{{ $filterBasePath }}', {
-                            'minDate': dateStr.split(' ')[0],
-                            'maxDate': dateStr.split(' ')[2]
-                        });
-                    }
-                    onClose: function() {
-                        childElementOpen = false;
-                    }
-                }),
-            init() {
-
+            mode: 'range',
+            clickOpens: false,
+            allowInvalidPreload: true,
+            defaultDate: [$refs.dateRangeInput{{ $filterKey }}.value.split(' ')[0], $refs.dateRangeInput{{ $filterKey }}.value.split(' ')[2]],
+            ariaDateFormat: '{{ $filter->getConfig('ariaDateFormat') }}',
+            allowInput: '{{ $filter->getConfig('allowInput') }}',
+            altFormat: '{{ $filter->getConfig('altFormat') }}',
+            altInput: '{{ $filter->getConfig('altInput') }}',
+            dateFormat: '{{ $filter->getConfig('dateFormat') }}',
+            locale: '{{ App::currentLocale() }}',
+            @if ($filter->hasConfig('earliestDate')) minDate: '{{ $filter->getConfig('earliestDate') }}', @endif
+            @if ($filter->hasConfig('latestDate')) maxDate: '{{ $filter->getConfig('latestDate') }}', @endif
+            onOpen: function() {
+                childElementOpen = true;
+            },
+            onChange: function(selectedDates, dateStr, instance) {
+                if (selectedDates.length == 2) {
+                    $wire.set('{{ $filterBasePath }}', {
+                        'minDate': dateStr.split(' ')[0],
+                        'maxDate': dateStr.split(' ')[2]
+                    });
+                }
+                onClose: function() {
+                    childElementOpen = false;
+                }
             }
-        }" x-effect="init">
+        });
+        init() {}
+    }" x-effect="init">
         @if ($theme === 'tailwind')
             <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />

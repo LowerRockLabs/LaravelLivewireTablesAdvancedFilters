@@ -7,8 +7,8 @@
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
     $customFilterMenuWidth = $filterConfigs['customFilterMenuWidth'];
-    $pushFlatpickrCss = $filterConfigs['dateRange']['publishFlatpickrCSS'];
-    $pushFlatpickrJS = $filterConfigs['dateRange']['publishFlatpickrJS'];
+    $pushFlatpickrCss = $filterConfigs['publishFlatpickrCSS'];
+    $pushFlatpickrJS = $filterConfigs['publishFlatpickrJS'];
 
     $yesterday = date('Y-m-d', strtotime('-1 days'));
     $dateInput = isset($this->{$tableName}['filters'][$filterKey]) ? $this->{$tableName}['filters'][$filterKey] : '';

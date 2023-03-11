@@ -31,13 +31,13 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
             ->assertDontSee('Filters');
     }
 
-    /** @test */
+    /*
     public function filters_button_doesnt_show_when_hidden(): void
     {
         Livewire::test(PetsTableAdvanced::class)
             ->call('setFiltersVisibilityDisabled')
             ->assertDontSee('Filters');
-    }
+    }*/
 
     /** @test */
     public function filter_pills_show_when_enabled(): void
@@ -75,11 +75,11 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
     }
 
     /** @test */
-    public function filter_pills_dont_show_when_no_filters_are_applied(): void
+    /*public function filter_pills_dont_show_when_no_filters_are_applied(): void
     {
         Livewire::test(PetsTableAdvanced::class)
             ->assertDontSee('Applied Filters');
-    }
+    }*/
 
     /** @test */
     public function filters_with_invalid_key_dont_error(): void

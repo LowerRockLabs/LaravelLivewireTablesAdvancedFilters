@@ -221,7 +221,7 @@ class DateRangeFilter extends Filter
     {
         // @codeCoverageIgnoreStart
         if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
-            $component->{$component->getTableName()}['filters'][$this->getKey()] = [];
+            $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
         }
 
         // @codeCoverageIgnoreEnd

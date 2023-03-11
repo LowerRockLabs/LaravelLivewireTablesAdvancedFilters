@@ -156,7 +156,7 @@ class DateRangeFilter extends Filter
      */
     public function getDefaultValue(): array
     {
-        return ['minDate' => null, 'maxDate' => null];
+        return [];
     }
 
     /**
@@ -219,13 +219,6 @@ class DateRangeFilter extends Filter
      */
     public function render(DataTableComponent $component)
     {
-        // @codeCoverageIgnoreStart
-        if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
-            $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
-        }
-
-        // @codeCoverageIgnoreEnd
-
         return view('livewiretablesadvancedfilters::components.tools.filters.dateRange', [
             'component' => $component,
             'theme' => $component->getTheme(),

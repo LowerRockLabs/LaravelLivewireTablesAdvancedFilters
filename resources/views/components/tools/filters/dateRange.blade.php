@@ -92,6 +92,7 @@
         @endPushOnce
     @endif
     <div x-data="{
+
         flatpickrInstance: flatpickr($refs.dateRangeInput{{ $filterKey }}, {
             mode: 'range',
             clickOpens: false,
@@ -110,17 +111,13 @@
             },
             onChange: function(selectedDates, dateStr, instance) {
                 if (selectedDates.length == 2) {
-                    $wire.set('{{ $filterBasePath }}.minDate', dateStr.split(' ')[0]);
-                    $wire.set('{{ $filterBasePath }}.maxDate', dateStr.split(' ')[2]);
+                    $wire.set('{{ $filterBasePath }}', { 'minDate': dateStr.split(' ')[0], 'maxDate': dateStr.split(' ')[2] });
                 }
             },
             onClose: function() {
                 childElementOpen = false;
             }
-        }),
-        init() {
-
-        }
+        })
     }" x-effect="init">
         @if ($theme === 'tailwind')
             <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"

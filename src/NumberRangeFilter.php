@@ -79,6 +79,10 @@ class NumberRangeFilter extends Filter
             return false;
         }
 
+        if ($values['min'] == $this->getConfig('minRange') && $values['max'] == $this->getConfig('maxRange')) {
+            return false;
+        }
+
         if (is_null($values['max']) || is_null($values['min']) || $values['min'] == '' || $values['max'] == '') {
             return false;
         }
@@ -140,7 +144,7 @@ class NumberRangeFilter extends Filter
      */
     public function getDefaultValue(): array
     {
-        return ['min' => null, 'max' => null];
+        return [];
     }
 
     /**
@@ -165,13 +169,6 @@ class NumberRangeFilter extends Filter
         //if ($currentMax < $currentMin) {
         //    $component->{$component->getTableName()}['filters'][$this->getKey()] = ['min' => $component->{$component->getTableName()}['filters'][$this->getKey()]['max'], 'max' => $component->{$component->getTableName()}['filters'][$this->getKey()]['min']];
         // }
-
-        // @codeCoverageIgnoreStart
-        if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
-            $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
-        }
-
-        // @codeCoverageIgnoreEnd
 
         return view('livewiretablesadvancedfilters::components.tools.filters.numberRange', [
             'component' => $component,

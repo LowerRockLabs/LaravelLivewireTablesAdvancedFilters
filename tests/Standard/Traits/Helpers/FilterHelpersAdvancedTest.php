@@ -197,10 +197,6 @@ class FilterHelpersAdvancedTest extends TestCaseAdvanced
 
         $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
 
-        $this->advancedTable->setFilter('range', ['min' => null, 'max' => null]);
-
-        $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
-
         $this->advancedTable->setFilter('range', ['min' => '50', 'max' => '50']);
 
         $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());

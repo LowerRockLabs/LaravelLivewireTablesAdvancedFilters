@@ -189,7 +189,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
     {
         $this->advancedTable->setFilterDefaults();
 
-        $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
 
         $this->advancedTable->setFilter('breed', ['1']);
 
@@ -197,7 +197,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
 
         $this->advancedTable->setFilter('breed', []);
 
-        $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
 
         $this->advancedTable->setFilter('species', ['1']);
 
@@ -224,7 +224,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
 
         $this->advancedTable->setFilter('species', ['0']);
 
-        $this->assertSame(['breed' => [0 => '1'],
+        $this->assertSame(['breed' => [0 => '1'], 'range' => ['min' => null, 'max' => null], 'daterange' => ['minDate' => null, 'maxDate' => null],
             'species' => [0 => '0']], $this->advancedTable->getAppliedFiltersWithValues());
     }
 

@@ -120,7 +120,7 @@
                     childElementOpen = false;
                 }
             }
-        });
+        }),
         init() {}
     }" x-effect="init">
         @if ($theme === 'tailwind')

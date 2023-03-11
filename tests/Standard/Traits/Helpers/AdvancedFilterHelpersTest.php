@@ -233,27 +233,27 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
     {
         $this->advancedTable->setFilterDefaults();
 
-        $this->assertSame(0, $this->advancedTable->getAppliedFiltersWithValuesCount());
+        $this->assertSame(2, $this->advancedTable->getAppliedFiltersWithValuesCount());
 
         $this->advancedTable->setFilter('breed', ['1']);
 
-        $this->assertSame(1, $this->advancedTable->getAppliedFiltersWithValuesCount());
+        $this->assertSame(3, $this->advancedTable->getAppliedFiltersWithValuesCount());
 
         $this->advancedTable->setFilter('species', ['1']);
 
-        $this->assertSame(2, $this->advancedTable->getAppliedFiltersWithValuesCount());
+        $this->assertSame(4, $this->advancedTable->getAppliedFiltersWithValuesCount());
 
         $this->advancedTable->setFilter('datepicker', '2021-01-01');
 
-        $this->assertSame(3, $this->advancedTable->getAppliedFiltersWithValuesCount());
+        $this->assertSame(5, $this->advancedTable->getAppliedFiltersWithValuesCount());
 
         $this->advancedTable->setFilter('breed', []);
 
-        $this->assertSame(2, $this->advancedTable->getAppliedFiltersWithValuesCount());
+        $this->assertSame(4, $this->advancedTable->getAppliedFiltersWithValuesCount());
 
         $this->advancedTable->setFilterDefaults();
 
-        $this->assertSame(0, $this->advancedTable->getAppliedFiltersWithValuesCount());
+        $this->assertSame(2, $this->advancedTable->getAppliedFiltersWithValuesCount());
     }
 
     /** @test */

@@ -115,7 +115,7 @@
                             'minDate': dateStr.split(' ')[0],
                             'maxDate': dateStr.split(' ')[2]
                         });
-                    },
+                    }
                     onClose: function() {
                         childElementOpen = false;
                     }

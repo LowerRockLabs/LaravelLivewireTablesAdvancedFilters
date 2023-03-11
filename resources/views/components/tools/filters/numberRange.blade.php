@@ -15,8 +15,8 @@
     $maxFilterWirePath = $filterBasePath . '.max';
 
     if (isset($this->{$tableName}['filters'])) {
-        $currentMin = !is_null($this->{$tableName}['filters'][$filterKey]['min']) ? $this->{$tableName}['filters'][$filterKey]['min'] : $defaultMin;
-        $currentMax = isset($this->{$tableName}['filters'][$filterKey]['max']) ? (!is_null($this->{$tableName}['filters'][$filterKey]['max']) ? $this->{$tableName}['filters'][$filterKey]['max'] : $filterMax) : $filterMax;
+        $currentMin = isset($this->{$tableName}['filters'][$filterKey]['min']) ? $this->{$tableName}['filters'][$filterKey]['min'] : $defaultMin;
+        $currentMax = isset($this->{$tableName}['filters'][$filterKey]['max']) ? $this->{$tableName}['filters'][$filterKey]['max'] : $defaultMax;
     }
     $lightStyling = $filter->getConfig('styling')['light'];
     $darkStyling = $filter->getConfig('styling')['dark'];
@@ -30,8 +30,6 @@
     currentMin: $refs.filterMin.value,
     currentMax: $refs.filterMax.value,
     wireValues: $wire.entangle('{{ $filterBasePath }}'),
-    minValue: $wire.entangle('{{ $minFilterWirePath }}'),
-    maxValue: $wire.entangle('{{ $maxFilterWirePath }}'),
     defaultMin: {{ $minRange }},
     defaultMax: {{ $maxRange }},
     restrictUpdates: true,
@@ -76,8 +74,8 @@
         document.getElementById('{{ $filterBasePath }}').style.setProperty('--text-value-a', JSON.stringify($refs.filterMax.value));
     },
     setupWire() {
-        $refs.filterMin.value = (this.minValue) ? this.minValue : this.defaultMin;
-        $refs.filterMax.value = (this.maxValue) ? this.maxValue : this.defaultMax;
+        $refs.filterMin.value = (this.wireValues['min']) ? this.wireValues['min'] : this.defaultMin;
+        $refs.filterMax.value = (this.wireValues['max']) ? this.wireValues['max'] : this.defaultMax;
         this.updateStyles();
     },
     allowUpdates() {
@@ -88,14 +86,8 @@
         this.updateStyles();
 
         if (!this.restrictUpdates) {
-            if (this.minValue === null || this.maxValue === null) {
-                if ($refs.filterMin.value != this.defaultMin || $refs.filterMax.value != this.defaultMax) {
-                    this.wireValues = { 'min': this.minValue, 'max': this.maxValue };
-                }
-            } else {
-                if (this.minValue != $refs.filterMin.value || this.maxValue != $refs.filterMax.value) {
-                    this.wireValues = { 'min': this.minValue, 'max': this.maxValue };
-                }
+            if ($refs.filterMin.value != this.defaultMin || $refs.filterMax.value != this.defaultMax) {
+                this.wireValues = { 'min': $refs.filterMin.value, 'max': $refs.filterMax.value };
             }
             this.restrictUpdates = true;
         }

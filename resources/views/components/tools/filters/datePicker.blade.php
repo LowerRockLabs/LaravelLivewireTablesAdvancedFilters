@@ -72,11 +72,14 @@
                 childElementOpen = true;
             },
             onChange: function(selectedDates, dateStr, instance) {
-                if ($refs.datePickerInput{{ $filterKey }}.value != dateStr) {
-                    $wire.set('{{ $filterBasePath }}', dateStr);
+                if (dateStr.length > 3) {
+                    if ($refs.datePickerInput{{ $filterKey }}.value != dateStr) {
+                        $wire.set('{{ $filterBasePath }}', dateStr);
 
-                    $refs.datePickerInput{{ $filterKey }}.value = dateStr;
+                        $refs.datePickerInput{{ $filterKey }}.value = dateStr;
+                    }
                 }
+
 
             },
             onClose: function() {
@@ -92,9 +95,17 @@
             dateFormat: '{{ $filter->getConfig('dateFormat') }}',
             defaultDate: '{{ $dateString }}',
             locale: '{{ App::currentLocale() }}',
-            enableTime: @if ($filter->getConfig('timeEnabled') == 1) true, @else false, @endif
-            @if ($filter->hasConfig('earliestDate')) minDate: '{{ $filter->getConfig('earliestDate') }}', @endif
-            @if ($filter->hasConfig('latestDate')) maxDate: '{{ $filter->getConfig('latestDate') }}' @endif
+            enableTime: @if($filter->getConfig('timeEnabled') == 1)
+            true,
+            @else
+            false,
+            @endif
+            @if($filter->hasConfig('earliestDate'))
+            minDate: '{{ $filter->getConfig('earliestDate') }}',
+            @endif
+            @if($filter->hasConfig('latestDate'))
+            maxDate: '{{ $filter->getConfig('latestDate') }}'
+            @endif
         }),
         init() {
 

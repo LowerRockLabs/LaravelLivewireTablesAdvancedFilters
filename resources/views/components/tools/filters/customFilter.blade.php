@@ -14,23 +14,23 @@
         var result = [];
         var options = this.items.options;
         var opt;
-        for (var i=0, iLen=options.length; i<iLen; i++) {
+        for (var i = 0, iLen = options.length; i < iLen; i++) {
             opt = options[i];
 
             if (opt.selected) {
-              result.push(opt.value);
+                result.push(opt.value);
             }
         }
         this.selectedItems = result;
     }
-    }"
-    >
+}">
     @if ($theme === 'tailwind')
-        <label for="{{ $tableName }}-filter-{{ $filterKey }}"
-            class="block text-sm font-medium leading-5 text-gray-700 dark:text-white">
-            {{ $filter->getName() }}
-        </label>
         <div>
+
+            <label for="{{ $tableName }}-filter-{{ $filterKey }}"
+                class="block text-sm font-medium leading-5 text-gray-700 dark:text-white">
+                {{ $filter->getName() }}
+            </label>
             @livewire('test-component')
         </div>
     @endif

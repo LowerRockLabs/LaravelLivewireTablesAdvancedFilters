@@ -23,8 +23,6 @@
     $lightStyling = $filter->getConfig('styling')['light'];
     $darkStyling = $filter->getConfig('styling')['dark'];
 @endphp
-
-
 <div id="numberRangeContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
     twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'),
@@ -123,10 +121,10 @@
                 '>
 
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
-                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()">
+                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()" />
                 <output></output>
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMin }}"
-                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()">
+                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()" />
                 <output></output>
                 <div class='range-slider__progress'></div>
             </div>
@@ -146,10 +144,10 @@
                     '>
 
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
-                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()">
+                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()" />
                 <output></output>
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMin }}"
-                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()">
+                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()" />
                 <output></output>
                 <div class='range-slider__progress'></div>
             </div>
@@ -169,10 +167,10 @@
             '>
 
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
-                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()">
+                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()" />
                 <output></output>
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMin }}"
-                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()">
+                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()" />
                 <output></output>
                 <div class='range-slider__progress'></div>
             </div>
@@ -507,7 +505,7 @@
         </style>
     @elseif ($filter->getConfig('cssInclude') == 'include')
         @push('styles')
-            <link href="{{ asset('css/numberRange.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/numberRange.css') }}" rel="stylesheet" />
         @endpush
     @endif
 

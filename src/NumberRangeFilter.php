@@ -170,6 +170,13 @@ class NumberRangeFilter extends Filter
         //    $component->{$component->getTableName()}['filters'][$this->getKey()] = ['min' => $component->{$component->getTableName()}['filters'][$this->getKey()]['max'], 'max' => $component->{$component->getTableName()}['filters'][$this->getKey()]['min']];
         // }
 
+        // @codeCoverageIgnoreStart
+        if (! isset($component->{$component->getTableName()}['filters'][$this->getKey()])) {
+            $component->{$component->getTableName()}['filters'][$this->getKey()] = $this->getDefaultValue();
+        }
+
+        // @codeCoverageIgnoreEnd
+
         return view('livewiretablesadvancedfilters::components.tools.filters.numberRange', [
             'component' => $component,
             'theme' => $component->getTheme(),

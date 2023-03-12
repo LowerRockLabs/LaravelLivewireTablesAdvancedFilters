@@ -14,12 +14,6 @@
     $xRefKey = 'slimSelectSearchBox' . $filterKey;
     $smartSelectID = 'slimSelectSearchBox' . $filterKey . '-id';
 @endphp
-
-@pushOnce('scripts')
-    <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
-    <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet" />
-@endPushOnce
-
 <div id="slimSelectContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
     twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'),
@@ -97,6 +91,12 @@
         $watch('allFilters', value => this.setupFilterMenu());
     }
 }">
+    @pushOnce('scripts')
+        <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
+    @endPushOnce
+    @pushOnce('styles')
+        <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet" />
+    @endPushOnce
     @if ($theme === 'tailwind')
         <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
             :filterName="$filterName" />

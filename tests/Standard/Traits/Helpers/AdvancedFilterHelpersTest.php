@@ -217,10 +217,8 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
 
         $this->assertSame(['breed' => [],
             'smart' => [],
-            'range' => ['min' => null,
-                'max' => null],
-            'daterange' => ['minDate' => null,
-                'maxDate' => null],
+            'range' => [],
+            'daterange' => [],
             'datepicker' => null,
             'species' => [],
             'slim' => [],

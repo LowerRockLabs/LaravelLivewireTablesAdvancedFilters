@@ -70,9 +70,18 @@ jobs:
       - name: Run PHPStan
         run: phpstan analyse src
 
-      - name: phpunit-coverage-badge
+      - name: phpunit-coverage-badge-l9
+        if: ${{ matrix.laravel }} == '9.*'
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
-          coverage_badge_path: 'docs/images/badges/phpunit-coverage-${{ matrix.php }}-develop.svg'
+          coverage_badge_path: 'docs/images/badges/phpunit-coverage-L9-${{ matrix.php }}-develop.svg'
+          push_badge: true
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: phpunit-coverage-badge-l10
+        if: ${{ matrix.laravel }} == '10.*'
+        uses: timkrase/phpunit-coverage-badge@v1.2.1
+        with:
+          coverage_badge_path: 'docs/images/badges/phpunit-coverage-L10-${{ matrix.php }}-develop.svg'
           push_badge: true
           repo_token: ${{ secrets.GITHUB_TOKEN }}

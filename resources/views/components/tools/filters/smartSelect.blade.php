@@ -20,8 +20,8 @@
 
 <div id="smartSelectContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
-    twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'),
-    bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'),
+    @if ($theme == 'tailwind') twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'), @endif
+    @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'), @endif
     setupFilterMenu() {
         if (document.querySelector('{{ $filterMenuLabel }}') !== null) {
             document.querySelector('{{ $filterMenuLabel }}').classList.add('{{ $customFilterMenuWidth }}');
@@ -42,18 +42,18 @@
             document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
             document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('d-none');
         }
-        for (let i = 0; i < this.twMenuElements.length; i++) {
+        @if ($theme === 'tailwind') for (let i = 0; i < this.twMenuElements.length; i++) {
             if (this.twMenuElements.item(i).getAttribute('x-data') != '{ open: true, childElementOpen: true  }') {
                 this.twMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
                 this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
             }
-        }
-        for (let i = 0; i < this.bsMenuElements.length; i++) {
+        } @endif
+        @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') for (let i = 0; i < this.bsMenuElements.length; i++) {
             if (this.bsMenuElements.item(i).getAttribute('x-data') != '{ open: true, childElementOpen: true  }') {
                 this.bsMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
                 this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
             }
-        }
+        } @endif
     },
     newSelectedItems: $wire.entangle('{{ $selectedWireKey }}'),
     optionsMethod: '{{ $optionsMethod }}',
@@ -108,7 +108,6 @@
         this.currentFilteredList = [];
         var testObject = Object.entries({{ json_encode($filter->getOptions()) }}).map((entry) => this.filteredList[entry[0]] = entry[1]);
         $watch('newSelectedItems', value => this.setupFilterMenu());
-        $watch('open', value => this.setupFilterMenu());
         $watch('allFilters', value => this.setupFilterMenu());
     },
 }">
@@ -232,25 +231,25 @@
             }
 
             /*
-            ul.smartSelectDropDownList li {
-                background-color: #FFFFFF;
-                cursor: pointer;
-            }
+                                    ul.smartSelectDropDownList li {
+                                        background-color: #FFFFFF;
+                                        cursor: pointer;
+                                    }
 
-            /* bg-gray-700
-            .dark ul.smartSelectDropDownList li {
-                background-color: rgb(55 65 81);
-            }
-            /* bg-blue-500
-            ul.smartSelectDropDownList li:hover {
-                background-color: rgb(59 130 246);
-            }
+                                    /* bg-gray-700
+                                    .dark ul.smartSelectDropDownList li {
+                                        background-color: rgb(55 65 81);
+                                    }
+                                    /* bg-blue-500
+                                    ul.smartSelectDropDownList li:hover {
+                                        background-color: rgb(59 130 246);
+                                    }
 
-            /* bg-gray-400
-            .dark ul.smartSelectDropDownList li:hover {
-                background-color: rgb(156 163 175);
-            }
-            */
+                                    /* bg-gray-400
+                                    .dark ul.smartSelectDropDownList li:hover {
+                                        background-color: rgb(156 163 175);
+                                    }
+                                    */
             .bg-blue-500 {
                 background-color: rgb(59 130 246);
             }

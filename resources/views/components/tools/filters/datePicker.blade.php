@@ -21,6 +21,7 @@
     setupFilterMenu() {
         if (document.querySelector('{{ $filterMenuLabel }}') !== null) {
             document.querySelector('{{ $filterMenuLabel }}').classList.add('{{ $customFilterMenuWidth }}');
+            document.querySelector('{{ $filterMenuLabel }}').style.width = '20em !important';
             document.querySelector('{{ $filterMenuLabel }}').classList.remove('md:w-56');
         }
 

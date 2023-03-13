@@ -16,8 +16,8 @@
 @endphp
 <div id="datePickerContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
-    twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'),
-    bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'),
+    @if ($theme == 'tailwind') twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'), @endif
+    @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'), @endif
     setupFilterMenu() {
         if (document.querySelector('{{ $filterMenuLabel }}') !== null) {
             document.querySelector('{{ $filterMenuLabel }}').classList.add('{{ $customFilterMenuWidth }}');
@@ -39,22 +39,21 @@
             document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
             document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('d-none');
         }
-        for (let i = 0; i < this.twMenuElements.length; i++) {
+        @if ($theme === 'tailwind') for (let i = 0; i < this.twMenuElements.length; i++) {
             if (this.twMenuElements.item(i).getAttribute('x-data') != '{ open: true, childElementOpen: true  }') {
                 this.twMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
                 this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
             }
-        }
-
-        for (let i = 0; i < this.bsMenuElements.length; i++) {
+        } @endif
+        @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') for (let i = 0; i < this.bsMenuElements.length; i++) {
             if (this.bsMenuElements.item(i).getAttribute('x-data') != '{ open: true, childElementOpen: true  }') {
                 this.bsMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
                 this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
             }
-        }
+        } @endif
     },
     init() {
-        $watch('open', value => this.setupFilterMenu());
+        this.setupFilterMenu();
         $watch('allFilters', value => this.setupFilterMenu());
     }
 }">

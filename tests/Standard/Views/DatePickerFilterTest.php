@@ -29,7 +29,7 @@ class DatePickerFilterTest extends TestCaseAdvanced
     {
         $filter = DatePickerFilter::make('Active');
 
-        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.datePicker'), ['customFilterMenuWidth' => 'md:w-80']);
+        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.datePicker'), ['customFilterMenuWidth' => 'w-80 md:w-80']);
 
         $this->assertSame($defaultConfig, $filter->getConfigs());
 

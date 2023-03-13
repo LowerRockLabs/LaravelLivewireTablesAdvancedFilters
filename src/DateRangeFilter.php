@@ -156,7 +156,7 @@ class DateRangeFilter extends Filter
      */
     public function getDefaultValue(): array
     {
-        return ['minDate' => null, 'maxDate' => null];
+        return [];
     }
 
     /**

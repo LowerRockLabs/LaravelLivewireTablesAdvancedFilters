@@ -30,7 +30,7 @@ class SlimSelectFilterTest extends TestCaseAdvanced
     {
         $filter = SlimSelectFilter::make('Active');
 
-        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.slimSelect'), ['customFilterMenuWidth' => 'md:w-80']);
+        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.slimSelect'), ['customFilterMenuWidth' => 'w-80 md:w-80']);
 
         $this->assertSame($defaultConfig, $filter->getConfigs());
 

@@ -15,22 +15,21 @@
     $maxFilterWirePath = $filterBasePath . '.max';
 
     if (isset($this->{$tableName}['filters'])) {
-        $currentMin = !is_null($this->{$tableName}['filters'][$filterKey]['min']) ? $this->{$tableName}['filters'][$filterKey]['min'] : $defaultMin;
-        $currentMax = isset($this->{$tableName}['filters'][$filterKey]['max']) ? (!is_null($this->{$tableName}['filters'][$filterKey]['max']) ? $this->{$tableName}['filters'][$filterKey]['max'] : $filterMax) : $filterMax;
+        if (!empty($this->{$tableName}['filters'][$filterKey])) {
+            $currentMin = isset($this->{$tableName}['filters'][$filterKey]['min']) ? $this->{$tableName}['filters'][$filterKey]['min'] : $defaultMin;
+            $currentMax = isset($this->{$tableName}['filters'][$filterKey]['max']) ? $this->{$tableName}['filters'][$filterKey]['max'] : $defaultMax;
+        }
     }
     $lightStyling = $filter->getConfig('styling')['light'];
     $darkStyling = $filter->getConfig('styling')['dark'];
 @endphp
-
-
 <div id="numberRangeContainer{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
     @if ($theme == 'tailwind') twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'), @endif
     @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'), @endif
     currentMin: $refs.filterMin.value,
     currentMax: $refs.filterMax.value,
-    minValue: $wire.entangle('{{ $minFilterWirePath }}'),
-    maxValue: $wire.entangle('{{ $maxFilterWirePath }}'),
+    wireValues: $wire.entangle('{{ $filterBasePath }}'),
     defaultMin: {{ $minRange }},
     defaultMax: {{ $maxRange }},
     restrictUpdates: true,
@@ -74,8 +73,13 @@
         document.getElementById('{{ $filterBasePath }}').style.setProperty('--text-value-a', JSON.stringify($refs.filterMax.value));
     },
     setupWire() {
-        $refs.filterMin.value = (this.minValue) ? this.minValue : this.defaultMin;
-        $refs.filterMax.value = (this.maxValue) ? this.maxValue : this.defaultMax;
+        if (this.wireValues !== undefined) {
+            $refs.filterMin.value = (this.wireValues['min'] !== undefined) ? this.wireValues['min'] : this.defaultMin;
+            $refs.filterMax.value = (this.wireValues['max'] !== undefined) ? this.wireValues['max'] : this.defaultMax;
+        } else {
+            $refs.filterMin.value = this.defaultMin;
+            $refs.filterMax.value = this.defaultMax;
+        }
         this.updateStyles();
     },
     allowUpdates() {
@@ -86,16 +90,8 @@
         this.updateStyles();
 
         if (!this.restrictUpdates) {
-            if (this.minValue === null || this.maxValue === null) {
-                if ($refs.filterMin.value != this.defaultMin || $refs.filterMax.value != this.defaultMax) {
-                    this.minValue = $refs.filterMin.value;
-                    this.maxValue = $refs.filterMax.value;
-                }
-            } else {
-                if (this.minValue != $refs.filterMin.value || this.maxValue != $refs.filterMax.value) {
-                    this.minValue = $refs.filterMin.value;
-                    this.maxValue = $refs.filterMax.value;
-                }
+            if ($refs.filterMin.value != this.defaultMin || $refs.filterMax.value != this.defaultMax) {
+                this.wireValues = { 'min': $refs.filterMin.value, 'max': $refs.filterMax.value };
             }
             this.restrictUpdates = true;
         }
@@ -105,8 +101,6 @@
         this.setupFilterMenu();
         $watch('allFilters', value => this.setupFilterMenu());
         $watch('allFilters', value => this.setupWire());
-
-
     },
 }">
     @if ($theme === 'tailwind')
@@ -125,10 +119,10 @@
                 '>
 
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
-                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()">
+                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()" />
                 <output></output>
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMin }}"
-                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()">
+                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()" />
                 <output></output>
                 <div class='range-slider__progress'></div>
             </div>
@@ -148,10 +142,10 @@
                     '>
 
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
-                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()">
+                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()" />
                 <output></output>
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMin }}"
-                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()">
+                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()" />
                 <output></output>
                 <div class='range-slider__progress'></div>
             </div>
@@ -171,10 +165,10 @@
             '>
 
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
-                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()">
+                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()" />
                 <output></output>
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMin }}"
-                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()">
+                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()" />
                 <output></output>
                 <div class='range-slider__progress'></div>
             </div>
@@ -509,7 +503,7 @@
         </style>
     @elseif ($filter->getConfig('cssInclude') == 'include')
         @push('styles')
-            <link href="{{ asset('css/numberRange.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/numberRange.css') }}" rel="stylesheet" />
         @endpush
     @endif
 

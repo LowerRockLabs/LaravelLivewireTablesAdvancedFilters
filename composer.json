@@ -23,7 +23,7 @@
         "livewire/livewire": "^2.6",
         "spatie/laravel-package-tools": "^1.4.3",
         "illuminate/contracts": "^8.0|^9.0|^10.0",
-        "rappasoft/laravel-livewire-tables": "^2.0|dev-main|dev-master"
+        "rappasoft/laravel-livewire-tables": "dev-devlatest|^2.0|dev-main|dev-master"
     },
     "require-dev": {
         "ext-sqlite3": "*",

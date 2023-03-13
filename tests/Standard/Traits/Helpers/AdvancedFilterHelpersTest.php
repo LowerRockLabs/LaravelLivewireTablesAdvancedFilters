@@ -283,7 +283,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
         $this->advancedTable->setFilter('datepicker', '2020-10-10');
 
         $this->assertSame(['breed' => [0 => '1'], 'range' => ['min' => null, 'max' => null], 'daterange' => ['minDate' => null, 'maxDate' => null],
-            'species' => [0 => '0']], $this->advancedTable->getAppliedFiltersWithValues());
+            'datepicker' => '2020-10-10', 'species' => [0 => '0']], $this->advancedTable->getAppliedFiltersWithValues());
     }
 
         /** @test */

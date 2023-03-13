@@ -4,6 +4,8 @@
 Dev Branch
 ![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit.yml/badge.svg?branch=develop)
 
+
+
 # LaravelLivewireTablesAdvancedFilters
 Advanced filters for Rappasoft Laravel Livewire Tables v2.0 and above
 
@@ -28,11 +30,13 @@ Package is currently under active development & testing, please use caution when
 | Component Filter  | Testing   | Testing | &cross;  | &cross;  |
 
 # Laravel Support
-| Version | Supported |
-| :---: | :---: |
-| 8 | &cross;  |
-| 9 | &check;  |
-| 10 | &check;  |
+| Version | Supported | Develop | Main
+| :---: | :---: | 
+| 8 | &cross;  | X | X |
+| 9 | &check;  | ![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/badges/phpunit-coverage-L9-8.2-develop.svg) | ![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/badges/phpunit-coverage-L9-8.2.svg) |
+| 10 | &check;  | ![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/badges/phpunit-coverage-L10-8.2-develop.svg) | ![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/develop/docs/images/badges/phpunit-coverage-L10-8.2.svg) |
+
+
 
 This package uses Arr::map, which is not supported under Laravel 8.  If there is demand, then a version will be released supporting Laravel 8
 

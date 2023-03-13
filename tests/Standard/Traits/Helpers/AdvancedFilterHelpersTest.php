@@ -5,6 +5,7 @@ namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Standard\Trai
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DateRangeFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter;
+use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SlimSelectFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SmartSelectFilter;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Standard\TestCaseAdvanced;
 use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectDropdownFilter;

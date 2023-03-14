@@ -7,11 +7,11 @@
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
     $customFilterMenuWidth = $filterConfigs['customFilterMenuWidth'];
-    
+
     $wireKey = $tableName . '.filters.' . $filterKey;
     $selectedWireKey = 'filterData.' . $filterKey;
     $xRefKey = 'smartSelectSearchBox' . $filterKey;
-    
+
     $iconStyling = $filterConfigs['iconStyling'];
     $listStyling = $filterConfigs['listStyling'];
     $displayIdEnabled = $filterConfigs['displayIdEnabled'] ?? 'false';
@@ -200,12 +200,12 @@
                                 :class="{ 'bg-light': (index % 2), 'bg-secondary': !(index % 2) }">
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
                                     <x-livewiretablesadvancedfilters::elements.smartselect-item-rem :iconStyling="$iconStyling"
-                                        :theme="$theme" />
+                                        :displayHtmlName="$displayHtmlName" :theme="$theme" />
                                 </template>
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
 
                                     <x-livewiretablesadvancedfilters::elements.smartselect-item-add :iconStyling="$iconStyling"
-                                        :theme="$theme" />
+                                        :displayHtmlName="$displayHtmlName" :theme="$theme" />
 
 
                                 </template>
@@ -307,11 +307,11 @@
                                 <a href='#'>
                                     <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
                                         <x-livewiretablesadvancedfilters::elements.smartselect-item-rem
-                                            :iconStyling="$iconStyling" :theme="$theme" />
+                                            :iconStyling="$iconStyling" :theme="$theme" :displayHtmlName="$displayHtmlName" />
                                     </template>
                                     <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
                                         <x-livewiretablesadvancedfilters::elements.smartselect-item-add
-                                            :iconStyling="$iconStyling" :theme="$theme" />
+                                            :iconStyling="$iconStyling" :theme="$theme" :displayHtmlName="$displayHtmlName" />
                                     </template>
                                 </a>
                             </li>

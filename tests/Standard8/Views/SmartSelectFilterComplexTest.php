@@ -35,7 +35,7 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
     {
         $filter = SmartSelectFilter::make('Active');
 
-        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.smartSelect'), ['customFilterMenuWidth' => 'md:w-80']);
+        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.smartSelect'), ['customFilterMenuWidth' => 'w-80']);
 
         $this->assertSame($defaultConfig, $filter->getConfigs());
 
@@ -51,7 +51,7 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
     {
         $filter = SmartSelectFilter::make('Active');
 
-        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.smartSelect'), ['customFilterMenuWidth' => 'md:w-80']);
+        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.smartSelect'), ['customFilterMenuWidth' => 'w-80']);
 
         $this->assertSame($defaultConfig, $filter->getConfigs());
 

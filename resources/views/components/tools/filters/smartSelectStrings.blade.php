@@ -16,7 +16,6 @@
     $listStyling = $filterConfigs['listStyling'];
     $displayIdEnabled = $filterConfigs['displayIdEnabled'] ?? 'false';
     $optionsMethod = $filterConfigs['optionsMethod'];
-    $displayHtmlName = $filterConfigs['displayHtmlName'] ?? 'false';
 @endphp
 
 <div id="smartSelectContainer{{ $filterKey }}" x-data="{
@@ -107,7 +106,7 @@
     init() {
         this.setupFilterMenu();
         this.currentFilteredList = [];
-        var testObject = Object.entries({{ json_encode($filter->getOptions()) }}).map((entry) => this.filteredList[entry[0]] = entry[1]);
+        var testObject = Object.entries({{ json_encode($filter->getOptions()) }}).map((entry) => this.filteredList[] = entry[1]);
         $watch('newSelectedItems', value => this.setupFilterMenu());
         $watch('allFilters', value => this.setupFilterMenu());
     },
@@ -148,12 +147,12 @@
                             <li class="px-2 py-1 hover:bg-blue-500 dark:hover:bg-gray-400"
                                 :class="{ 'dark:bg-gray-800': (index % 2) }">
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
-                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-rem :displayHtmlName="$displayHtmlName"
-                                        :iconStyling="$iconStyling" :theme="$theme" />
+                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-rem :iconStyling="$iconStyling"
+                                        :theme="$theme" />
                                 </template>
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
-                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-add :displayHtmlName="$displayHtmlName"
-                                        :iconStyling="$iconStyling" :theme="$theme" />
+                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-add :iconStyling="$iconStyling"
+                                        :theme="$theme" />
                                 </template>
                             </li>
                         </template>

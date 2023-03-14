@@ -1,4 +1,4 @@
-@props(['theme', 'iconStyling', 'linkClass' => ''])
+@props(['theme', 'iconStyling', 'linkClass' => '', 'displayHtmlName'])
 @if ($theme == 'tailwind')
     <a class="cursor-pointer  inline-block w-full" x-on:click="removeSelectedItem(filteredItem.id.toString())">
         @if ($iconStyling['delete']['svgEnabled'])
@@ -10,7 +10,11 @@
                     &#40;<span x-text="filteredItem.id"></span>&#41;
                 </span>
             </template>
-            <span class="smartSelect-NameDisplay-Name" x-text="filteredItem.name"></span>
+            @if ($displayHtmlName)
+                <span class="smartSelect-NameDisplay-Name" x-html="filteredItem.name"></span>
+            @else
+                <span class="smartSelect-NameDisplay-Name" x-text="filteredItem.name"></span>
+            @endif
         </span>
     </a>
 @else
@@ -25,7 +29,11 @@
                     &#40;<span x-text="filteredItem.id"></span>&#41;
                 </span>
             </template>
-            <span class="smartSelect-NameDisplay-Name" x-text="filteredItem.name"></span>
+            @if ($displayHtmlName)
+                <span class="smartSelect-NameDisplay-Name" x-html="filteredItem.name"></span>
+            @else
+                <span class="smartSelect-NameDisplay-Name" x-text="filteredItem.name"></span>
+            @endif
         </span>
     </a>
 @endif

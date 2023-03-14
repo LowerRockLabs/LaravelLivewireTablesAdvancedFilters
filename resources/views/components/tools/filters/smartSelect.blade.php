@@ -7,11 +7,11 @@
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
     $customFilterMenuWidth = $filterConfigs['customFilterMenuWidth'];
-
+    
     $wireKey = $tableName . '.filters.' . $filterKey;
     $selectedWireKey = 'filterData.' . $filterKey;
     $xRefKey = 'smartSelectSearchBox' . $filterKey;
-
+    
     $iconStyling = $filterConfigs['iconStyling'];
     $listStyling = $filterConfigs['listStyling'];
     $displayIdEnabled = $filterConfigs['displayIdEnabled'] ?? 'false';
@@ -74,7 +74,7 @@
         if ($refs.{{ $xRefKey }}.value != '') {
             this.filteredList.filter(function(elem, index) {
                 if (elem.name.toString().toLowerCase().includes($refs.{{ $xRefKey }}.value.toLowerCase())) {
-                    currentlyFilteredObject.push({ 'id': index, 'name': elem.name.toString() });
+                    currentlyFilteredObject.push({ 'id': index, 'name': elem.name.toString(), 'htmlName': elem.htmlName.toString() });
                 }
                 return true;
             });

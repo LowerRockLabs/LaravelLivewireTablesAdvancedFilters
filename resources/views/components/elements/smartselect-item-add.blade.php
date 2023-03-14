@@ -11,7 +11,7 @@
                 </span>
             </template>
             @if ($displayHtmlName)
-                <span class="smartSelect-NameDisplay-Name" x-html="filteredItem.name"></span>
+                <span class="smartSelect-NameDisplay-Name" x-html="filteredItem.htmlName"></span>
             @else
                 <span class="smartSelect-NameDisplay-Name" x-text="filteredItem.name"></span>
             @endif
@@ -31,7 +31,7 @@
             </template>
 
             @if ($displayHtmlName)
-                <span class="smartSelect-NameDisplay-Name" x-html="filteredItem.name"></span>
+                <span class="smartSelect-NameDisplay-Name" x-html="filteredItem.htmlName"></span>
             @else
                 <span class="smartSelect-NameDisplay-Name" x-text="filteredItem.name"></span>
             @endif

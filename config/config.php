@@ -9,6 +9,7 @@ return [
     'smartSelect' => [
         'optionsMethod' => 'complex',  // Should be set to either standard or lookup
         'popoverMethod' => 'standard',  // Should be set to either standard or lookup.
+        'displayHtmlName' => false,
         'iconStyling' => [
             'add' => [
                 'classes' => '',        // Base classes for the "add" icon

@@ -21,7 +21,8 @@
         </svg>
     </button>
 @elseif ($theme == 'bootstrap-5')
-    <button x-on:click="popOpen = ! popOpen" type="button"
+    <button x-on:click="popOpen = ! popOpen" type="button" data-container="body" data-toggle="popover"
+        data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
         class="d-inline bg-white rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-200 z-0"
         id="menu-button" aria-expanded="true" aria-haspopup="true">
         <span class="sr-only">Open options</span>

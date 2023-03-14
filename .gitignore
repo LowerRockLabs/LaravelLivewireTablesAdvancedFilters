@@ -29,3 +29,4 @@ srcb/
 build/coverage.txt
 build/report.junit.xml
 clover.xml
+resources/views/components/buttons/popover-open.blade copy.php

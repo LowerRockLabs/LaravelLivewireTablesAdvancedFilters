@@ -2,7 +2,7 @@
 
 // config for LowerRockLabs/LaravelLivewireTablesAdvancedFilters
 return [
-    'customFilterMenuWidth' => 'w-80 md:w-80',
+    'customFilterMenuWidth' => 'w-80',
     'slimSelect' => [
         'defaults' => ['test' => 'test'],
     ],
@@ -42,9 +42,9 @@ return [
             'dateFormat' => 'Y-m-d',
         ],
         // Set to true if you need to include the Flatpickr JS
-        'publishFlatpickrJS' => true,
+        'publishFlatpickrJS' => false,
         // Set to true if you need to include the Flatpickr CSS
-        'publishFlatpickrCSS' => true,
+        'publishFlatpickrCSS' => false,
     ],
     'datePicker' => [
         'defaults' => [
@@ -57,9 +57,9 @@ return [
             'timeEnabled' => false,
         ],
         // Set to true if you need to include the Flatpickr JS
-        'publishFlatpickrJS' => true,
+        'publishFlatpickrJS' => false,
         // Set to true if you need to include the Flatpickr CSS
-        'publishFlatpickrCSS' => true,
+        'publishFlatpickrCSS' => false,
     ],
     'numberRange' => [
         'defaults' => [

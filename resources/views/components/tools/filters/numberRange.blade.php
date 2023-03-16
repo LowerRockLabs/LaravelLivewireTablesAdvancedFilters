@@ -54,17 +54,20 @@
             document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('d-none');
         }
         @if ($theme === 'tailwind') for (let i = 0; i < this.twMenuElements.length; i++) {
-            if (this.twMenuElements.item(i).getAttribute('x-data') != '{ open: true, childElementOpen: true  }') {
-                this.twMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
+            if (!this.twMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
+            {
+                this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
                 this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
             }
         } @endif
         @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') for (let i = 0; i < this.bsMenuElements.length; i++) {
-            if (this.bsMenuElements.item(i).getAttribute('x-data') != '{ open: true, childElementOpen: true  }') {
-                this.bsMenuElements.item(i).setAttribute('x-data', '{ open: true, childElementOpen: true  }');
+            if (!this.bsMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
+            {
+                this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
                 this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
             }
         } @endif
+
     },
     updateStyles() {
         document.getElementById('{{ $filterBasePath }}').style.setProperty('--value-b', $refs.filterMin.value);

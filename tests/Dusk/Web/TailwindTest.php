@@ -124,9 +124,6 @@ class TailwindTest extends DuskTestCase
             $browser->click('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(10)');
 
             $browser->pause(5000);
-
-            
-
         });
     }
 }

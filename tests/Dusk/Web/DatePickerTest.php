@@ -94,7 +94,6 @@ final class DatePickerTest extends DuskTestCase
             $this->assertNotEquals($browser->attribute('.today', 'aria-label'), Carbon::tomorrow()->format('F j, Y'));
 
             $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_5_Final_Check_" . date('Y-m-d H'));
-
         });
     }
 /*

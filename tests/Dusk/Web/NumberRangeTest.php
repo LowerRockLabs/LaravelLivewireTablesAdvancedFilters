@@ -2,7 +2,6 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Dusk\Web;
 
-use Carbon\Carbon;
 use Laravel\Dusk\Browser;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Dusk\DuskTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -36,7 +35,7 @@ final class NumberRangeTest extends DuskTestCase
             ],
              'BS5-slidedown' => [
                  '/bootstrap-5-slidedown',
-             ],  
+             ],
              
         ];
     }
@@ -48,7 +47,6 @@ final class NumberRangeTest extends DuskTestCase
     public function testNumberRangeFilterOpens($baseURL): void
     {
         $this->browse(function (Browser $browser) use ($baseURL) {
-
             $browser->visit($baseURL);
            
             $browser->pause(1000);
@@ -63,7 +61,7 @@ final class NumberRangeTest extends DuskTestCase
             
             $initialMinValue = $browser->value('#users2\.filters\.success_rate\.min');
 
-            $this->assertEquals(0,$browser->value('#users2\.filters\.success_rate\.min'));
+            $this->assertEquals(0, $browser->value('#users2\.filters\.success_rate\.min'));
 
             $initialMaxValue = $browser->value('#users2\.filters\.success_rate\.max');
 
@@ -75,7 +73,7 @@ final class NumberRangeTest extends DuskTestCase
 
             $browser->value('#users2\.filters\.success_rate\.max', "75");
 
-            $this->assertEquals(75,$browser->value('#users2\.filters\.success_rate\.max'));
+            $this->assertEquals(75, $browser->value('#users2\.filters\.success_rate\.max'));
 
             $browser->pause(500);
 
@@ -94,7 +92,6 @@ final class NumberRangeTest extends DuskTestCase
             $browser->pause(2000);
 
             $browser->screenshot("numberRange_" . trim($baseURL, '//') . "_5_Final_Check_" . date('Y-m-d H'));
-
         });
     }
 }

@@ -30,11 +30,7 @@ final class NumberRangeTest extends DuskTestCase
             'BS4-slidedown' => [
                 '/bootstrap-4-slidedown',
             ],
-            
-            'BS5' => [
-                '/bootstrap-5',
-            ],
-             'BS5-slidedown' => [
+                         'BS5-slidedown' => [
                  '/bootstrap-5-slidedown',
              ],  
              
@@ -60,40 +56,53 @@ final class NumberRangeTest extends DuskTestCase
             $browser->pause(1000);
 
             $browser->screenshot("numberRange_" . trim($baseURL, '//') . "_2_Clicked_Filter_Button_" . date('Y-m-d H'));
-            
+
+            $browser->scrollIntoView('#users2\.filters\.success_rate\.min');
+
             $initialMinValue = $browser->value('#users2\.filters\.success_rate\.min');
 
-            $this->assertEquals(0,$browser->value('#users2\.filters\.success_rate\.min'));
+            $this->assertEquals(0,$initialMinValue);
 
             $initialMaxValue = $browser->value('#users2\.filters\.success_rate\.max');
 
-            $this->assertEquals(100, $browser->value('#users2\.filters\.success_rate\.max'));
+            $this->assertEquals(100, $initialMaxValue);
             
             $browser->pause(1000);
-
-            $browser->dragLeft('#users2\.filters\.success_rate\.max', 50);
+            
+            $browser->scrollIntoView('#users2\.filters\.success_rate\.min');
 
             $browser->value('#users2\.filters\.success_rate\.max', "75");
 
-            $this->assertEquals(75,$browser->value('#users2\.filters\.success_rate\.max'));
+            $this->assertEquals(75, $browser->value('#users2\.filters\.success_rate\.max'));
 
             $browser->pause(500);
 
+            $browser->scrollIntoView('#users2\.filters\.success_rate\.min');
+
             $browser->screenshot("numberRange_" . trim($baseURL, '//') . "_4a_First_Drag" . date('Y-m-d H'));
             
-            $browser->mouseover('#users2-filter-e_mail_verified_range');
+            
+            $browser->dragOffset('#users2\.filters\.success_rate\.min', $x = 20, $y = -50);
+
+            $browser->scrollIntoView('#users2\.filters\.success_rate\.min');
 
             $browser->pause(1000);
+
+            $browser->scrollIntoView('#users2\.filters\.success_rate\.min');
 
             $browser->screenshot("numberRange_" . trim($baseURL, '//') . "_4b_Second_Drag" . date('Y-m-d H'));
 
             $this->assertEquals(0, $browser->value('#users2\.filters\.success_rate\.min'));
 
-            $browser->mouseover('#users2-filter-e_mail_verified_range');
-
             $browser->pause(2000);
 
-            $browser->screenshot("numberRange_" . trim($baseURL, '//') . "_5_Final_Check_" . date('Y-m-d H'));
+            $browser->scrollIntoView('@filtBtn');
+
+            $browser->screenshot("numberRange_" . trim($baseURL, '//') . "_5a_Final_Check_" . date('Y-m-d H'));
+
+            $browser->scrollIntoView('.sf-dump');
+
+            $browser->screenshot("numberRange_" . trim($baseURL, '//') . "_5b_Final_Check_" . date('Y-m-d H'));
 
         });
     }

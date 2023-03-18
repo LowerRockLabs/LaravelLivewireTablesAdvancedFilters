@@ -7,7 +7,7 @@ use Laravel\Dusk\Browser;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Dusk\DuskTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-final class DatePickerTest extends DuskTestCase
+final class DateRangeTest extends DuskTestCase
 {
     public static function urlProvider(): array
     {
@@ -29,13 +29,13 @@ final class DatePickerTest extends DuskTestCase
             'BS4' => [
                 '/bootstrap-4',
             ],
-            'BS5' => [
+            /*'BS5' => [
                 '/bootstrap-5',
-            ],
-            /*
+            ],*/
+          
              'BS4-slidedown' => [
                  '/bootstrap-4-slidedown',
-             ],
+             ],/*
              'BS5-slidedown' => [
                  '/bootstrap-5-slidedown',
              ],  */
@@ -46,30 +46,30 @@ final class DatePickerTest extends DuskTestCase
      * testDatepickerFilterOpens
      */
     #[DataProvider('urlProvider')]
-    public function testDatepickerFilterOpens($baseURL): void
+    public function testDaterangeFilterOpens($baseURL): void
     {
         $this->browse(function (Browser $browser) use ($baseURL) {
             $browser->visit($baseURL);
-
+           
             $browser->pause(1000);
 
-            $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_1_Initial_Load_" . date('Y-m-d H'));
+            $browser->screenshot("dateRange_" . trim($baseURL, '//') . "_1_Initial_Load_" . date('Y-m-d H'));
 
             $browser->press('@filtBtn');
 
             $browser->pause(1000);
 
-            $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_2_Clicked_Filter_Button_" . date('Y-m-d H'));
+            $browser->screenshot("dateRange_" . trim($baseURL, '//') . "_2_Clicked_Filter_Button_" . date('Y-m-d H'));
 
             $browser->assertDontSee('Wed');
 
             $browser->pause(1000);
 
-            $browser->click('#users2-filter-verified_before_date');
+            $browser->click('#users2-filter-e_mail_verified_range');
             
             $browser->pause(1000);
 
-            $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_3_opened_Flatpickr_" . date('Y-m-d H'));
+            $browser->screenshot("dateRange_" . trim($baseURL, '//') . "_3_opened_Flatpickr_" . date('Y-m-d H'));
 
             $browser->assertSee('Sun')->assertSee('Mon')->assertSee('Tue')->assertSee('Wed')->assertSee('Thu')->assertSee('Fri')->assertSee('Sat');
 
@@ -79,62 +79,30 @@ final class DatePickerTest extends DuskTestCase
 
             $browser->assertVisible('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(10)');
 
-            $currentDate = $browser->attribute('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(10)', 'aria-label');
+            $firstDate = $browser->attribute('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(10)', 'aria-label');
+
+            $secondDate = $browser->attribute('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(15)', 'aria-label');
 
             $browser->click('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(10)');
 
+            $browser->click('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(15)');
+
             $browser->pause(1000);
 
-            $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_4_Selected_Date_" . date('Y-m-d H'));
+            $browser->screenshot("dateRange_" . trim($baseURL, '//') . "_4_Selected_Dates_" . date('Y-m-d H'));
            
             $browser->press('@filtBtn');
 
             $browser->pause(1000);
 
-            $browser->assertSee($currentDate);
+            $browser->assertSee($firstDate);
 
-            $browser->assertDontSee(date('F j, Y'));
+            $browser->assertSee($secondDate);
 
             $browser->pause(1000);
 
-            $browser->assertAttribute('.today', 'aria-label', date('F j, Y'));
-
-            $this->assertEquals($browser->attribute('.today', 'aria-label'), date('F j, Y'));
-
-            $this->assertNotEquals($browser->attribute('.today', 'aria-label'), Carbon::tomorrow()->format('F j, Y'));
-
-            $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_5_Final_Check_" . date('Y-m-d H'));
+            $browser->screenshot("dateRange_" . trim($baseURL, '//') . "_5_Final_Check_" . date('Y-m-d H'));
 
         });
     }
-/*
-    #[DataProvider('urlProvider')]
-    public function testTodayIsDefaultDate($baseURL): void
-    {
-        $this->browse(function (Browser $browser) use ($baseURL) {
-            $browser->visit($baseURL);
-
-            $browser->pause(1000);
-
-            $browser->press('@filtBtn');
-
-            $browser->pause(2000);
-
-            $browser->assertDontSee('Wed');
-
-            $browser->pause(1000);
-
-            $browser->click('#users2-filter-verified_before_date');
-
-            $browser->pause(3000);
-
-            $browser->assertAttribute('.today','aria-label',date('F j, Y'));
-
-            $this->assertEquals($browser->attribute('.today','aria-label'),date('F j, Y'));
-
-            $this->assertNotEquals($browser->attribute('.today','aria-label'),Carbon::tomorrow()->format('F j, Y'));
-
-        });
-    }
-*/
 }

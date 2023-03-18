@@ -237,7 +237,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
     }
 
     /** @test */
-    /*public function can_see_if_filters_set_with_values(): void
+    public function can_see_if_filters_set_with_values(): void
     {
         $this->advancedTable->setFilterDefaults();
 
@@ -267,10 +267,10 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
         $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
         $this->advancedTable->setFilter('range', []);
         $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
-    }*/
+    }
 
     /** @test */
-    /*public function can_get_all_applied_filters_with_values(): void
+    public function can_get_all_applied_filters_with_values(): void
     {
         $this->advancedTable->setFilter('breed', ['1']);
 
@@ -281,7 +281,7 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
         $this->advancedTable->setFilter('datepicker', '2020-10-10');
 
         $this->assertSame(['breed' => [0 => '1'], 'datepicker' => '2020-10-10', 'species' => [0 => '0']], $this->advancedTable->getAppliedFiltersWithValues());
-    }*/
+    }
 
     /** @test */
         /*public function can_see_if_filters_set_with_values_3(): void
@@ -374,24 +374,22 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
     }
 
     /** @test */
-    /*
     public function can_check_if_filter_layout_slidedown_is_visible(): void
     {
-        $this->assertFalse($this->basicTable->getFilterSlideDownDefaultStatus());
+        $this->assertFalse($this->advancedTable->getFilterSlideDownDefaultStatus());
 
-        $this->basicTable->setFilterSlideDownDefaultStatusEnabled();
+        $this->advancedTable->setFilterSlideDownDefaultStatusEnabled();
 
-        $this->assertTrue($this->basicTable->getFilterSlideDownDefaultStatus());
-    }*/
+        $this->assertTrue($this->advancedTable->getFilterSlideDownDefaultStatus());
+    }
 
     /** @test */
-    /*
     public function can_check_if_filter_layout_slidedown_is_hidden(): void
     {
-        $this->assertFalse($this->basicTable->getFilterSlideDownDefaultStatus());
+        $this->assertFalse($this->advancedTable->getFilterSlideDownDefaultStatus());
 
-        $this->basicTable->setFilterSlideDownDefaultStatusDisabled();
+        $this->advancedTable->setFilterSlideDownDefaultStatusDisabled();
 
-        $this->assertFalse($this->basicTable->getFilterSlideDownDefaultStatus());
-    }*/
+        $this->assertFalse($this->advancedTable->getFilterSlideDownDefaultStatus());
+    }
 }

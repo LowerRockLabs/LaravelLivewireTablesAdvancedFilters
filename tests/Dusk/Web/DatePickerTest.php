@@ -15,27 +15,25 @@ final class DatePickerTest extends DuskTestCase
             'TW2' => [
                '/tailwind',
             ],
-            'TW3' => [
-               '/tailwind3',
-            ],
             'TW2-slidedown' => [
                 '/tailwind-slidedown',
              ],
+            'TW3' => [
+               '/tailwind3',
+            ],
              'TW3-slidedown' => [
                 '/tailwind3-slidedown',
              ],
-            
-            
             'BS4' => [
                 '/bootstrap-4',
-            ],/*
+            ],
+            'BS4-slidedown' => [
+                '/bootstrap-4-slidedown',
+            ],
+            /*
             'BS5' => [
                 '/bootstrap-5',
-            ],*/
-          /*
-             'BS4-slidedown' => [
-                 '/bootstrap-4-slidedown',
-             ],
+            ],
              'BS5-slidedown' => [
                  '/bootstrap-5-slidedown',
              ],  */
@@ -53,27 +51,23 @@ final class DatePickerTest extends DuskTestCase
 
             $browser->pause(1000);
 
+            $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_1_Initial_Load_" . date('Y-m-d H'));
+
             $browser->press('@filtBtn');
 
             $browser->pause(1000);
 
-            $browser->assertDontSee('Wed');
+            $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_2_Clicked_Filter_Button_" . date('Y-m-d H'));
 
-            $browser->pause(1000);
+            $browser->assertDontSee('Wed');
 
             $browser->click('#users2-filter-verified_before_date');
             
             $browser->pause(1000);
 
-            $browser->screenshot(trim($baseURL, '//')."_flatpickrDatepicker-testDatepickerFilterOpens-click-verified_before_date".date('Y-m-d H'));
+            $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_3_opened_Flatpickr_" . date('Y-m-d H'));
 
-            $browser->assertSee('Sun')->assertSee('Mon')->assertSee('Tue')->assertSee('Wed')->assertSee('Thu')->assertSee('Fri')->assertSee('Sat');
-
-            $browser->assertSee('28')->assertSee('15')->assertSee('1')->assertSee('7')->assertSee('25');
-
-            $browser->assertSee(date('F'));
-
-            $browser->screenshot(trim($baseURL, '//')."_flatpickrDatepicker-testDatepickerFilterOpens-click-verified_before_date-seeYear".date('Y-m-d H'));
+            $browser->assertSee('Sun')->assertSee('Mon')->assertSee('Tue')->assertSee('Wed')->assertSee('Thu')->assertSee('Fri')->assertSee('Sat')->assertSee('28')->assertSee('15')->assertSee('1')->assertSee('7')->assertSee('25')->assertSee(date('F'));
 
             $browser->assertVisible('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(10)');
 
@@ -83,7 +77,7 @@ final class DatePickerTest extends DuskTestCase
 
             $browser->pause(1000);
 
-            $browser->screenshot(trim($baseURL, '//')."_flatpickrDatepicker-testDatepickerFilterOpens-AssetSeeDates".date('Y-m-d H'));
+            $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_4_Selected_Date_" . date('Y-m-d H'));
            
             $browser->press('@filtBtn');
 
@@ -93,15 +87,13 @@ final class DatePickerTest extends DuskTestCase
 
             $browser->assertDontSee(date('F j, Y'));
 
-            $browser->pause(1000);
-
-            $browser->screenshot(trim($baseURL, '//')."_flatpickrDatepicker-testDatepickerFilterOpens-".date('Y-m-d H'));
-
             $browser->assertAttribute('.today', 'aria-label', date('F j, Y'));
 
             $this->assertEquals($browser->attribute('.today', 'aria-label'), date('F j, Y'));
 
             $this->assertNotEquals($browser->attribute('.today', 'aria-label'), Carbon::tomorrow()->format('F j, Y'));
+
+            $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_5_Final_Check_" . date('Y-m-d H'));
         });
     }
 /*

@@ -172,10 +172,14 @@
                 '>
 
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
-                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()" />
+                    id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()" 
+                    oninput="this.parentNode.style.setProperty('--value-a',this.value); this.parentNode.style.setProperty('--text-value-a', JSON.stringify(this.value))"
+                    />
                 <output></output>
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMin }}"
-                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()" />
+                    id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()"
+                    oninput="this.parentNode.style.setProperty('--value-b',this.value); this.parentNode.style.setProperty('--text-value-b', JSON.stringify(this.value))"
+                    />
                 <output></output>
                 <div class='range-slider__progress'></div>
             </div>
@@ -195,9 +199,13 @@
                     '>
 
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
+                oninput="this.parentNode.style.setProperty('--value-a',this.value); this.parentNode.style.setProperty('--text-value-a', JSON.stringify(this.value))"
+
                     id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()" />
                 <output></output>
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMin }}"
+                oninput="this.parentNode.style.setProperty('--value-b',this.value); this.parentNode.style.setProperty('--text-value-b', JSON.stringify(this.value))"
+
                     id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()" />
                 <output></output>
                 <div class='range-slider__progress'></div>
@@ -218,9 +226,13 @@
             '>
 
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMax }}"
+                oninput="this.parentNode.style.setProperty('--value-a',this.value); this.parentNode.style.setProperty('--text-value-a', JSON.stringify(this.value))"
+
                     id="{{ $maxFilterWirePath }}" x-ref='filterMax' x-on:change="updateWire()" />
                 <output></output>
                 <input type="range" min="{{ $minRange }}" max="{{ $maxRange }}" value="{{ $currentMin }}"
+                oninput="this.parentNode.style.setProperty('--value-b',this.value); this.parentNode.style.setProperty('--text-value-b', JSON.stringify(this.value))"
+
                     id="{{ $minFilterWirePath }}" x-ref='filterMin' x-on:change="updateWire()" />
                 <output></output>
                 <div class='range-slider__progress'></div>

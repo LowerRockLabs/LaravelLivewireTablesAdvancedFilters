@@ -15,27 +15,25 @@ final class DatePickerTest extends DuskTestCase
             'TW2' => [
                '/tailwind',
             ],
-            'TW3' => [
-               '/tailwind3',
-            ],
             'TW2-slidedown' => [
                 '/tailwind-slidedown',
              ],
+            'TW3' => [
+               '/tailwind3',
+            ],
              'TW3-slidedown' => [
                 '/tailwind3-slidedown',
              ],
-            
-            
             'BS4' => [
                 '/bootstrap-4',
             ],
+            'BS4-slidedown' => [
+                '/bootstrap-4-slidedown',
+            ],
+            /*
             'BS5' => [
                 '/bootstrap-5',
             ],
-            /*
-             'BS4-slidedown' => [
-                 '/bootstrap-4-slidedown',
-             ],
              'BS5-slidedown' => [
                  '/bootstrap-5-slidedown',
              ],  */
@@ -63,19 +61,13 @@ final class DatePickerTest extends DuskTestCase
 
             $browser->assertDontSee('Wed');
 
-            $browser->pause(1000);
-
             $browser->click('#users2-filter-verified_before_date');
             
             $browser->pause(1000);
 
             $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_3_opened_Flatpickr_" . date('Y-m-d H'));
 
-            $browser->assertSee('Sun')->assertSee('Mon')->assertSee('Tue')->assertSee('Wed')->assertSee('Thu')->assertSee('Fri')->assertSee('Sat');
-
-            $browser->assertSee('28')->assertSee('15')->assertSee('1')->assertSee('7')->assertSee('25');
-
-            $browser->assertSee(date('F'));
+            $browser->assertSee('Sun')->assertSee('Mon')->assertSee('Tue')->assertSee('Wed')->assertSee('Thu')->assertSee('Fri')->assertSee('Sat')->assertSee('28')->assertSee('15')->assertSee('1')->assertSee('7')->assertSee('25')->assertSee(date('F'));
 
             $browser->assertVisible('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(10)');
 
@@ -94,8 +86,6 @@ final class DatePickerTest extends DuskTestCase
             $browser->assertSee($currentDate);
 
             $browser->assertDontSee(date('F j, Y'));
-
-            $browser->pause(1000);
 
             $browser->assertAttribute('.today', 'aria-label', date('F j, Y'));
 

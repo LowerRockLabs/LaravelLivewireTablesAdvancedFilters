@@ -15,30 +15,29 @@ final class DateRangeTest extends DuskTestCase
             'TW2' => [
                '/tailwind',
             ],
-            'TW3' => [
-               '/tailwind3',
-            ],
             'TW2-slidedown' => [
                 '/tailwind-slidedown',
+             ],
+             'TW3' => [
+                '/tailwind3',
              ],
              'TW3-slidedown' => [
                 '/tailwind3-slidedown',
              ],
-            
-            
             'BS4' => [
                 '/bootstrap-4',
             ],
-            /*'BS5' => [
+            'BS4-slidedown' => [
+                '/bootstrap-4-slidedown',
+            ],
+            
+            'BS5' => [
                 '/bootstrap-5',
-            ],*/
-          
-             'BS4-slidedown' => [
-                 '/bootstrap-4-slidedown',
-             ],/*
+            ],
              'BS5-slidedown' => [
                  '/bootstrap-5-slidedown',
-             ],  */
+             ],  
+             
         ];
     }
 
@@ -49,6 +48,7 @@ final class DateRangeTest extends DuskTestCase
     public function testDaterangeFilterOpens($baseURL): void
     {
         $this->browse(function (Browser $browser) use ($baseURL) {
+
             $browser->visit($baseURL);
            
             $browser->pause(1000);
@@ -63,19 +63,13 @@ final class DateRangeTest extends DuskTestCase
 
             $browser->assertDontSee('Wed');
 
-            $browser->pause(1000);
-
             $browser->click('#users2-filter-e_mail_verified_range');
             
             $browser->pause(1000);
 
             $browser->screenshot("dateRange_" . trim($baseURL, '//') . "_3_opened_Flatpickr_" . date('Y-m-d H'));
 
-            $browser->assertSee('Sun')->assertSee('Mon')->assertSee('Tue')->assertSee('Wed')->assertSee('Thu')->assertSee('Fri')->assertSee('Sat');
-
-            $browser->assertSee('28')->assertSee('15')->assertSee('1')->assertSee('7')->assertSee('25');
-
-            $browser->assertSee(date('F'));
+            $browser->assertSee('Sun')->assertSee('Mon')->assertSee('Tue')->assertSee('Wed')->assertSee('Thu')->assertSee('Fri')->assertSee('Sat')->assertSee('28')->assertSee('15')->assertSee('1')->assertSee('7')->assertSee('25')->assertSee(date('F'));
 
             $browser->assertVisible('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(10)');
 
@@ -95,11 +89,7 @@ final class DateRangeTest extends DuskTestCase
 
             $browser->pause(1000);
 
-            $browser->assertSee($firstDate);
-
-            $browser->assertSee($secondDate);
-
-            $browser->pause(1000);
+            $browser->assertSee($firstDate)->assertSee($secondDate);
 
             $browser->screenshot("dateRange_" . trim($baseURL, '//') . "_5_Final_Check_" . date('Y-m-d H'));
 

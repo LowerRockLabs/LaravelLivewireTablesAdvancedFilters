@@ -32,5 +32,4 @@ class TailwindTest extends DuskTestCase
             $browser->assertSee('Success Rate');
         });
     }
-
 }

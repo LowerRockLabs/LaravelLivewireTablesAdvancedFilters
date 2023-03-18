@@ -8,7 +8,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ExampleTest extends DuskTestCase
 {
-
     public static function urlProvider(): array
     {
         return [
@@ -26,7 +25,6 @@ final class ExampleTest extends DuskTestCase
               ],
         ];
     }
-
     
     /**
      * A basic browser test example.
@@ -39,11 +37,10 @@ final class ExampleTest extends DuskTestCase
         });
     }
 
-
     #[DataProvider('urlProvider')]
     public function testThemesLoadsData($baseURL): void
     {
-        $this->browse(function (Browser $browser) use ($baseURL){
+        $this->browse(function (Browser $browser) use ($baseURL) {
             $browser->visit($baseURL)->assertSee('Mekhi Schultz');
         });
     }
@@ -77,9 +74,6 @@ final class ExampleTest extends DuskTestCase
 
             $browser->visit('/bootstrap-5-slidedown')
                     ->assertSee('Bootstrap 5 Implementation');
-
-
         });
     }
-
 }

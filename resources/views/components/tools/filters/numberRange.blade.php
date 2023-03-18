@@ -115,18 +115,24 @@
     },
     updateWire() {
         this.updateStyles();
-
         if (!this.restrictUpdates) {
-            if (this.wireValues !== undefined) {
-                if (this.wireValues['min'] !== $refs.filterMin.value || this.wireValues['max'] !== $refs.filterMax.value)
+            this.restrictUpdates = true;
+            if (this.wireValues != undefined) {
+                if (this.wireValues['min'] != undefined || this.wireValues['max'] != undefined)
                 {
+                    if (this.wireValues['min'] != $refs.filterMin.value || this.wireValues['max'] != $refs.filterMax.value)
+                    {
+                        this.wireValues = { 'min': $refs.filterMin.value, 'max': $refs.filterMax.value };
+                    }
+                }
+                else if ($refs.filterMin.value != this.defaultMin || $refs.filterMax.value != this.defaultMax) {
                     this.wireValues = { 'min': $refs.filterMin.value, 'max': $refs.filterMax.value };
                 }
             }
             else if ($refs.filterMin.value != this.defaultMin || $refs.filterMax.value != this.defaultMax) {
                 this.wireValues = { 'min': $refs.filterMin.value, 'max': $refs.filterMax.value };
             }
-            this.restrictUpdates = true;
+
         }
     },
     init() {

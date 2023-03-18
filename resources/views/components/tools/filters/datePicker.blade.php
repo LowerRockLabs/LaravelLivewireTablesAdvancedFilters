@@ -101,19 +101,16 @@
             onChange: function(selectedDates, dateStr, instance) {
                 if (dateStr.length > 3) {
                     if ($refs.datePickerInput{{ $filterKey }}.value != dateStr) {
-                        $wire.set('{{ $filterBasePath }}', dateStr);
-
                         $refs.datePickerInput{{ $filterKey }}.value = dateStr;
                     }
+                    if ($wire.get('{{ $filterBasePath }}') != dateStr)
+                    {
+                        $wire.set('{{ $filterBasePath }}', dateStr);
+                    }
                 }
-
-
-            },
-            onClose: function() {
-                childElementOpen = false;
             },
             mode: 'single',
-            clickOpens: false,
+            clickOpens: true,
             allowInvalidPreload: true,
             ariaDateFormat: '{{ $filter->getConfig('ariaDateFormat') }}',
             allowInput: '{{ $filter->getConfig('allowInput') }}',
@@ -122,30 +119,20 @@
             dateFormat: '{{ $filter->getConfig('dateFormat') }}',
             defaultDate: '{{ $dateString }}',
             locale: '{{ App::currentLocale() }}',
-            enableTime: @if($filter->getConfig('timeEnabled') == 1)
-            true,
-            @else
-            false,
-            @endif
-            @if($filter->hasConfig('earliestDate'))
-            minDate: '{{ $filter->getConfig('earliestDate') }}',
-            @endif
-            @if($filter->hasConfig('latestDate'))
-            maxDate: '{{ $filter->getConfig('latestDate') }}'
-            @endif
+            @if($filter->getConfig('timeEnabled') == 1)enableTime: true, @else enableTime: false,@endif
+            @if($filter->hasConfig('earliestDate'))minDate: '{{ $filter->getConfig('earliestDate') }}',@endif
+            @if($filter->hasConfig('latestDate')) maxDate: '{{ $filter->getConfig('latestDate') }}' @endif
         }),
         init() {
-
+            childElementOpen = true;
         }
     }">
-
-
         @if ($theme === 'tailwind')
             <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />
 
 
-            <div x-on:click="flatpickrInstance.toggle()" class="w-full rounded-md shadow-sm text-right"
+            <div class="w-full rounded-md shadow-sm text-right"
                 placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
                 <x-livewiretablesadvancedfilters::forms.datePicker-textinput :filterKey="$filterKey" :theme="$theme"

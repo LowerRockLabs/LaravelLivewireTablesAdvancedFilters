@@ -112,7 +112,7 @@
     <div x-data="{
         flatpickrInstance: flatpickr($refs.dateRangeInput{{ $filterKey }}, {
             mode: 'range',
-            clickOpens: false,
+            clickOpens: true,
             allowInvalidPreload: true,
             defaultDate: [$refs.dateRangeInput{{ $filterKey }}.value.split(' ')[0], $refs.dateRangeInput{{ $filterKey }}.value.split(' ')[2]],
             ariaDateFormat: '{{ $filter->getConfig('ariaDateFormat') }}',
@@ -134,19 +134,18 @@
                     wireDateArray = { 'minDate': startDate, 'maxDate': endDate };
                     $wire.set('{{ $filterBasePath }}', wireDateArray);
                 }
-            },
-            onClose: function() {
-                childElementOpen = false;
             }
-        })
+        }),
+        init() {
+            childElementOpen = true;
+        }
     }" x-effect="init">
         @if ($theme === 'tailwind')
             <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />
 
 
-            <div x-on:click="flatpickrInstance.toggle()" class="w-full rounded-md shadow-sm text-right"
-                placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
+            <div class="w-full rounded-md shadow-sm text-right" placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
                 <x-livewiretablesadvancedfilters::forms.dateRange-textinput :theme="$theme" :filterKey="$filterKey"
                     :dateString="$dateString" :filterLabelPath="$filterLabelPath" />
@@ -158,8 +157,7 @@
             <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />
 
-            <div x-on:click="flatpickrInstance.toggle()" class="d-inline-block w-100 mb-3 mb-md-0 input-group"
-                placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
+            <div class="d-inline-block w-100 mb-3 mb-md-0 input-group" placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
                 <x-livewiretablesadvancedfilters::forms.dateRange-textinput :theme="$theme" :filterKey="$filterKey"
                     :dateString="$dateString" :filterLabelPath="$filterLabelPath" />
@@ -170,8 +168,7 @@
             <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />
 
-            <div x-on:click="flatpickrInstance.toggle()" class="d-inline-block w-100 mb-3 mb-md-0 input-group"
-                placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
+            <div class="d-inline-block w-100 mb-3 mb-md-0 input-group" placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
 
                 <x-livewiretablesadvancedfilters::forms.dateRange-textinput :theme="$theme" :filterKey="$filterKey"

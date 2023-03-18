@@ -19,13 +19,65 @@ class ExampleTest extends DuskTestCase
     }
 
     /**
+     * Check all versions have pages.
+     */
+    public function testThemesLoads(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/tailwind')
+                    ->assertSee('Tailwind 2 Implementation');
+        });
+    
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/tailwind3')
+                    ->assertSee('Tailwind 3 Implementation');
+        });
+    
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/bootstrap-4')
+                    ->assertSee('Bootstrap 4 Implementation');
+        });
+    
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/bootstrap-5')
+                    ->assertSee('Bootstrap 5 Implementation');
+        });
+    }
+    
+    /**
+     * Check all versions have pages.
+     */
+    public function testThemesSlidedownLoads(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/tailwind-slidedown')
+                    ->assertSee('Tailwind 2 Implementation');
+        });
+    
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/tailwind3-slidedown')
+                    ->assertSee('Tailwind 3 Implementation');
+        });
+    
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/bootstrap-4')
+                    ->assertSee('Bootstrap 4 Implementation');
+        });
+    
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/bootstrap-5-slidedown')
+                    ->assertSee('Bootstrap 5 Implementation');
+        });
+    }
+
+    /**
      * A basic TW2.
      */
     public function testBasicTailwind2(): void
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/tailwind')
-                    ->assertSee('Telly Stokes');
+                    ->assertSee('Mekhi Schultz');
         });
     }
 
@@ -36,7 +88,7 @@ class ExampleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/tailwind3')
-                    ->assertSee('Telly Stokes');
+                    ->assertSee('Mekhi Schultz');
         });
     }
 
@@ -47,7 +99,7 @@ class ExampleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/bootstrap-4')
-                    ->assertSee('Telly Stokes');
+                    ->assertSee('Mekhi Schultz');
         });
     }
 
@@ -58,7 +110,7 @@ class ExampleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/bootstrap-5')
-                    ->assertSee('Telly Stokes');
+                    ->assertSee('Mekhi Schultz');
         });
     }
 }

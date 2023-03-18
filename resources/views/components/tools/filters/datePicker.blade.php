@@ -7,52 +7,75 @@
     $filterMenuLabel = '[aria-labelledby="filters-menu"]';
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
-    $customFilterMenuWidth = $filterConfigs['customFilterMenuWidth'];
+    $customFilterMenuWidth = (!empty($filterConfigs['customFilterMenuWidth']) ? json_encode(explode( " ", $filterConfigs['customFilterMenuWidth'])) : '');
     $pushFlatpickrCss = $filterConfigs['publishFlatpickrCSS'];
     $pushFlatpickrJS = $filterConfigs['publishFlatpickrJS'];
 
     $dateString = !is_null($this->{$tableName}['filters'][$filterKey]) && $this->{$tableName}['filters'][$filterKey] != '' ? $this->{$tableName}['filters'][$filterKey] : date('Y-m-d');
-
+    $filterContainerName = "datePickerContainer";
 @endphp
-<div id="datePickerContainer{{ $filterKey }}" x-data="{
+
+<div id="{{ $filterContainerName }}{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
+    filterMenuClasses: {{ $customFilterMenuWidth }}, 
     @if ($theme == 'tailwind') twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'), @endif
     @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'), @endif
     setupFilterMenu() {
-        if (document.querySelector('{{ $filterMenuLabel }}') !== null) {
-            document.querySelector('{{ $filterMenuLabel }}').classList.add('{{ $customFilterMenuWidth }}');
-            document.querySelector('{{ $filterMenuLabel }}').style.width = '20em !important';
-            document.querySelector('{{ $filterMenuLabel }}').classList.remove('md:w-56');
+        let parentLabelElement = document.getElementById('{{ $filterLabelPath }}-label');
+        let currentFilterMenuLabel = document.querySelector('{{ $filterMenuLabel }}');
+        let newFilterLabelElement = document.getElementById('{{ $filterLabelPath }}-labelInternal');
+
+        if (currentFilterMenuLabel !== null) {
+            this.filterMenuClasses.forEach(item => currentFilterMenuLabel.classList.add(item));
+            currentFilterMenuLabel.style.width = '20em !important';
+            currentFilterMenuLabel.classList.remove('md:w-56');
         }
 
-        if (document.getElementById('{{ $filterLabelPath }}-label') === null) {
-            if (document.getElementById('datePickerContainer{{ $filterKey }}').parentElement.firstElementChild !== null) {
-                document.getElementById('datePickerContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
-                document.getElementById('datePickerContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('d-none');
-            }
-        } else {
-            document.getElementById('{{ $filterLabelPath }}-label').classList.add('hidden');
-            document.getElementById('{{ $filterLabelPath }}-label').classList.add('d-none');
-        }
 
-        if (document.getElementById('{{ $filterLabelPath }}-labelInternal') !== null) {
-            document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
-            document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('d-none');
-        }
-        @if ($theme === 'tailwind') for (let i = 0; i < this.twMenuElements.length; i++) {
-            if (!this.twMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
-            {
-                this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
-                this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+        @if ($theme === 'tailwind') 
+            if (parentLabelElement === null) {
+                let parentLabelContainer = document.getElementById('{{ $filterContainerName }}{{ $filterKey }}').parentElement.firstElementChild;
+                if (parentLabelContainer !== null) {
+                    parentLabelContainer.classList.add('hidden');
+                }
+            } else {
+                parentLabelElement.classList.add('hidden');
             }
-        } @endif
-        @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') for (let i = 0; i < this.bsMenuElements.length; i++) {
-            if (!this.bsMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
-            {
-                this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
-                this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+
+            if (newFilterLabelElement !== null) {
+                newFilterLabelElement.classList.remove('hidden');
             }
-        } @endif
+
+            for (let i = 0; i < this.twMenuElements.length; i++) {
+                if (!this.twMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
+                {
+                    this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
+                    this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+                }
+            } 
+        @endif
+
+        @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') 
+            if (parentLabelElement === null) {
+                if (parentLabelContainer !== null) {
+                    parentLabelContainer.classList.add('d-none');
+                }
+            } else {
+                parentLabelElement.classList.add('d-none');
+            }
+
+            if (newFilterLabelElement !== null) {
+                newFilterLabelElement.classList.remove('d-none');
+            }
+
+            for (let i = 0; i < this.bsMenuElements.length; i++) {
+                if (!this.bsMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
+                {
+                    this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
+                    this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+                }
+            } 
+        @endif
     },
     init() {
         this.setupFilterMenu();
@@ -78,19 +101,16 @@
             onChange: function(selectedDates, dateStr, instance) {
                 if (dateStr.length > 3) {
                     if ($refs.datePickerInput{{ $filterKey }}.value != dateStr) {
-                        $wire.set('{{ $filterBasePath }}', dateStr);
-
                         $refs.datePickerInput{{ $filterKey }}.value = dateStr;
                     }
+                    if ($wire.get('{{ $filterBasePath }}') != dateStr)
+                    {
+                        $wire.set('{{ $filterBasePath }}', dateStr);
+                    }
                 }
-
-
-            },
-            onClose: function() {
-                childElementOpen = false;
             },
             mode: 'single',
-            clickOpens: false,
+            clickOpens: true,
             allowInvalidPreload: true,
             ariaDateFormat: '{{ $filter->getConfig('ariaDateFormat') }}',
             allowInput: '{{ $filter->getConfig('allowInput') }}',
@@ -99,30 +119,20 @@
             dateFormat: '{{ $filter->getConfig('dateFormat') }}',
             defaultDate: '{{ $dateString }}',
             locale: '{{ App::currentLocale() }}',
-            enableTime: @if($filter->getConfig('timeEnabled') == 1)
-            true,
-            @else
-            false,
-            @endif
-            @if($filter->hasConfig('earliestDate'))
-            minDate: '{{ $filter->getConfig('earliestDate') }}',
-            @endif
-            @if($filter->hasConfig('latestDate'))
-            maxDate: '{{ $filter->getConfig('latestDate') }}'
-            @endif
+            @if($filter->getConfig('timeEnabled') == 1)enableTime: true, @else enableTime: false,@endif
+            @if($filter->hasConfig('earliestDate'))minDate: '{{ $filter->getConfig('earliestDate') }}',@endif
+            @if($filter->hasConfig('latestDate')) maxDate: '{{ $filter->getConfig('latestDate') }}' @endif
         }),
         init() {
-
+            childElementOpen = true;
         }
     }">
-
-
         @if ($theme === 'tailwind')
             <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />
 
 
-            <div x-on:click="flatpickrInstance.toggle()" class="w-full rounded-md shadow-sm text-right"
+            <div class="w-full rounded-md shadow-sm text-right"
                 placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
                 <x-livewiretablesadvancedfilters::forms.datePicker-textinput :filterKey="$filterKey" :theme="$theme"

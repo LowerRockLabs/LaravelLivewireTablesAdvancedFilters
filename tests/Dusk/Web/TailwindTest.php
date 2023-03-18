@@ -50,59 +50,7 @@ class TailwindTest extends DuskTestCase
                     ->assertSee('Mekhi Schultz');
         });
     }
-
-    /**
-     * SmartSelect Loads Label
-     */
-    public function testFilterMenuOpensSmartSelectFilter(): void
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/tailwind');
-            $browser->assertDontSee('SmartSelect');
-            $browser->press('@filtBtn');
-            $browser->assertSee('SmartSelect');
-        });
-    }
-
-    /**
-     * NumberRange Loads Label
-     */
-    public function testFilterMenuOpensNumberRangeFilter(): void
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/tailwind');
-            $browser->assertDontSee('Success Rate');
-            $browser->press('@filtBtn');
-            $browser->assertSee('Success Rate');
-        });
-    }
-
-    /**
-     * DatePicker Loads Label
-     */
-    public function testFilterMenuOpensDatePickerFilter(): void
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/tailwind');
-            $browser->assertDontSee('EMail Verified Before DateTime');
-            $browser->press('@filtBtn');
-            $browser->assertSee('EMail Verified Before DateTime');
-        });
-    }
-
-    /**
-     * DateRange Loads Label
-     */
-    public function testFilterMenuOpensDateRangeFilter(): void
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/tailwind');
-            $browser->assertDontSee('EMail Verified Range');
-            $browser->press('@filtBtn');
-            $browser->assertSee('EMail Verified Range');
-        });
-    }
-
+    
     /**
      * All Filters Load
      */
@@ -110,16 +58,75 @@ class TailwindTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/tailwind');
+
             $browser->assertDontSee('EMail Verified Range');
-            $browser->assertDontSee('EMail Verified Before DateTime');
+            $browser->assertDontSee('Verified Before Date');
             $browser->assertDontSee('SmartSelect');
             $browser->assertDontSee('Success Rate');
 
+            $browser->pause(1000);
+
             $browser->press('@filtBtn');
+
+            $browser->pause(1000);
+
             $browser->assertSee('EMail Verified Range');
-            $browser->assertSee('EMail Verified Before DateTime');
+            $browser->assertSee('Verified Before Date');
             $browser->assertSee('SmartSelect');
             $browser->assertSee('Success Rate');
+        });
+    }
+
+    /**
+     * All Filters Load
+     */
+    public function testDatepickerFilterFocus(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/tailwind');
+
+            $browser->pause(1000);
+
+            $browser->press('@filtBtn');
+
+            $browser->pause(2000);
+
+            $browser->assertDontSee('Wed');
+
+            $browser->pause(1000);
+
+            $browser->click('#users2-filter-verified_before_date');
+            
+            $browser->pause(3000);
+
+            $browser->assertSee('Sun');
+            $browser->assertSee('Mon');
+            $browser->assertSee('Tue');
+            $browser->assertSee('Wed');
+            $browser->assertSee('Thu');
+            $browser->assertSee('Fri');
+            $browser->assertSee('Sat');
+
+            $browser->assertSee('28');
+            $browser->assertSee('15');
+            $browser->assertSee('1');
+            $browser->assertSee('7');
+            $browser->assertSee('25');
+
+            $browser->assertSee(date('F'));
+
+            $browser->assertSee(date('Y'));
+
+            $browser->assertVisible('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(10)');
+
+            $browser->attribute('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(10)', 'aria-label');
+
+            $browser->click('div.flatpickr-calendar.animate.arrowBottom.arrowLeft.open > div.flatpickr-innerContainer > div > div.flatpickr-days > div > span:nth-child(10)');
+
+            $browser->pause(5000);
+
+            
+
         });
     }
 }

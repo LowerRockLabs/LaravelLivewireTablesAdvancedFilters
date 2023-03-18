@@ -47,7 +47,12 @@
             }
 
             for (let i = 0; i < this.twMenuElements.length; i++) {
-                if (!this.twMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
+                if (!this.twMenuElements.item(i).hasAttribute('x-data'))
+                {
+                    this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
+                    this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+                }
+                else if (!this.twMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
                 {
                     this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
                     this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
@@ -57,10 +62,13 @@
 
         @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') 
             if (parentLabelElement === null) {
+                let parentLabelContainer = document.getElementById('{{ $filterContainerName }}{{ $filterKey }}').parentElement.firstElementChild;
                 if (parentLabelContainer !== null) {
+                    parentLabelContainer.classList.add('hidden');
                     parentLabelContainer.classList.add('d-none');
                 }
             } else {
+                parentLabelElement.classList.add('hidden');
                 parentLabelElement.classList.add('d-none');
             }
 
@@ -69,10 +77,18 @@
             }
 
             for (let i = 0; i < this.bsMenuElements.length; i++) {
-                if (!this.bsMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
+                if (!this.bsMenuElements.item(i).hasAttribute('x-data'))
                 {
                     this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
                     this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+                }
+                else
+                {
+                    if (!this.bsMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
+                    {
+                        this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
+                        this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+                    }
                 }
             } 
         @endif
@@ -144,7 +160,7 @@
             <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />
 
-            <div x-on:click="flatpickrInstance.toggle()" class="d-inline-block w-100 mb-3 mb-md-0 input-group"
+            <div class="d-inline-block w-100 mb-3 mb-md-0 input-group"
                 placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
                 <x-livewiretablesadvancedfilters::forms.datePicker-textinput :filterKey="$filterKey" :theme="$theme"

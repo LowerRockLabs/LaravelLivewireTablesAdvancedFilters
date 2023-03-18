@@ -66,7 +66,12 @@
             }
 
             for (let i = 0; i < this.twMenuElements.length; i++) {
-                if (!this.twMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
+                if (!this.twMenuElements.item(i).hasAttribute('x-data'))
+                {
+                    this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
+                    this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+                }
+                else if (!this.twMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
                 {
                     this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
                     this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
@@ -76,6 +81,7 @@
 
         @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') 
             if (parentLabelElement === null) {
+                let parentLabelContainer = document.getElementById('{{ $filterContainerName }}{{ $filterKey }}').parentElement.firstElementChild;
                 if (parentLabelContainer !== null) {
                     parentLabelContainer.classList.add('d-none');
                 }
@@ -88,10 +94,18 @@
             }
 
             for (let i = 0; i < this.bsMenuElements.length; i++) {
-                if (!this.bsMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
+                if (!this.bsMenuElements.item(i).hasAttribute('x-data'))
                 {
                     this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
                     this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+                }
+                else
+                {
+                    if (!this.bsMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
+                    {
+                        this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
+                        this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+                    }
                 }
             } 
         @endif

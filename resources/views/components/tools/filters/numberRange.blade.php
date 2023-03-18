@@ -6,7 +6,7 @@
     $filterMenuLabel = '[aria-labelledby="filters-menu"]';
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
-    $customFilterMenuWidth = $filterConfigs['customFilterMenuWidth'];
+    $customFilterMenuWidth = (!empty($filterConfigs['customFilterMenuWidth']) ? json_encode(explode( " ", $filterConfigs['customFilterMenuWidth'])) : '');
     $suffix = $filter->getConfig('suffix');
 
     $defaultMin = $currentMin = $filterMin = $minRange = $filter->getConfig('minRange');
@@ -22,9 +22,12 @@
     }
     $lightStyling = $filter->getConfig('styling')['light'];
     $darkStyling = $filter->getConfig('styling')['dark'];
+    $filterContainerName = "numberRangeContainer";
+
 @endphp
-<div id="numberRangeContainer{{ $filterKey }}" x-data="{
+<div id="{{ $filterContainerName }}{{ $filterKey }}" x-data="{
     allFilters: $wire.entangle('{{ $tableName }}.filters'),
+    filterMenuClasses: {{ $customFilterMenuWidth }}, 
     @if ($theme == 'tailwind') twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'), @endif
     @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'), @endif
     currentMin: $refs.filterMin.value,
@@ -34,46 +37,67 @@
     defaultMax: {{ $maxRange }},
     restrictUpdates: true,
     setupFilterMenu() {
-        if (document.querySelector('{{ $filterMenuLabel }}') !== null) {
-            document.querySelector('{{ $filterMenuLabel }}').classList.add('{{ $customFilterMenuWidth }}');
-            document.querySelector('{{ $filterMenuLabel }}').classList.remove('md:w-56');
+        let parentLabelElement = document.getElementById('{{ $filterLabelPath }}-label');
+        let currentFilterMenuLabel = document.querySelector('{{ $filterMenuLabel }}');
+        let newFilterLabelElement = document.getElementById('{{ $filterLabelPath }}-labelInternal');
+
+        if (currentFilterMenuLabel !== null) {
+            this.filterMenuClasses.forEach(item => currentFilterMenuLabel.classList.add(item));
+            currentFilterMenuLabel.style.width = '20em !important';
+            currentFilterMenuLabel.classList.remove('md:w-56');
         }
 
-        if (document.getElementById('{{ $filterLabelPath }}-label') === null) {
-            if (document.getElementById('numberRangeContainer{{ $filterKey }}').parentElement.firstElementChild !== null) {
-                document.getElementById('numberRangeContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('hidden');
-                document.getElementById('numberRangeContainer{{ $filterKey }}').parentElement.firstElementChild.classList.add('d-none');
+        @if ($theme === 'tailwind') 
+            if (parentLabelElement === null) {
+                let parentLabelContainer = document.getElementById('{{ $filterContainerName }}{{ $filterKey }}').parentElement.firstElementChild;
+                if (parentLabelContainer !== null) {
+                    parentLabelContainer.classList.add('hidden');
+                }
+            } else {
+                parentLabelElement.classList.add('hidden');
             }
-        } else {
-            document.getElementById('{{ $filterLabelPath }}-label').classList.add('hidden');
-            document.getElementById('{{ $filterLabelPath }}-label').classList.add('d-none');
-        }
 
-        if (document.getElementById('{{ $filterLabelPath }}-labelInternal') !== null) {
-            document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('hidden');
-            document.getElementById('{{ $filterLabelPath }}-labelInternal').classList.remove('d-none');
-        }
-        @if ($theme === 'tailwind') for (let i = 0; i < this.twMenuElements.length; i++) {
-            if (!this.twMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
-            {
-                this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
-                this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+            if (newFilterLabelElement !== null) {
+                newFilterLabelElement.classList.remove('hidden');
             }
-        } @endif
-        @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') for (let i = 0; i < this.bsMenuElements.length; i++) {
-            if (!this.bsMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
-            {
-                this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
-                this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-            }
-        } @endif
 
+            for (let i = 0; i < this.twMenuElements.length; i++) {
+                if (!this.twMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
+                {
+                    this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
+                    this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+                }
+            } 
+        @endif
+
+        @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') 
+            if (parentLabelElement === null) {
+                if (parentLabelContainer !== null) {
+                    parentLabelContainer.classList.add('d-none');
+                }
+            } else {
+                parentLabelElement.classList.add('d-none');
+            }
+
+            if (newFilterLabelElement !== null) {
+                newFilterLabelElement.classList.remove('d-none');
+            }
+
+            for (let i = 0; i < this.bsMenuElements.length; i++) {
+                if (!this.bsMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
+                {
+                    this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
+                    this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
+                }
+            } 
+        @endif
     },
     updateStyles() {
-        document.getElementById('{{ $filterBasePath }}').style.setProperty('--value-b', $refs.filterMin.value);
-        document.getElementById('{{ $filterBasePath }}').style.setProperty('--text-value-b', JSON.stringify($refs.filterMin.value));
-        document.getElementById('{{ $filterBasePath }}').style.setProperty('--value-a', $refs.filterMax.value);
-        document.getElementById('{{ $filterBasePath }}').style.setProperty('--text-value-a', JSON.stringify($refs.filterMax.value));
+        let numRangeFilterContainer = document.getElementById('{{ $filterBasePath }}');
+        numRangeFilterContainer.style.setProperty('--value-b', $refs.filterMin.value);
+        numRangeFilterContainer.style.setProperty('--text-value-b', JSON.stringify($refs.filterMin.value));
+        numRangeFilterContainer.style.setProperty('--value-a', $refs.filterMax.value);
+        numRangeFilterContainer.style.setProperty('--text-value-a', JSON.stringify($refs.filterMax.value));
     },
     setupWire() {
         if (this.wireValues !== undefined) {

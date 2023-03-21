@@ -47,7 +47,7 @@ class DatePickerFilter extends Filter
      * @param  array<mixed>  $config
      * @return $this
      */
-    public function config($config = []): DateRangeFilter
+    public function config($config = []): DatePickerFilter
     {
         $version = explode(".",app()->version())[0];
         if ($version == 8)

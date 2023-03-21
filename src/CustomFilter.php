@@ -43,18 +43,49 @@ class CustomFilter extends Filter
      * @param  array<mixed>  $config
      * @return $this
      */
-    public function config($config = []): CustomFilter
+    public function config($config = []): DateRangeFilter
     {
-        $flattened = \Illuminate\Support\Arr::dot($config);
+        $version = explode(".",app()->version())[0];
+        if ($version == 8)
+        {
+            foreach ($config as $configIndex => $configValue)
+            {
+                if (!is_array($configValue))
+                {
+                    $this->config[$configIndex] = $configValue;
+                }
+                else
+                {
+                    foreach ($configValue as $configIndex2 => $configValue2)
+                    {
+                        if (!is_array($configValue2))
+                        {
+                            $this->config[$configIndex][$configIndex2] = $configValue2;
+                        }
+                        else
+                        {
+                            foreach ($configValue2 as $configIndex3 => $configValue3)
+                            {
+                                $this->config[$configIndex][$configIndex2][$configIndex3] = $configValue3;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            $flattened = \Illuminate\Support\Arr::dot($config);
 
-        \Illuminate\Support\Arr::map($flattened, function (string $value, string $key) {
-            \Illuminate\Support\Arr::set($this->config, $key, $value);
-
-            return true;
-        });
-
+            \Illuminate\Support\Arr::map($flattened, function (string $value, string $key) {
+                \Illuminate\Support\Arr::set($this->config, $key, $value);
+    
+                return true;
+            });
+        }
         return $this;
     }
+
 
     /**
      * @param  array<mixed>|string  $values

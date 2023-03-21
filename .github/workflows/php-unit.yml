@@ -64,11 +64,11 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Run Unit Tests L8
-        if: ${{ matrix.laravel }} == '8.*'
+        if: startsWith(matrix.laravel, '8') == true
         run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
 
       - name: Run Unit Tests L9 L10
-        if: ${{ matrix.laravel }} != '8.*'
+        if: startsWith(matrix.laravel, '8') == false
         run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --passthru-php="'-d pcov.enabled=1'"
 
       - name: Run PHPStan

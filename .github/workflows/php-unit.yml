@@ -72,11 +72,11 @@ jobs:
         run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --passthru-php="'-d pcov.enabled=1'"
 
       - name: Run PHPStan
-        if: ${{ matrix.laravel }} != '8.*'
+        if: startsWith(matrix.laravel, '8') == false
         run: phpstan analyse src
 
       - name: phpunit-coverage-badge-l9
-        if: ${{ matrix.laravel }} == '9.*'
+        if: startsWith(matrix.laravel, '9') == true
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           coverage_badge_path: 'docs/images/badges/phpunit-coverage-L9-${{ matrix.php }}-develop.svg'
@@ -84,7 +84,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: phpunit-coverage-badge-l10
-        if: ${{ matrix.laravel }} == '10.*'
+        if: startsWith(matrix.laravel, '10') == true
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           coverage_badge_path: 'docs/images/badges/phpunit-coverage-L10-${{ matrix.php }}-develop.svg'

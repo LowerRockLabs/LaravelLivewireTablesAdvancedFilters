@@ -1,4 +1,3 @@
-@props(['theme'])
 @php
     $tableName = $component->getTableName();
     $filterKey = $filter->getKey();

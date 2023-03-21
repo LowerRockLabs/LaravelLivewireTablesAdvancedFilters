@@ -45,36 +45,24 @@ class CustomFilter extends Filter
      */
     public function config($config = []): DateRangeFilter
     {
-        $version = explode(".",app()->version())[0];
-        if ($version == 8)
-        {
-            foreach ($config as $configIndex => $configValue)
-            {
-                if (!is_array($configValue))
-                {
+        $version = explode(".", app()->version())[0];
+        if ($version == 8) {
+            foreach ($config as $configIndex => $configValue) {
+                if (! is_array($configValue)) {
                     $this->config[$configIndex] = $configValue;
-                }
-                else
-                {
-                    foreach ($configValue as $configIndex2 => $configValue2)
-                    {
-                        if (!is_array($configValue2))
-                        {
+                } else {
+                    foreach ($configValue as $configIndex2 => $configValue2) {
+                        if (! is_array($configValue2)) {
                             $this->config[$configIndex][$configIndex2] = $configValue2;
-                        }
-                        else
-                        {
-                            foreach ($configValue2 as $configIndex3 => $configValue3)
-                            {
+                        } else {
+                            foreach ($configValue2 as $configIndex3 => $configValue3) {
                                 $this->config[$configIndex][$configIndex2][$configIndex3] = $configValue3;
                             }
                         }
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             $flattened = \Illuminate\Support\Arr::dot($config);
 
             \Illuminate\Support\Arr::map($flattened, function (string $value, string $key) {
@@ -83,9 +71,9 @@ class CustomFilter extends Filter
                 return true;
             });
         }
+
         return $this;
     }
-
 
     /**
      * @param  array<mixed>|string  $values

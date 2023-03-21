@@ -35,7 +35,7 @@
     wireValues: $wire.entangle('{{ $filterBasePath }}'),
     defaultMin: {{ $minRange }},
     defaultMax: {{ $maxRange }},
-    restrictUpdates: true,
+    restrictUpdates: false,
     setupFilterMenu() {
         let parentLabelElement = document.getElementById('{{ $filterLabelPath }}-label');
         let currentFilterMenuLabel = document.querySelector('{{ $filterMenuLabel }}');
@@ -124,13 +124,10 @@
         this.updateStyles();
     },
     allowUpdates() {
-        this.restrictUpdates = false;
         this.updateWire();
     },
     updateWire() {
         this.updateStyles();
-        if (!this.restrictUpdates) {
-            this.restrictUpdates = true;
             if (this.wireValues != undefined) {
                 if (this.wireValues['min'] != undefined || this.wireValues['max'] != undefined)
                 {
@@ -146,8 +143,6 @@
             else if ($refs.filterMin.value != this.defaultMin || $refs.filterMax.value != this.defaultMax) {
                 this.wireValues = { 'min': $refs.filterMin.value, 'max': $refs.filterMax.value };
             }
-
-        }
     },
     init() {
         this.setupWire();

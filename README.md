@@ -36,12 +36,10 @@ Please see the [Wiki](https://github.com/LowerRockLabs/LaravelLivewireTablesAdva
 # Laravel Support
 | Version | Supported |
 | :---: | :---: | 
-| 8 | &cross;  |
+| 8 | &check;  |
 | 9 | &check;  |
 | 10 | &check;  |
 
-
-This package uses Arr::map, which is not supported under Laravel 8.  If there is demand, then a version will be released supporting Laravel 8
 
 # Installation
 This package is available to be installed via Composer

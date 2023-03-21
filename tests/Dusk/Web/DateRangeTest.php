@@ -2,7 +2,6 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Dusk\Web;
 
-use Carbon\Carbon;
 use Laravel\Dusk\Browser;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Dusk\DuskTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -36,7 +35,7 @@ final class DateRangeTest extends DuskTestCase
             ],
              'BS5-slidedown' => [
                  '/bootstrap-5-slidedown',
-             ],  
+             ],
              
         ];
     }
@@ -48,7 +47,6 @@ final class DateRangeTest extends DuskTestCase
     public function testDaterangeFilterOpens($baseURL): void
     {
         $this->browse(function (Browser $browser) use ($baseURL) {
-
             $browser->visit($baseURL);
            
             $browser->pause(1000);
@@ -92,7 +90,6 @@ final class DateRangeTest extends DuskTestCase
             $browser->assertSee($firstDate)->assertSee($secondDate);
 
             $browser->screenshot("dateRange_" . trim($baseURL, '//') . "_5_Final_Check_" . date('Y-m-d H'));
-
         });
     }
 }

@@ -2,7 +2,6 @@
 
 namespace LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Dusk\Web;
 
-use Carbon\Carbon;
 use Laravel\Dusk\Browser;
 use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Dusk\DuskTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -32,7 +31,7 @@ final class NumberRangeTest extends DuskTestCase
             ],
                          'BS5-slidedown' => [
                  '/bootstrap-5-slidedown',
-             ],  
+             ],
              
         ];
     }
@@ -44,7 +43,6 @@ final class NumberRangeTest extends DuskTestCase
     public function testNumberRangeFilterOpens($baseURL): void
     {
         $this->browse(function (Browser $browser) use ($baseURL) {
-
             $browser->visit($baseURL);
            
             $browser->pause(1000);
@@ -61,7 +59,7 @@ final class NumberRangeTest extends DuskTestCase
 
             $initialMinValue = $browser->value('#users2\.filters\.success_rate\.min');
 
-            $this->assertEquals(0,$initialMinValue);
+            $this->assertEquals(0, $initialMinValue);
 
             $initialMaxValue = $browser->value('#users2\.filters\.success_rate\.max');
 
@@ -103,7 +101,6 @@ final class NumberRangeTest extends DuskTestCase
             $browser->scrollIntoView('.sf-dump');
 
             $browser->screenshot("numberRange_" . trim($baseURL, '//') . "_5b_Final_Check_" . date('Y-m-d H'));
-
         });
     }
 }

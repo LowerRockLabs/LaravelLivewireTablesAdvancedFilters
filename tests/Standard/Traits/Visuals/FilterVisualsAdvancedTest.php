@@ -8,22 +8,21 @@ use LowerRockLabs\LaravelLivewireTablesAdvancedFilters\Tests\Standard\TestCaseAd
 
 class FilterVisualsAdvancedTest extends TestCaseAdvanced
 {
-
-    /** 
+    /**
      * @group skip8
-     * 
-     * @test 
-     */   
+     *
+     * @test
+     */
     public function filters_button_shows_when_enabled(): void
     {
         Livewire::test(PetsTableAdvanced::class)
             ->assertSee('Filters');
     }
 
-    /** 
+    /**
      * @group skip8
-     * 
-     * @test 
+     *
+     * @test
      */
     public function filters_button_shows_when_visible(): void
     {
@@ -32,10 +31,10 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
             ->assertSee('Filters');
     }
 
-    /** 
+    /**
      * @group skip8
-     * 
-     * @test 
+     *
+     * @test
      */
     public function filters_button_doesnt_show_when_disabled(): void
     {
@@ -52,11 +51,10 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
             ->assertDontSee('Filters');
     }*/
 
-
-    /** 
+    /**
      * @group skip8
-     * 
-     * @test 
+     *
+     * @test
      */
     public function filter_pills_show_when_enabled(): void
     {
@@ -65,11 +63,10 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
             ->assertSee('Applied Filters');
     }
 
-
-    /** 
+    /**
      * @group skip8
-     * 
-     * @test 
+     *
+     * @test
      */
     public function filter_pills_show_when_visible(): void
     {
@@ -79,10 +76,10 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
             ->assertSee('Applied Filters');
     }
 
-    /** 
+    /**
      * @group skip8
-     * 
-     * @test 
+     *
+     * @test
      */
     public function filter_pills_dont_show_when_disabled(): void
     {
@@ -92,10 +89,10 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
             ->assertDontSee('Applied Filters');
     }
 
-    /** 
+    /**
      * @group skip8
-     * 
-     * @test 
+     *
+     * @test
      */
     public function filter_pills_dont_show_when_hidden(): void
     {
@@ -121,10 +118,10 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
             ->assertDontSee('Applied Filters');
     }*/
 
-    /** 
+    /**
      * @group skip8
-     * 
-     * @test 
+     *
+     * @test
      */
     public function filters_numberrange_can_be_seen(): void
     {
@@ -132,10 +129,10 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
             ->assertSeeHtml('range-slider');
     }
 
-    /** 
+    /**
      * @group skip8
-     * 
-     * @test 
+     *
+     * @test
      */
     public function filters_smartselect_can_be_seen(): void
     {
@@ -143,10 +140,10 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
             ->assertSeeHtml('updateCurrentFilteredList');
     }
 
-    /** 
+    /**
      * @group skip8
-     * 
-     * @test 
+     *
+     * @test
      */
     public function filters_daterange_can_be_seen(): void
     {
@@ -154,10 +151,10 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
             ->assertSeeHtml("mode: 'range'");
     }
 
-    /** 
+    /**
      * @group skip8
-     * 
-     * @test 
+     *
+     * @test
      */
     public function filters_datepicker_can_be_seen(): void
     {
@@ -165,10 +162,10 @@ class FilterVisualsAdvancedTest extends TestCaseAdvanced
             ->assertSeeHtml("mode: 'single'");
     }
 
-    /** 
+    /**
      * @group skip8
-     * 
-     * @test 
+     *
+     * @test
      */
     public function filters_slimselect_can_be_seen(): void
     {

@@ -30,3 +30,6 @@ tests/Dusk/Web/screenshots/
 tests/Dusk/Web/console/
 phpunit.dusk.xml
 !build/clover.xml
+!build/clover-L8.xml
+!build/clover-L9.xml
+!build/clover-L10.xml

@@ -80,6 +80,7 @@ jobs:
       - name: Add CoverageSVG
         run: |
           git add ./output/phpunit-coverage-*.svg
+          git add composer.json
 
       - name: update-coverage-badge
         uses: stefanzweifel/git-auto-commit-action@v4

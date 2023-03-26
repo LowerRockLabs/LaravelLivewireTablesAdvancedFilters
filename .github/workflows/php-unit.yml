@@ -82,7 +82,7 @@ jobs:
       - name: Add Shi
         if: startsWith(matrix.php, '8.2') == true
         run: |
-          git add phpunit-coverage-*.svg
+          git add ./output/phpunit-coverage-*.svg
 
       - name: update-coverage-badge
         if: startsWith(matrix.php, '8.2') == true

@@ -101,35 +101,12 @@ jobs:
           coverage_badge_path: 'output/phpunit-coverage-L10-${{ matrix.php }}-develop.svg'
           push_badge: false
 
-      - name: Git push to image-data branch L8
-        if: startsWith(matrix.laravel, '8') == true
+      - name: Git push to image-data branch
         uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_dir: ./output/L8/   # default: public destination_dir: ./docs/images/badges/L10/${{ matrix.php }}/
-          publish_branch: image-data-L8
+          publish_dir: ./output
+          publish_branch: image-data
           keep_files: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
-
-      - name: Git push to image-data branch L9
-        if: startsWith(matrix.laravel, '9') == true
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          publish_dir: ./output/L9/  # default: public destination_dir: ./docs/images/badges/L10/${{ matrix.php }}/
-          publish_branch: image-data-L8
-          keep_files: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-
-      - name: Git push to image-data branch L10
-        if: startsWith(matrix.laravel, '10') == true
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          publish_dir: ./output  # default: public destination_dir: ./docs/images/badges/L10/${{ matrix.php }}/
-          publish_branch: image-data-L10-${{ matrix.php }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-

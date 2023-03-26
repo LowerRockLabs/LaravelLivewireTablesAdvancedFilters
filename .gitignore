@@ -22,9 +22,6 @@ src/DateRangeFilter.php
 .phpunit.cache/*
 tests/Views/SmartSelectFilterTest.php
 srcb/
-/build/
-build/coverage.txt
-build/report.junit.xml
 resources/views/components/buttons/popover-open.blade copy.php
 tests/Dusk/Web/screenshots/
 tests/Dusk/Web/console/

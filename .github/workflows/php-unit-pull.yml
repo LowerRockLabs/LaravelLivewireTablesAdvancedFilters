@@ -12,7 +12,6 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci]')"
     strategy:
       fail-fast: true
-      max-parallel: 1
       matrix:
         os: [ubuntu-22.04]
         php: [8.0, 8.1, 8.2]
@@ -103,9 +102,8 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           publish_dir: ./output/L8  # default: public
-          keep_files: true
           destination_dir: ./L8/${{ matrix.php }}
-          publish_branch: image-data
+          publish_branch: image-data-L8-${{ matrix.php }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
@@ -115,9 +113,8 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           publish_dir: ./output/L9   # default: public
-          keep_files: true
           destination_dir: ./L9/${{ matrix.php }}
-          publish_branch: image-data
+          publish_branch: image-data-L9-${{ matrix.php }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
@@ -127,9 +124,8 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           publish_dir: ./output/L10  # default: public
-          keep_files: true
           destination_dir: ./L10/${{ matrix.php }}
-          publish_branch: image-data
+          publish_branch: image-data-L10-${{ matrix.php }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'

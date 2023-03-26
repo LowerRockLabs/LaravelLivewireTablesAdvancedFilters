@@ -15,7 +15,7 @@ jobs:
       matrix:
         os: [ubuntu-22.04]
         php: [8.0, 8.1, 8.2]
-        laravel: [8.*, 9.*, 10.*]
+        laravel: [8, 9, 10]
         stability: [prefer-dist]
         exclude:
           - laravel: 10.*
@@ -56,7 +56,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+        run: composer require "laravel/framework:${{ matrix.laravel }}.*" --no-interaction --no-update
 
       - name: Update dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
@@ -67,17 +67,15 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-      - name: Run Unit Tests L8
-        if: startsWith(matrix.laravel, '8') == true
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='build/clover-L8.xml' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
+      - name: Run Unit Tests
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='build/clover-L${{ matrix.laravel }}.xml' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
 
-      - name: Run Unit Tests L9
-        if: startsWith(matrix.laravel, '9') == true
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='build/clover-L9.xml' --passthru-php="'-d pcov.enabled=1'"
-
-      - name: Run Unit Tests L10
-        if: startsWith(matrix.laravel, '10') == true
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='build/clover-L10.xml' --passthru-php="'-d pcov.enabled=1'"
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automated Change
+          branch: image-data-L${{ matrix.laravel }}
+          file_pattern: 'build/clover-L${{ matrix.laravel }}.xml'
+          push_options: '--force'
 
   coverage:
     needs: test
@@ -90,7 +88,7 @@ jobs:
       matrix:
         os: [ubuntu-22.04]
         php: [8.2]
-        laravel: [8.*, 9.*, 10.*]
+        laravel: [8, 9, 10]
         stability: [prefer-stable]
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }}
@@ -108,46 +106,6 @@ jobs:
           tools: phpstan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Get composer cache directory
-        id: composer-cache
-        run: |
-          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v3
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer--${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-composer-
-
-      - name: Add token
-        run: |
-          composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-
-      - name: Update dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --prefer-stable --no-interaction
-
-      - name: Setup problem matchers
-        run: |
-          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-
-      - name: Run Unit Tests L8
-        if: startsWith(matrix.laravel, '8') == true
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='build/clover-L8.xml' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
-
-      - name: Run Unit Tests L9
-        if: startsWith(matrix.laravel, '9') == true
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='build/clover-L9.xml' --passthru-php="'-d pcov.enabled=1'"
-
-      - name: Run Unit Tests L10
-        if: startsWith(matrix.laravel, '10') == true
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='build/clover-L10.xml' --passthru-php="'-d pcov.enabled=1'"
 
       - name: phpunit-coverage-badge-l8
         if: startsWith(matrix.laravel, '8') == true

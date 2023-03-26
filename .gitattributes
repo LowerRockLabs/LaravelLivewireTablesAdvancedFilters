@@ -27,3 +27,4 @@
 /testbench.yaml         export-ignore
 /phpunit.xml.dist       export-ignore
 /.phpunit.result.cache  export-ignore
+/.phpunit.cache         export-ignore

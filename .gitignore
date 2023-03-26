@@ -23,13 +23,10 @@ src/DateRangeFilter.php
 tests/Views/SmartSelectFilterTest.php
 srcb/
 /build/
-./build
-./build/
-/build
 build/coverage.txt
 build/report.junit.xml
-clover.xml
 resources/views/components/buttons/popover-open.blade copy.php
 tests/Dusk/Web/screenshots/
 tests/Dusk/Web/console/
 phpunit.dusk.xml
+!build/clover.xml

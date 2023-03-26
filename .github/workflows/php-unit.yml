@@ -7,21 +7,17 @@ on:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
-    permissions:
-      contents: write
     if: "!contains(github.event.head_commit.message, '[ci]')"
     strategy:
       fail-fast: true
       matrix:
         os: [ubuntu-22.04]
-        php: [8.0, 8.1, 8.2]
+        php: [8.1, 8.2]
         laravel: [8, 9, 10]
         stability: [prefer-dist]
         exclude:
-          - laravel: 10
+          - laravel: 10.*
             php: 8.1
-          - laravel: 10
-            php: 8.0
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -52,7 +48,7 @@ jobs:
 
       - name: Add token
         run: |
-          composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+          composer config github-oauth.github.com ${{ secrets.LRL_GH_SECRET }}
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
@@ -67,99 +63,29 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-      - name: Run Unit Tests
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='clover-L${{ matrix.laravel }}.xml' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
+      - name: Run Unit Tests L8
+        if: startsWith(matrix.laravel, '8') == true
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
+
+      - name: Run Unit Tests L9 L10
+        if: startsWith(matrix.laravel, '8') == false
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --passthru-php="'-d pcov.enabled=1'"
+
+      - name: phpunit-coverage-badge
+        uses: timkrase/phpunit-coverage-badge@v1.2.1
+        with:
+          coverage_badge_path: 'phpunit-coverage-L${{ matrix.laravel }}-${{ matrix.php }}.svg'
+          push_badge: false
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change
           branch: image-data-L${{ matrix.laravel }}
-          file_pattern: 'clover-L${{ matrix.laravel }}.xml'
+          file_pattern: 'phpunit-coverage-L${{ matrix.laravel }}-${{ matrix.php }}.svg'
           skip_dirty_check: true 
-          skip_fetch: true
           skip_checkout: true
           push_options: '--force'
 
-  coverage:
-    needs: test
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: write
-    if: "!contains(github.event.head_commit.message, '[ci]')"
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ubuntu-22.04]
-        php: [8.2]
-        laravel: [8, 9, 10]
-        stability: [prefer-stable]
-
-    name: P${{ matrix.php }} - L${{ matrix.laravel }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, pcov, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: pcov
-          tools: phpstan
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: phpunit-coverage-badge-l8
-        if: startsWith(matrix.laravel, '8') == true
-        uses: timkrase/phpunit-coverage-badge@v1.2.1
-        with:
-          report: 'clover-L8.xml'
-          coverage_badge_path: 'output/phpunit-coverage-L8-develop.svg'
-          push_badge: false
-
-      - name: phpunit-coverage-badge-l9
-        if: startsWith(matrix.laravel, '9') == true
-        uses: timkrase/phpunit-coverage-badge@v1.2.1
-        with:
-          report: 'clover-L9.xml'
-          coverage_badge_path: 'output/phpunit-coverage-L9-develop.svg'
-          push_badge: false
-
-      - name: phpunit-coverage-badge-l10
-        if: startsWith(matrix.laravel, '10') == true
-        uses: timkrase/phpunit-coverage-badge@v1.2.1
-        with:
-          report: 'clover-L10.xml'
-          coverage_badge_path: 'output/phpunit-coverage-L10-develop.svg'
-          push_badge: false
-
-      - name: Git push to image-data branch L8
-        if: startsWith(matrix.laravel, '8') == true
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          publish_dir: ./output  # default: public
-          publish_branch: image-data-L8
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-
-      - name: Git push to image-data branch L9
-        if: startsWith(matrix.laravel, '9') == true
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          publish_dir: ./output  # default: public
-          publish_branch: image-data-L9
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-
-      - name: Git push to image-data branch L10
-        if: startsWith(matrix.laravel, '10') == true
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          publish_dir: ./output  # default: public
-          publish_branch: image-data-L10
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
+      - name: Run PHPStan
+        if: startsWith(matrix.laravel, '8') == false
+        run: phpstan analyse src

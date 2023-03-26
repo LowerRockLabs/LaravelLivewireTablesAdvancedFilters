@@ -78,9 +78,10 @@ jobs:
       - name: Run Unit Tests L10
         if: startsWith(matrix.laravel, '10') == true
         run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='build/clover-L10.xml' --passthru-php="'-d pcov.enabled=1'"
-        
+
   coverage:
-    runs-on: ${{ matrix.os }}
+    needs: test
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     if: "!contains(github.event.head_commit.message, '[ci]')"
@@ -92,7 +93,7 @@ jobs:
         laravel: [8.*, 9.*, 10.*]
         stability: [prefer-stable]
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }}
 
     steps:
       - name: Checkout code
@@ -129,7 +130,7 @@ jobs:
 
       - name: Update dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --${{ matrix.stability }} --no-interaction
+        run: composer update --prefer-stable --no-interaction
 
       - name: Setup problem matchers
         run: |

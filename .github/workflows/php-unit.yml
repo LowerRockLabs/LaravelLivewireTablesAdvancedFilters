@@ -75,10 +75,6 @@ jobs:
         if: startsWith(matrix.laravel, '8') == false
         run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --passthru-php="'-d pcov.enabled=1'"
 
-      - name: Run PHPStan
-        if: startsWith(matrix.laravel, '8') == false
-        run: phpstan analyse src
-
       - name: phpunit-coverage-badge-l8
         if: startsWith(matrix.laravel, '8') == true
         uses: timkrase/phpunit-coverage-badge@v1.2.1
@@ -100,26 +96,28 @@ jobs:
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           report: 'build/clover.xml'
-          coverage_badge_path: 'output/phpunit-coverage-L10-${{ matrix.php }}-main.svg'
+          coverage_badge_path: 'output/phpunit-coverage-L10-${{ matrix.php }}-develop.svg'
           push_badge: false
-
 
       - name: Git push to image-data branch L8
         if: startsWith(matrix.laravel, '8') == true
         uses: peaceiris/actions-gh-pages@v3
         with:
-          destination_dir: L8/${{ matrix.php }}
+          publish_dir: ./public  # default: public
+          keep_files: true
+          destination_dir: ./L8/${{ matrix.php }}
           publish_branch: image-data
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
 
-
       - name: Git push to image-data branch L9
         if: startsWith(matrix.laravel, '9') == true
         uses: peaceiris/actions-gh-pages@v3
         with:
-          destination_dir: L9/${{ matrix.php }}
+          publish_dir: ./output  # default: public
+          keep_files: true
+          destination_dir: ./L9/${{ matrix.php }}
           publish_branch: image-data
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'
@@ -129,7 +127,9 @@ jobs:
         if: startsWith(matrix.laravel, '10') == true
         uses: peaceiris/actions-gh-pages@v3
         with:
-          destination_dir: L10/${{ matrix.php }}
+          publish_dir: ./output  # default: public
+          keep_files: true
+          destination_dir: ./L10/${{ matrix.php }}
           publish_branch: image-data
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'

@@ -75,6 +75,10 @@ jobs:
         run: |
           git stash
 
+      - name: Add CoverageSVG
+        run: |
+          git add --no-all ./output/phpunit-coverage-*.svg
+
       - name: phpunit-coverage-badge
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:

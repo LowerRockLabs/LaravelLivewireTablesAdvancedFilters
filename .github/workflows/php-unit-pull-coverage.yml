@@ -73,7 +73,6 @@ jobs:
 
       - name: Stash CoverageSVG
         run: |
-          git switch image-data
           git stash
 
       - name: phpunit-coverage-badge

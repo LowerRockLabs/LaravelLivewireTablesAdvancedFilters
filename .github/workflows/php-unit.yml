@@ -76,7 +76,7 @@ jobs:
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           report: 'clover-L${{ matrix.laravel }}.xml'
-          coverage_badge_path: 'output/phpunit-coverage-L${{ matrix.laravel }}.svg'
+          coverage_badge_path: 'phpunit-coverage-L${{ matrix.laravel }}.svg'
           push_badge: false
 
       - name: update-coverage-badge
@@ -84,14 +84,14 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change
-          commit_options: '--no-verify --signoff'
           branch: image-data
-          file_pattern: './output/phpunit-coverage-L${{ matrix.laravel }}.svg'
-          skip_dirty_check: true 
-          skip_checkout: false 
+          commit_options: '--no-verify --signoff'
+          file_pattern: 'phpunit-coverage-L${{ matrix.laravel }}.svg'
+          status_options: '--untracked-files=no'
+          add_options: '-u --ignore-removal'
           push_options: '--force'
-          add_options: '--ignore-removal'
+          skip_dirty_check: true 
+          skip_fetch: true   
+          skip_checkout: true 
 
-      - name: Run PHPStan
-        if: startsWith(matrix.laravel, '8') == false
-        run: phpstan analyse src
+

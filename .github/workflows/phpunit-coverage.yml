@@ -75,7 +75,7 @@ jobs:
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           report: 'build/clover.xml'
-          coverage_badge_path: 'output/L8/phpunit-coverage-L8-develop.svg'
+          coverage_badge_path: 'output/phpunit-coverage-L8-develop.svg'
           push_badge: false
 
       - name: phpunit-coverage-badge-l9
@@ -83,7 +83,7 @@ jobs:
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           report: 'build/clover.xml'
-          coverage_badge_path: 'output/L9/phpunit-coverage-L9-develop.svg'
+          coverage_badge_path: 'output/phpunit-coverage-L9-develop.svg'
           push_badge: false
 
       - name: phpunit-coverage-badge-l10
@@ -91,14 +91,14 @@ jobs:
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           report: 'build/clover.xml'
-          coverage_badge_path: 'output/L10/phpunit-coverage-L10-develop.svg'
+          coverage_badge_path: 'output/phpunit-coverage-L10-develop.svg'
           push_badge: false
 
       - name: Git push to image-data branch L8
         if: startsWith(matrix.laravel, '8') == true
         uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_dir: ./output/L8  # default: public
+          publish_dir: ./output  # default: public
           publish_branch: image-data-L8
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'
@@ -108,7 +108,7 @@ jobs:
         if: startsWith(matrix.laravel, '9') == true
         uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_dir: ./output/L9  # default: public
+          publish_dir: ./output  # default: public
           publish_branch: image-data-L9
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'
@@ -118,7 +118,7 @@ jobs:
         if: startsWith(matrix.laravel, '10') == true
         uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_dir: ./output/L10  # default: public
+          publish_dir: ./output  # default: public
           publish_branch: image-data-L10
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'

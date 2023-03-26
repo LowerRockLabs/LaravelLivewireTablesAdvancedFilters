@@ -90,7 +90,7 @@ jobs:
           commit_options: '--no-verify --signoff'
           status_options: '--untracked-files=no'
           add_options: '-u'
-          file_pattern: './output/phpunit-coverage-L${{ matrix.laravel }}.svg'
+          file_pattern: './output/phpunit-coverage-L${{ matrix.laravel }}.svg composer.json'
           push_options: '--force'
           skip_dirty_check: false 
           skip_fetch: false   

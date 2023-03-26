@@ -83,7 +83,6 @@ jobs:
         if: startsWith(matrix.php, '8.2') == true
         run: |
           git add phpunit-coverage-*.svg
-          git rm auth.json
 
       - name: update-coverage-badge
         if: startsWith(matrix.php, '8.2') == true

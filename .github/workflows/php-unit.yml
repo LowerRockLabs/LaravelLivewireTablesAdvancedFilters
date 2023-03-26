@@ -68,13 +68,16 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Run Unit Tests
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='output/clover-L${{ matrix.laravel }}.xml' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='clover-L${{ matrix.laravel }}.xml' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change
           branch: image-data-L${{ matrix.laravel }}
-          file_pattern: 'output/clover-L${{ matrix.laravel }}.xml'
+          file_pattern: 'clover-L${{ matrix.laravel }}.xml'
+          skip_dirty_check: true 
+          skip_fetch: true
+          skip_checkout: true
           push_options: '--force'
 
   coverage:

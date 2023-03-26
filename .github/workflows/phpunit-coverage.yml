@@ -7,7 +7,6 @@ on:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
-    max-parallel: 1
     permissions:
       contents: write
     if: "!contains(github.event.head_commit.message, '[ci]')"
@@ -94,7 +93,6 @@ jobs:
           report: 'build/clover.xml'
           coverage_badge_path: 'output/L10/phpunit-coverage-L10-develop.svg'
           push_badge: false
-
   updateCoverage:
     needs: test
     runs-on: ubuntu-22.04

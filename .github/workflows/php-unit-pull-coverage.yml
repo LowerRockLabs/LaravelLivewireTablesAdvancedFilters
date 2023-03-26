@@ -62,6 +62,7 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
+
       - name: Run Unit Tests L8
         if: startsWith(matrix.laravel, '8') == true
         run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='clover-L8.xml' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
@@ -69,6 +70,11 @@ jobs:
       - name: Run Unit Tests L9 L10
         if: startsWith(matrix.laravel, '8') == false
         run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='clover-L${{ matrix.laravel }}.xml' --passthru-php="'-d pcov.enabled=1'"
+
+      - name: Stash CoverageSVG
+        run: |
+          git switch image-data
+          git stash
 
       - name: phpunit-coverage-badge
         uses: timkrase/phpunit-coverage-badge@v1.2.1
@@ -80,7 +86,6 @@ jobs:
       - name: Add CoverageSVG
         run: |
           git add ./output/phpunit-coverage-*.svg
-          git add composer.json
 
       - name: update-coverage-badge
         uses: stefanzweifel/git-auto-commit-action@v4

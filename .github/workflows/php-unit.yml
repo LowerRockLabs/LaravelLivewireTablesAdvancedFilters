@@ -48,7 +48,7 @@ jobs:
 
       - name: Add token
         run: |
-          composer config github-oauth.github.com ${{ secrets.LRL_GH_SECRET }}
+          composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'

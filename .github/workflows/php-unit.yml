@@ -84,7 +84,7 @@ jobs:
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           report: 'build/clover.xml'
-          coverage_badge_path: 'output/L8/${{ matrix.php }}/phpunit-coverage-L8-${{ matrix.php }}-main.svg'
+          coverage_badge_path: 'output/phpunit-coverage-L8-${{ matrix.php }}-main.svg'
           push_badge: false
 
       - name: phpunit-coverage-badge-l9
@@ -92,7 +92,7 @@ jobs:
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           report: 'build/clover.xml'
-          coverage_badge_path: 'output/L9/${{ matrix.php }}/phpunit-coverage-L9-${{ matrix.php }}-main.svg'
+          coverage_badge_path: 'output/phpunit-coverage-L9-${{ matrix.php }}-main.svg'
           push_badge: false
 
       - name: phpunit-coverage-badge-l10
@@ -100,7 +100,7 @@ jobs:
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           report: 'build/clover.xml'
-          coverage_badge_path: 'output/L10/${{ matrix.php }}/phpunit-coverage-L10-${{ matrix.php }}-main.svg'
+          coverage_badge_path: 'output/phpunit-coverage-L10-${{ matrix.php }}-main.svg'
           push_badge: false
 
 

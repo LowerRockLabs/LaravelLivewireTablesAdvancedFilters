@@ -137,6 +137,18 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
+      - name: Run Unit Tests L8
+        if: startsWith(matrix.laravel, '8') == true
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='build/clover-L8.xml' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
+
+      - name: Run Unit Tests L9
+        if: startsWith(matrix.laravel, '9') == true
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='build/clover-L9.xml' --passthru-php="'-d pcov.enabled=1'"
+
+      - name: Run Unit Tests L10
+        if: startsWith(matrix.laravel, '10') == true
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='build/clover-L10.xml' --passthru-php="'-d pcov.enabled=1'"
+
       - name: phpunit-coverage-badge-l8
         if: startsWith(matrix.laravel, '8') == true
         uses: timkrase/phpunit-coverage-badge@v1.2.1

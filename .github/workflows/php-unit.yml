@@ -108,7 +108,7 @@ jobs:
         if: startsWith(matrix.laravel, '8') == true
         uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_dir: ./output/L8/${{ matrix.php }}
+          destination_dir: L8/${{ matrix.php }}
           publish_branch: image-data
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'
@@ -119,7 +119,7 @@ jobs:
         if: startsWith(matrix.laravel, '9') == true
         uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_dir: ./output/L9/${{ matrix.php }}
+          destination_dir: L9/${{ matrix.php }}
           publish_branch: image-data
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'
@@ -129,7 +129,7 @@ jobs:
         if: startsWith(matrix.laravel, '10') == true
         uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_dir: ./output/L10/${{ matrix.php }}
+          destination_dir: L10/${{ matrix.php }}
           publish_branch: image-data
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'

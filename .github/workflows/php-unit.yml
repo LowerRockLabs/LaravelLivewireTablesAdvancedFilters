@@ -65,23 +65,27 @@ jobs:
 
       - name: Run Unit Tests L8
         if: startsWith(matrix.laravel, '8') == true
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='clover-L${{ matrix.laravel }}.xml' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
 
       - name: Run Unit Tests L9 L10
         if: startsWith(matrix.laravel, '8') == false
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --passthru-php="'-d pcov.enabled=1'"
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='clover-L${{ matrix.laravel }}.xml' --passthru-php="'-d pcov.enabled=1'"
 
       - name: phpunit-coverage-badge
+        if: startsWith(matrix.php, '8.2') == true
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
-          coverage_badge_path: 'phpunit-coverage-L${{ matrix.laravel }}-${{ matrix.php }}.svg'
+          report: 'clover-L${{ matrix.laravel }}.xml'
+          coverage_badge_path: 'phpunit-coverage-L${{ matrix.laravel }}.svg'
           push_badge: false
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: update-coverage-badge
+        if: startsWith(matrix.php, '8.2') == true
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change
           branch: image-data-L${{ matrix.laravel }}
-          file_pattern: 'phpunit-coverage-L${{ matrix.laravel }}-${{ matrix.php }}.svg'
+          file_pattern: 'phpunit-coverage-L${{ matrix.laravel }}.svg'
           skip_dirty_check: true 
           skip_checkout: true
           push_options: '--force'

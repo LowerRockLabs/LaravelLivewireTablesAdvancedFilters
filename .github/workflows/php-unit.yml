@@ -7,6 +7,8 @@ on:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
     if: "!contains(github.event.head_commit.message, '[ci]')"
     strategy:
       fail-fast: true
@@ -104,7 +106,8 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           publish_dir: ./output  # default: public destination_dir: ./docs/images/badges/L10/${{ matrix.php }}/
-          publish_branch: image-data-L8-${{ matrix.php }}
+          publish_branch: image-data-L8
+          keep_files: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'

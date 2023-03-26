@@ -75,16 +75,17 @@ jobs:
         run: |
           git stash
 
-      - name: Add CoverageSVG
-        run: |
-          git add --no-all ./output/phpunit-coverage-*.svg
-
       - name: phpunit-coverage-badge
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           report: 'clover-L${{ matrix.laravel }}.xml'
           coverage_badge_path: 'output/phpunit-coverage-L${{ matrix.laravel }}.svg'
           push_badge: false
+
+      - name: Add CoverageSVG
+        run: |
+          git add --no-all ./output/phpunit-coverage-*.svg
+
 
       - name: update-coverage-badge
         uses: stefanzweifel/git-auto-commit-action@v4

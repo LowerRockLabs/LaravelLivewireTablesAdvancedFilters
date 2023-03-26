@@ -65,36 +65,8 @@ jobs:
 
       - name: Run Unit Tests L8
         if: startsWith(matrix.laravel, '8') == true
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='clover-L8.xml' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
+        run: php ./vendor/bin/paratest --testsuite='Standard' --exclude-group skip8
 
       - name: Run Unit Tests L9 L10
         if: startsWith(matrix.laravel, '8') == false
-        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='clover-L${{ matrix.laravel }}.xml' --passthru-php="'-d pcov.enabled=1'"
-
-      - name: phpunit-coverage-badge
-        if: startsWith(matrix.php, '8.2') == true
-        uses: timkrase/phpunit-coverage-badge@v1.2.1
-        with:
-          report: 'clover-L${{ matrix.laravel }}.xml'
-          coverage_badge_path: 'output/phpunit-coverage-L${{ matrix.laravel }}.svg'
-          push_badge: false
-
-      - name: Add Shi
-        if: startsWith(matrix.php, '8.2') == true
-        run: |
-          git add ./output/phpunit-coverage-*.svg
-
-      - name: update-coverage-badge
-        if: startsWith(matrix.php, '8.2') == true
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Automated Change
-          branch: image-data
-          commit_options: '--no-verify --signoff'
-          file_pattern: './output/phpunit-coverage-L${{ matrix.laravel }}.svg'
-          push_options: '--force'
-          skip_dirty_check: false 
-          skip_fetch: false   
-          skip_checkout: false 
-
-
+        run: php ./vendor/bin/paratest --testsuite='Standard'

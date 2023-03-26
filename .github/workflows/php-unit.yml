@@ -95,6 +95,6 @@ jobs:
           push_options: '--force'
           skip_dirty_check: false 
           skip_fetch: false   
-          skip_checkout: true 
+          skip_checkout: false 
 
 

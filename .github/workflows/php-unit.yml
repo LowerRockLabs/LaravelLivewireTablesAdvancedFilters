@@ -86,8 +86,8 @@ jobs:
           commit_message: Automated Change
           branch: image-data
           file_pattern: './output/phpunit-coverage-L${{ matrix.laravel }}.svg'
-          skip_dirty_check: true 
-          skip_checkout: true
+          skip_dirty_check: false 
+          skip_checkout: false 
           push_options: '--force'
 
       - name: Run PHPStan

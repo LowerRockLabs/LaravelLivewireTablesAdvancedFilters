@@ -75,6 +75,14 @@ jobs:
         if: startsWith(matrix.laravel, '8') == false
         run: phpstan analyse src
 
+      - name: phpunit-coverage-badge-l8
+        if: startsWith(matrix.laravel, '8') == true
+        uses: timkrase/phpunit-coverage-badge@v1.2.1
+        with:
+          report: 'build/clover.xml'
+          coverage_badge_path: 'docs/images/badges/L8/${{ matrix.php }}/phpunit-coverage-develop.svg'
+          push_badge: false
+
       - name: phpunit-coverage-badge-l9
         if: startsWith(matrix.laravel, '9') == true
         uses: timkrase/phpunit-coverage-badge@v1.2.1
@@ -90,6 +98,16 @@ jobs:
           report: 'build/clover.xml'
           coverage_badge_path: 'docs/images/badges/L10/${{ matrix.php }}/phpunit-coverage-develop.svg'
           push_badge: false
+
+      - name: Git push to image-data branch L8
+        if: startsWith(matrix.laravel, '8') == true
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: ./docs/images/badges/L8/${{ matrix.php }}/
+          publish_branch: image-data
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
 
       - name: Git push to image-data branch L9
         if: startsWith(matrix.laravel, '9') == true

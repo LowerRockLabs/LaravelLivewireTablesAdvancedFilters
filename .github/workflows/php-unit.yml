@@ -80,6 +80,7 @@ jobs:
           push_badge: false
 
       - name: Add Shi
+        if: startsWith(matrix.php, '8.2') == true
         run: |
           git add phpunit-coverage-*.svg
           git rm auth.json

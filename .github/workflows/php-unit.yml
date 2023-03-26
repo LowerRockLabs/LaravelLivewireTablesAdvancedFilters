@@ -84,7 +84,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change
-          branch: image-data-L${{ matrix.laravel }}
+          branch: image-data
           file_pattern: 'phpunit-coverage-L${{ matrix.laravel }}.svg'
           skip_dirty_check: true 
           skip_checkout: true

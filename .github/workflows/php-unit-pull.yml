@@ -11,7 +11,7 @@ jobs:
       contents: write
     if: "!contains(github.event.head_commit.message, '[ci]')"
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: [ubuntu-22.04]
         php: [8.0, 8.1, 8.2]
@@ -78,13 +78,13 @@ jobs:
         uses: timkrase/phpunit-coverage-badge@v1.2.1
         with:
           report: 'clover-L${{ matrix.laravel }}.xml'
-          coverage_badge_path: 'phpunit-coverage-L${{ matrix.laravel }}.svg'
+          coverage_badge_path: 'output/phpunit-coverage-L${{ matrix.laravel }}.svg'
           push_badge: false
 
       - name: Add CoverageSVG
         if: startsWith(matrix.php, '8.2') == true
         run: |
-          git add ./phpunit-coverage-*.svg
+          git add ./output/phpunit-coverage-*.svg
 
       - name: update-coverage-badge
         if: startsWith(matrix.php, '8.2') == true
@@ -93,7 +93,7 @@ jobs:
           commit_message: Automated Change
           branch: image-data
           commit_options: '--no-verify --signoff'
-          file_pattern: './phpunit-coverage-L${{ matrix.laravel }}.svg'
+          file_pattern: './output/phpunit-coverage-L${{ matrix.laravel }}.svg'
           push_options: '--force'
           skip_dirty_check: false 
           skip_fetch: false   

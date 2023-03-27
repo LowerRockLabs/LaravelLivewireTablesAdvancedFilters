@@ -82,19 +82,14 @@ jobs:
           coverage_badge_path: 'output/phpunit-coverage-L${{ matrix.laravel }}.svg'
           push_badge: false
 
-      - name: Add CoverageSVG
-        run: |
-          git add --no-all ./output/phpunit-coverage-*.svg
-
-
       - name: update-coverage-badge
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change
           branch: image-data
           commit_options: '--no-verify --signoff'
-          add_options: '--ignore-removal --ignore-missing'
-          file_pattern: './output/phpunit-coverage-*.svg'
+          add_options: '--no-all --ignore-removal'
+          file_pattern: './output/phpunit-coverage-L${{ matrix.laravel }}.svg'
           push_options: '--force'
           skip_dirty_check: true 
           skip_fetch: false   

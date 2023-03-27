@@ -94,7 +94,7 @@ jobs:
           branch: image-data
           commit_options: '--no-verify --signoff'
           add_options: '--no-all --ignore-removal'
-          file_pattern: 'output/*.svg'
+          file_pattern: '*'
           push_options: '--force'
           skip_dirty_check: true 
           skip_fetch: false   

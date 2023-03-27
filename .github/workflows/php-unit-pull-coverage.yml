@@ -101,9 +101,5 @@ jobs:
           skip_dirty_check: true 
           skip_fetch: false   
           skip_checkout: false 
-        run: |
-          git stash
-          git add output/phpunit-coverage-L${{ matrix.laravel }}.svg
-          git rm clover*
-          git rm build/*
+
 

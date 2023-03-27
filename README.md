@@ -1,8 +1,6 @@
-![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit-pull.yml/badge.svg) 
-![PHP Stan L8](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-stan-pull.yml/badge.svg)
+![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit-pull.yml/badge.svg) ![PHP Stan L8](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-stan-pull.yml/badge.svg)  ![Test Coverage](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/image-data/coverage.svg)
 
-Dev Branch
-![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit.yml/badge.svg?branch=develop)
+![PHP Unit](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/actions/workflows/php-unit.yml/badge.svg?branch=develop) ![Test Coverage](https://github.com/LowerRockLabs/LaravelLivewireTablesAdvancedFilters/blob/image-data/coverage.svg)
 
 
 # LaravelLivewireTablesAdvancedFilters

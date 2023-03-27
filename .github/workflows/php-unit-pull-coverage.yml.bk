@@ -1,4 +1,4 @@
-name: Main PHP Unit Tests
+name: Main PHP Unit Tests Coverage
 on:
   pull_request:
     branches:
@@ -14,12 +14,9 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-22.04]
-        php: [8.0, 8.1]
+        php: [8.2]
         laravel: [8, 9, 10]
         stability: [prefer-stable]
-        exclude:
-          - laravel: 10
-            php: 8.0
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -65,10 +62,44 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
+
       - name: Run Unit Tests L8
         if: startsWith(matrix.laravel, '8') == true
-        run: php ./vendor/bin/paratest --testsuite='Standard' --exclude-group skip8
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='clover-L8.xml' --exclude-group skip8 --passthru-php="'-d pcov.enabled=1'"
 
       - name: Run Unit Tests L9 L10
         if: startsWith(matrix.laravel, '8') == false
-        run: php ./vendor/bin/paratest --testsuite='Standard'
+        run: php -d pcov.enabled=1 ./vendor/bin/paratest --testsuite='Standard' --coverage-clover='clover-L${{ matrix.laravel }}.xml' --passthru-php="'-d pcov.enabled=1'"
+
+      - name: Stash CoverageSVG
+        run: |
+          git stash
+
+      - name: phpunit-coverage-badge
+        uses: timkrase/phpunit-coverage-badge@v1.2.1
+        with:
+          report: 'clover-L${{ matrix.laravel }}.xml'
+          coverage_badge_path: 'output/phpunit-coverage-L${{ matrix.laravel }}.svg'
+          push_badge: false
+
+      - name: Add CoverageSVG
+        run: |
+          git stash
+          git add output/phpunit-coverage-L${{ matrix.laravel }}.svg
+          git rm clover*
+          git rm build/*
+
+      - name: update-coverage-badge
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automated Change
+          branch: image-data
+          commit_options: '--no-verify --signoff'
+          add_options: '--no-all --ignore-removal'
+          file_pattern: '.phpunit.cache/* composer.lock'
+          push_options: '--force'
+          skip_dirty_check: true 
+          skip_fetch: false   
+          skip_checkout: false 
+
+

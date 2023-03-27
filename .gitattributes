@@ -4,7 +4,6 @@
 # Ignore all test and documentation with "export-ignore".
 /.github                export-ignore
 /.phpunit.cache         export-ignore
-/build                  export-ignore
 /docs                   export-ignore
 /tests                  export-ignore
 /testsdusk              export-ignore

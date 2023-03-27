@@ -87,7 +87,6 @@ jobs:
           git stash
           git add output/phpunit-coverage-L${{ matrix.laravel }}.svg
           git add clover*
-          git add .phpunit.cache/*
 
       - name: update-coverage-badge
         uses: stefanzweifel/git-auto-commit-action@v4

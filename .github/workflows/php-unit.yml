@@ -64,6 +64,8 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
+      - run: php artisan migrate --fresh
+
       - name: Run Unit Tests L8
         if: startsWith(matrix.laravel, '8') == true
         run: php ./vendor/bin/paratest --testsuite='Standard' --exclude-group skip8

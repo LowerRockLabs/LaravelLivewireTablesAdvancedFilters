@@ -7,6 +7,7 @@
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
     $customFilterMenuWidth = (!empty($filterConfigs['customFilterMenuWidth']) ? json_encode(explode( " ", $filterConfigs['customFilterMenuWidth'])) : '');
+    $filterLayout = $component->getFilterLayout();
 
     $options = [];
     $empty = [];
@@ -75,8 +76,11 @@
         <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet" />
     @endPushOnce
     @if ($theme === 'tailwind')
-        <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
-            :filterName="$filterName" />
+            @if($filter->hasCustomFilterLabel())
+                @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+            @else
+                <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+            @endif        
         <div wire:ignore wire:key>
             <div wire:key class="rounded-md shadow-sm">
 
@@ -88,8 +92,11 @@
             </div>
         </div>
     @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
-        <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
-            :filterName="$filterName" />
+        @if($filter->hasCustomFilterLabel())
+            @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+        @else
+            <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+        @endif        
         <div wire:ignore wire:key>
             <div wire:key class="rounded-md shadow-sm">
 

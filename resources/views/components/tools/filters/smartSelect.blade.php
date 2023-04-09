@@ -7,6 +7,7 @@
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
     $customFilterMenuWidth = (!empty($filterConfigs['customFilterMenuWidth']) ? json_encode(explode( " ", $filterConfigs['customFilterMenuWidth'])) : '');
+    $filterLayout = $component->getFilterLayout();
 
     $wireKey = $tableName . '.filters.' . $filterKey;
     $selectedWireKey = 'filterData.' . $filterKey;

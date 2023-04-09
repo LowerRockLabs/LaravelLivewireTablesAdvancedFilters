@@ -3,6 +3,7 @@
     $tableName = $component->getTableName();
     $filterKey = $filter->getKey();
     $wireKey = $tableName . '.filters.' . $filterKey;
+    $filterLayout = $component->getFilterLayout();
 
 @endphp
 
@@ -26,11 +27,11 @@
 }">
     @if ($theme === 'tailwind')
         <div>
-
-            <label for="{{ $tableName }}-filter-{{ $filterKey }}"
-                class="block text-sm font-medium leading-5 text-gray-700 dark:text-white">
-                {{ $filter->getName() }}
-            </label>
+            @if($filter->hasCustomFilterLabel())
+                @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+            @else
+                <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+            @endif        
             @livewire('test-component')
         </div>
     @endif

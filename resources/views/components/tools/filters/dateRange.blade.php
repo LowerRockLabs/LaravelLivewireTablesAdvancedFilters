@@ -9,6 +9,7 @@
     $customFilterMenuWidth = (!empty($filterConfigs['customFilterMenuWidth']) ? json_encode(explode( " ", $filterConfigs['customFilterMenuWidth'])) : '');
     $pushFlatpickrCss = $filterConfigs['publishFlatpickrCSS'];
     $pushFlatpickrJS = $filterConfigs['publishFlatpickrJS'];
+    $filterLayout = $component->getFilterLayout();
 
     $yesterday = date('Y-m-d', strtotime('-1 days'));
     $dateInput = isset($this->{$tableName}['filters'][$filterKey]) ? $this->{$tableName}['filters'][$filterKey] : '';
@@ -95,8 +96,11 @@
         }
     }" x-effect="init">
         @if ($theme === 'tailwind')
-            <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
-                :filterName="$filterName" />
+            @if($filter->hasCustomFilterLabel())
+                @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+            @else
+                <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+            @endif
 
 
             <div class="w-full rounded-md shadow-sm text-right" placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
@@ -108,8 +112,11 @@
 
             </div>
         @elseif ($theme === 'bootstrap-4')
-            <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
-                :filterName="$filterName" />
+            @if($filter->hasCustomFilterLabel())
+                @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+            @else
+                <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+            @endif
 
             <div class="d-inline-block w-100 mb-3 mb-md-0 input-group" placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
@@ -119,8 +126,11 @@
                 <x-lrlAdvancedTableFilters::icons.calendarIcon :theme="$theme" />
             </div>
         @elseif ($theme === 'bootstrap-5')
-            <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
-                :filterName="$filterName" />
+            @if($filter->hasCustomFilterLabel())
+                @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+            @else
+                <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+            @endif
 
             <div class="d-inline-block w-100 mb-3 mb-md-0 input-group" placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 

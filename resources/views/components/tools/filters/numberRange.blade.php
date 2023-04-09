@@ -8,6 +8,7 @@
     $filterConfigs = $filter->getConfigs();
     $customFilterMenuWidth = (!empty($filterConfigs['customFilterMenuWidth']) ? json_encode(explode( " ", $filterConfigs['customFilterMenuWidth'])) : '');
     $suffix = $filter->getConfig('suffix');
+    $filterLayout = $component->getFilterLayout();
 
     $defaultMin = $currentMin = $filterMin = $minRange = $filter->getConfig('minRange');
     $defaultMax = $currentMax = $filterMax = $maxRange = $filter->getConfig('maxRange');
@@ -93,8 +94,13 @@
     },
 }">
     @if ($theme === 'tailwind')
-        <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
-            :filterName="$filterName" />
+
+        @if($filter->hasCustomFilterLabel())
+            @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+        @else
+            <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+        @endif
+
         <div class="mt-4 h-22 pt-8 pb-4 grid gap-10">
             <div x-on:mousedown.away="allowUpdates" x-on:touchstart.away="allowUpdates" x-on:mouseleave="allowUpdates"
                 class="range-slider flat" id="{{ $filterBasePath }}" data-ticks-position='bottom'
@@ -121,8 +127,11 @@
             </div>
         </div>
     @elseif ($theme === 'bootstrap-4')
-        <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
-            :filterName="$filterName" />
+            @if($filter->hasCustomFilterLabel())
+                @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+            @else
+                <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+            @endif        
         <div class="mt-4 h-22 w-100 pb-4 pt-2  grid gap-10" x-on:mouseleave="allowUpdates">
             <div class="range-slider flat w-100" id="{{ $filterBasePath }}" data-ticks-position='bottom'
                 style='--min:{{ $minRange }};

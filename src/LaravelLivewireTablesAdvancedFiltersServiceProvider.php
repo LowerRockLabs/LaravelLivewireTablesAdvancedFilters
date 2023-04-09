@@ -14,8 +14,11 @@ class LaravelLivewireTablesAdvancedFiltersServiceProvider extends ServiceProvide
         /*
          * Optional methods to load your package assets
          */
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'lrlAdvancedTableFilters');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'lrlAdvancedTableFilters');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'lrlAdvancedTableFilters');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'lrlAdvancedTableFilters');
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/config.php', 'lrlAdvancedTableFilters'
+        );
 
         if ($this->app->runningInConsole()) {
             $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'lrlAdvancedTableFilters');
@@ -43,6 +46,6 @@ class LaravelLivewireTablesAdvancedFiltersServiceProvider extends ServiceProvide
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'livewiretablesadvancedfilters');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'basefunctions');
     }
 }

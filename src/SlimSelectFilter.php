@@ -23,8 +23,8 @@ class SlimSelectFilter extends Filter
     public function __construct(string $name, string $key = null)
     {
         parent::__construct($name, (isset($key) ? $key : null));
-        $this->config = config('livewiretablesadvancedfilters.slimSelect');
-        $this->config['customFilterMenuWidth'] = config('livewiretablesadvancedfilters.customFilterMenuWidth');
+        $this->config = config('lrlAdvancedTableFilters.slimSelect');
+        $this->config['customFilterMenuWidth'] = config('lrlAdvancedTableFilters.customFilterMenuWidth');
     }
 
     /**

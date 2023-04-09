@@ -29,7 +29,7 @@ class NumberRangeFilterTest extends TestCaseAdvanced
     {
         $filter = NumberRangeFilter::make('Active');
 
-        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.numberRange'), ['customFilterMenuWidth' => 'md:w-80']);
+        $defaultConfig = array_merge(config('lrlAdvancedTableFilters.numberRange'), ['customFilterMenuWidth' => 'md:w-80']);
 
         $this->assertSame($defaultConfig, $filter->getConfigs());
 
@@ -192,7 +192,7 @@ class NumberRangeFilterTest extends TestCaseAdvanced
     {
         $filter = NumberRangeFilter::make('Active');
 
-        $this->assertSame(config('livewiretablesadvancedfilters.numberRange.defaults'), $filter->getOptions());
+        $this->assertSame(config('lrlAdvancedTableFilters.numberRange.defaults'), $filter->getOptions());
 
         $filter->options(['foo' => 'bar']);
         $this->assertSame(['min' => '0', 'max' => '100', 'foo' => 'bar'], $filter->getOptions());

@@ -203,7 +203,7 @@ class DatePickerFilter extends Filter
 
         // @codeCoverageIgnoreEnd
 
-        return view('livewiretablesadvancedfilters::components.tools.filters.datePicker', [
+        return view('lrlAdvancedTableFilters::components.tools.filters.datePicker', [
             'component' => $component,
             'theme' => $component->getTheme(),
             'filter' => $this,

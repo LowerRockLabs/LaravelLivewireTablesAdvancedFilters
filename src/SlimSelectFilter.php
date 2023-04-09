@@ -140,7 +140,7 @@ class SlimSelectFilter extends Filter
         }
 
         // @codeCoverageIgnoreEnd
-        return view('livewiretablesadvancedfilters::components.tools.filters.slimSelect', [
+        return view('lrlAdvancedTableFilters::components.tools.filters.slimSelect', [
             'component' => $component,
             'theme' => $component->getTheme(),
             'filter' => $this,

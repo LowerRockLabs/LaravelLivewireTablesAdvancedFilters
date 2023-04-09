@@ -120,7 +120,7 @@
                     {{ $filter->getName() }}
                 </label>
                 <div class="inline-block w-1/12">
-                    <x-livewiretablesadvancedfilters::buttons.popover-open :theme="$theme" />
+                    <x-lrlAdvancedTableFilters::buttons.popover-open :theme="$theme" />
                 </div>
             </div>
             <!-- End Label Replacement -->
@@ -129,13 +129,13 @@
             <div x-cloak
                 class="w-full z-50 rounded-md relative inline-flex place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-                <x-livewiretablesadvancedfilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
+                <x-lrlAdvancedTableFilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
             </div>
             <!-- Stop Existing Pop-Over -->
 
             <!-- Start Drop Down -->
             <div class=" w-full flex flex-col items-center justify-center text-black dark:text-white ">
-                <x-livewiretablesadvancedfilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
+                <x-lrlAdvancedTableFilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
 
                 <div :class="{
                     'border-solid border-2 rounded-md border-gray-300 dark:border-gray-600': currentFilteredList
@@ -147,11 +147,11 @@
                             <li class="px-2 py-1 hover:bg-blue-500 dark:hover:bg-gray-400"
                                 :class="{ 'dark:bg-gray-800': (index % 2) }">
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
-                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-rem :iconStyling="$iconStyling"
+                                    <x-lrlAdvancedTableFilters::elements.smartselect-item-rem :iconStyling="$iconStyling"
                                         :theme="$theme" />
                                 </template>
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
-                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-add :iconStyling="$iconStyling"
+                                    <x-lrlAdvancedTableFilters::elements.smartselect-item-add :iconStyling="$iconStyling"
                                         :theme="$theme" />
                                 </template>
                             </li>
@@ -169,7 +169,7 @@
                     {{ $filter->getName() }}
                 </label>
                 <div class="d-inline align-self-end text-right position-absolute">
-                    <x-livewiretablesadvancedfilters::buttons.popover-open :theme="$theme" />
+                    <x-lrlAdvancedTableFilters::buttons.popover-open :theme="$theme" />
                 </div>
             </div>
             <!-- End Label Replacement -->
@@ -180,13 +180,13 @@
             <div x-cloak id="existingPopover"
                 class="w-100 rounded-md position-relative d-inline-flex place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-                <x-livewiretablesadvancedfilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
+                <x-lrlAdvancedTableFilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
             </div>
             <!-- Stop Existing Pop-Over -->
 
             <!-- Start Drop Down -->
             <div class=" w-100 d-flex flex-column items-center justify-center text-black dark:text-white ">
-                <x-livewiretablesadvancedfilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
+                <x-lrlAdvancedTableFilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
 
                 <div :class="{
                     'border-solid border-2 rounded-md border-gray-300 dark:border-gray-600': currentFilteredList
@@ -198,12 +198,12 @@
                             <li class="list-group-item px-2 py-1"
                                 :class="{ 'bg-light': (index % 2), 'bg-secondary': !(index % 2) }">
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
-                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-rem :iconStyling="$iconStyling"
+                                    <x-lrlAdvancedTableFilters::elements.smartselect-item-rem :iconStyling="$iconStyling"
                                         :theme="$theme" />
                                 </template>
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
 
-                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-add :iconStyling="$iconStyling"
+                                    <x-lrlAdvancedTableFilters::elements.smartselect-item-add :iconStyling="$iconStyling"
                                         :theme="$theme" />
 
 
@@ -276,7 +276,7 @@
                     {{ $filter->getName() }}
                 </label>
                 <div class="d-inline-block w-1/12">
-                    <x-livewiretablesadvancedfilters::buttons.popover-open :theme="$theme" />
+                    <x-lrlAdvancedTableFilters::buttons.popover-open :theme="$theme" />
                 </div>
             </div>
             <!-- End Label Replacement -->
@@ -286,13 +286,13 @@
             <div id="existingPopover" x-cloak
                 class="w-100 rounded-md position-relative d-inline-flex place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-                <x-livewiretablesadvancedfilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
+                <x-lrlAdvancedTableFilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
             </div>
             <!-- Stop Existing Pop-Over -->
 
             <!-- Start Drop Down -->
             <div class=" w-100 d-flex flex-column items-center justify-center text-black dark:text-white ">
-                <x-livewiretablesadvancedfilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
+                <x-lrlAdvancedTableFilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
 
                 <div :class="{
                     'border-solid border-2 rounded-md border-gray-300 dark:border-gray-600': currentFilteredList
@@ -305,11 +305,11 @@
                                 :class="{ 'dark:bg-gray-800': (index % 2) }">
                                 <a href='#'>
                                     <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
-                                        <x-livewiretablesadvancedfilters::elements.smartselect-item-rem
+                                        <x-lrlAdvancedTableFilters::elements.smartselect-item-rem
                                             :iconStyling="$iconStyling" :theme="$theme" />
                                     </template>
                                     <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
-                                        <x-livewiretablesadvancedfilters::elements.smartselect-item-add
+                                        <x-lrlAdvancedTableFilters::elements.smartselect-item-add
                                             :iconStyling="$iconStyling" :theme="$theme" />
                                     </template>
                                 </a>

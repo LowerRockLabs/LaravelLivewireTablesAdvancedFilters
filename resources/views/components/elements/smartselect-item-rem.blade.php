@@ -2,7 +2,7 @@
 @if ($theme == 'tailwind')
     <a class="cursor-pointer  inline-block w-full" x-on:click="removeSelectedItem(filteredItem.id.toString())">
         @if ($iconStyling['delete']['svgEnabled'])
-            <x-livewiretablesadvancedfilters::icons.smartselect-removeIcon :theme="$theme" />
+            <x-lrlAdvancedTableFilters::icons.smartselect-removeIcon :theme="$theme" />
         @endif
         <span class="smartSelect-NameDisplay-Wrapper pl-1">
             <template x-if="displayIdEnabled">
@@ -21,7 +21,7 @@
     <a class="cursor-pointer  d-inline-block w-100 {{ $linkClass }}"
         x-on:click="removeSelectedItem(filteredItem.id.toString())">
         @if ($iconStyling['delete']['svgEnabled'])
-            <x-livewiretablesadvancedfilters::icons.smartselect-removeIcon :theme="$theme" />
+            <x-lrlAdvancedTableFilters::icons.smartselect-removeIcon :theme="$theme" />
         @endif
         <span class="smartSelect-NameDisplay-Wrapper pl-1">
             <template x-if="displayIdEnabled">

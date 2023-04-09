@@ -75,7 +75,7 @@
         <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet" />
     @endPushOnce
     @if ($theme === 'tailwind')
-        <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
+        <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
             :filterName="$filterName" />
         <div wire:ignore wire:key>
             <div wire:key class="rounded-md shadow-sm">
@@ -88,7 +88,7 @@
             </div>
         </div>
     @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
-        <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
+        <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
             :filterName="$filterName" />
         <div wire:ignore wire:key>
             <div wire:key class="rounded-md shadow-sm">

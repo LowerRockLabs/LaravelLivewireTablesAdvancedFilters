@@ -80,29 +80,29 @@
         }
     }">
         @if ($theme === 'tailwind')
-            <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
+            <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />
 
 
             <div class="w-full rounded-md shadow-sm text-right"
                 placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
-                <x-livewiretablesadvancedfilters::forms.datePicker-textinput :filterKey="$filterKey" :theme="$theme"
+                <x-lrlAdvancedTableFilters::forms.datePicker-textinput :filterKey="$filterKey" :theme="$theme"
                     :tableName="$tableName" :dateString="$dateString" :filterLabelPath="$filterLabelPath" :filterBasePath="$filterBasePath" />
 
-                <x-livewiretablesadvancedfilters::icons.calendarIcon :theme="$theme" />
+                <x-lrlAdvancedTableFilters::icons.calendarIcon :theme="$theme" />
             </div>
         @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
-            <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
+            <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
                 :filterName="$filterName" />
 
             <div class="d-inline-block w-100 mb-3 mb-md-0 input-group"
                 placeholder="{{ __('app.enter') }} {{ __('app.date') }}">
 
-                <x-livewiretablesadvancedfilters::forms.datePicker-textinput :filterKey="$filterKey" :theme="$theme"
+                <x-lrlAdvancedTableFilters::forms.datePicker-textinput :filterKey="$filterKey" :theme="$theme"
                     :tableName="$tableName" :dateString="$dateString" :filterLabelPath="$filterLabelPath" :filterBasePath="$filterBasePath" />
 
-                <x-livewiretablesadvancedfilters::icons.calendarIcon :theme="$theme" />
+                <x-lrlAdvancedTableFilters::icons.calendarIcon :theme="$theme" />
             </div>
         @endif
     </div>

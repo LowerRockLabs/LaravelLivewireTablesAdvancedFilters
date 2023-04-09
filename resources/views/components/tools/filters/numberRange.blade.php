@@ -93,7 +93,7 @@
     },
 }">
     @if ($theme === 'tailwind')
-        <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
+        <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
             :filterName="$filterName" />
         <div class="mt-4 h-22 pt-8 pb-4 grid gap-10">
             <div x-on:mousedown.away="allowUpdates" x-on:touchstart.away="allowUpdates" x-on:mouseleave="allowUpdates"
@@ -121,7 +121,7 @@
             </div>
         </div>
     @elseif ($theme === 'bootstrap-4')
-        <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
+        <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
             :filterName="$filterName" />
         <div class="mt-4 h-22 w-100 pb-4 pt-2  grid gap-10" x-on:mouseleave="allowUpdates">
             <div class="range-slider flat w-100" id="{{ $filterBasePath }}" data-ticks-position='bottom'
@@ -148,7 +148,7 @@
             </div>
         </div>
     @elseif ($theme === 'bootstrap-5')
-        <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
+        <x-lrlAdvancedTableFilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
             :filterName="$filterName" />
         <div class="mt-4 h-22 w-100 pb-4 pt-2  grid gap-10" x-on:mouseleave="allowUpdates">
             <div class="range-slider flat w-100" id="{{ $filterBasePath }}" data-ticks-position='bottom'

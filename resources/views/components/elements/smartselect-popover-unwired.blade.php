@@ -11,7 +11,7 @@
                 <span class="inline-block pt-2 pl-2">
                     <h2><strong>{{ __('Selected Items') }}</strong></h2>
                 </span>
-                <x-livewiretablesadvancedfilters::buttons.popover-close :theme="$theme" />
+                <x-lrlAdvancedTableFilters::buttons.popover-close :theme="$theme" />
             </div>
 
             <div class="w-full flex flex-col">
@@ -21,7 +21,7 @@
                         :class="{ 'dark:bg-gray-800': (index % 2) }">
                         <a href="#" class="inline-block w-full" x-on:click="removeSelectedItem(key)">
 
-                            <x-livewiretablesadvancedfilters::icons.smartselect-removeIcon :theme="$theme" />
+                            <x-lrlAdvancedTableFilters::icons.smartselect-removeIcon :theme="$theme" />
 
                             <template x-if="displayIdEnabled">
 
@@ -45,7 +45,7 @@
                     <h2><strong>{{ __('Selected Items') }}</strong></h2>
                 </div>
                 <div class="align-self-end text-right mb-auto p-2">
-                    <x-livewiretablesadvancedfilters::buttons.popover-close :theme="$theme" />
+                    <x-lrlAdvancedTableFilters::buttons.popover-close :theme="$theme" />
                 </div>
             </div>
 
@@ -61,7 +61,7 @@
                         <tr x-on:click="removeSelectedItem(key)">
                             <td>
                                 <a href="#" x-on:click="removeSelectedItem(key)">
-                                    <x-livewiretablesadvancedfilters::icons.smartselect-removeIcon :theme="$theme" />
+                                    <x-lrlAdvancedTableFilters::icons.smartselect-removeIcon :theme="$theme" />
                                 </a>
                             </td>
                             <td>
@@ -91,7 +91,7 @@
                     <h2><strong>{{ __('Selected Items') }}</strong></h2>
                 </div>
                 <div class="align-self-end text-right mb-auto p-2">
-                    <x-livewiretablesadvancedfilters::buttons.popover-close :theme="$theme" />
+                    <x-lrlAdvancedTableFilters::buttons.popover-close :theme="$theme" />
                 </div>
             </div>
 
@@ -107,7 +107,7 @@
                         <tr x-on:click="removeSelectedItem(key)">
                             <td>
                                 <a href="#" x-on:click="removeSelectedItem(key)">
-                                    <x-livewiretablesadvancedfilters::icons.smartselect-removeIcon :theme="$theme" />
+                                    <x-lrlAdvancedTableFilters::icons.smartselect-removeIcon :theme="$theme" />
                                 </a>
                             </td>
                             <td>

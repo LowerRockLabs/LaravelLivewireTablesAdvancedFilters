@@ -1,19 +1,19 @@
 
 
 [1;37;40mCode Coverage Report:      [0m
-[1;37;40m  2023-04-09 03:09:15      [0m
+[1;37;40m  2023-04-09 03:44:05      [0m
 [1;37;40m                           [0m
 [1;37;40m Summary:                  [0m
 [37;41m  Classes: 14.29% (1/7)    [0m
 [30;43m  Methods: 69.35% (43/62)  [0m
-[30;43m  Lines:   80.89% (347/429)[0m
+[30;43m  Lines:   80.93% (348/430)[0m
 
 LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DatePickerFilter
   [30;43mMethods:  77.78% ( 7/ 9)[0m   [30;43mLines:  86.25% ( 69/ 80)[0m
 LowerRockLabs\LaravelLivewireTablesAdvancedFilters\DateRangeFilter
   [30;43mMethods:  80.00% ( 8/10)[0m   [30;42mLines:  91.18% ( 93/102)[0m
 LowerRockLabs\LaravelLivewireTablesAdvancedFilters\LaravelLivewireTablesAdvancedFiltersServiceProvider
-  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 20/ 20)[0m
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 21/ 21)[0m
 LowerRockLabs\LaravelLivewireTablesAdvancedFilters\NumberRangeFilter
   [30;43mMethods:  77.78% ( 7/ 9)[0m   [30;43mLines:  87.14% ( 61/ 70)[0m
 LowerRockLabs\LaravelLivewireTablesAdvancedFilters\SlimSelectFilter

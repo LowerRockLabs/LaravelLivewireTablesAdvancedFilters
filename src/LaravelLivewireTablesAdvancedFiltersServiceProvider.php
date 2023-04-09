@@ -47,6 +47,6 @@ class LaravelLivewireTablesAdvancedFiltersServiceProvider extends ServiceProvide
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'basefunctions');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'v');
     }
 }

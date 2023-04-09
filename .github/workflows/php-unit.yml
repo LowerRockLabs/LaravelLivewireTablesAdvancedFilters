@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - develop
+      - Rappasoftv2.12
 
 jobs:
   test:

@@ -96,11 +96,10 @@
         <div class="relative" class="h-16">
             <!-- Start Label Replacement -->
             <div class="flex flex-cols w-full h-8" id="{{ $filterLabelPath }}-labelInternal">
-                @if($filter->hasCustomFilterLabel())
-                    @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
-                @else
-                    <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
-                @endif
+                <label for="{{ $filterLabelPath }}"
+                    class="inline-block w-11/12 text-sm font-medium leading-5 text-gray-700 dark:text-white ">
+                    {{ $filter->getName() }}
+                </label>
                 <div class="inline-block w-1/12">
                     <x-lrlAdvancedTableFilters::buttons.popover-open :theme="$theme" />
                 </div>
@@ -146,12 +145,10 @@
     @elseif ($theme === 'bootstrap-4')
         <div class="position-relative">
             <!-- Start Label Replacement -->
-            <div class="d-flex flex-column align-items-start w-100" id="{{ $filterLabelPath }}-labelInternal">
-                @if($filter->hasCustomFilterLabel())
-                    @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
-                @else
-                    <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
-                @endif
+            <div class="d-flex flex-column align-items-start w-100 d-none" id="{{ $filterLabelPath }}-labelInternal">
+                <label for="{{ $filterLabelPath }}" class="d-inline small leading-5 text-gray-700 dark:text-white ">
+                    {{ $filter->getName() }}
+                </label>
                 <div class="d-inline align-self-end text-right position-absolute">
                     <x-lrlAdvancedTableFilters::buttons.popover-open :theme="$theme" />
                 </div>
@@ -254,12 +251,11 @@
         <div class="position-relative">
 
             <!-- Start Label Replacement -->
-            <div class="d-flex flex-column w-100 h-8" id="{{ $filterLabelPath }}-labelInternal">
-                @if($filter->hasCustomFilterLabel())
-                    @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
-                @else
-                    <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
-                @endif
+            <div class="d-flex flex-column w-100 d-none h-8" id="{{ $filterLabelPath }}-labelInternal">
+                <label for="{{ $filterLabelPath }}"
+                    class="d-inline-block w-11/12 small leading-5 text-gray-700 dark:text-white ">
+                    {{ $filter->getName() }}
+                </label>
                 <div class="d-inline-block w-1/12">
                     <x-lrlAdvancedTableFilters::buttons.popover-open :theme="$theme" />
                 </div>

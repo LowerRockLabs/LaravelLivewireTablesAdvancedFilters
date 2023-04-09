@@ -18,8 +18,8 @@ class DateRangeFilter extends Filter
     public function __construct(string $name, string $key = null)
     {
         parent::__construct($name, (isset($key) ? $key : null));
-        $this->config = config('livewiretablesadvancedfilters.dateRange');
-        $this->config['customFilterMenuWidth'] = config('livewiretablesadvancedfilters.customFilterMenuWidth');
+        $this->config = config('lrlAdvancedTableFilters.dateRange');
+        $this->config['customFilterMenuWidth'] = config('lrlAdvancedTableFilters.customFilterMenuWidth');
 
         $this->options = $this->config['defaults'];
     }
@@ -245,7 +245,7 @@ class DateRangeFilter extends Filter
 
         // @codeCoverageIgnoreEnd
 
-        return view('livewiretablesadvancedfilters::components.tools.filters.dateRange', [
+        return view('lrlAdvancedTableFilters::components.tools.filters.dateRange', [
             'component' => $component,
             'theme' => $component->getTheme(),
             'filter' => $this,

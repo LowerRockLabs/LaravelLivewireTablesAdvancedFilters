@@ -7,6 +7,7 @@
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
     $customFilterMenuWidth = (!empty($filterConfigs['customFilterMenuWidth']) ? json_encode(explode( " ", $filterConfigs['customFilterMenuWidth'])) : '');
+    $filterLayout = $component->getFilterLayout();
 
     $wireKey = $tableName . '.filters.' . $filterKey;
     $selectedWireKey = 'filterData.' . $filterKey;
@@ -14,7 +15,7 @@
 
     $iconStyling = $filterConfigs['iconStyling'];
     $listStyling = $filterConfigs['listStyling'];
-    $displayIdEnabled = $filterConfigs['displayIdEnabled'] ?? 'false';
+    $displayIdEnabled = #$filterConfigs['displayIdEnabled'] ?? 'false';
     $optionsMethod = $filterConfigs['optionsMethod'];
     $displayHtmlName = $filterConfigs['displayHtmlName'] ?? 'false';
     $filterContainerName = "smartSelectContainer";
@@ -26,9 +27,7 @@
     @if ($theme == 'tailwind') twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'), @endif
     @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'), @endif
     setupFilterMenu() {
-        let parentLabelElement = document.getElementById('{{ $filterLabelPath }}-label');
         let currentFilterMenuLabel = document.querySelector('{{ $filterMenuLabel }}');
-        let newFilterLabelElement = document.getElementById('{{ $filterLabelPath }}-labelInternal');
 
         if (currentFilterMenuLabel !== null) {
             this.filterMenuClasses.forEach(item => currentFilterMenuLabel.classList.add(item));
@@ -36,70 +35,10 @@
             currentFilterMenuLabel.classList.remove('md:w-56');
         }
 
-        @if ($theme === 'tailwind') 
-            if (parentLabelElement === null) {
-                let parentLabelContainer = document.getElementById('{{ $filterContainerName }}{{ $filterKey }}').parentElement.firstElementChild;
-                if (parentLabelContainer !== null) {
-                    parentLabelContainer.classList.add('hidden');
-                }
-            } else {
-                parentLabelElement.classList.add('hidden');
-            }
-
-            if (newFilterLabelElement !== null) {
-                newFilterLabelElement.classList.remove('hidden');
-            }
-
-            for (let i = 0; i < this.twMenuElements.length; i++) {
-                if (!this.twMenuElements.item(i).hasAttribute('x-data'))
-                {
-                    this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
-                    this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-                }
-                else if (!this.twMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
-                {
-                    this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
-                    this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-                }
-            } 
-        @endif
-
-        @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') 
-            if (parentLabelElement === null) {
-                let parentLabelContainer = document.getElementById('{{ $filterContainerName }}{{ $filterKey }}').parentElement.firstElementChild;
-
-                if (parentLabelContainer !== null) {
-                    parentLabelContainer.classList.add('d-none');
-                }
-            } else {
-                parentLabelElement.classList.add('d-none');
-            }
-
-            if (newFilterLabelElement !== null) {
-                newFilterLabelElement.classList.remove('d-none');
-            }
-
-            for (let i = 0; i < this.bsMenuElements.length; i++) {
-                if (!this.bsMenuElements.item(i).hasAttribute('x-data'))
-                {
-                    this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
-                    this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-                }
-                else
-                {
-                    if (!this.bsMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
-                    {
-                        this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
-                        this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-                    }
-                }
-            } 
-        @endif
-
     },
     newSelectedItems: $wire.entangle('{{ $selectedWireKey }}'),
     optionsMethod: '{{ $optionsMethod }}',
-    displayIdEnabled: {{ $displayIdEnabled }},
+    displayIdEnabled: '{{ $displayIdEnabled }}',
     currentFilteredList: [],
     presentlySelectedList: [],
     filteredList: [],
@@ -156,13 +95,18 @@
     @if ($theme === 'tailwind')
         <div class="relative" class="h-16">
             <!-- Start Label Replacement -->
-            <div class="flex flex-cols w-full hidden h-8" id="{{ $filterLabelPath }}-labelInternal">
-                <label for="{{ $filterLabelPath }}"
-                    class="inline-block w-11/12 text-sm font-medium leading-5 text-gray-700 dark:text-white ">
-                    {{ $filter->getName() }}
-                </label>
+            <div class="flex flex-cols w-full h-8" >
+
+                <div class="inline-block w-11/12 text-sm font-medium leading-5 text-gray-700 dark:text-white">
+                @if($filter->hasCustomFilterLabel())
+                    @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+                @else
+                    <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+                @endif
+                </div>
+
                 <div class="inline-block w-1/12">
-                    <x-livewiretablesadvancedfilters::buttons.popover-open :theme="$theme" />
+                    <x-lrlAdvancedTableFilters::buttons.popover-open :theme="$theme" />
                 </div>
             </div>
             <!-- End Label Replacement -->
@@ -171,13 +115,13 @@
             <div x-cloak
                 class="w-full z-50 rounded-md relative inline-flex place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-                <x-livewiretablesadvancedfilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
+                <x-lrlAdvancedTableFilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
             </div>
             <!-- Stop Existing Pop-Over -->
 
             <!-- Start Drop Down -->
             <div class=" w-full flex flex-col items-center justify-center text-black dark:text-white ">
-                <x-livewiretablesadvancedfilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
+                <x-lrlAdvancedTableFilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
 
                 <div :class="{
                     'border-solid border-2 rounded-md border-gray-300 dark:border-gray-600': currentFilteredList
@@ -189,11 +133,11 @@
                             <li class="px-2 py-1 hover:bg-blue-500 dark:hover:bg-gray-400"
                                 :class="{ 'dark:bg-gray-800': (index % 2) }">
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
-                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-rem :displayHtmlName="$displayHtmlName"
+                                    <x-lrlAdvancedTableFilters::elements.smartselect-item-rem :displayHtmlName="$displayHtmlName"
                                         :iconStyling="$iconStyling" :theme="$theme" />
                                 </template>
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
-                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-add :displayHtmlName="$displayHtmlName"
+                                    <x-lrlAdvancedTableFilters::elements.smartselect-item-add :displayHtmlName="$displayHtmlName"
                                         :iconStyling="$iconStyling" :theme="$theme" />
                                 </template>
                             </li>
@@ -206,12 +150,16 @@
     @elseif ($theme === 'bootstrap-4')
         <div class="position-relative">
             <!-- Start Label Replacement -->
-            <div class="d-flex flex-column align-items-start w-100 d-none" id="{{ $filterLabelPath }}-labelInternal">
-                <label for="{{ $filterLabelPath }}" class="d-inline small leading-5 text-gray-700 dark:text-white ">
-                    {{ $filter->getName() }}
-                </label>
+            <div class="d-flex flex-column align-items-start w-100" >
+                <div class="d-inline small leading-5 text-gray-700 dark:text-white ">
+                    @if($filter->hasCustomFilterLabel())
+                        @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+                    @else
+                        <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+                    @endif
+                </div>
                 <div class="d-inline align-self-end text-right position-absolute">
-                    <x-livewiretablesadvancedfilters::buttons.popover-open :theme="$theme" />
+                    <x-lrlAdvancedTableFilters::buttons.popover-open :theme="$theme" />
                 </div>
             </div>
             <!-- End Label Replacement -->
@@ -222,13 +170,13 @@
             <div x-cloak id="existingPopover"
                 class="w-100 rounded-md position-relative d-inline-flex place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-                <x-livewiretablesadvancedfilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
+                <x-lrlAdvancedTableFilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
             </div>
             <!-- Stop Existing Pop-Over -->
 
             <!-- Start Drop Down -->
             <div class=" w-100 d-flex flex-column items-center justify-center text-black dark:text-white ">
-                <x-livewiretablesadvancedfilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
+                <x-lrlAdvancedTableFilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
 
                 <div :class="{
                     'border-solid border-2 rounded-md border-gray-300 dark:border-gray-600': currentFilteredList
@@ -240,12 +188,12 @@
                             <li class="list-group-item px-2 py-1"
                                 :class="{ 'bg-light': (index % 2), 'bg-secondary': !(index % 2) }">
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
-                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-rem :iconStyling="$iconStyling"
+                                    <x-lrlAdvancedTableFilters::elements.smartselect-item-rem :iconStyling="$iconStyling"
                                         :displayHtmlName="$displayHtmlName" :theme="$theme" />
                                 </template>
                                 <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
 
-                                    <x-livewiretablesadvancedfilters::elements.smartselect-item-add :iconStyling="$iconStyling"
+                                    <x-lrlAdvancedTableFilters::elements.smartselect-item-add :iconStyling="$iconStyling"
                                         :displayHtmlName="$displayHtmlName" :theme="$theme" />
 
 
@@ -312,13 +260,17 @@
         <div class="position-relative">
 
             <!-- Start Label Replacement -->
-            <div class="d-flex flex-column w-100 d-none h-8" id="{{ $filterLabelPath }}-labelInternal">
-                <label for="{{ $filterLabelPath }}"
-                    class="d-inline-block w-11/12 small leading-5 text-gray-700 dark:text-white ">
-                    {{ $filter->getName() }}
-                </label>
+            <div class="d-flex flex-column w-100 h-8" >
+                <div class="d-inline-block w-11/12 small leading-5 text-gray-700 dark:text-white ">
+                    @if($filter->hasCustomFilterLabel())
+                        @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+                    @else
+                        <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+                    @endif
+
+                  </div>
                 <div class="d-inline-block w-1/12">
-                    <x-livewiretablesadvancedfilters::buttons.popover-open :theme="$theme" />
+                    <x-lrlAdvancedTableFilters::buttons.popover-open :theme="$theme" />
                 </div>
             </div>
             <!-- End Label Replacement -->
@@ -328,13 +280,13 @@
             <div id="existingPopover" x-cloak
                 class="w-100 rounded-md position-relative d-inline-flex place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-                <x-livewiretablesadvancedfilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
+                <x-lrlAdvancedTableFilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
             </div>
             <!-- Stop Existing Pop-Over -->
 
             <!-- Start Drop Down -->
             <div class=" w-100 d-flex flex-column items-center justify-center text-black dark:text-white ">
-                <x-livewiretablesadvancedfilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
+                <x-lrlAdvancedTableFilters::forms.smartselect-textinput :theme="$theme" :xRefKey="$xRefKey" />
 
                 <div :class="{
                     'border-solid border-2 rounded-md border-gray-300 dark:border-gray-600': currentFilteredList
@@ -347,11 +299,11 @@
                                 :class="{ 'dark:bg-gray-800': (index % 2) }">
                                 <a href='#'>
                                     <template x-if="selectedItems.indexOf(filteredItem.id.toString()) > -1">
-                                        <x-livewiretablesadvancedfilters::elements.smartselect-item-rem
+                                        <x-lrlAdvancedTableFilters::elements.smartselect-item-rem
                                             :iconStyling="$iconStyling" :theme="$theme" :displayHtmlName="$displayHtmlName" />
                                     </template>
                                     <template x-if="selectedItems.indexOf(filteredItem.id.toString()) < 0">
-                                        <x-livewiretablesadvancedfilters::elements.smartselect-item-add
+                                        <x-lrlAdvancedTableFilters::elements.smartselect-item-add
                                             :iconStyling="$iconStyling" :theme="$theme" :displayHtmlName="$displayHtmlName" />
                                     </template>
                                 </a>

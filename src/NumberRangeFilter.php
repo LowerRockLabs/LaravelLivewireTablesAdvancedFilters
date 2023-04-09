@@ -18,10 +18,10 @@ class NumberRangeFilter extends Filter
     public function __construct(string $name, string $key = null)
     {
         parent::__construct($name, (isset($key) ? $key : null));
-        $this->config = config('livewiretablesadvancedfilters.numberRange');
-        $this->config['customFilterMenuWidth'] = config('livewiretablesadvancedfilters.customFilterMenuWidth');
+        $this->config = config('lrlAdvancedTableFilters.numberRange');
+        $this->config['customFilterMenuWidth'] = config('lrlAdvancedTableFilters.customFilterMenuWidth');
 
-        $this->options = config('livewiretablesadvancedfilters.numberRange.defaults');
+        $this->options = config('lrlAdvancedTableFilters.numberRange.defaults');
     }
 
     /**
@@ -196,7 +196,7 @@ class NumberRangeFilter extends Filter
 
         // @codeCoverageIgnoreEnd
 
-        return view('livewiretablesadvancedfilters::components.tools.filters.numberRange', [
+        return view('lrlAdvancedTableFilters::components.tools.filters.numberRange', [
             'component' => $component,
             'theme' => $component->getTheme(),
             'filter' => $this,

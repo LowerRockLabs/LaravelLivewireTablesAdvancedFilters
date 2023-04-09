@@ -18,10 +18,10 @@ class DatePickerFilter extends Filter
     public function __construct(string $name, string $key = null)
     {
         parent::__construct($name, (isset($key) ? $key : null));
-        $this->config = config('livewiretablesadvancedfilters.datePicker');
-        $this->config['customFilterMenuWidth'] = config('livewiretablesadvancedfilters.customFilterMenuWidth');
+        $this->config = config('lrlAdvancedTableFilters.datePicker');
+        $this->config['customFilterMenuWidth'] = config('lrlAdvancedTableFilters.customFilterMenuWidth');
 
-        $this->options = config('livewiretablesadvancedfilters.datePicker.defaults');
+        $this->options = config('lrlAdvancedTableFilters.datePicker.defaults');
     }
 
     /**
@@ -49,31 +49,33 @@ class DatePickerFilter extends Filter
      */
     public function config($config = []): DatePickerFilter
     {
-        $version = explode(".", app()->version())[0];
-        if ($version == 8) {
-            foreach ($config as $configIndex => $configValue) {
-                if (! is_array($configValue)) {
-                    $this->config[$configIndex] = $configValue;
-                } else {
-                    foreach ($configValue as $configIndex2 => $configValue2) {
-                        if (! is_array($configValue2)) {
-                            $this->config[$configIndex][$configIndex2] = $configValue2;
-                        } else {
-                            foreach ($configValue2 as $configIndex3 => $configValue3) {
-                                $this->config[$configIndex][$configIndex2][$configIndex3] = $configValue3;
+        if (! empty($config)) {
+            $version = explode(".", app()->version())[0];
+            if ($version == 8) {
+                foreach ($config as $configIndex => $configValue) {
+                    if (! is_array($configValue)) {
+                        $this->config[$configIndex] = $configValue;
+                    } else {
+                        foreach ($configValue as $configIndex2 => $configValue2) {
+                            if (! is_array($configValue2)) {
+                                $this->config[$configIndex][$configIndex2] = $configValue2;
+                            } else {
+                                foreach ($configValue2 as $configIndex3 => $configValue3) {
+                                    $this->config[$configIndex][$configIndex2][$configIndex3] = $configValue3;
+                                }
                             }
                         }
                     }
                 }
-            }
-        } else {
-            $flattened = \Illuminate\Support\Arr::dot($config);
-
-            \Illuminate\Support\Arr::map($flattened, function (string $value, string $key) {
-                \Illuminate\Support\Arr::set($this->config, $key, $value);
+            } else {
+                $flattened = \Illuminate\Support\Arr::dot($config);
     
-                return true;
-            });
+                \Illuminate\Support\Arr::map($flattened, function (string $value, string $key) {
+                    \Illuminate\Support\Arr::set($this->config, $key, $value);
+        
+                    return true;
+                });
+            }
         }
 
         return $this;
@@ -203,7 +205,7 @@ class DatePickerFilter extends Filter
 
         // @codeCoverageIgnoreEnd
 
-        return view('livewiretablesadvancedfilters::components.tools.filters.datePicker', [
+        return view('lrlAdvancedTableFilters::components.tools.filters.datePicker', [
             'component' => $component,
             'theme' => $component->getTheme(),
             'filter' => $this,

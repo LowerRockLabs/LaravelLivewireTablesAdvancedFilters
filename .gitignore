@@ -10,6 +10,8 @@ public_html/storage
 public_html/hot
 storage/*.key
 .env
+build/*
+build/coverage/*
 Homestead.yaml
 Homestead.json
 /.vagrant
@@ -18,9 +20,8 @@ LaravelLivewireTablesAdvancedFilters.code-workspace
 composer.lock
 phpunit.txt
 .php-cs-fixer.cache
-src/DateRangeFilter.php
 .phpunit.cache/*
-tests/Views/SmartSelectFilterTest.php
+tests/*
 srcb/
 resources/views/components/buttons/popover-open.blade copy.php
 tests/Dusk/Web/screenshots/

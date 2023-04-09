@@ -20,9 +20,7 @@
     @if ($theme == 'tailwind') twMenuElements: document.getElementsByClassName('relative block md:inline-block text-left'), @endif
     @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') bsMenuElements: document.getElementsByClassName('btn-group d-block d-md-inline'), @endif
     setupFilterMenu() {
-        let parentLabelElement = document.getElementById('{{ $filterLabelPath }}-label');
         let currentFilterMenuLabel = document.querySelector('{{ $filterMenuLabel }}');
-        let newFilterLabelElement = document.getElementById('{{ $filterLabelPath }}-labelInternal');
 
         if (currentFilterMenuLabel !== null) {
             this.filterMenuClasses.forEach(item => currentFilterMenuLabel.classList.add(item));
@@ -30,67 +28,6 @@
             currentFilterMenuLabel.classList.remove('md:w-56');
         }
 
-
-        @if ($theme === 'tailwind') 
-            if (parentLabelElement === null) {
-                let parentLabelContainer = document.getElementById('{{ $filterContainerName }}{{ $filterKey }}').parentElement.firstElementChild;
-                if (parentLabelContainer !== null) {
-                    parentLabelContainer.classList.add('hidden');
-                }
-            } else {
-                parentLabelElement.classList.add('hidden');
-            }
-
-            if (newFilterLabelElement !== null) {
-                newFilterLabelElement.classList.remove('hidden');
-            }
-
-            for (let i = 0; i < this.twMenuElements.length; i++) {
-                if (!this.twMenuElements.item(i).hasAttribute('x-data'))
-                {
-                    this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
-                    this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-                }
-                else if (!this.twMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
-                {
-                    this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
-                    this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-                }
-            } 
-        @endif
-
-        @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') 
-            if (parentLabelElement === null) {
-                let parentLabelContainer = document.getElementById('{{ $filterContainerName }}{{ $filterKey }}').parentElement.firstElementChild;
-                if (parentLabelContainer !== null) {
-                    parentLabelContainer.classList.add('hidden');
-                    parentLabelContainer.classList.add('d-none');
-                }
-            } else {
-                parentLabelElement.classList.add('hidden');
-                parentLabelElement.classList.add('d-none');
-            }
-
-            if (newFilterLabelElement !== null) {
-                newFilterLabelElement.classList.remove('d-none');
-            }
-
-            for (let i = 0; i < this.bsMenuElements.length; i++) {
-                if (!this.bsMenuElements.item(i).hasAttribute('x-data'))
-                {
-                    this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
-                    this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-                }
-                else
-                {
-                    if (!this.bsMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
-                    {
-                        this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
-                        this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-                    }
-                }
-            } 
-        @endif
     },
     init() {
         this.setupFilterMenu();

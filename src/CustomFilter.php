@@ -120,7 +120,7 @@ class CustomFilter extends Filter
 
         // @codeCoverageIgnoreEnd
 
-        return view('livewiretablesadvancedfilters::components.tools.filters.customFilter', [
+        return view('lrlAdvancedTableFilters::components.tools.filters.customFilter', [
             'component' => $component,
             'filter' => $this,
         ]);

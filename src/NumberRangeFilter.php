@@ -196,7 +196,7 @@ class NumberRangeFilter extends Filter
 
         // @codeCoverageIgnoreEnd
 
-        return view('livewiretablesadvancedfilters::components.tools.filters.numberRange', [
+        return view('lrlAdvancedTableFilters::components.tools.filters.numberRange', [
             'component' => $component,
             'theme' => $component->getTheme(),
             'filter' => $this,

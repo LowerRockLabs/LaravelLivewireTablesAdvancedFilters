@@ -7,6 +7,7 @@
     $filterName = $filter->getName();
     $filterConfigs = $filter->getConfigs();
     $customFilterMenuWidth = (!empty($filterConfigs['customFilterMenuWidth']) ? json_encode(explode( " ", $filterConfigs['customFilterMenuWidth'])) : '');
+    $filterLayout = $component->getFilterLayout();
 
     $options = [];
     $empty = [];
@@ -23,74 +24,13 @@
     slimSelect: [],
     booting: true,
     setupFilterMenu() {
-        let parentLabelElement = document.getElementById('{{ $filterLabelPath }}-label');
         let currentFilterMenuLabel = document.querySelector('{{ $filterMenuLabel }}');
-        let newFilterLabelElement = document.getElementById('{{ $filterLabelPath }}-labelInternal');
 
         if (currentFilterMenuLabel !== null) {
             this.filterMenuClasses.forEach(item => currentFilterMenuLabel.classList.add(item));
             currentFilterMenuLabel.style.width = '20em !important';
             currentFilterMenuLabel.classList.remove('md:w-56');
         }
-
-        @if ($theme === 'tailwind') 
-            if (parentLabelElement === null) {
-                let parentLabelContainer = document.getElementById('{{ $filterContainerName }}{{ $filterKey }}').parentElement.firstElementChild;
-                if (parentLabelContainer !== null) {
-                    parentLabelContainer.classList.add('hidden');
-                }
-            } else {
-                parentLabelElement.classList.add('hidden');
-            }
-
-            if (newFilterLabelElement !== null) {
-                newFilterLabelElement.classList.remove('hidden');
-            }
-
-            for (let i = 0; i < this.twMenuElements.length; i++) {
-                if (!this.twMenuElements.item(i).hasAttribute('x-data'))
-                {
-                    this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
-                    this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-                }
-                else if (!this.twMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
-                {
-                    this.twMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: true  }');
-                    this.twMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-                }
-            } 
-        @endif
-
-        @if ($theme === 'bootstrap-4' || $theme === 'bootstrap-5') 
-            if (parentLabelElement === null) {
-                let parentLabelContainer = document.getElementById('{{ $filterContainerName }}{{ $filterKey }}').parentElement.firstElementChild;
-                if (parentLabelContainer !== null) {
-                    parentLabelContainer.classList.add('d-none');
-                }
-            } else {
-                parentLabelElement.classList.add('d-none');
-            }
-
-            if (newFilterLabelElement !== null) {
-                newFilterLabelElement.classList.remove('d-none');
-            }
-
-            for (let i = 0; i < this.bsMenuElements.length; i++) {
-                if (!this.bsMenuElements.item(i).hasAttribute('x-data'))
-                {
-                    this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
-                    this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-                }
-                else
-                {
-                    if (!this.bsMenuElements.item(i).getAttribute('x-data').includes('childElementOpen'))
-                    {
-                        this.bsMenuElements.item(i).setAttribute('x-data', '{ open: false, childElementOpen: false  }');
-                        this.bsMenuElements.item(i).setAttribute('x-on:mousedown.away', 'if (!childElementOpen) { open = false }');
-                    }
-                }
-            } 
-        @endif
     },
     bootSlimSelect() {
         this.slimSelect = new SlimSelect({
@@ -136,8 +76,11 @@
         <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet" />
     @endPushOnce
     @if ($theme === 'tailwind')
-        <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
-            :filterName="$filterName" />
+            @if($filter->hasCustomFilterLabel())
+                @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+            @else
+                <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+            @endif        
         <div wire:ignore wire:key>
             <div wire:key class="rounded-md shadow-sm">
 
@@ -149,8 +92,11 @@
             </div>
         </div>
     @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
-        <x-livewiretablesadvancedfilters::elements.labelInternal :theme="$theme" :filterLabelPath="$filterLabelPath"
-            :filterName="$filterName" />
+        @if($filter->hasCustomFilterLabel())
+            @include($filter->getCustomFilterLabel(),['filter' => $filter, 'theme' => $theme, 'filterLayout' => $filterLayout, 'tableName' => $tableName  ])
+        @else
+            <x-livewire-tables::tools.filter-label :filter="$filter" :theme="$theme" :filterLayout="$filterLayout" :tableName="$tableName" />
+        @endif        
         <div wire:ignore wire:key>
             <div wire:key class="rounded-md shadow-sm">
 

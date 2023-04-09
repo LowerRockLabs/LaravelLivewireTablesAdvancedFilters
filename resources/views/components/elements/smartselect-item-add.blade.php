@@ -2,7 +2,7 @@
 @if ($theme == 'tailwind')
     <a class="cursor-pointer inline-block w-full" x-on:click="addSelectedItem(filteredItem.id.toString())">
         @if ($iconStyling['add']['svgEnabled'])
-            <x-livewiretablesadvancedfilters::icons.smartselect-addIcon :theme="$theme" />
+            <x-lrlAdvancedTableFilters::icons.smartselect-addIcon :theme="$theme" />
         @endif
         <span class="smartSelect-NameDisplay-Wrapper pl-1">
             <template x-if="displayIdEnabled">
@@ -21,7 +21,7 @@
 @else
     <a class="cursor-pointer d-inline-block w-100" x-on:click="addSelectedItem(filteredItem.id.toString())">
         @if ($iconStyling['add']['svgEnabled'])
-            <x-livewiretablesadvancedfilters::icons.smartselect-addIcon :theme="$theme" />
+            <x-lrlAdvancedTableFilters::icons.smartselect-addIcon :theme="$theme" />
         @endif
         <span class="smartSelect-NameDisplay-Wrapper pl-1">
             <template x-if="displayIdEnabled">

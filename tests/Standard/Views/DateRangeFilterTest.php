@@ -29,7 +29,7 @@ class DateRangeFilterTest extends TestCaseAdvanced
     {
         $filter = DateRangeFilter::make('Active');
 
-        $defaultConfig = array_merge(config('livewiretablesadvancedfilters.dateRange'), ['customFilterMenuWidth' => 'md:w-80']);
+        $defaultConfig = array_merge(config('lrlAdvancedTableFilters.dateRange'), ['customFilterMenuWidth' => 'md:w-80']);
 
         $this->assertSame($defaultConfig, $filter->getConfigs());
 
@@ -52,7 +52,7 @@ class DateRangeFilterTest extends TestCaseAdvanced
     {
         $filter = DateRangeFilter::make('Active');
 
-        $this->assertSame(config('livewiretablesadvancedfilters.dateRange.defaults'), $filter->getOptions());
+        $this->assertSame(config('lrlAdvancedTableFilters.dateRange.defaults'), $filter->getOptions());
 
         $filter->options(['foo' => 'bar']);
 

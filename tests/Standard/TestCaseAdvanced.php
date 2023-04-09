@@ -28,9 +28,7 @@ class TestCaseAdvanced extends Orchestra
         parent::setUp();
 
         if (! Breed::where('id', 1)->get()) {
-            include_once __DIR__.'/../database/migrations/create_test_tables.php.stub';
-            (new \CreateTestTables())->down();
-            (new \CreateTestTables())->up();
+
 
             Species::insert([
                 ['id' => 1, 'name' => 'Cat'],
@@ -105,10 +103,10 @@ class TestCaseAdvanced extends Orchestra
         $app['config']->set('view.compiled', realpath(storage_path('framework/views')).'/'.rand(0,100));
 
 
-        if (file_exists(__DIR__.'/../database/sqlite.database')) {
+        if (file_exists(__DIR__.'/../../database/sqlite.database')) {
             $app['config']->set('database.connections.sqlite', [
                 'driver' => 'sqlite',
-                'database' => __DIR__.'/../database/sqlite.database',
+                'database' => __DIR__.'/../../database/sqlite.database',
                 'prefix' => '',
             ]);
         } else {
@@ -117,6 +115,9 @@ class TestCaseAdvanced extends Orchestra
                 'database' => ':memory:',
                 'prefix' => '',
             ]);
+            include_once __DIR__.'/../../database/migrations/create_test_tables.php';
+            (new \CreateTestTables())->up();
+
         }
     }
 

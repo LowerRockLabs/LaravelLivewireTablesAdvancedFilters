@@ -17,7 +17,8 @@ class LaravelLivewireTablesAdvancedFiltersServiceProvider extends ServiceProvide
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'lrlAdvancedTableFilters');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'lrlAdvancedTableFilters');
         $this->mergeConfigFrom(
-            __DIR__.'/../config/config.php', 'lrlAdvancedTableFilters'
+            __DIR__.'/../config/config.php',
+            'lrlAdvancedTableFilters'
         );
 
         if ($this->app->runningInConsole()) {

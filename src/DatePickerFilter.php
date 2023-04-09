@@ -18,10 +18,10 @@ class DatePickerFilter extends Filter
     public function __construct(string $name, string $key = null)
     {
         parent::__construct($name, (isset($key) ? $key : null));
-        $this->config = config('livewiretablesadvancedfilters.datePicker');
-        $this->config['customFilterMenuWidth'] = config('livewiretablesadvancedfilters.customFilterMenuWidth');
+        $this->config = config('lrlAdvancedTableFilters.datePicker');
+        $this->config['customFilterMenuWidth'] = config('lrlAdvancedTableFilters.customFilterMenuWidth');
 
-        $this->options = config('livewiretablesadvancedfilters.datePicker.defaults');
+        $this->options = config('lrlAdvancedTableFilters.datePicker.defaults');
     }
 
     /**
@@ -44,7 +44,7 @@ class DatePickerFilter extends Filter
     }
 
     /**
-     * @param  array<mixed>  $config
+     * @param  ?array<mixed>  $config
      * @return $this
      */
     public function config($config = []): DatePickerFilter
@@ -203,7 +203,7 @@ class DatePickerFilter extends Filter
 
         // @codeCoverageIgnoreEnd
 
-        return view('livewiretablesadvancedfilters::components.tools.filters.datePicker', [
+        return view('lrlAdvancedTableFilters::components.tools.filters.datePicker', [
             'component' => $component,
             'theme' => $component->getTheme(),
             'filter' => $this,

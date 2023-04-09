@@ -49,8 +49,7 @@ class DatePickerFilter extends Filter
      */
     public function config($config = []): DatePickerFilter
     {
-        if (!empty($config))
-        {
+        if (! empty($config)) {
             $version = explode(".", app()->version())[0];
             if ($version == 8) {
                 foreach ($config as $configIndex => $configValue) {
@@ -78,6 +77,7 @@ class DatePickerFilter extends Filter
                 });
             }
         }
+
         return $this;
     }
 

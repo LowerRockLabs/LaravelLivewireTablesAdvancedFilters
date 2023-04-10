@@ -93,7 +93,7 @@
     },
 }">
     @if ($theme === 'tailwind')
-        <div class="relative" class="h-16">
+        <div class="relative" >
             <!-- Start Label Replacement -->
             <div class="flex flex-cols w-full h-8" >
 
@@ -113,7 +113,7 @@
 
             <!-- Start Existing Pop-Over -->
             <div x-cloak
-                class="w-full z-50 rounded-md relative inline-flex place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
+                class="w-full z-50 rounded-md relative place-items-end justify-items-end items-end pr-2 smartSelectExistingPopOverWrapper"
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
                 <x-lrlAdvancedTableFilters::elements.smartselect-popover :theme="$theme" :iconStyling="$iconStyling" />
             </div>

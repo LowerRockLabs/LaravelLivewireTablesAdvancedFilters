@@ -10,9 +10,8 @@
     $pushFlatpickrCss = $filterConfigs['publishFlatpickrCSS'];
     $pushFlatpickrJS = $filterConfigs['publishFlatpickrJS'];
     $filterLayout = $component->getFilterLayout();
-
     $yesterday = date('Y-m-d', strtotime('-1 days'));
-    $dateInput = isset($this->{$tableName}['filters'][$filterKey]) ? $this->{$tableName}['filters'][$filterKey] : '';
+    $dateInput = !empty($this->{$tableName}['filters'][$filterKey]) ? $this->{$tableName}['filters'][$filterKey] : '';
     if ($dateInput != '') {
         if (is_array($dateInput)) {
             $startDate = isset($dateInput['minDate']) ? $dateInput['minDate'] : (isset($dateInput[1]) ? $dateInput[1] : date('Y-m-d'));
@@ -22,16 +21,14 @@
             $startDate = isset($dateArray[0]) ? $dateArray[0] : date('Y-m-d');
             $endDate = isset($dateArray[2]) ? $dateArray[2] : date('Y-m-d');
         }
+        $startDate = strlen($startDate) > 2 ? $startDate : $yesterday;
+        $endDate = strlen($endDate) > 2 ? $endDate : date('Y-m-d');
+        $dateString = $startDate . ' to ' . $endDate;
+
     } else {
-        $startDate = date('Y-m-d');
-        $endDate = date('Y-m-d');
+        $dateString = '';
     }
 
-    $startDate = strlen($startDate) > 2 ? $startDate : $yesterday;
-
-    $endDate = strlen($endDate) > 2 ? $endDate : date('Y-m-d');
-
-    $dateString = $startDate . ' to ' . $endDate;
     $filterContainerName = "dateRangeContainer";
 
 @endphp
@@ -69,7 +66,6 @@
             mode: 'range',
             clickOpens: true,
             allowInvalidPreload: true,
-            defaultDate: [$refs.dateRangeInput{{ $filterKey }}.value.split(' ')[0], $refs.dateRangeInput{{ $filterKey }}.value.split(' ')[2]],
             ariaDateFormat: '{{ $filter->getConfig('ariaDateFormat') }}',
             allowInput: '{{ $filter->getConfig('allowInput') }}',
             altFormat: '{{ $filter->getConfig('altFormat') }}',

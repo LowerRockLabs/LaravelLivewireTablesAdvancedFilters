@@ -31,3 +31,4 @@ phpunit.dusk.xml
 !build/clover-L8.xml
 !build/clover-L9.xml
 !build/clover-L10.xml
+.history/*

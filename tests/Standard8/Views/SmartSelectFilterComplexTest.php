@@ -400,22 +400,22 @@ class SmartSelectFilterComplexTest extends TestCaseAdvanced
         $this->assertFalse($filter->isResetByClearButton());
     }
 
-        /** @test */
-        public function can_setup_icon_styling(): void
-        {
-            $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'complex']);
+    /** @test */
+    public function can_setup_icon_styling(): void
+    {
+        $filter = SmartSelectFilter::make('Active')->config(['optionsMethod' => 'complex']);
 
-            $filter->setIconStyling(true, '#000000', '1em', 'both');
+        $filter->setIconStyling(true, '#000000', '1em', 'both');
 
-            $this->assertSame(['classes' => '', 'defaults' => true, 'svgEnabled' => true, 'svgFill' => '#000000', 'svgSize' => '1em'], $filter->getConfig('iconStyling')['add']);
-            $this->assertSame(['classes' => '', 'defaults' => true, 'svgEnabled' => true, 'svgFill' => '#000000', 'svgSize' => '1em'], $filter->getConfig('iconStyling')['delete']);
-            $filter->setIconStyling(true, '#FFFFFF', '1em', 'add');
-            $this->assertSame(['classes' => '', 'defaults' => true, 'svgEnabled' => true, 'svgFill' => '#FFFFFF', 'svgSize' => '1em'], $filter->getConfig('iconStyling')['add']);
-            $this->assertSame(['classes' => '', 'defaults' => true, 'svgEnabled' => true, 'svgFill' => '#000000', 'svgSize' => '1em'], $filter->getConfig('iconStyling')['delete']);
-            $filter->setIconStyling(true, '#FFFFFF', '1em', 'delete');
-            $this->assertSame(['classes' => '', 'defaults' => true, 'svgEnabled' => true, 'svgFill' => '#FFFFFF', 'svgSize' => '1em'], $filter->getConfig('iconStyling')['add']);
-            $this->assertSame(['classes' => '', 'defaults' => true, 'svgEnabled' => true, 'svgFill' => '#FFFFFF', 'svgSize' => '1em'], $filter->getConfig('iconStyling')['delete']);
-        }
+        $this->assertSame(['classes' => '', 'defaults' => true, 'svgEnabled' => true, 'svgFill' => '#000000', 'svgSize' => '1em'], $filter->getConfig('iconStyling')['add']);
+        $this->assertSame(['classes' => '', 'defaults' => true, 'svgEnabled' => true, 'svgFill' => '#000000', 'svgSize' => '1em'], $filter->getConfig('iconStyling')['delete']);
+        $filter->setIconStyling(true, '#FFFFFF', '1em', 'add');
+        $this->assertSame(['classes' => '', 'defaults' => true, 'svgEnabled' => true, 'svgFill' => '#FFFFFF', 'svgSize' => '1em'], $filter->getConfig('iconStyling')['add']);
+        $this->assertSame(['classes' => '', 'defaults' => true, 'svgEnabled' => true, 'svgFill' => '#000000', 'svgSize' => '1em'], $filter->getConfig('iconStyling')['delete']);
+        $filter->setIconStyling(true, '#FFFFFF', '1em', 'delete');
+        $this->assertSame(['classes' => '', 'defaults' => true, 'svgEnabled' => true, 'svgFill' => '#FFFFFF', 'svgSize' => '1em'], $filter->getConfig('iconStyling')['add']);
+        $this->assertSame(['classes' => '', 'defaults' => true, 'svgEnabled' => true, 'svgFill' => '#FFFFFF', 'svgSize' => '1em'], $filter->getConfig('iconStyling')['delete']);
+    }
 
     /** @test */
     public function can_check_get_selected_values(): void

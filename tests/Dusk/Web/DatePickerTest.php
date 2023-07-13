@@ -96,34 +96,34 @@ final class DatePickerTest extends DuskTestCase
             $browser->screenshot("datePicker_" . trim($baseURL, '//') . "_5_Final_Check_" . date('Y-m-d H'));
         });
     }
-/*
-    #[DataProvider('urlProvider')]
-    public function testTodayIsDefaultDate($baseURL): void
-    {
-        $this->browse(function (Browser $browser) use ($baseURL) {
-            $browser->visit($baseURL);
+    /*
+        #[DataProvider('urlProvider')]
+        public function testTodayIsDefaultDate($baseURL): void
+        {
+            $this->browse(function (Browser $browser) use ($baseURL) {
+                $browser->visit($baseURL);
 
-            $browser->pause(1000);
+                $browser->pause(1000);
 
-            $browser->press('@filtBtn');
+                $browser->press('@filtBtn');
 
-            $browser->pause(2000);
+                $browser->pause(2000);
 
-            $browser->assertDontSee('Wed');
+                $browser->assertDontSee('Wed');
 
-            $browser->pause(1000);
+                $browser->pause(1000);
 
-            $browser->click('#users2-filter-verified_before_date');
+                $browser->click('#users2-filter-verified_before_date');
 
-            $browser->pause(3000);
+                $browser->pause(3000);
 
-            $browser->assertAttribute('.today','aria-label',date('F j, Y'));
+                $browser->assertAttribute('.today','aria-label',date('F j, Y'));
 
-            $this->assertEquals($browser->attribute('.today','aria-label'),date('F j, Y'));
+                $this->assertEquals($browser->attribute('.today','aria-label'),date('F j, Y'));
 
-            $this->assertNotEquals($browser->attribute('.today','aria-label'),Carbon::tomorrow()->format('F j, Y'));
+                $this->assertNotEquals($browser->attribute('.today','aria-label'),Carbon::tomorrow()->format('F j, Y'));
 
-        });
-    }
-*/
+            });
+        }
+    */
 }

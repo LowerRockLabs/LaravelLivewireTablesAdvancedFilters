@@ -147,31 +147,31 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
         $this->assertSame(['1'], $this->advancedTable->getAppliedFilterWithValue('species'));
     }
 
-        /** @test */
-        public function can_set_filter_value_3(): void
-        {
-            $this->advancedTable->setFilter('breed', ['1']);
+    /** @test */
+    public function can_set_filter_value_3(): void
+    {
+        $this->advancedTable->setFilter('breed', ['1']);
 
-            $this->assertSame(['1'], $this->advancedTable->getAppliedFilterWithValue('breed'));
+        $this->assertSame(['1'], $this->advancedTable->getAppliedFilterWithValue('breed'));
 
-            $this->advancedTable->setFilter('breed', ['0']);
+        $this->advancedTable->setFilter('breed', ['0']);
 
-            $this->advancedTable->setFilter('species', ['1']);
+        $this->advancedTable->setFilter('species', ['1']);
 
-            $this->assertSame(['1'], $this->advancedTable->getAppliedFilterWithValue('species'));
+        $this->assertSame(['1'], $this->advancedTable->getAppliedFilterWithValue('species'));
 
-            $this->advancedTable->setFilter('smart', ['1']);
+        $this->advancedTable->setFilter('smart', ['1']);
 
-            $this->assertSame(['1'], $this->advancedTable->getAppliedFilterWithValue('smart'));
+        $this->assertSame(['1'], $this->advancedTable->getAppliedFilterWithValue('smart'));
 
-            $this->advancedTable->setFilter('datepicker', ['2021-01-01']);
+        $this->advancedTable->setFilter('datepicker', ['2021-01-01']);
 
-            $this->assertSame(['2021-01-01'], $this->advancedTable->getAppliedFilterWithValue('datepicker'));
+        $this->assertSame(['2021-01-01'], $this->advancedTable->getAppliedFilterWithValue('datepicker'));
 
-            $this->advancedTable->setFilter('range', ['min' => '50', 'max' => '50']);
+        $this->advancedTable->setFilter('range', ['min' => '50', 'max' => '50']);
 
-            $this->assertSame(['min' => '50', 'max' => '50'], $this->advancedTable->getAppliedFilterWithValue('range'));
-        }
+        $this->assertSame(['min' => '50', 'max' => '50'], $this->advancedTable->getAppliedFilterWithValue('range'));
+    }
 
     /** @test */
     public function advanced_can_set_filter_value(): void
@@ -284,50 +284,50 @@ class AdvancedFilterHelpersTest extends TestCaseAdvanced
     }
 
     /** @test */
-        /*public function can_see_if_filters_set_with_values_3(): void
-        {
-            $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
+    /*public function can_see_if_filters_set_with_values_3(): void
+    {
+        $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
 
-            $this->advancedTable->setFilter('breed', ['1']);
+        $this->advancedTable->setFilter('breed', ['1']);
 
-            $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
 
-            $this->advancedTable->setFilter('breed', []);
+        $this->advancedTable->setFilter('breed', []);
 
-            $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
 
-            $this->advancedTable->setFilter('species', ['1']);
+        $this->advancedTable->setFilter('species', ['1']);
 
-            $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
 
-            $this->advancedTable->setFilter('species', []);
+        $this->advancedTable->setFilter('species', []);
 
-            $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
 
-            $this->advancedTable->setFilter('range', ['min' => '50', 'max' => '50']);
+        $this->advancedTable->setFilter('range', ['min' => '50', 'max' => '50']);
 
-            $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
 
-            $this->advancedTable->setFilter('range', ['min' => null, 'max' => null]);
+        $this->advancedTable->setFilter('range', ['min' => null, 'max' => null]);
 
-            $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
 
-            $this->advancedTable->setFilter('range', ['min' => '50', 'max' => '50']);
+        $this->advancedTable->setFilter('range', ['min' => '50', 'max' => '50']);
 
-            $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
 
-            $this->advancedTable->setFilter('range', []);
+        $this->advancedTable->setFilter('range', []);
 
-            $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
 
-            $this->advancedTable->setFilter('datepicker', '2020-10-12');
+        $this->advancedTable->setFilter('datepicker', '2020-10-12');
 
-            $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
+        $this->assertTrue($this->advancedTable->hasAppliedFiltersWithValues());
 
-            $this->advancedTable->setFilter('datepicker', '');
+        $this->advancedTable->setFilter('datepicker', '');
 
-            $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
-        }*/
+        $this->assertFalse($this->advancedTable->hasAppliedFiltersWithValues());
+    }*/
 
     /** @test */
     /*public function advanced_can_get_all_applied_filters_with_values_count(): void
